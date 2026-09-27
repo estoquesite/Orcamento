@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Orçamento</title>
+    <title>Meu Orçamento & Finanças</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --bg-color: #f3f4f6;
+            --primary: #6366f1;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+        }
+
+        /* Tema Claro (caso queira alternar) */
+        body.light-mode {
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #f8fafc;
         }
 
         * {
@@ -18,6 +31,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background 0.3s, color 0.3s;
         }
 
         body {
@@ -29,47 +43,65 @@
             min-height: 100vh;
         }
 
-        /* Simulador de Tela de Celular */
         .phone-container {
             width: 100%;
             max-width: 414px;
             height: 100vh;
-            max-height: 896px;
+            max-height: 900px;
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             overflow-y: auto;
             position: relative;
         }
 
         @media (min-width: 450px) {
             .phone-container {
-                height: 85vh;
-                border-radius: 40px;
-                border: 8px solid #111;
+                height: 90vh;
+                border-radius: 36px;
+                border: 10px solid #1e293b;
             }
         }
 
         header {
-            background: var(--primary);
+            background: var(--primary-gradient);
             color: white;
             padding: 20px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        header h1 {
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 700;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .content {
-            padding: 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 16px;
             flex: 1;
         }
 
-        /* Os Dois quadradinhos (Cards de Resumo) */
-        .summary-cards {
+        /* Cards de Resumo (Editáveis direto no clique) */
+        .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
@@ -77,52 +109,69 @@
 
         .card {
             background: var(--card-bg);
-            padding: 16px;
+            padding: 14px;
             border-radius: 16px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
+            position: relative;
         }
 
         .card span {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
 
         .card h2 {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
         }
 
-        .card.total h2 { color: #059669; }
-        .card.spent h2 { color: #dc2626; }
+        .card h2:hover {
+            opacity: 0.8;
+            text-decoration: underline dotted;
+        }
 
-        /* Formulários e Seções */
+        .card.cash h2 { color: #10b981; }
+        .card.spent h2 { color: #f43f5e; }
+        .card.card-val h2 { color: #38bdf8; }
+        .card.euro h2 { color: #fbbf24; }
+
+        /* Caixas de Ação e Formulários */
         .section-box {
             background: var(--card-bg);
             padding: 16px;
             border-radius: 16px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
         }
 
         .section-box h3 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 12px;
             color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
+            gap: 10px;
         }
 
         input, select {
-            padding: 12px;
-            border: 1px solid #d1d5db;
+            padding: 11px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             border-radius: 10px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
         }
 
@@ -130,28 +179,28 @@
             border-color: var(--primary);
         }
 
-        button {
-            background: var(--primary);
+        button.btn-primary {
+            background: var(--primary-gradient);
             color: white;
             border: none;
             padding: 12px;
             border-radius: 10px;
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
         }
 
-        button:active {
-            opacity: 0.85;
+        button.btn-primary:active {
+            transform: scale(0.98);
         }
 
-        /* Lista de Gastos */
+        /* Lista de Gastos & Categorias */
         .transaction-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 200px;
+            max-height: 220px;
             overflow-y: auto;
         }
 
@@ -159,9 +208,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background: #f9fafb;
-            border-radius: 8px;
+            padding: 10px 12px;
+            background: var(--input-bg);
+            border-radius: 10px;
             border-left: 5px solid #ccc;
         }
 
@@ -172,69 +221,94 @@
 
         .transaction-title {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        .transaction-category {
-            font-size: 0.75rem;
+        .transaction-meta {
+            font-size: 0.7rem;
             color: var(--text-muted);
+        }
+
+        .transaction-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .transaction-value {
             font-weight: bold;
-            color: #dc2626;
+            color: #f43f5e;
+            font-size: 0.9rem;
         }
 
-        /* Categorias Badges */
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .delete-btn:hover { color: #f43f5e; }
+
         .category-badges {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            margin-top: 8px;
         }
 
         .badge {
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: white;
             font-weight: 600;
         }
     </style>
 </head>
-<body>
+<body class="">
 
     <div class="phone-container">
-        <header>Orçamento Mensal</header>
+        <header>
+            <h1>Meus Gastos & Caixa</h1>
+            <button class="theme-toggle" onclick="alternarTema()">🌙 Noite</button>
+        </header>
         
         <div class="content">
-            <!-- 1. Os dois quadradinhos -->
-            <div class="summary-cards">
-                <div class="card total">
-                    <span>Dinheiro Total</span>
-                    <h2 id="total-money">R$ 5.000,00</h2>
+            <!-- 4 Cards de Resumo (Valores editáveis ao clicar) -->
+            <div class="summary-grid">
+                <div class="card cash">
+                    <span>Dinheiro em Caixa</span>
+                    <h2 id="card-cash" onclick="editarValor('cash')" title="Clique para editar">R$ 5.000,00</h2>
                 </div>
                 <div class="card spent">
-                    <span>Total Gasto</span>
-                    <h2 id="total-spent">R$ 0,00</h2>
+                    <span>Total Gasto (Mês)</span>
+                    <h2 id="card-spent">R$ 0,00</h2>
+                </div>
+                <div class="card card-val">
+                    <span>Cartão de Crédito</span>
+                    <h2 id="card-credit" onclick="editarValor('credit')" title="Clique para editar">R$ 1.200,00</h2>
+                </div>
+                <div class="card euro">
+                    <span>Valor em Euro (€)</span>
+                    <h2 id="card-euro" onclick="editarValor('euro')" title="Clique para editar">€ 0,00</h2>
                 </div>
             </div>
 
-            <!-- 2. Cadastro de Categorias Coloridas -->
+            <!-- Criar Categoria Colorida -->
             <div class="section-box">
                 <h3>Criar Categoria</h3>
                 <div class="form-group">
                     <input type="text" id="cat-name" placeholder="Nome (ex: Viagem, Escola)">
                     <div style="display: flex; gap: 8px; align-items: center;">
-                        <input type="color" id="cat-color" value="#4f46e5" style="width: 50px; height: 44px; padding: 0; cursor: pointer;">
-                        <button onclick="adicionarCategoria()" style="flex: 1;">Adicionar Categoria</button>
+                        <input type="color" id="cat-color" value="#6366f1" style="width: 44px; height: 42px; padding: 0; cursor: pointer; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <button class="btn-primary" onclick="adicionarCategoria()" style="flex: 1;">Adicionar Categoria</button>
                     </div>
                 </div>
-                <div class="category-badges" id="category-list-display">
-                    <!-- Categorias aparecem aqui -->
-                </div>
+                <div class="category-badges" id="category-list-display"></div>
             </div>
 
-            <!-- 3. Lançamento de Gastos -->
+            <!-- Lançamento de Gastos -->
             <div class="section-box">
                 <h3>Novo Gasto</h3>
                 <div class="form-group">
@@ -243,53 +317,60 @@
                     <select id="expense-category">
                         <option value="">Selecione a Categoria</option>
                     </select>
-                    <button onclick="adicionarGasto()">Salvar Gasto</button>
+                    <select id="expense-payment">
+                        <option value="Dinheiro/Caixa">Dinheiro / Caixa</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    </select>
+                    <button class="btn-primary" onclick="adicionarGasto()">Salvar Gasto</button>
                 </div>
             </div>
 
-            <!-- 4. Extrato do Mês -->
+            <!-- Extrato do Mês -->
             <div class="section-box">
-                <h3>Extrato do Mês</h3>
-                <div class="transaction-list" id="transaction-list">
-                    <!-- Os gastos aparecem aqui -->
-                </div>
+                <h3>Extrato de Gastos</h3>
+                <div class="transaction-list" id="transaction-list"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Dados iniciais de exemplo
-        let totalMoney = 5000.00;
-        let categories = [
-            { name: "Viagem", color: "#ec4899" },
-            { name: "Escola", color: "#3b82f6" },
-            { name: "Alimentação", color: "#f59e0b" }
-        ];
-        let expenses = [];
+        // Dados principais salvos em memória ou localStorage
+        let financialData = {
+            cash: 5000.00,
+            credit: 1200.00,
+            euro: 250.00,
+            categories: [
+                { name: "Viagem", color: "#ec4899" },
+                { name: "Escola", color: "#38bdf8" },
+                { name: "Alimentação", color: "#f59e0b" }
+            ],
+            expenses: []
+        };
 
         function atualizarTela() {
-            // Atualizar valores dos cards
-            let totalGasto = expenses.reduce((acc, curr) => acc + curr.value, 0);
+            // Calcular total gasto
+            let totalGasto = financialData.expenses.reduce((acc, curr) => acc + curr.value, 0);
             
-            document.getElementById("total-money").innerText = `R$ ${totalMoney.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("total-spent").innerText = `R$ ${totalGasto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            // Atualizar textos dos cards
+            document.getElementById("card-cash").innerText = `R$ ${financialData.cash.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-spent").innerText = `R$ ${totalGasto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-credit").innerText = `R$ ${financialData.credit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-euro").innerText = `€ ${financialData.euro.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
             // Atualizar Select de Categorias
             let select = document.getElementById("expense-category");
             select.innerHTML = '<option value="">Selecione a Categoria</option>';
             
-            // Atualizar Lista de Badges de Categorias
+            // Atualizar Badges de Categorias
             let badgeContainer = document.getElementById("category-list-display");
             badgeContainer.innerHTML = '';
 
-            categories.forEach(cat => {
-                // Adiciona no select
+            financialData.categories.forEach(cat => {
                 let opt = document.createElement("option");
                 opt.value = cat.name;
                 opt.textContent = cat.name;
                 select.appendChild(opt);
 
-                // Adiciona na visualização em badges
                 let badge = document.createElement("div");
                 badge.className = "badge";
                 badge.style.backgroundColor = cat.color;
@@ -297,17 +378,17 @@
                 badgeContainer.appendChild(badge);
             });
 
-            // Atualizar Lista de Transações
+            // Atualizar Lista de Gastos
             let listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
 
-            if(expenses.length === 0) {
-                listContainer.innerHTML = '<span style="font-size: 0.85rem; color: #6b7280; text-align: center; padding: 10px;">Nenhum gasto registrado ainda.</span>';
+            if(financialData.expenses.length === 0) {
+                listContainer.innerHTML = '<span style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 10px;">Nenhum gasto registrado.</span>';
                 return;
             }
 
-            expenses.forEach(exp => {
-                let catObj = categories.find(c => c.name === exp.category);
+            financialData.expenses.forEach((exp, index) => {
+                let catObj = financialData.categories.find(c => c.name === exp.category);
                 let catColor = catObj ? catObj.color : '#ccc';
 
                 let item = document.createElement("div");
@@ -317,12 +398,35 @@
                 item.innerHTML = `
                     <div class="transaction-info">
                         <span class="transaction-title">${exp.desc}</span>
-                        <span class="transaction-category">${exp.category || 'Geral'}</span>
+                        <span class="transaction-meta">${exp.category || 'Geral'} • ${exp.payment}</span>
                     </div>
-                    <span class="transaction-value">- R$ ${exp.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    <div class="transaction-right">
+                        <span class="transaction-value">- R$ ${exp.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                        <button class="delete-btn" onclick="removerGasto(${index})">✕</button>
+                    </div>
                 `;
                 listContainer.appendChild(item);
             });
+        }
+
+        function editarValor(tipo) {
+            let nomes = {
+                cash: "Dinheiro em Caixa",
+                credit: "Cartão de Crédito",
+                euro: "Valor em Euro"
+            };
+            let valorAtual = financialData[tipo];
+            let novoValorStr = prompt(`Digite o novo valor para ${nomes[tipo]}:`, valorAtual);
+            
+            if(novoValorStr !== null) {
+                let novoValor = parseFloat(novoValorStr.replace(',', '.'));
+                if(!isNaN(novoValor)) {
+                    financialData[tipo] = novoValor;
+                    atualizarTela();
+                } else {
+                    alert("Por favor, digite um número válido.");
+                }
+            }
         }
 
         function adicionarCategoria() {
@@ -334,7 +438,7 @@
                 return;
             }
 
-            categories.push({
+            financialData.categories.push({
                 name: nameInput.value.trim(),
                 color: colorInput.value
             });
@@ -347,6 +451,7 @@
             let descInput = document.getElementById("expense-desc");
             let valueInput = document.getElementById("expense-value");
             let catSelect = document.getElementById("expense-category");
+            let paySelect = document.getElementById("expense-payment");
 
             let valor = parseFloat(valueInput.value);
 
@@ -355,10 +460,11 @@
                 return;
             }
 
-            expenses.push({
+            financialData.expenses.push({
                 desc: descInput.value.trim(),
                 value: valor,
-                category: catSelect.value
+                category: catSelect.value,
+                payment: paySelect.value
             });
 
             descInput.value = '';
@@ -368,7 +474,24 @@
             atualizarTela();
         }
 
-        // Inicializar aplicação
+        function removerGasto(index) {
+            financialData.expenses.splice(index, 1);
+            atualizarTela();
+        }
+
+        function alternarTema() {
+            let body = document.body;
+            let btn = document.querySelector(".theme-toggle");
+            body.classList.toggle("light-mode");
+            
+            if(body.classList.contains("light-mode")) {
+                btn.textContent = "☀️ Dia";
+            } else {
+                btn.textContent = "🌙 Noite";
+            }
+        }
+
+        // Inicializar
         atualizarTela();
     </script>
 </body>
