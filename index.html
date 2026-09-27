@@ -80,8 +80,11 @@
         }
 
         header h1 {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .theme-toggle {
@@ -95,26 +98,36 @@
             font-weight: 600;
         }
 
-        /* Abas Superiores */
+        /* Barra de Navegação com Ícones (Evita quebra na tela) */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
-            overflow-x: auto;
+            width: 100%;
         }
 
         .tab-button {
-            flex: 1;
-            min-width: 80px;
-            padding: 10px 4px;
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 8px 4px;
             border: none;
             background: none;
             color: var(--text-muted);
-            font-size: 0.75rem;
-            font-weight: 600;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
             position: relative;
-            text-align: center;
+        }
+
+        .tab-button .tab-icon {
+            font-size: 1.15rem;
+        }
+
+        .tab-button .tab-label {
+            font-size: 0.7rem;
+            font-weight: 600;
             white-space: nowrap;
         }
 
@@ -152,7 +165,7 @@
             display: flex;
         }
 
-        /* Resumos e Cards */
+        /* Cards de Resumo */
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -174,11 +187,12 @@
         }
 
         .card span {
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .card h2 {
@@ -215,6 +229,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
 
         .form-group {
@@ -257,6 +272,10 @@
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 3px 8px rgba(99, 102, 241, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
         }
 
         button.btn-secondary {
@@ -343,7 +362,6 @@
         }
         .delete-btn:hover { color: var(--red); }
 
-        /* Barras de Progresso */
         .progress-bar-bg {
             background: rgba(255,255,255,0.08);
             border-radius: 10px;
@@ -376,23 +394,6 @@
             font-weight: 600;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 6px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        .badge-del {
-            cursor: pointer;
-            opacity: 0.8;
-        }
-        .badge-del:hover { opacity: 1; }
-
         .chart-box {
             position: relative;
             height: 200px;
@@ -404,16 +405,28 @@
 
     <div class="phone-container">
         <header>
-            <h1>Finanças Pro</h1>
+            <h1>💰 Finanças Pro</h1>
             <button class="theme-toggle" onclick="alternarTema()">🌙 Noite</button>
         </header>
 
-        <!-- Navegação -->
+        <!-- Navegação com Ícones -->
         <nav class="tab-bar">
-            <button class="tab-button active" onclick="trocarAba('gastos')">Gastos & Caixa</button>
-            <button class="tab-button" onclick="trocarAba('metas')">Orçamentos & Metas</button>
-            <button class="tab-button" onclick="trocarAba('investimentos')">Investimentos</button>
-            <button class="tab-button" onclick="trocarAba('relatorios')">Relatórios</button>
+            <button class="tab-button active" onclick="trocarAba('gastos')">
+                <span class="tab-icon">💳</span>
+                <span class="tab-label">Gastos</span>
+            </button>
+            <button class="tab-button" onclick="trocarAba('metas')">
+                <span class="tab-icon">🎯</span>
+                <span class="tab-label">Metas</span>
+            </button>
+            <button class="tab-button" onclick="trocarAba('investimentos')">
+                <span class="tab-icon">📈</span>
+                <span class="tab-label">Investir</span>
+            </button>
+            <button class="tab-button" onclick="trocarAba('relatorios')">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label">Relatórios</span>
+            </button>
         </nav>
         
         <div class="content">
@@ -422,24 +435,24 @@
             <div id="tab-gastos" class="tab-pane active">
                 <div class="summary-grid">
                     <div class="card blue full-width editable">
-                        <span>Dinheiro em Caixa / Saldo em Conta</span>
+                        <span>💵 Saldo em Caixa / Conta</span>
                         <h2 id="card-cash" onclick="editarValor('cash')" title="Clique para editar">R$ 0,00</h2>
                     </div>
                     <div class="card green">
-                        <span>Receitas (Mês)</span>
+                        <span>📈 Receitas (Mês)</span>
                         <h2 id="card-income">R$ 0,00</h2>
                     </div>
                     <div class="card red">
-                        <span>Despesas (Mês)</span>
+                        <span>📉 Despesas (Mês)</span>
                         <h2 id="card-spent">R$ 0,00</h2>
                     </div>
                     <div class="card purple">
-                        <span>Resultado Líquido</span>
+                        <span>⚖️ Saldo Líquido</span>
                         <h2 id="card-net">R$ 0,00</h2>
                     </div>
                     <div class="card yellow editable">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>Fatura Cartão</span>
+                            <span>💳 Fatura Cartão</span>
                             <a href="#" onclick="pagarFaturaCartao()" style="font-size:0.65rem; color:var(--yellow); text-decoration:none; font-weight:700;">[PAGAR]</a>
                         </div>
                         <h2 id="card-credit" onclick="editarValor('credit')" title="Clique para editar">R$ 0,00</h2>
@@ -448,12 +461,12 @@
 
                 <!-- Formulário de Transação -->
                 <div class="section-box">
-                    <h3>Novo Lançamento</h3>
+                    <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
                         <div class="form-row">
                             <select id="trans-type" onchange="alternarTipoTransacao()">
-                                <option value="expense">Despesa (-)</option>
-                                <option value="income">Receita (+)</option>
+                                <option value="expense">📉 Despesa (-)</option>
+                                <option value="income">📈 Receita (+)</option>
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
@@ -463,8 +476,8 @@
                                 <option value="">Selecione Categoria</option>
                             </select>
                             <select id="trans-payment">
-                                <option value="Dinheiro/Caixa">Dinheiro / Saldo</option>
-                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Dinheiro/Caixa">💵 Dinheiro / Saldo</option>
+                                <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
                             </select>
                         </div>
                         <div class="form-row" id="installments-row">
@@ -479,17 +492,17 @@
                                 <option value="12">12x parcelas</option>
                             </select>
                             <label style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer;">
-                                <input type="checkbox" id="trans-fixed" style="width: auto;"> Gasto Fixo Mensal
+                                <input type="checkbox" id="trans-fixed" style="width: auto;"> 🔄 Gasto Fixo
                             </label>
                         </div>
-                        <button class="btn-primary" onclick="adicionarTransacao()">Salvar Lançamento</button>
+                        <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                     </div>
                 </div>
 
                 <!-- Extrato -->
                 <div class="section-box">
                     <h3>
-                        <span>Extrato Recente</span>
+                        <span>📑 Extrato de Movimentações</span>
                         <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.7rem;">
                             <option value="all">Todos</option>
                             <option value="expense">Despesas</option>
@@ -502,36 +515,34 @@
 
             <!-- ABA 2: ORÇAMENTOS E METAS -->
             <div id="tab-metas" class="tab-pane">
-                <!-- Tetos de Gastos por Categoria -->
                 <div class="section-box">
-                    <h3>Criar / Editar Categoria com Limite</h3>
+                    <h3>🏷️ Nova Categoria & Teto de Gastos</h3>
                     <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome da Categoria (ex: Alimentação)">
+                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
                         <div class="form-row">
                             <input type="number" id="cat-limit" step="10" min="0" placeholder="Teto Mensal R$ (ex: 800)">
                             <input type="color" id="cat-color" value="#6366f1" style="width: 44px; height: 38px; padding: 0; cursor: pointer; border-radius: 6px;">
                         </div>
-                        <button class="btn-primary" onclick="adicionarCategoria()">Salvar Categoria</button>
+                        <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Orçamento Mensal (Consumo vs Limite)</h3>
+                    <h3>📊 Orçamento Mensal (Consumo vs Limite)</h3>
                     <div class="list-container" id="budget-progress-list"></div>
                 </div>
 
-                <!-- Metas e Caixinhas -->
                 <div class="section-box">
-                    <h3>Criar Nova Caixinha / Meta</h3>
+                    <h3>🏦 Nova Caixinha / Objetivo</h3>
                     <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: Reserva Emergência, Viagem)">
-                        <input type="number" id="goal-target" min="1" step="10" placeholder="Valor Meta (R$)">
-                        <button class="btn-primary" onclick="adicionarMeta()">Criar Meta</button>
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🛡️ Reserva, ✈️ Viagem)">
+                        <input type="number" id="goal-target" min="1" step="10" placeholder="Meta Total (R$)">
+                        <button class="btn-primary" onclick="adicionarMeta()">🎯 Criar Caixinha</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Minhas Caixinhas</h3>
+                    <h3>🐷 Minhas Caixinhas Guardadas</h3>
                     <div class="list-container" id="goals-list"></div>
                 </div>
             </div>
@@ -540,21 +551,21 @@
             <div id="tab-investimentos" class="tab-pane">
                 <div class="summary-grid">
                     <div class="card purple full-width">
-                        <span>Total Geral Investido</span>
+                        <span>💼 Total Geral Investido</span>
                         <h2 id="card-total-invested">R$ 0,00</h2>
                     </div>
                     <div class="card yellow">
-                        <span>XP Investimentos</span>
+                        <span>🟡 XP Investimentos</span>
                         <h2 id="card-xp-total">R$ 0,00</h2>
                     </div>
                     <div class="card yellow">
-                        <span>Binance (Cripto)</span>
+                        <span>🟡 Binance (Cripto)</span>
                         <h2 id="card-binance-total">R$ 0,00</h2>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Novo Aporte / Ativo</h3>
+                    <h3>🚀 Novo Aporte / Ativo</h3>
                     <div class="form-group">
                         <div class="form-row">
                             <select id="invest-platform">
@@ -562,21 +573,21 @@
                                 <option value="Binance">Binance</option>
                             </select>
                             <select id="invest-type">
-                                <option value="Renda Fixa">Renda Fixa / CDB / Tesouro</option>
-                                <option value="Criptomoeda">Criptomoeda</option>
-                                <option value="Ações">Ações</option>
-                                <option value="Fundos Imobiliários">FIIs</option>
-                                <option value="Outros">Outros</option>
+                                <option value="Renda Fixa">🏛️ Renda Fixa / CDB</option>
+                                <option value="Criptomoeda">🪙 Criptomoeda</option>
+                                <option value="Ações">📈 Ações</option>
+                                <option value="Fundos Imobiliários">🏢 FIIs</option>
+                                <option value="Outros">📦 Outros</option>
                             </select>
                         </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: BTC, CDB 110%, BOVA11)">
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: BTC, CDB 110%, PETR4)">
                         <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor Aportado (R$)">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">Registrar Aporte</button>
+                        <button class="btn-primary" onclick="adicionarInvestimento()">➕ Registrar Aporte</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Carteira de Ativos</h3>
+                    <h3>📁 Carteira de Ativos</h3>
                     <div class="list-container" id="investment-list"></div>
                 </div>
             </div>
@@ -584,23 +595,23 @@
             <!-- ABA 4: RELATÓRIOS E BACKUP -->
             <div id="tab-relatorios" class="tab-pane">
                 <div class="section-box">
-                    <h3>Despesas por Categoria</h3>
+                    <h3>🥧 Despesas por Categoria</h3>
                     <div class="chart-box">
                         <canvas id="expenseCategoryChart"></canvas>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Alocação de Investimentos</h3>
+                    <h3>📊 Alocação de Investimentos</h3>
                     <div class="chart-box">
                         <canvas id="investmentClassChart"></canvas>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>Exportação e Backup</h3>
+                    <h3>💾 Exportação e Backup</h3>
                     <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Baixe uma planilha CSV de suas movimentações financeiras para controle no Excel.</p>
-                    <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Dados em Planilha (CSV)</button>
+                    <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Planilha (CSV)</button>
                 </div>
             </div>
 
@@ -608,24 +619,24 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_completo_v3";
+        const STORAGE_KEY = "meu_orcamento_completo_v4";
 
         const defaultData = {
             cash: 5000.00,
             credit: 1200.00,
             categories: [
-                { name: "Alimentação", color: "#f59e0b", limit: 1200 },
-                { name: "Moradia", color: "#6366f1", limit: 2000 },
-                { name: "Transporte", color: "#ec4899", limit: 500 },
-                { name: "Lazer", color: "#38bdf8", limit: 400 }
+                { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
+                { name: "🏠 Moradia", color: "#6366f1", limit: 2000 },
+                { name: "🚗 Transporte", color: "#ec4899", limit: 500 },
+                { name: "🎮 Lazer", color: "#38bdf8", limit: 400 }
             ],
             transactions: [
-                { id: 1, type: "income", desc: "Salário Principal", value: 6500.00, category: "Geral", payment: "Dinheiro/Caixa", date: "05/09", fixed: true },
-                { id: 2, type: "expense", desc: "Supermercado Semanal", value: 380.00, category: "Alimentação", payment: "Cartão de Crédito", installments: "1", date: "15/09", fixed: false }
+                { id: 1, type: "income", desc: "Salário Principal", value: 6500.00, category: "💼 Geral", payment: "Dinheiro/Caixa", date: "05/09", fixed: true },
+                { id: 2, type: "expense", desc: "Supermercado Semanal", value: 380.00, category: "🍔 Alimentação", payment: "Cartão de Crédito", installments: "1", date: "15/09", fixed: false }
             ],
             goals: [
-                { id: 1, name: "Reserva de Emergência", target: 20000.00, current: 8500.00 },
-                { id: 2, name: "Viagem Férias", target: 5000.00, current: 1500.00 }
+                { id: 1, name: "🛡️ Reserva de Emergência", target: 20000.00, current: 8500.00 },
+                { id: 2, name: "✈️ Viagem de Férias", target: 5000.00, current: 1500.00 }
             ],
             investments: [
                 { id: 1, platform: "XP Investimentos", asset: "CDB 110% CDI", type: "Renda Fixa", value: 12000.00, date: "10/09" },
@@ -685,7 +696,6 @@
         }
 
         function atualizarTela() {
-            // Cálculos da aba de Gastos
             const totalDespesas = financialData.transactions
                 .filter(t => t.type === 'expense')
                 .reduce((acc, curr) => acc + curr.value, 0);
@@ -751,7 +761,7 @@
             // Orçamento / Metas de Categoria
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
-            financialData.categories.forEach((cat, index) => {
+            financialData.categories.forEach((cat) => {
                 const gastoCat = financialData.transactions
                     .filter(t => t.type === 'expense' && t.category === cat.name)
                     .reduce((acc, curr) => acc + curr.value, 0);
@@ -798,8 +808,8 @@
                             <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
                         </div>
                         <div style="display:flex; gap:6px; margin-top:6px;">
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'guardar')">+ Guardar</button>
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'resgatar')">- Resgatar</button>
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'guardar')">📥 Guardar</button>
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'resgatar')">📤 Resgatar</button>
                             <button class="delete-btn" onclick="removerMeta(${index})">✕</button>
                         </div>
                     `;
@@ -840,7 +850,7 @@
             });
         }
 
-        // Operações de Gastos & Caixa
+        // Operações de Gastos
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1027,7 +1037,6 @@
 
         // Gráficos
         function renderizarGraficos() {
-            // Gráfico 1: Categorias de Gastos
             const ctxCat = document.getElementById('expenseCategoryChart').getContext('2d');
             const catLabels = financialData.categories.map(c => c.name);
             const catColors = financialData.categories.map(c => c.color);
@@ -1055,7 +1064,6 @@
                 }
             });
 
-            // Gráfico 2: Alocação de Investimentos
             const ctxInv = document.getElementById('investmentClassChart').getContext('2d');
             const classes = ["Renda Fixa", "Criptomoeda", "Ações", "Fundos Imobiliários", "Outros"];
             const invTotals = classes.map(cls => {
@@ -1083,7 +1091,6 @@
             });
         }
 
-        // Exportação CSV
         function exportarCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Data;Tipo;Descricao;Valor;Categoria;Pagamento\n";
