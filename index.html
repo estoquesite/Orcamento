@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças Pro</title>
     
+    <!-- CONEXÃO DO PWA & MANIFESTO -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#4f46e5">
     <meta name="application-name" content="Finanças Pro">
     <meta name="apple-mobile-web-app-title" content="Finanças Pro">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#4f46e5">
 
+    <!-- Ícones oficiais para Android e iPhone -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
-    <link rel="manifest" href="./manifest.json">
-    
+
+    <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -661,6 +664,9 @@
             
             <div class="header-actions">
                 <button class="header-btn" onclick="bloquearManualmente()" title="Trancar Aplicativo">🔒</button>
+                <button class="header-btn" id="btn-instalar" onclick="baixarApp()" title="Instalar App no Celular">
+                    <span>📲</span> Baixar
+                </button>
                 <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Modo Escuro</button>
             </div>
         </header>
@@ -917,7 +923,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_limpo_v3";
+        const STORAGE_KEY = "meu_orcamento_limpo_v4";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -959,9 +965,34 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- CONTROLE DE SESSÃO E BIOMETRIA INTELIGENTE ---
+        // --- REGISTRO OBRIGATÓRIO DO SERVICE WORKER (Para o Chrome liberar Instalar) ---
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log("SW registrado com sucesso!"))
+                .catch(err => console.warn("Aviso no SW:", err));
+        }
 
-        // Se o app já foi desbloqueado nesta sessão, NÃO bloqueia ao atualizar a página!
+        // --- CAPTURA DO BOTÃO DE INSTALAÇÃO DO CHROME ---
+        let deferredInstallPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            const btn = document.getElementById('btn-instalar');
+            if (btn) btn.style.display = 'inline-flex';
+        });
+
+        function baixarApp() {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                deferredInstallPrompt.userChoice.then(() => {
+                    deferredInstallPrompt = null;
+                });
+            } else {
+                alert("Para instalar na tela do celular:\n\n1. Toque nos 3 pontinhos (⋮) no topo direito do Chrome.\n2. Escolha 'Instalar aplicativo' ou 'Criar atalho'.");
+            }
+        }
+
+        // --- CONTROLE DE SESSÃO BIOMÉTRICA (Não bloqueia ao recarregar a tela) ---
         if (sessionStorage.getItem('app_desbloqueado') === 'true') {
             document.getElementById("lock-screen").classList.add("hidden");
         }
@@ -979,7 +1010,7 @@
                 let credIdBase64 = localStorage.getItem('biometria_unica_id');
 
                 if (!credIdBase64) {
-                    // Primeiro cadastro de digital: cria a chave única do aparelho
+                    // Primeiro cadastro de digital
                     const userId = new Uint8Array(16);
                     window.crypto.getRandomValues(userId);
 
@@ -1007,7 +1038,7 @@
                         marcarDesbloqueado();
                     }
                 } else {
-                    // Autenticação direta com a digital específica (sem listar contas)
+                    // Autenticação direta com a digital cadastrada
                     const rawId = Uint8Array.from(atob(credIdBase64), c => c.charCodeAt(0));
                     const cred = await navigator.credentials.get({
                         publicKey: {
