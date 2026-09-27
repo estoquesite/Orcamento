@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanças Pro</title>
+    <title>Finanças Pro v1.2</title>
     
     <!-- CONEXÃO DO PWA & MANIFESTO -->
     <link rel="manifest" href="./manifest.json">
@@ -200,10 +200,22 @@
             stroke-linejoin: round;
         }
 
+        .brand-title-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
         header h1 {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             font-weight: 800;
             letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .app-version {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
         }
 
         .header-actions {
@@ -657,8 +669,9 @@
                         <path d="M14 7h7v7"></path>
                     </svg>
                 </div>
-                <div>
+                <div class="brand-title-wrapper">
                     <h1>Finanças Pro</h1>
+                    <span class="app-version">v1.2</span>
                 </div>
             </div>
             
@@ -965,7 +978,7 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- REGISTRO OBRIGATÓRIO DO SERVICE WORKER (Para o Chrome liberar Instalar) ---
+        // --- REGISTRO OBRIGATÓRIO DO SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js')
                 .then(() => console.log("SW registrado com sucesso!"))
@@ -992,7 +1005,7 @@
             }
         }
 
-        // --- CONTROLE DE SESSÃO BIOMÉTRICA (Não bloqueia ao recarregar a tela) ---
+        // --- CONTROLE DE SESSÃO BIOMÉTRICA ---
         if (sessionStorage.getItem('app_desbloqueado') === 'true') {
             document.getElementById("lock-screen").classList.add("hidden");
         }
@@ -1010,7 +1023,6 @@
                 let credIdBase64 = localStorage.getItem('biometria_unica_id');
 
                 if (!credIdBase64) {
-                    // Primeiro cadastro de digital
                     const userId = new Uint8Array(16);
                     window.crypto.getRandomValues(userId);
 
@@ -1038,7 +1050,6 @@
                         marcarDesbloqueado();
                     }
                 } else {
-                    // Autenticação direta com a digital cadastrada
                     const rawId = Uint8Array.from(atob(credIdBase64), c => c.charCodeAt(0));
                     const cred = await navigator.credentials.get({
                         publicKey: {
