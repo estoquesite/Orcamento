@@ -4,33 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças Pro</title>
-    <!-- Favicon do App (Ícone na aba do navegador) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%236366f1%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2260%22>💰</text></svg>">
+    
+    <!-- Manifesto para Instalação PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%234f46e5%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2260%22>💎</text></svg>">
+    
     <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --input-bg: #0f172a;
-            --green: #10b981;
-            --red: #f43f5e;
-            --blue: #38bdf8;
-            --yellow: #f59e0b;
-        }
 
-        body.light-mode {
-            --bg-color: #f1f5f9;
+    <style>
+        /* TEMA CLARO PADRÃO - CORES VIBRANTES */
+        :root {
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #f8fafc;
+            --input-bg: #f1f5f9;
+            --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+            --green: #059669;
+            --red: #e11d48;
+            --blue: #2563eb;
+            --yellow: #d97706;
+            --purple: #7c3aed;
+        }
+
+        /* TEMA NOTURNO */
+        body.dark-mode {
+            --primary: #818cf8;
+            --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
+            --bg-color: #0b0f19;
+            --card-bg: #151d30;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #222f49;
+            --input-bg: #0b1120;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            --green: #10b981;
+            --red: #f43f5e;
+            --blue: #38bdf8;
+            --yellow: #f59e0b;
+            --purple: #a855f7;
         }
 
         * {
@@ -38,7 +55,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
         }
 
         body {
@@ -58,7 +75,7 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 45px rgba(79, 70, 229, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -66,7 +83,7 @@
         @media (min-width: 450px) {
             .phone-container {
                 height: 94vh;
-                border-radius: 32px;
+                border-radius: 34px;
                 border: 8px solid var(--card-bg);
             }
         }
@@ -74,11 +91,11 @@
         header {
             background: var(--primary-gradient);
             color: white;
-            padding: 12px 16px;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.25);
         }
 
         .header-brand {
@@ -87,25 +104,24 @@
             gap: 10px;
         }
 
-        /* Foto/Logotipo do App */
         .app-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.3rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.35rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
         }
 
         header h1 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            line-height: 1.1;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
         }
 
         .header-actions {
@@ -116,20 +132,20 @@
 
         .header-btn {
             background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 6px 10px;
-            border-radius: 16px;
+            padding: 6px 11px;
+            border-radius: 18px;
             cursor: pointer;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 4px;
         }
 
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .header-btn:active {
+            transform: scale(0.96);
         }
 
         /* Barra de Navegação */
@@ -143,7 +159,7 @@
         .tab-button {
             flex: 1 1 0;
             min-width: 0;
-            padding: 8px 4px;
+            padding: 9px 4px;
             border: none;
             background: none;
             color: var(--text-muted);
@@ -156,12 +172,12 @@
         }
 
         .tab-button .tab-icon {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
         }
 
         .tab-button .tab-label {
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 700;
             white-space: nowrap;
         }
 
@@ -199,21 +215,22 @@
             display: flex;
         }
 
-        /* Resumos e Cards */
+        /* Cards */
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 10px 12px;
-            border-radius: 12px;
+            padding: 12px 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
 
         .card.full-width {
@@ -221,17 +238,18 @@
         }
 
         .card span {
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .card h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
         }
 
         .card.editable h2 {
@@ -246,19 +264,21 @@
         .card.green h2 { color: var(--green); }
         .card.red h2 { color: var(--red); }
         .card.blue h2 { color: var(--blue); }
-        .card.purple h2 { color: #a855f7; }
+        .card.purple h2 { color: var(--purple); }
         .card.yellow h2 { color: var(--yellow); }
 
         .section-box {
             background: var(--card-bg);
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
         }
 
         .section-box h3 {
-            font-size: 0.85rem;
-            margin-bottom: 8px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            margin-bottom: 10px;
             color: var(--text-main);
             display: flex;
             justify-content: space-between;
@@ -282,30 +302,32 @@
         }
 
         input, select {
-            padding: 9px;
+            padding: 10px 12px;
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            border-radius: 8px;
-            font-size: 0.8rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
             outline: none;
             width: 100%;
         }
 
         input:focus, select:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
         }
 
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 3px 8px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -316,10 +338,10 @@
             background: var(--input-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
             cursor: pointer;
         }
 
@@ -332,7 +354,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 220px;
+            max-height: 230px;
             overflow-y: auto;
         }
 
@@ -340,9 +362,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 10px;
+            padding: 10px 12px;
             background: var(--input-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             border-left: 4px solid #ccc;
         }
 
@@ -353,37 +375,38 @@
         }
 
         .item-title {
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.82rem;
         }
 
         .item-meta {
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .item-right {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .val-expense {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--red);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .val-income {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--green);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .val-neutral {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--blue);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .delete-btn {
@@ -391,18 +414,22 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             padding: 2px;
         }
         .delete-btn:hover { color: var(--red); }
 
         .progress-bar-bg {
-            background: rgba(255,255,255,0.08);
+            background: rgba(0, 0, 0, 0.06);
             border-radius: 10px;
-            height: 8px;
+            height: 9px;
             width: 100%;
             overflow: hidden;
             margin-top: 4px;
+        }
+
+        body.dark-mode .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .progress-bar-fill {
@@ -414,10 +441,10 @@
         .budget-item, .goal-item {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            padding: 8px;
+            gap: 5px;
+            padding: 9px 11px;
             background: var(--input-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
         }
 
@@ -425,7 +452,7 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .chart-box {
@@ -440,7 +467,6 @@
     <div class="phone-container">
         <header>
             <div class="header-brand">
-                <!-- Logotipo / Fotinha do App -->
                 <div class="app-logo">💎</div>
                 <div>
                     <h1>Finanças Pro</h1>
@@ -448,11 +474,10 @@
             </div>
             
             <div class="header-actions">
-                <!-- Botão de Instalação / Download -->
                 <button class="header-btn" onclick="baixarApp()" title="Instalar App no Celular">
                     <span>📲</span> Baixar
                 </button>
-                <button class="header-btn" onclick="alternarTema()">🌙 Noite</button>
+                <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Modo Escuro</button>
             </div>
         </header>
 
@@ -500,13 +525,12 @@
                     <div class="card yellow editable">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span>💳 Fatura Cartão</span>
-                            <a href="#" onclick="pagarFaturaCartao()" style="font-size:0.65rem; color:var(--yellow); text-decoration:none; font-weight:700;">[PAGAR]</a>
+                            <a href="#" onclick="pagarFaturaCartao()" style="font-size:0.68rem; color:var(--yellow); text-decoration:none; font-weight:800;">[PAGAR]</a>
                         </div>
                         <h2 id="card-credit" onclick="editarValor('credit')" title="Clique para editar">R$ 0,00</h2>
                     </div>
                 </div>
 
-                <!-- Formulário de Transação -->
                 <div class="section-box">
                     <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
@@ -538,7 +562,7 @@
                                 <option value="10">10x parcelas</option>
                                 <option value="12">12x parcelas</option>
                             </select>
-                            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer;">
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; font-weight:600;">
                                 <input type="checkbox" id="trans-fixed" style="width: auto;"> 🔄 Gasto Fixo
                             </label>
                         </div>
@@ -546,11 +570,10 @@
                     </div>
                 </div>
 
-                <!-- Extrato -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato de Movimentações</span>
-                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.7rem;">
+                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.72rem;">
                             <option value="all">Todos</option>
                             <option value="expense">Despesas</option>
                             <option value="income">Receitas</option>
@@ -568,7 +591,7 @@
                         <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
                         <div class="form-row">
                             <input type="number" id="cat-limit" step="10" min="0" placeholder="Teto Mensal R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 44px; height: 38px; padding: 0; cursor: pointer; border-radius: 6px;">
+                            <input type="color" id="cat-color" value="#4f46e5" style="width: 48px; height: 40px; padding: 0; cursor: pointer; border-radius: 8px;">
                         </div>
                         <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
                     </div>
@@ -657,7 +680,7 @@
 
                 <div class="section-box">
                     <h3>💾 Exportação e Backup</h3>
-                    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Baixe uma planilha CSV de suas movimentações financeiras para controle no Excel.</p>
+                    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Baixe uma planilha CSV com todas as transações para controle no Excel.</p>
                     <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Planilha (CSV)</button>
                 </div>
             </div>
@@ -666,16 +689,16 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_completo_v4";
+        const STORAGE_KEY = "meu_orcamento_completo_v6";
 
         const defaultData = {
             cash: 5000.00,
             credit: 1200.00,
             categories: [
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
-                { name: "🏠 Moradia", color: "#6366f1", limit: 2000 },
+                { name: "🏠 Moradia", color: "#4f46e5", limit: 2000 },
                 { name: "🚗 Transporte", color: "#ec4899", limit: 500 },
-                { name: "🎮 Lazer", color: "#38bdf8", limit: 400 }
+                { name: "🎮 Lazer", color: "#06b6d4", limit: 400 }
             ],
             transactions: [
                 { id: 1, type: "income", desc: "Salário Principal", value: 6500.00, category: "💼 Geral", payment: "Dinheiro/Caixa", date: "05/09", fixed: true },
@@ -710,21 +733,26 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // Instalação do App no Celular
+        // Instalação do App / Atalho
         let installPromptEvent = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             installPromptEvent = e;
         });
 
+        // Registrar Service Worker se disponível
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
         function baixarApp() {
             if (installPromptEvent) {
                 installPromptEvent.prompt();
-                installPromptEvent.userChoice.then((choice) => {
+                installPromptEvent.userChoice.then(() => {
                     installPromptEvent = null;
                 });
             } else {
-                alert("Para baixar o app no seu celular:\n\n1. Toque nos 3 pontos (⋮) no topo do seu navegador.\n2. Escolha 'Adicionar à tela inicial' ou 'Instalar aplicativo'.\n\nPronto! Ele funcionará como um aplicativo instalado.");
+                alert("Para instalar na tela do seu celular:\n\n1. Toque nos 3 pontos (⋮) no topo direito do Chrome.\n2. Toque em 'Criar atalho' ou 'Adicionar à tela inicial'.\n\nO ícone do app aparecerá na sua tela inicial!");
             }
         }
 
@@ -915,7 +943,7 @@
             });
         }
 
-        // Operações de Gastos
+        // Lançamento de Gastos e Receitas
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1005,7 +1033,6 @@
             }
         }
 
-        // Categorias e Metas
         function adicionarCategoria() {
             const name = document.getElementById("cat-name").value.trim();
             const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
@@ -1073,7 +1100,6 @@
             atualizarTela();
         }
 
-        // Investimentos
         function adicionarInvestimento() {
             const platform = document.getElementById("invest-platform").value;
             const type = document.getElementById("invest-type").value;
@@ -1100,7 +1126,6 @@
             atualizarTela();
         }
 
-        // Gráficos
         function renderizarGraficos() {
             const ctxCat = document.getElementById('expenseCategoryChart').getContext('2d');
             const catLabels = financialData.categories.map(c => c.name);
@@ -1119,13 +1144,14 @@
                     datasets: [{
                         data: catTotals,
                         backgroundColor: catColors,
-                        borderWidth: 1
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, weight: 'bold' } } } }
                 }
             });
 
@@ -1144,14 +1170,15 @@
                     labels: classes,
                     datasets: [{
                         data: invTotals,
-                        backgroundColor: ['#f59e0b', '#eab308', '#10b981', '#38bdf8', '#a855f7'],
-                        borderWidth: 1
+                        backgroundColor: ['#d97706', '#eab308', '#059669', '#2563eb', '#7c3aed'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, weight: 'bold' } } } }
                 }
             });
         }
@@ -1176,8 +1203,8 @@
         function alternarTema() {
             const body = document.body;
             const btn = document.querySelector(".theme-toggle");
-            body.classList.toggle("light-mode");
-            btn.textContent = body.classList.contains("light-mode") ? "☀️ Dia" : "🌙 Noite";
+            body.classList.toggle("dark-mode");
+            btn.textContent = body.classList.contains("dark-mode") ? "☀️ Modo Claro" : "🌙 Modo Escuro";
             if (document.getElementById('tab-relatorios').classList.contains('active')) {
                 renderizarGraficos();
             }
