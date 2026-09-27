@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* TEMA CLARO PADRÃO - CORES VIBRANTES */
+        /* TEMA CLARO PADRÃO */
         :root {
             --primary: #4f46e5;
             --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
@@ -88,6 +88,73 @@
             }
         }
 
+        /* TELA DE BLOQUEIO */
+        .lock-screen {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .lock-screen.hidden {
+            display: none;
+        }
+
+        .lock-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--primary-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+        }
+
+        .lock-logo svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .fingerprint-btn {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 15px 0;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(79, 70, 229, 0.45); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
+        }
+
+        .fingerprint-btn svg {
+            width: 44px;
+            height: 44px;
+            fill: var(--primary);
+        }
+
         header {
             background: var(--primary-gradient);
             color: white;
@@ -104,7 +171,6 @@
             gap: 10px;
         }
 
-        /* Novo Logotipo Vetorial Fintech */
         .app-logo {
             width: 38px;
             height: 38px;
@@ -225,7 +291,6 @@
             display: flex;
         }
 
-        /* Barra de Seleção de Mês */
         .month-selector {
             display: flex;
             justify-content: space-between;
@@ -392,7 +457,6 @@
             transform: scale(0.98);
         }
 
-        /* Listas */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -504,7 +568,6 @@
             margin-bottom: 10px;
         }
 
-        /* Tabela Mensal */
         .report-table {
             width: 100%;
             border-collapse: collapse;
@@ -535,9 +598,44 @@
 <body>
 
     <div class="phone-container">
+
+        <!-- TELA DE BLOQUEIO POR DIGITAL OU PIN -->
+        <div id="lock-screen" class="lock-screen">
+            <div class="lock-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 17l6-6 4 4 8-8"></path>
+                    <path d="M14 7h7v7"></path>
+                </svg>
+            </div>
+            
+            <div>
+                <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Finanças Pro</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Aplicativo Protegido</p>
+            </div>
+
+            <!-- Botão da Digital -->
+            <button class="fingerprint-btn" onclick="autenticarComDigital()" title="Toque para usar a digital">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17.81 4.87A10 10 0 0 0 4.19 18.5"></path>
+                    <path d="M15.41 7.27a6.5 6.5 0 0 0-8.82 9.54"></path>
+                    <path d="M13 9.68a3 3 0 0 0-4 4.34"></path>
+                    <path d="M9.88 12.18a.5.5 0 0 0 0 .7"></path>
+                    <path d="M12 2a10 10 0 0 1 8.2 15.65"></path>
+                    <path d="M12 6a6.5 6.5 0 0 1 5.3 10.2"></path>
+                </svg>
+            </button>
+
+            <p style="font-size: 0.78rem; font-weight: 600; color: var(--primary); cursor: pointer;" onclick="autenticarComDigital()">
+                👆 Toque para ler a digital
+            </p>
+
+            <div style="margin-top: 20px;">
+                <button class="btn-secondary" onclick="desbloquearComPIN()">🔢 Usar PIN de Acesso</button>
+            </div>
+        </div>
+
         <header>
             <div class="header-brand">
-                <!-- Logotipo Vetorial Fintech -->
                 <div class="app-logo">
                     <svg viewBox="0 0 24 24">
                         <path d="M3 17l6-6 4 4 8-8"></path>
@@ -550,6 +648,8 @@
             </div>
             
             <div class="header-actions">
+                <!-- Botão de Trancar Imediatamente -->
+                <button class="header-btn" onclick="bloquearApp()" title="Bloquear App">🔒</button>
                 <button class="header-btn" onclick="baixarApp()" title="Instalar App no Celular">
                     <span>📲</span> Baixar
                 </button>
@@ -582,7 +682,6 @@
             <!-- ABA 1: GASTOS E CAIXA -->
             <div id="tab-gastos" class="tab-pane active">
                 
-                <!-- Seletor de Mês -->
                 <div class="month-selector">
                     <button onclick="mudarMes(-1)">◀</button>
                     <span id="current-month-display">Setembro de 2026</span>
@@ -747,7 +846,6 @@
             <!-- ABA 4: RELATÓRIOS E FECHAMENTO ANUAL -->
             <div id="tab-relatorios" class="tab-pane">
                 
-                <!-- Métricas Anuais -->
                 <div class="summary-grid">
                     <div class="card green">
                         <span>📈 Entradas no Ano</span>
@@ -767,7 +865,6 @@
                     </div>
                 </div>
 
-                <!-- Gráfico de Comparação Mensal -->
                 <div class="section-box">
                     <h3>📈 Evolução dos Meses (Entradas vs Saídas)</h3>
                     <div class="chart-box">
@@ -775,7 +872,6 @@
                     </div>
                 </div>
 
-                <!-- Tabela de Fechamento por Mês -->
                 <div class="section-box">
                     <h3>📋 Relatório Mensal Detalhado</h3>
                     <div style="overflow-x: auto;">
@@ -793,7 +889,6 @@
                     </div>
                 </div>
 
-                <!-- Distribuição por Categoria -->
                 <div class="section-box">
                     <h3>🥧 Despesas por Categoria (Mês Atual)</h3>
                     <div class="chart-box" style="height: 180px;">
@@ -801,7 +896,6 @@
                     </div>
                 </div>
 
-                <!-- Backup -->
                 <div class="section-box">
                     <h3>💾 Exportação e Backup</h3>
                     <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Baixe uma planilha CSV com todas as transações para controle no Excel.</p>
@@ -813,13 +907,15 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_completo_v7";
+        const STORAGE_KEY = "meu_orcamento_completo_v8";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        // Mês atual selecionado (ex: "2026-09")
         let currentYear = 2026;
-        let currentMonthNum = 9; // Setembro
+        let currentMonthNum = 9;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+
+        // PIN padrão de segurança
+        let userPIN = localStorage.getItem('user_pin') || "1234";
 
         const defaultData = {
             cash: 5000.00,
@@ -832,9 +928,7 @@
             ],
             transactions: [
                 { id: 1, type: "income", desc: "Salário Principal", value: 6500.00, category: "💼 Geral", payment: "Dinheiro/Caixa", date: "2026-09-05", monthKey: "2026-09" },
-                { id: 2, type: "expense", desc: "Supermercado", value: 380.00, category: "🍔 Alimentação", payment: "Cartão de Crédito", date: "2026-09-15", monthKey: "2026-09" },
-                { id: 3, type: "income", desc: "Salário Principal", value: 6500.00, category: "💼 Geral", payment: "Dinheiro/Caixa", date: "2026-08-05", monthKey: "2026-08" },
-                { id: 4, type: "expense", desc: "Aluguel", value: 1800.00, category: "🏠 Moradia", payment: "Dinheiro/Caixa", date: "2026-08-10", monthKey: "2026-08" }
+                { id: 2, type: "expense", desc: "Supermercado", value: 380.00, category: "🍔 Alimentação", payment: "Cartão de Crédito", date: "2026-09-15", monthKey: "2026-09" }
             ],
             goals: [
                 { id: 1, name: "🛡️ Reserva de Emergência", target: 20000.00, current: 8500.00 },
@@ -864,6 +958,85 @@
         function salvarDados() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
+
+        // --- SISTEMA DE BIOMETRIA NATIVA (WEBAUTHN) ---
+        async function autenticarComDigital() {
+            if (!window.PublicKeyCredential) {
+                desbloquearComPIN();
+                return;
+            }
+
+            try {
+                const challenge = new Uint8Array(32);
+                window.crypto.getRandomValues(challenge);
+
+                // Se já registrou no aparelho, solicita verificação
+                if (localStorage.getItem('biometria_registrada')) {
+                    const cred = await navigator.credentials.get({
+                        publicKey: {
+                            challenge: challenge,
+                            userVerification: "required",
+                            timeout: 60000
+                        }
+                    });
+                    if (cred) desbloquearApp();
+                } else {
+                    // Primeiro registro da digital no aparelho
+                    const userId = new Uint8Array(16);
+                    window.crypto.getRandomValues(userId);
+
+                    const cred = await navigator.credentials.create({
+                        publicKey: {
+                            challenge: challenge,
+                            rp: { name: "Finanças Pro" },
+                            user: {
+                                id: userId,
+                                name: "usuario@financaspro",
+                                displayName: "Usuário Finanças Pro"
+                            },
+                            pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }],
+                            authenticatorSelection: {
+                                authenticatorAttachment: "platform",
+                                userVerification: "required"
+                            },
+                            timeout: 60000
+                        }
+                    });
+                    if (cred) {
+                        localStorage.setItem('biometria_registrada', 'true');
+                        desbloquearApp();
+                    }
+                }
+            } catch (err) {
+                console.warn("Digital cancelada ou falha. Alternando para PIN.", err);
+            }
+        }
+
+        function desbloquearComPIN() {
+            const digitado = prompt("Digite seu PIN de 4 dígitos para desbloquear:", "");
+            if (digitado === userPIN) {
+                desbloquearApp();
+            } else if (digitado !== null) {
+                alert("PIN incorreto!");
+            }
+        }
+
+        function desbloquearApp() {
+            const lock = document.getElementById("lock-screen");
+            lock.classList.add("hidden");
+        }
+
+        function bloquearApp() {
+            const lock = document.getElementById("lock-screen");
+            lock.classList.remove("hidden");
+        }
+
+        // Tentar biometria automaticamente ao abrir o app
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                autenticarComDigital();
+            }, 600);
+        });
 
         // Navegação de Mês
         function mudarMes(delta) {
@@ -934,10 +1107,8 @@
         }
 
         function atualizarTela() {
-            // Rótulo do Mês Selecionado
             document.getElementById("current-month-display").innerText = `${mesesNomes[currentMonthNum - 1]} de ${currentYear}`;
 
-            // Transações do Mês Selecionado
             const transDoMes = financialData.transactions.filter(t => t.monthKey === selectedMonthKey);
 
             const despesasMes = transDoMes
@@ -956,7 +1127,6 @@
             document.getElementById("card-net").innerText = `R$ ${liquidoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-credit").innerText = `R$ ${financialData.credit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // Select de Categorias
             const select = document.getElementById("trans-category");
             select.innerHTML = '<option value="">Selecione Categoria</option>';
             financialData.categories.forEach(cat => {
@@ -966,7 +1136,6 @@
                 select.appendChild(opt);
             });
 
-            // Extrato do Mês
             const filter = document.getElementById("filter-type").value;
             const listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
@@ -1001,7 +1170,6 @@
                 });
             }
 
-            // Orçamento / Metas de Categoria
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
             financialData.categories.forEach((cat) => {
@@ -1032,7 +1200,6 @@
                 budgetContainer.appendChild(bItem);
             });
 
-            // Caixinhas
             const goalsContainer = document.getElementById("goals-list");
             goalsContainer.innerHTML = '';
             financialData.goals.forEach((goal, index) => {
@@ -1056,7 +1223,6 @@
                 goalsContainer.appendChild(gItem);
             });
 
-            // Investimentos
             const totalXP = financialData.investments
                 .filter(i => i.platform === "XP Investimentos")
                 .reduce((acc, curr) => acc + curr.value, 0);
@@ -1089,7 +1255,6 @@
             });
         }
 
-        // Operações de Gastos
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1104,7 +1269,6 @@
                 return;
             }
 
-            // Atualizar Caixa / Fatura
             if (type === 'expense') {
                 if (payment === "Dinheiro/Caixa") {
                     financialData.cash -= value;
@@ -1115,7 +1279,6 @@
                 financialData.cash += value;
             }
 
-            // Distribuição de Parcelas nos meses
             const valorParcela = value / installments;
             const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
 
@@ -1288,9 +1451,7 @@
             atualizarTela();
         }
 
-        // Renderização dos Relatórios Mensais e Anuais
         function renderizarRelatorios() {
-            // Totais Anuais
             const anoAtual = currentYear;
             const transAno = financialData.transactions.filter(t => t.monthKey && t.monthKey.startsWith(String(anoAtual)));
 
@@ -1304,7 +1465,6 @@
             document.getElementById("card-year-savings").innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-savings-rate").innerText = `${taxaPoupanca}%`;
 
-            // Dados mês a mês (Jan - Dez)
             const monthlyIncome = [];
             const monthlyExpense = [];
             const tableBody = document.getElementById("monthly-report-table-body");
@@ -1332,7 +1492,6 @@
                 tableBody.appendChild(tr);
             }
 
-            // Linha Total Geral na Tabela
             const totalRow = document.createElement("tr");
             totalRow.className = "total-row";
             const totNetColor = economiaAno >= 0 ? "var(--green)" : "var(--red)";
@@ -1344,7 +1503,6 @@
             `;
             tableBody.appendChild(totalRow);
 
-            // Gráfico 1: Barras Mês a Mês
             const ctxMonthly = document.getElementById('monthlyComparisonChart').getContext('2d');
             if (monthlyChartInstance) monthlyChartInstance.destroy();
             monthlyChartInstance = new Chart(ctxMonthly, {
@@ -1377,7 +1535,6 @@
                 }
             });
 
-            // Gráfico 2: Despesas por Categoria (Mês Ativo)
             const ctxCat = document.getElementById('expenseCategoryChart').getContext('2d');
             const catLabels = financialData.categories.map(c => c.name);
             const catColors = financialData.categories.map(c => c.color);
@@ -1435,9 +1592,7 @@
             }
         }
 
-        // Definir data padrão no input de lançamento
         document.getElementById("trans-date").value = new Date().toISOString().slice(0, 10);
-
         atualizarTela();
     </script>
 </body>
