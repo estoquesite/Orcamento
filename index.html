@@ -453,7 +453,18 @@
             cursor: pointer;
         }
 
-        button.btn-primary:active, button.btn-secondary:active {
+        button.btn-danger {
+            background: #fee2e2;
+            color: var(--red);
+            border: 1px solid #fecaca;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button.btn-primary:active, button.btn-secondary:active, button.btn-danger:active {
             transform: scale(0.98);
         }
 
@@ -648,7 +659,6 @@
             </div>
             
             <div class="header-actions">
-                <!-- Botão de Trancar Imediatamente -->
                 <button class="header-btn" onclick="bloquearApp()" title="Bloquear App">🔒</button>
                 <button class="header-btn" onclick="baixarApp()" title="Instalar App no Celular">
                     <span>📲</span> Baixar
@@ -684,7 +694,7 @@
                 
                 <div class="month-selector">
                     <button onclick="mudarMes(-1)">◀</button>
-                    <span id="current-month-display">Setembro de 2026</span>
+                    <span id="current-month-display">Mês Atual</span>
                     <button onclick="mudarMes(1)">▶</button>
                 </div>
 
@@ -898,8 +908,10 @@
 
                 <div class="section-box">
                     <h3>💾 Exportação e Backup</h3>
-                    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Baixe uma planilha CSV com todas as transações para controle no Excel.</p>
-                    <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Planilha (CSV)</button>
+                    <div class="form-group">
+                        <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Planilha (CSV)</button>
+                        <button class="btn-danger" onclick="limparTodosDados()" style="width: 100%; margin-top: 6px;">🗑️ Zerar / Resetar Todos os Dados</button>
+                    </div>
                 </div>
             </div>
 
@@ -907,45 +919,37 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_completo_v8";
+        // Nova chave para iniciar 100% limpo
+        const STORAGE_KEY = "meu_orcamento_zerado_v1";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        let currentYear = 2026;
-        let currentMonthNum = 9;
+        const hoje = new Date();
+        let currentYear = hoje.getFullYear();
+        let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
-        // PIN padrão de segurança
         let userPIN = localStorage.getItem('user_pin') || "1234";
 
+        // DADOS PADRÃO 100% LIMPOS E ZERADOS
         const defaultData = {
-            cash: 5000.00,
-            credit: 1200.00,
+            cash: 0.00,
+            credit: 0.00,
             categories: [
-                { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
-                { name: "🏠 Moradia", color: "#4f46e5", limit: 2000 },
-                { name: "🚗 Transporte", color: "#ec4899", limit: 500 },
-                { name: "🎮 Lazer", color: "#06b6d4", limit: 400 }
+                { name: "🍔 Alimentação", color: "#f59e0b", limit: 0 },
+                { name: "🏠 Moradia", color: "#4f46e5", limit: 0 },
+                { name: "🚗 Transporte", color: "#ec4899", limit: 0 },
+                { name: "🎮 Lazer", color: "#06b6d4", limit: 0 }
             ],
-            transactions: [
-                { id: 1, type: "income", desc: "Salário Principal", value: 6500.00, category: "💼 Geral", payment: "Dinheiro/Caixa", date: "2026-09-05", monthKey: "2026-09" },
-                { id: 2, type: "expense", desc: "Supermercado", value: 380.00, category: "🍔 Alimentação", payment: "Cartão de Crédito", date: "2026-09-15", monthKey: "2026-09" }
-            ],
-            goals: [
-                { id: 1, name: "🛡️ Reserva de Emergência", target: 20000.00, current: 8500.00 },
-                { id: 2, name: "✈️ Viagem de Férias", target: 5000.00, current: 1500.00 }
-            ],
-            investments: [
-                { id: 1, platform: "XP Investimentos", asset: "CDB 110% CDI", type: "Renda Fixa", value: 12000.00, date: "10/09" },
-                { id: 2, platform: "Binance", asset: "Bitcoin (BTC)", type: "Criptomoeda", value: 4500.00, date: "18/09" }
-            ]
+            transactions: [],
+            goals: [],
+            investments: []
         };
 
         function carregarDados() {
             const salvo = localStorage.getItem(STORAGE_KEY);
             if (salvo) {
                 try {
-                    const parsed = JSON.parse(salvo);
-                    return { ...defaultData, ...parsed };
+                    return JSON.parse(salvo);
                 } catch (e) {
                     console.error("Erro ao carregar dados:", e);
                 }
@@ -959,7 +963,16 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- SISTEMA DE BIOMETRIA NATIVA (WEBAUTHN) ---
+        function limparTodosDados() {
+            if (confirm("Tem certeza que deseja apagar todos os lançamentos e zerar o app?")) {
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                alert("Aplicativo zerado com sucesso!");
+            }
+        }
+
+        // --- SISTEMA DE BIOMETRIA ---
         async function autenticarComDigital() {
             if (!window.PublicKeyCredential) {
                 desbloquearComPIN();
@@ -970,7 +983,6 @@
                 const challenge = new Uint8Array(32);
                 window.crypto.getRandomValues(challenge);
 
-                // Se já registrou no aparelho, solicita verificação
                 if (localStorage.getItem('biometria_registrada')) {
                     const cred = await navigator.credentials.get({
                         publicKey: {
@@ -981,7 +993,6 @@
                     });
                     if (cred) desbloquearApp();
                 } else {
-                    // Primeiro registro da digital no aparelho
                     const userId = new Uint8Array(16);
                     window.crypto.getRandomValues(userId);
 
@@ -1008,7 +1019,7 @@
                     }
                 }
             } catch (err) {
-                console.warn("Digital cancelada ou falha. Alternando para PIN.", err);
+                console.warn("Digital cancelada.", err);
             }
         }
 
@@ -1022,16 +1033,13 @@
         }
 
         function desbloquearApp() {
-            const lock = document.getElementById("lock-screen");
-            lock.classList.add("hidden");
+            document.getElementById("lock-screen").classList.add("hidden");
         }
 
         function bloquearApp() {
-            const lock = document.getElementById("lock-screen");
-            lock.classList.remove("hidden");
+            document.getElementById("lock-screen").classList.remove("hidden");
         }
 
-        // Tentar biometria automaticamente ao abrir o app
         window.addEventListener("load", () => {
             setTimeout(() => {
                 autenticarComDigital();
@@ -1136,6 +1144,7 @@
                 select.appendChild(opt);
             });
 
+            // Extrato
             const filter = document.getElementById("filter-type").value;
             const listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
@@ -1143,7 +1152,7 @@
             const filtrados = transDoMes.filter(t => filter === 'all' || t.type === filter);
 
             if (filtrados.length === 0) {
-                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma movimentação neste mês.</span>';
+                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhuma movimentação neste mês.</span>';
             } else {
                 filtrados.forEach((trans) => {
                     const catObj = financialData.categories.find(c => c.name === trans.category);
@@ -1170,6 +1179,7 @@
                 });
             }
 
+            // Metas de Categorias
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
             financialData.categories.forEach((cat) => {
@@ -1200,29 +1210,35 @@
                 budgetContainer.appendChild(bItem);
             });
 
+            // Caixinhas
             const goalsContainer = document.getElementById("goals-list");
             goalsContainer.innerHTML = '';
-            financialData.goals.forEach((goal, index) => {
-                const perc = Math.min(Math.round((goal.current / goal.target) * 100), 100);
-                const gItem = document.createElement("div");
-                gItem.className = "goal-item";
-                gItem.innerHTML = `
-                    <div class="goal-header">
-                        <span>${goal.name}</span>
-                        <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
-                    </div>
-                    <div style="display:flex; gap:6px; margin-top:6px;">
-                        <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'guardar')">📥 Guardar</button>
-                        <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'resgatar')">📤 Resgatar</button>
-                        <button class="delete-btn" onclick="removerMeta(${index})">✕</button>
-                    </div>
-                `;
-                goalsContainer.appendChild(gItem);
-            });
+            if (financialData.goals.length === 0) {
+                goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada.</span>';
+            } else {
+                financialData.goals.forEach((goal, index) => {
+                    const perc = Math.min(Math.round((goal.current / goal.target) * 100), 100);
+                    const gItem = document.createElement("div");
+                    gItem.className = "goal-item";
+                    gItem.innerHTML = `
+                        <div class="goal-header">
+                            <span>${goal.name}</span>
+                            <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
+                        </div>
+                        <div style="display:flex; gap:6px; margin-top:6px;">
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'guardar')">📥 Guardar</button>
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'resgatar')">📤 Resgatar</button>
+                            <button class="delete-btn" onclick="removerMeta(${index})">✕</button>
+                        </div>
+                    `;
+                    goalsContainer.appendChild(gItem);
+                });
+            }
 
+            // Investimentos
             const totalXP = financialData.investments
                 .filter(i => i.platform === "XP Investimentos")
                 .reduce((acc, curr) => acc + curr.value, 0);
@@ -1237,22 +1253,26 @@
 
             const investList = document.getElementById("investment-list");
             investList.innerHTML = '';
-            financialData.investments.forEach((inv, index) => {
-                const item = document.createElement("div");
-                item.className = "item-card";
-                item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
-                item.innerHTML = `
-                    <div class="item-info">
-                        <span class="item-title">${inv.asset}</span>
-                        <span class="item-meta">${inv.platform} • ${inv.type} • ${inv.date}</span>
-                    </div>
-                    <div class="item-right">
-                        <span class="val-neutral">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                        <button class="delete-btn" onclick="removerInvestimento(${index})" title="Excluir">✕</button>
-                    </div>
-                `;
-                investList.appendChild(item);
-            });
+            if (financialData.investments.length === 0) {
+                investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum investimento registrado.</span>';
+            } else {
+                financialData.investments.forEach((inv, index) => {
+                    const item = document.createElement("div");
+                    item.className = "item-card";
+                    item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
+                    item.innerHTML = `
+                        <div class="item-info">
+                            <span class="item-title">${inv.asset}</span>
+                            <span class="item-meta">${inv.platform} • ${inv.type} • ${inv.date}</span>
+                        </div>
+                        <div class="item-right">
+                            <span class="val-neutral">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                            <button class="delete-btn" onclick="removerInvestimento(${index})" title="Excluir">✕</button>
+                        </div>
+                    `;
+                    investList.appendChild(item);
+                });
+            }
         }
 
         function adicionarTransacao() {
