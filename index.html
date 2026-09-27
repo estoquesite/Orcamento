@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças Pro</title>
     
-    <!-- Manifesto para Instalação PWA -->
-    <link rel="manifest" href="manifest.json">
+    <meta name="application-name" content="Finanças Pro">
+    <meta name="apple-mobile-web-app-title" content="Finanças Pro">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="theme-color" content="#4f46e5">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2228%22 fill=%22%234f46e5%22/><path d=%22M30 65 L45 45 L60 55 L75 30%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/><circle cx=%2275%22 cy=%2230%22 r=%226%22 fill=%22%2310b981%22/></svg>">
+
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
+    <link rel="manifest" href="./manifest.json">
     
-    <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* TEMA CLARO PADRÃO */
         :root {
             --primary: #4f46e5;
             --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
@@ -32,7 +36,6 @@
             --purple: #7c3aed;
         }
 
-        /* TEMA NOTURNO */
         body.dark-mode {
             --primary: #818cf8;
             --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
@@ -99,18 +102,18 @@
             justify-content: center;
             align-items: center;
             padding: 24px;
-            gap: 20px;
+            gap: 18px;
             text-align: center;
         }
 
         .lock-screen.hidden {
-            display: none;
+            display: none !important;
         }
 
         .lock-logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
             background: var(--primary-gradient);
             display: flex;
             justify-content: center;
@@ -119,8 +122,8 @@
         }
 
         .lock-logo svg {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             fill: none;
             stroke: white;
             stroke-width: 2.2;
@@ -129,8 +132,8 @@
         }
 
         .fingerprint-btn {
-            width: 84px;
-            height: 84px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: var(--card-bg);
             border: 2px solid var(--primary);
@@ -139,19 +142,19 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin: 15px 0;
+            margin: 10px 0;
             animation: pulse 2s infinite ease-in-out;
         }
 
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(79, 70, 229, 0.45); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(79, 70, 229, 0.4); }
             100% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
         }
 
         .fingerprint-btn svg {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             fill: var(--primary);
         }
 
@@ -224,7 +227,6 @@
             transform: scale(0.96);
         }
 
-        /* Barra de Navegação */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
@@ -323,7 +325,6 @@
             text-transform: capitalize;
         }
 
-        /* Cards */
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -610,7 +611,7 @@
 
     <div class="phone-container">
 
-        <!-- TELA DE BLOQUEIO POR DIGITAL OU PIN -->
+        <!-- TELA DE BLOQUEIO BIOMÉTRICO / PIN -->
         <div id="lock-screen" class="lock-screen">
             <div class="lock-logo">
                 <svg viewBox="0 0 24 24">
@@ -620,11 +621,11 @@
             </div>
             
             <div>
-                <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Finanças Pro</h2>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Aplicativo Protegido</p>
+                <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Finanças Pro</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">Toque para desbloquear</p>
             </div>
 
-            <!-- Botão da Digital -->
+            <!-- Botão da Digital Nativa -->
             <button class="fingerprint-btn" onclick="autenticarComDigital()" title="Toque para usar a digital">
                 <svg viewBox="0 0 24 24">
                     <path d="M17.81 4.87A10 10 0 0 0 4.19 18.5"></path>
@@ -636,12 +637,12 @@
                 </svg>
             </button>
 
-            <p style="font-size: 0.78rem; font-weight: 600; color: var(--primary); cursor: pointer;" onclick="autenticarComDigital()">
-                👆 Toque para ler a digital
-            </p>
+            <button class="btn-primary" onclick="autenticarComDigital()" style="padding: 9px 18px; font-size: 0.82rem;">
+                👆 Usar Digital
+            </button>
 
-            <div style="margin-top: 20px;">
-                <button class="btn-secondary" onclick="desbloquearComPIN()">🔢 Usar PIN de Acesso</button>
+            <div>
+                <button class="btn-secondary" onclick="desbloquearComPIN()">🔢 Usar PIN (Padrão: 1234)</button>
             </div>
         </div>
 
@@ -659,10 +660,7 @@
             </div>
             
             <div class="header-actions">
-                <button class="header-btn" onclick="bloquearApp()" title="Bloquear App">🔒</button>
-                <button class="header-btn" onclick="baixarApp()" title="Instalar App no Celular">
-                    <span>📲</span> Baixar
-                </button>
+                <button class="header-btn" onclick="bloquearManualmente()" title="Trancar Aplicativo">🔒</button>
                 <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Modo Escuro</button>
             </div>
         </header>
@@ -919,8 +917,7 @@
     </div>
 
     <script>
-        // Nova chave para iniciar 100% limpo
-        const STORAGE_KEY = "meu_orcamento_zerado_v1";
+        const STORAGE_KEY = "meu_orcamento_limpo_v3";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -930,7 +927,6 @@
 
         let userPIN = localStorage.getItem('user_pin') || "1234";
 
-        // DADOS PADRÃO 100% LIMPOS E ZERADOS
         const defaultData = {
             cash: 0.00,
             credit: 0.00,
@@ -963,16 +959,13 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        function limparTodosDados() {
-            if (confirm("Tem certeza que deseja apagar todos os lançamentos e zerar o app?")) {
-                financialData = JSON.parse(JSON.stringify(defaultData));
-                salvarDados();
-                atualizarTela();
-                alert("Aplicativo zerado com sucesso!");
-            }
+        // --- CONTROLE DE SESSÃO E BIOMETRIA INTELIGENTE ---
+
+        // Se o app já foi desbloqueado nesta sessão, NÃO bloqueia ao atualizar a página!
+        if (sessionStorage.getItem('app_desbloqueado') === 'true') {
+            document.getElementById("lock-screen").classList.add("hidden");
         }
 
-        // --- SISTEMA DE BIOMETRIA ---
         async function autenticarComDigital() {
             if (!window.PublicKeyCredential) {
                 desbloquearComPIN();
@@ -983,16 +976,10 @@
                 const challenge = new Uint8Array(32);
                 window.crypto.getRandomValues(challenge);
 
-                if (localStorage.getItem('biometria_registrada')) {
-                    const cred = await navigator.credentials.get({
-                        publicKey: {
-                            challenge: challenge,
-                            userVerification: "required",
-                            timeout: 60000
-                        }
-                    });
-                    if (cred) desbloquearApp();
-                } else {
+                let credIdBase64 = localStorage.getItem('biometria_unica_id');
+
+                if (!credIdBase64) {
+                    // Primeiro cadastro de digital: cria a chave única do aparelho
                     const userId = new Uint8Array(16);
                     window.crypto.getRandomValues(userId);
 
@@ -1002,8 +989,8 @@
                             rp: { name: "Finanças Pro" },
                             user: {
                                 id: userId,
-                                name: "usuario@financaspro",
-                                displayName: "Usuário Finanças Pro"
+                                name: "usuario_financas",
+                                displayName: "Finanças Pro"
                             },
                             pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }],
                             authenticatorSelection: {
@@ -1013,40 +1000,64 @@
                             timeout: 60000
                         }
                     });
+
                     if (cred) {
-                        localStorage.setItem('biometria_registrada', 'true');
-                        desbloquearApp();
+                        const idStr = btoa(String.fromCharCode(...new Uint8Array(cred.rawId)));
+                        localStorage.setItem('biometria_unica_id', idStr);
+                        marcarDesbloqueado();
+                    }
+                } else {
+                    // Autenticação direta com a digital específica (sem listar contas)
+                    const rawId = Uint8Array.from(atob(credIdBase64), c => c.charCodeAt(0));
+                    const cred = await navigator.credentials.get({
+                        publicKey: {
+                            challenge: challenge,
+                            allowCredentials: [{
+                                id: rawId,
+                                type: 'public-key'
+                            }],
+                            userVerification: "required",
+                            timeout: 60000
+                        }
+                    });
+
+                    if (cred) {
+                        marcarDesbloqueado();
                     }
                 }
             } catch (err) {
-                console.warn("Digital cancelada.", err);
+                console.warn("Digital não concluída. Você pode tentar novamente ou usar o PIN.");
             }
         }
 
+        function marcarDesbloqueado() {
+            sessionStorage.setItem('app_desbloqueado', 'true');
+            document.getElementById("lock-screen").classList.add("hidden");
+        }
+
+        function bloquearManualmente() {
+            sessionStorage.removeItem('app_desbloqueado');
+            document.getElementById("lock-screen").classList.remove("hidden");
+        }
+
         function desbloquearComPIN() {
-            const digitado = prompt("Digite seu PIN de 4 dígitos para desbloquear:", "");
+            const digitado = prompt("Digite seu PIN de 4 dígitos:", "");
             if (digitado === userPIN) {
-                desbloquearApp();
+                marcarDesbloqueado();
             } else if (digitado !== null) {
                 alert("PIN incorreto!");
             }
         }
 
-        function desbloquearApp() {
-            document.getElementById("lock-screen").classList.add("hidden");
+        function limparTodosDados() {
+            if (confirm("Tem certeza que deseja apagar todos os lançamentos e zerar o app?")) {
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                alert("Aplicativo zerado com sucesso!");
+            }
         }
 
-        function bloquearApp() {
-            document.getElementById("lock-screen").classList.remove("hidden");
-        }
-
-        window.addEventListener("load", () => {
-            setTimeout(() => {
-                autenticarComDigital();
-            }, 600);
-        });
-
-        // Navegação de Mês
         function mudarMes(delta) {
             currentMonthNum += delta;
             if (currentMonthNum > 12) {
@@ -1058,28 +1069,6 @@
             }
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
-        }
-
-        // PWA
-        let installPromptEvent = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            installPromptEvent = e;
-        });
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
-
-        function baixarApp() {
-            if (installPromptEvent) {
-                installPromptEvent.prompt();
-                installPromptEvent.userChoice.then(() => {
-                    installPromptEvent = null;
-                });
-            } else {
-                alert("Para instalar na tela do seu celular:\n\n1. Toque nos 3 pontos (⋮) no topo direito do Chrome.\n2. Toque em 'Criar atalho' ou 'Adicionar à tela inicial'.");
-            }
         }
 
         function alternarTipoTransacao() {
@@ -1144,7 +1133,6 @@
                 select.appendChild(opt);
             });
 
-            // Extrato
             const filter = document.getElementById("filter-type").value;
             const listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
@@ -1179,7 +1167,6 @@
                 });
             }
 
-            // Metas de Categorias
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
             financialData.categories.forEach((cat) => {
@@ -1210,7 +1197,6 @@
                 budgetContainer.appendChild(bItem);
             });
 
-            // Caixinhas
             const goalsContainer = document.getElementById("goals-list");
             goalsContainer.innerHTML = '';
             if (financialData.goals.length === 0) {
@@ -1238,7 +1224,6 @@
                 });
             }
 
-            // Investimentos
             const totalXP = financialData.investments
                 .filter(i => i.platform === "XP Investimentos")
                 .reduce((acc, curr) => acc + curr.value, 0);
