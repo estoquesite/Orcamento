@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Finanças Pro</title>
     
-    <!-- PWA -->
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Ícones & Tailwind -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -176,7 +174,6 @@
             font-weight: 700;
         }
 
-        /* BARRA DE NAVEGAÇÃO */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
@@ -229,7 +226,6 @@
         }
         .tab-pane.active { display: flex; }
 
-        /* SELETOR DE ANO E MÊS */
         .date-control-bar {
             display: flex;
             justify-content: space-between;
@@ -256,18 +252,6 @@
             font-size: 0.78rem;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 14px;
-            border-radius: 18px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        /* HERO CARD PRINCIPAL */
         .hero-wallet-card {
             background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
             color: white;
@@ -281,19 +265,6 @@
             overflow: hidden;
         }
 
-        .hero-wallet-card::after {
-            content: '';
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        /* GRID DAS CAIXINHAS VIVAS */
         .budget-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -397,7 +368,7 @@
             background: var(--input-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 9px 12px;
+            padding: 8px 12px;
             border-radius: 10px;
             font-size: 0.78rem;
             font-weight: 700;
@@ -408,7 +379,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-height: 280px;
+            max-height: 290px;
             overflow-y: auto;
         }
 
@@ -426,9 +397,10 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
+            max-width: 65%;
         }
-        .item-title { font-weight: 700; font-size: 0.84rem; }
-        .item-meta { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; display: flex; gap: 6px; align-items: center; }
+        .item-title { font-weight: 700; font-size: 0.84rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .item-meta { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
 
         .tag-person { padding: 1px 6px; border-radius: 6px; font-size: 0.62rem; font-weight: 800; }
 
@@ -437,6 +409,7 @@
         .val-income { font-weight: 800; color: var(--green); font-size: 0.85rem; }
 
         .btn-icon { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 0.8rem; }
+        .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
 
         .modal-overlay {
@@ -461,6 +434,8 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -533,12 +508,8 @@
         
         <div class="content">
 
-            <!-- ============================================== -->
-            <!-- TELA 1: PAINEL PRINCIPAL REVITALIZADO -->
-            <!-- ============================================== -->
+            <!-- TELA 1: PAINEL PRINCIPAL -->
             <div id="tab-painel" class="tab-pane active">
-                
-                <!-- SELETOR DE ANO E MÊS -->
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
@@ -572,37 +543,33 @@
                     </div>
                 </div>
 
-                <!-- 1. HERO CARD: O CORAÇÃO DO SEU MÊS (SEM DUPLICAÇÃO) -->
                 <div class="hero-wallet-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:0.5px;">Disponível para Gastar</span>
+                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
                         <span id="hero-badge-status" style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(16,185,129,0.25); color:#34d399; border:1px solid rgba(52,211,153,0.3);">
                             🟢 Orçamento Seguro
                         </span>
                     </div>
 
-                    <!-- Valor que sobra no bolso em tamanho grande -->
                     <div>
-                        <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 6.500,00</h2>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra livre no mês</span>
+                        <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra livre do mês</span>
                     </div>
 
-                    <!-- Barra de Saúde do Mês -->
                     <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
                         <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.85); font-weight:700;">
                             <span id="hero-percent-txt">0% consumido</span>
-                            <span>R$ <span id="hero-spent-txt">0,00</span> de R$ <span id="hero-verba-txt">6.500,00</span></span>
+                            <span>R$ <span id="hero-spent-txt">0,00</span> de R$ <span id="hero-verba-txt">0,00</span></span>
                         </div>
                         <div style="background:rgba(255,255,255,0.15); height:7px; border-radius:6px; overflow:hidden;">
                             <div id="hero-progress-bar" style="width:0%; height:100%; background:#34d399; border-radius:6px; transition:width 0.4s ease;"></div>
                         </div>
                     </div>
 
-                    <!-- Linha com 3 métricas precisas -->
                     <div style="display:flex; justify-content:space-between; font-size:0.72rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:8px; margin-top:4px;">
                         <div>
                             <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">📥 Verba Total</span>
-                            <b id="hero-verba-total-small" style="color:white;">R$ 6.500,00</b>
+                            <b id="hero-verba-total-small" style="color:white;">R$ 0,00</b>
                         </div>
                         <div>
                             <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">📉 Total Gasto</span>
@@ -615,7 +582,6 @@
                     </div>
                 </div>
 
-                <!-- 2. ATALHOS RÁPIDOS DE 1 CLIQUE -->
                 <div class="quick-actions-bar">
                     <button class="quick-btn" onclick="trocarAba('lancar')">
                         <i class="fa-solid fa-plus text-indigo-500"></i> Lançar Despesa
@@ -628,18 +594,14 @@
                     </button>
                 </div>
 
-                <!-- 3. CAIXINHAS VIVAS (LINKADAS DIRETO AOS SEUS GASTOS) -->
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">📦 SUAS CAIXINHAS DE VERBA</span>
-                        <span id="txt-qtd-caixinhas" style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">2 caixinhas ativas</span>
+                        <span id="txt-qtd-caixinhas" style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">0 caixinhas ativas</span>
                     </div>
-
-                    <!-- Container onde as caixinhas aparecem -->
                     <div class="budget-grid" id="budget-boxes-container"></div>
                 </div>
 
-                <!-- 4. ÚLTIMAS MOVIMENTAÇÕES (PARA SABER ONDE O DINHEIRO FOI) -->
                 <div class="section-box" style="padding:12px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">🕒 ÚLTIMOS LANÇAMENTOS</span>
@@ -648,22 +610,18 @@
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <!-- 5. ACUMULADO DO ANO REAL (DISCRETO E SEM ENFEITE FALSO) -->
                 <div style="background:var(--input-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span> • <span id="txt-meses-preenchidos">1 mês</span></span>
+                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span> • <span id="txt-meses-preenchidos">0 meses</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
                     </div>
                     <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:1px solid var(--border-color); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
                         Ver Meses
                     </button>
                 </div>
-
             </div>
 
-            <!-- ============================================== -->
-            <!-- TELA 2: LANÇAR CUSTOS, DESPESAS & EXTRATO -->
-            <!-- ============================================== -->
+            <!-- TELA 2: LANÇAR & EXTRATO COM EDIÇÃO -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="section-box">
                     <h3>✍️ Imputar Lançamento</h3>
@@ -675,10 +633,9 @@
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Farmácia)">
+                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Pós-graduação)">
                         
                         <div class="form-row">
-                            <!-- Destino dinâmico vinculado às caixinhas -->
                             <select id="trans-box-id"></select>
                             <select id="trans-payment">
                                 <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
@@ -696,20 +653,23 @@
                         <div class="form-row">
                             <select id="trans-installments">
                                 <option value="1">À vista (1x)</option>
-                                <option value="2">2x parcelas (Partes)</option>
-                                <option value="3">3x parcelas (Partes)</option>
-                                <option value="4">4x parcelas (Partes)</option>
-                                <option value="5">5x parcelas (Partes)</option>
-                                <option value="6">6x parcelas (Partes)</option>
-                                <option value="10">10x parcelas (Partes)</option>
-                                <option value="12">12x parcelas (Partes)</option>
+                                <option value="2">2x parcelas</option>
+                                <option value="3">3x parcelas</option>
+                                <option value="4">4x parcelas</option>
+                                <option value="5">5x parcelas</option>
+                                <option value="6">6x parcelas</option>
+                                <option value="10">10x parcelas</option>
+                                <option value="12">12x parcelas (1 ano)</option>
+                                <option value="18">18x parcelas (1 ano e meio)</option>
+                                <option value="24">24x parcelas (2 anos - pós/curso)</option>
+                                <option value="36">36x parcelas (3 anos)</option>
+                                <option value="48">48x parcelas (4 anos)</option>
                             </select>
                         </div>
                         <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                     </div>
                 </div>
 
-                <!-- EXTRATO COMPLETO DO MÊS -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
@@ -723,15 +683,13 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- TELA 3: MESES DO ANO (TABELA REAL) -->
-            <!-- ============================================== -->
+            <!-- TELA 3: MESES DO ANO -->
             <div id="tab-meses" class="tab-pane">
                 <div class="section-box">
                     <h3>
                         <span>📅 Valores Mês a Mês (<span id="txt-ano-tabela">2026</span>)</span>
                     </h3>
-                    <p class="text-[11px] text-gray-500 mb-2">Cada mês só entra no acumulado quando tiver caixinhas ou lançamentos preenchidos.</p>
+                    <p class="text-[11px] text-gray-500 mb-2">Clique em "Abrir" para acessar qualquer mês diretamente.</p>
                     
                     <div style="overflow-x: auto;">
                         <table style="width:100%; font-size:0.75rem; border-collapse:collapse;">
@@ -750,14 +708,12 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- TELA 4: METAS & CAIXINHAS GUARDADAS -->
-            <!-- ============================================== -->
+            <!-- TELA 4: METAS & CATEGORIAS (TOTALMENTE EDITÁVEIS) -->
             <div id="tab-metas" class="tab-pane">
                 <div class="section-box">
-                    <h3>🏷️ Nova Categoria & Teto</h3>
+                    <h3>🏷️ Nova Categoria ou Teto</h3>
                     <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação)">
+                        <input type="text" id="cat-name" placeholder="Nome da Categoria (ex: 🍔 Alimentação)">
                         <div class="form-row">
                             <input type="number" id="cat-limit" placeholder="Teto R$ (ex: 800)">
                             <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0;">
@@ -767,28 +723,26 @@
                 </div>
 
                 <div class="section-box">
-                    <h3>📊 Orçamento das Categorias</h3>
+                    <h3>📊 Gerenciar Categorias & Orçamento</h3>
                     <div class="list-container" id="budget-progress-list"></div>
                 </div>
 
                 <div class="section-box">
-                    <h3>🏦 Nova Caixinha de Poupança / Reserva</h3>
+                    <h3>🏦 Nova Meta de Poupança / Reserva</h3>
                     <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Futuro Sofia, 🛡️ Reserva)">
-                        <input type="number" id="goal-target" min="1" placeholder="Meta Total (R$)">
-                        <button class="btn-primary" onclick="adicionarMeta()">Criar Caixinha</button>
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Pós-Graduação, 🛡️ Reserva)">
+                        <input type="number" id="goal-target" min="1" placeholder="Meta Total Pretendida (R$)">
+                        <button class="btn-primary" onclick="adicionarMeta()">Criar Meta</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>🐷 Minhas Caixinhas de Reserva</h3>
+                    <h3>🐷 Minhas Metas & Reservas</h3>
                     <div class="list-container" id="goals-list"></div>
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- TELA 5: MAIS (INVESTIMENTOS & BACKUP) -->
-            <!-- ============================================== -->
             <div id="tab-mais" class="tab-pane">
                 <div class="section-box">
                     <h3>💼 Total Investido em Ativos</h3>
@@ -839,12 +793,12 @@
 
         </div>
 
-        <!-- MODAL NATIVO -->
+        <!-- MODAL NATIVO DINÂMICO -->
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
                 <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
                 <div id="modal-body" class="form-group"></div>
-                <div class="form-row">
+                <div class="form-row" style="margin-top:6px;">
                     <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
                     <button class="btn-primary" id="modal-confirm-btn">Confirmar</button>
                 </div>
@@ -854,7 +808,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v9_revitalizado";
+        const STORAGE_KEY = "financas_pro_v10_livre";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -862,42 +816,39 @@
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
-        // Caixinhas 100% editáveis com valores iniciais
         const defaultData = {
             cash: 0.00,
             budgetBoxes: [
-                { id: "box_salario", name: "💼 Meu Salário", amount: 5000.00, color: "#10b981" },
-                { id: "box_sofia", name: "👧 Pensão Sofia", amount: 1500.00, color: "#ec4899" }
+                { id: "box_principal", name: "💼 Renda Principal", amount: 5000.00, color: "#10b981" },
+                { id: "box_outras", name: "🪙 Outras Rendas", amount: 1500.00, color: "#ec4899" }
             ],
             categories: [
-                { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
-                { name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
-                { name: "👧 Sofia Cuidados / Escola", color: "#ec4899", limit: 1500 },
-                { name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
+                { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
+                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
+                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
             ],
             transactions: [],
             goals: [
-                { id: 1, name: "🎓 Futuro Sofia", target: 10000, current: 0 },
-                { id: 2, name: "🛡️ Reserva de Emergência", target: 15000, current: 0 }
+                { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
             ],
             investments: []
         };
 
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v8_custom_boxes");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v9_revitalizado") || localStorage.getItem("financas_pro_v8_custom_boxes");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
                     return {
                         cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
-                        budgetBoxes: Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes : defaultData.budgetBoxes,
-                        categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
+                        budgetBoxes: Array.isArray(parsed.budgetBoxes) ? parsed.budgetBoxes : defaultData.budgetBoxes,
+                        categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                         goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
                 } catch (e) {
-                    console.error("Erro ao carregar:", e);
+                    console.error("Erro ao carregar dados:", e);
                 }
             }
             return JSON.parse(JSON.stringify(defaultData));
@@ -967,7 +918,6 @@
             atualizarTela();
         }
 
-        // --- CÁLCULO GERAL E INTERFACE INTELIGENTE ---
         function atualizarTela() {
             document.getElementById("select-year").value = String(currentYear);
             document.getElementById("select-month").value = String(currentMonthNum);
@@ -980,7 +930,6 @@
 
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
-            // 1. Verba Total das Caixinhas + Receitas Extras do Mês
             const totalVerbaCaixinhas = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
             const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const verbaTotalMes = totalVerbaCaixinhas + receitasExtrasMes;
@@ -989,7 +938,7 @@
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // 2. HERO CARD (SEM REPETIÇÃO DE NÚMEROS)
+            // HERO CARD
             const heroSobra = document.getElementById("hero-sobra-livre");
             heroSobra.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             heroSobra.style.color = sobraTotalMes >= 0 ? '#ffffff' : '#fb7185';
@@ -1024,7 +973,7 @@
             document.getElementById("hero-total-gasto-small").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // 3. CAIXINHAS VIVAS COM RAIO-X DE GASTOS
+            // CAIXINHAS VIVAS
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -1061,23 +1010,19 @@
                             </div>
                         </div>
 
-                        <!-- Valor Inicial -->
                         <div style="font-size:1rem; font-weight:900; color:${box.color || 'var(--primary)'};">
                             R$ ${(box.amount || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </div>
 
-                        <!-- Barra de Consumo da Caixinha -->
                         <div style="background:rgba(0,0,0,0.08); height:5px; border-radius:4px; overflow:hidden; margin:2px 0;">
                             <div style="width:${percBox}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
                         </div>
 
-                        <!-- Raio-X de Gastos -->
                         <div style="font-size:0.64rem; color:var(--text-muted); display:flex; justify-content:space-between;">
                             <span>Gasto: <b style="color:var(--red);">R$ ${spent.toFixed(0)}</b> (${percBox}%)</span>
                             <span>💳 ${spentCard.toFixed(0)} | 💵 ${spentCash.toFixed(0)}</span>
                         </div>
 
-                        <!-- Sobra Restante -->
                         <div style="font-size:0.7rem; font-weight:900; margin-top:3px; padding-top:3px; border-top:1px dashed var(--border-color); display:flex; justify-content:space-between; align-items:center;">
                             <span style="color:${remain >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.85rem;">Sobra: R$ ${remain.toFixed(2)}</span>
                             <button onclick="lancarDiretoNaCaixinha('${box.id}')" style="background:var(--input-bg); border:1px solid var(--border-color); padding:1px 6px; border-radius:6px; font-size:0.62rem; font-weight:800; cursor:pointer;" title="Lançar gasto nesta caixinha">+ Gasto</button>
@@ -1087,7 +1032,7 @@
                 });
             }
 
-            // 4. ÚLTIMOS LANÇAMENTOS NO PAINEL
+            // ÚLTIMOS LANÇAMENTOS
             const recentContainer = document.getElementById("painel-recent-transactions");
             if (recentContainer) {
                 recentContainer.innerHTML = '';
@@ -1117,7 +1062,7 @@
                 }
             }
 
-            // 5. ACUMULADO DO ANO REAL (SÓ MESES PREENCHIDOS)
+            // MESES DO ANO
             let anoEntradasReal = 0;
             let anoSaidasReal = 0;
             let mesesPreenchidosContador = 0;
@@ -1128,7 +1073,6 @@
             for (let m = 1; m <= 12; m++) {
                 const mKey = `${currentYear}-${String(m).padStart(2, '0')}`;
                 const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-
                 const temDados = mTrans.length > 0 || (mKey === selectedMonthKey && boxes.length > 0);
 
                 let mInc = 0;
@@ -1138,7 +1082,6 @@
                     mesesPreenchidosContador++;
                     const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
                     mInc = totalVerbaCaixinhas + mExt;
-
                     anoEntradasReal += mInc;
                     anoSaidasReal += mExp;
                 }
@@ -1155,7 +1098,7 @@
                         <td style="color:${temDados ? 'var(--red)' : 'var(--text-muted)'};">${temDados ? 'R$ ' + mExp.toFixed(0) : '-'}</td>
                         <td style="color:${temDados ? corSobra : 'var(--text-muted)'}; font-weight:700;">${temDados ? 'R$ ' + mNet.toFixed(0) : '-'}</td>
                         <td>
-                            <button onclick="selecionarMesEAbrir(${m})" style="background:var(--input-bg); border:1px solid var(--border-color); padding:2px 6px; border-radius:6px; font-size:0.65rem; font-weight:700;">Abrir</button>
+                            <button onclick="selecionarMesEAbrir(${m})" style="background:var(--input-bg); border:1px solid var(--border-color); padding:2px 6px; border-radius:6px; font-size:0.65rem; font-weight:700; cursor:pointer;">Abrir</button>
                         </td>
                     `;
                     tbodyMeses.appendChild(tr);
@@ -1169,7 +1112,7 @@
 
             document.getElementById("txt-meses-preenchidos").innerText = `${mesesPreenchidosContador} ${mesesPreenchidosContador === 1 ? 'mês preenchido' : 'meses preenchidos'}`;
 
-            // 6. ATUALIZAÇÃO DOS MENUS DA ABA LANÇAR
+            // MENUS SELETORES
             const selectBox = document.getElementById("trans-box-id");
             if (selectBox) {
                 selectBox.innerHTML = '';
@@ -1199,7 +1142,7 @@
                 });
             }
 
-            // 7. EXTRATO COMPLETO NA ABA LANÇAR
+            // EXTRATO COMPLETO COM BOTÃO EDITAR (✏️) E EXCLUIR (🗑️)
             const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
             const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
@@ -1231,15 +1174,17 @@
                         item.style.borderLeftColor = boxObj ? boxObj.color : '#ccc';
                         item.innerHTML = `
                             <div class="item-info">
-                                <span class="item-title">${trans.desc}</span>
+                                <span class="item-title" title="${trans.desc}">${trans.desc}</span>
                                 <div class="item-meta">
                                     ${tagHtml}
-                                    <span>${trans.payment === 'Cartão de Crédito' ? '💳 Cartão' : '💵 À vista'}</span> • 
+                                    <span>${trans.payment === 'Cartão de Crédito' ? '💳' : '💵'}</span> • 
+                                    <span>${trans.category || 'Geral'}</span> • 
                                     <span>${dataFormatada}</span>
                                 </div>
                             </div>
                             <div class="item-right">
                                 <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar Lançamento"><i class="fa-solid fa-pen"></i></button>
                                 <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `;
@@ -1248,58 +1193,74 @@
                 }
             }
 
-            // 8. ABA METAS
+            // ABA METAS: CATEGORIAS COM BOTÃO DE EDITAR E EXCLUIR
             const budgetContainer = document.getElementById("budget-progress-list");
             if (budgetContainer) {
                 budgetContainer.innerHTML = '';
-                (financialData.categories || []).forEach((cat) => {
-                    const gastoCat = transDoMes.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
-                    const limit = cat.limit || 0;
-                    const perc = limit > 0 ? Math.min(Math.round((gastoCat / limit) * 100), 100) : 0;
-                    let colorFill = 'var(--green)';
-                    if (perc >= 90) colorFill = 'var(--red)'; else if (perc >= 70) colorFill = 'var(--yellow)';
+                if ((financialData.categories || []).length === 0) {
+                    budgetContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma categoria configurada.</span>';
+                } else {
+                    (financialData.categories || []).forEach((cat, idx) => {
+                        const gastoCat = transDoMes.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
+                        const limit = cat.limit || 0;
+                        const perc = limit > 0 ? Math.min(Math.round((gastoCat / limit) * 100), 100) : 0;
+                        let colorFill = 'var(--green)';
+                        if (perc >= 90) colorFill = 'var(--red)'; else if (perc >= 70) colorFill = 'var(--yellow)';
 
-                    const bItem = document.createElement("div");
-                    bItem.style.cssText = "background:var(--input-bg); padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
-                    bItem.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; font-weight:700;">
-                            <span>${cat.name}</span>
-                            <span>R$ ${gastoCat.toFixed(0)} / R$ ${limit.toFixed(0)} (${perc}%)</span>
-                        </div>
-                        <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; margin-top:4px; overflow:hidden;">
-                            <div style="width:${perc}%; height:100%; background:${colorFill};"></div>
-                        </div>
-                    `;
-                    budgetContainer.appendChild(bItem);
-                });
+                        const bItem = document.createElement("div");
+                        bItem.style.cssText = "background:var(--input-bg); padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
+                        bItem.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700;">
+                                <span>${cat.name}</span>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span>R$ ${gastoCat.toFixed(0)} / R$ ${limit.toFixed(0)} (${perc}%)</span>
+                                    <button class="btn-icon" onclick="abrirModalEditarCategoria(${idx})" title="Editar Categoria"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
+                                    <button class="btn-icon del" onclick="removerCategoria(${idx})" title="Excluir Categoria"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
+                                </div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; margin-top:4px; overflow:hidden;">
+                                <div style="width:${perc}%; height:100%; background:${colorFill};"></div>
+                            </div>
+                        `;
+                        budgetContainer.appendChild(bItem);
+                    });
+                }
             }
 
+            // ABA METAS: METAS/RESERVAS COM BOTÃO DE EDITAR E EXCLUIR
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
                 goalsContainer.innerHTML = '';
-                (financialData.goals || []).forEach((goal) => {
-                    const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
-                    const gItem = document.createElement("div");
-                    gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
-                    gItem.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700;">
-                            <span>${goal.name}</span>
-                            <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                        </div>
-                        <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
-                            <div style="width:${perc}%; height:100%; background:var(--primary);"></div>
-                        </div>
-                        <div style="display:flex; gap:6px; margin-top:4px;">
-                            <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
-                            <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
-                            <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    goalsContainer.appendChild(gItem);
-                });
+                if ((financialData.goals || []).length === 0) {
+                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma meta cadastrada.</span>';
+                } else {
+                    (financialData.goals || []).forEach((goal) => {
+                        const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
+                        const gItem = document.createElement("div");
+                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
+                        gItem.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700;">
+                                <span>${goal.name}</span>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                                    <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar Meta"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
+                                    <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir Meta"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
+                                </div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
+                                <div style="width:${perc}%; height:100%; background:var(--primary);"></div>
+                            </div>
+                            <div style="display:flex; gap:6px; margin-top:4px;">
+                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                            </div>
+                        `;
+                        goalsContainer.appendChild(gItem);
+                    });
+                }
             }
 
-            // 9. ABA MAIS (INVESTIMENTOS)
+            // ABA MAIS: INVESTIMENTOS
             const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
             const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
             const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
@@ -1343,14 +1304,14 @@
             if (select) select.value = boxId;
         }
 
-        // --- SISTEMA DE CAIXINHAS 100% LIVRE ---
+        // --- CAIXINHAS DE VERBA ---
         function abrirModalNovaCaixinhaVerba() {
             abrirModal("Criar Nova Caixinha de Verba", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha (ex: 💻 Freelance, 🏠 Aluguel):</label>
-                <input type="text" id="new-box-name" placeholder="Nome da Caixinha">
+                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
+                <input type="text" id="new-box-name" placeholder="Ex: Meu Salário, Extra, Consultoria">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
+                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 5000">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
                 <input type="color" id="new-box-color" value="#3b82f6" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
@@ -1415,7 +1376,7 @@
             }
         }
 
-        // --- LANÇAMENTOS ---
+        // --- LANÇAMENTOS COM EDIÇÃO COMPLETA ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1439,7 +1400,7 @@
                 while (m > 12) { m -= 12; a += 1; }
                 const mKey = `${a}-${String(m).padStart(2, '0')}`;
                 const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaBase).padStart(2, '0')}`;
-                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parte)` : desc;
+                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parcela)` : desc;
 
                 financialData.transactions.unshift({
                     id: Date.now() + i,
@@ -1461,10 +1422,84 @@
             alert("Lançamento salvo com sucesso!");
         }
 
+        function abrirModalEditarTransacao(id) {
+            const t = financialData.transactions.find(x => x.id === id);
+            if (!t) return;
+
+            let optionsCaixinhas = '<option value="">Sem caixinha (Geral)</option>';
+            (financialData.budgetBoxes || []).forEach(b => {
+                optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
+            });
+
+            let optionsCategorias = '<option value="">Sem categoria</option>';
+            (financialData.categories || []).forEach(c => {
+                optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
+            });
+
+            abrirModal("Editar Lançamento", `
+                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
+                <input type="text" id="edit-trans-desc" value="${t.desc}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
+                <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Tipo:</label>
+                <select id="edit-trans-type">
+                    <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
+                    <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Data:</label>
+                <input type="date" id="edit-trans-date" value="${t.date || ''}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Pagamento:</label>
+                <select id="edit-trans-payment">
+                    <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
+                    <option value="Dinheiro/Caixa" ${t.payment === 'Dinheiro/Caixa' ? 'selected' : ''}>💵 Dinheiro / Débito / Pix</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
+                <select id="edit-trans-box">${optionsCaixinhas}</select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Categoria:</label>
+                <select id="edit-trans-cat">${optionsCategorias}</select>
+            `, () => {
+                const desc = document.getElementById("edit-trans-desc").value.trim();
+                const val = parseFloat(document.getElementById("edit-trans-val").value);
+                const type = document.getElementById("edit-trans-type").value;
+                const date = document.getElementById("edit-trans-date").value;
+                const payment = document.getElementById("edit-trans-payment").value;
+                const boxId = document.getElementById("edit-trans-box").value;
+                const cat = document.getElementById("edit-trans-cat").value;
+
+                if (!desc || isNaN(val) || val <= 0) {
+                    alert("Dados inválidos.");
+                    return;
+                }
+
+                t.desc = desc;
+                t.value = val;
+                t.type = type;
+                t.date = date;
+                if (date) {
+                    const parts = date.split('-');
+                    t.monthKey = `${parts[0]}-${parts[1]}`;
+                }
+                t.payment = payment;
+                t.boxId = boxId || null;
+                t.category = cat || "Geral";
+
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
         function removerTransacao(id) {
-            financialData.transactions = financialData.transactions.filter(t => t.id !== id);
-            salvarDados();
-            atualizarTela();
+            if (confirm("Deseja realmente excluir este lançamento?")) {
+                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
+                salvarDados();
+                atualizarTela();
+            }
         }
 
         function abrirModalPagarFatura() {
@@ -1490,12 +1525,61 @@
             });
         }
 
+        // --- METAS E CAIXINHAS DE POUPANÇA ---
+        function adicionarMeta() {
+            const name = document.getElementById("goal-name").value.trim();
+            const target = parseFloat(document.getElementById("goal-target").value);
+            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e o valor da meta."); return; }
+
+            financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+            document.getElementById("goal-name").value = '';
+            document.getElementById("goal-target").value = '';
+            salvarDados();
+            atualizarTela();
+        }
+
+        function abrirModalEditarMeta(id) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal("Editar Meta / Reserva", `
+                <label class="text-xs text-gray-500 font-bold">Nome do Objetivo:</label>
+                <input type="text" id="edit-goal-name" value="${goal.name}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
+                <input type="number" id="edit-goal-target" step="100" value="${goal.target}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor já guardado atual (R$):</label>
+                <input type="number" id="edit-goal-current" step="50" value="${goal.current}">
+            `, () => {
+                const name = document.getElementById("edit-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("edit-goal-target").value);
+                const current = parseFloat(document.getElementById("edit-goal-current").value);
+
+                if (name && !isNaN(target) && !isNaN(current)) {
+                    goal.name = name;
+                    goal.target = target;
+                    goal.current = current;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function removerMeta(id) {
+            if (confirm("Deseja realmente remover esta meta?")) {
+                financialData.goals = financialData.goals.filter(g => g.id !== id);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
         function abrirModalCaixinha(id, tipo) {
             const goal = financialData.goals.find(g => g.id === id);
             if (!goal) return;
 
-            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
-                <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
+            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
+                <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
                 <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
                 <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
             `, () => {
@@ -1515,15 +1599,20 @@
             });
         }
 
+        // --- CATEGORIAS ---
         function adicionarCategoria() {
             const name = document.getElementById("cat-name").value.trim();
             const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
             const color = document.getElementById("cat-color").value;
             if (!name) { alert("Informe o nome da categoria."); return; }
 
-            const existente = financialData.categories.find(c => c.name.toLowerCase() === name.toLowerCase());
-            if (existente) { existente.limit = limit; existente.color = color; }
-            else { financialData.categories.push({ name, color, limit }); }
+            const existente = (financialData.categories || []).find(c => c.name.toLowerCase() === name.toLowerCase());
+            if (existente) { 
+                existente.limit = limit; 
+                existente.color = color; 
+            } else { 
+                financialData.categories.push({ id: "cat_" + Date.now(), name, color, limit }); 
+            }
 
             document.getElementById("cat-name").value = '';
             document.getElementById("cat-limit").value = '';
@@ -1531,24 +1620,52 @@
             atualizarTela();
         }
 
-        function adicionarMeta() {
-            const name = document.getElementById("goal-name").value.trim();
-            const target = parseFloat(document.getElementById("goal-target").value);
-            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e o valor da meta."); return; }
+        function abrirModalEditarCategoria(index) {
+            const cat = financialData.categories[index];
+            if (!cat) return;
 
-            financialData.goals.push({ id: Date.now(), name, target, current: 0 });
-            document.getElementById("goal-name").value = '';
-            document.getElementById("goal-target").value = '';
-            salvarDados();
-            atualizarTela();
+            abrirModal("Editar Categoria", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Categoria:</label>
+                <input type="text" id="edit-cat-name" value="${cat.name}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal (R$):</label>
+                <input type="number" id="edit-cat-limit" step="50" value="${cat.limit || 0}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-cat-color" value="${cat.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("edit-cat-name").value.trim();
+                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
+                const color = document.getElementById("edit-cat-color").value;
+
+                if (name) {
+                    const nomeAntigo = cat.name;
+                    cat.name = name;
+                    cat.limit = limit;
+                    cat.color = color;
+
+                    // Atualiza transações antigas que tinham o nome antigo
+                    (financialData.transactions || []).forEach(t => {
+                        if (t.category === nomeAntigo) t.category = name;
+                    });
+
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
         }
 
-        function removerMeta(id) {
-            financialData.goals = financialData.goals.filter(g => g.id !== id);
-            salvarDados();
-            atualizarTela();
+        function removerCategoria(index) {
+            const cat = financialData.categories[index];
+            if (!cat) return;
+            if (confirm(`Deseja realmente excluir a categoria "${cat.name}"?`)) {
+                financialData.categories.splice(index, 1);
+                salvarDados();
+                atualizarTela();
+            }
         }
 
+        // --- INVESTIMENTOS ---
         function adicionarInvestimento() {
             const platform = document.getElementById("invest-platform").value;
             const type = document.getElementById("invest-type").value;
@@ -1569,6 +1686,7 @@
             atualizarTela();
         }
 
+        // --- BACKUP E RESTAURAÇÃO ---
         function exportarCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Data;Mes;Tipo;Descricao;Valor;Categoria;Pagamento\n";
@@ -1609,7 +1727,7 @@
         }
 
         function limparTodosDados() {
-            if (confirm("Tem certeza que deseja zerar todos os lançamentos e restaurar o app?")) {
+            if (confirm("Tem certeza que deseja zerar todos os lançamentos e restaurar o app limpo?")) {
                 financialData = JSON.parse(JSON.stringify(defaultData));
                 salvarDados();
                 atualizarTela();
@@ -1617,6 +1735,7 @@
             }
         }
 
+        // --- MODAL ---
         function abrirModal(titulo, htmlBody, callbackConfirm) {
             document.getElementById("modal-title").innerText = titulo;
             document.getElementById("modal-body").innerHTML = htmlBody;
