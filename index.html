@@ -27,6 +27,16 @@
     }
   </script>
   <style>
+      /* CAIXINHA FLUTUANTE DE CORES */
+      #painel-cores-rapido {
+        background: var(--bg-card, #ffffff);
+        border: 1px solid var(--color-border, #e2e8f0);
+        color: var(--text-main, #0f172a);
+        padding: 12px;
+        border-radius: 20px;
+        margin: 10px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
@@ -707,7 +717,19 @@
           if (e.target === modalContainer) closeModal();
         });
       }
+      window.mudarCorQuadrados = function(cor) {
+        document.querySelectorAll('#phone-frame, header, #month-nav, #bottom-nav, .bg-slate-900, .bg-slate-800, #modal-box').forEach(el => {
+          el.style.backgroundColor = cor;
+        });
+        showToast('Cor dos quadrados alterada!');
+      };
 
+      window.mudarCorLetras = function(cor) {
+        document.querySelectorAll('body, header, span, h3, div, p, label').forEach(el => {
+          el.style.color = cor;
+        });
+        showToast('Cor das letras alterada!');
+      };
       // 1. EDIÇÃO DE SALÁRIO
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
