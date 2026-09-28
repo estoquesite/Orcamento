@@ -1,981 +1,2885 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Finanças Pro Mobile</title>
-  <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para celular." />
-  <meta name="theme-color" content="#4f46e5" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            }
-          }
-        }
-      }
-    };
-  </script>
-  <style>
-    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    body {
-      user-select: none;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    .modal-backdrop {
-      background-color: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(4px);
-    }
-  </style>
-</head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
-
-  <!-- FRAME DO SMARTPHONE -->
-  <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-100 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300 dark">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Finanças Pro Mobile</title>
     
-    <!-- 1. HEADER SUPERIOR -->
-    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-30">
-      <div class="flex items-center gap-2">
-        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-        <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
-      </div>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-      <div class="flex items-center gap-2">
-        <button
-          id="btn-privacy"
-          type="button"
-          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer"
-          title="Ocultar / Mostrar Valores"
-        >
-          👁️
-        </button>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        <button
-          id="btn-theme"
-          type="button"
-          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer"
-          title="Alternar Tema Claro / Escuro"
-        >
-          ☀️
-        </button>
-      </div>
-    </header>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #f8fafc;
+            --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            --green: #10b981;
+            --red: #f43f5e;
+            --blue: #3b82f6;
+            --yellow: #f59e0b;
+            --pink: #ec4899;
+            --purple: #8b5cf6;
+        }
 
-    <!-- 2. BARRA DE NAVEGAÇÃO NO TOPO -->
-    <nav class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex justify-around items-center px-2 py-1.5 shrink-0 z-20 shadow-xs">
-      <button data-tab="painel" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
-        <span class="text-base leading-none">📊</span>
-        <span class="text-[10px] mt-0.5">Painel</span>
-      </button>
-      <button data-tab="lancar" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-base leading-none">➕</span>
-        <span class="text-[10px] mt-0.5">Lançar</span>
-      </button>
-      <button data-tab="cartoes" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-base leading-none">💳</span>
-        <span class="text-[10px] mt-0.5">Cartões</span>
-      </button>
-      <button data-tab="meses" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-base leading-none">📅</span>
-        <span class="text-[10px] mt-0.5">Meses</span>
-      </button>
-      <button data-tab="mais" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-base leading-none">⚙️</span>
-        <span class="text-[10px] mt-0.5">Mais</span>
-      </button>
-    </nav>
+        body.dark-mode {
+            --primary: #818cf8;
+            --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
+            --bg-color: #070a14;
+            --card-bg: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --input-bg: #0b0f19;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --green: #34d399;
+            --red: #fb7185;
+            --blue: #60a5fa;
+            --yellow: #fbbf24;
+            --pink: #f472b6;
+            --purple: #c084fc;
+        }
 
-    <!-- 3. NAVEGAÇÃO DE MÊS/ANO -->
-    <div class="px-4 py-2 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
-      <button id="btn-prev-month" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer shadow-2xs">
-        ◀
-      </button>
-      <div id="month-label" class="text-center font-extrabold text-slate-900 dark:text-slate-100">
-        Iniciando...
-      </div>
-      <button id="btn-next-month" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer shadow-2xs">
-        ▶
-      </button>
-    </div>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
 
-    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
-    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-12">
-    </main>
+        body {
+            background-color: #0b0f19;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="hidden absolute top-24 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
-      Notificação
-    </div>
+        .phone-container {
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            max-height: 930px;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
 
-    <!-- MODAL -->
-    <div id="modal-container" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
-      <div id="modal-box" class="w-full max-w-[380px] bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-5 space-y-4 max-h-[85vh] overflow-y-auto">
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    (function () {
-      const STORAGE_KEY = 'FINANCAS_PRO_HARMONIOUS_V33';
-      const CURRENT_TAB_KEY = 'financas_pro_active_tab';
-      const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
-      const DEFAULT_DATA = {
-        boxes: [
-          { id: '1', name: 'Meu Salário', limit: 5000, color: '#10b981', icon: '💼', isMain: true },
-          { id: '2', name: 'Glória', limit: 600, color: '#3b82f6', icon: '🪙', isMain: false },
-          { id: '3', name: 'Pensão Sophia', limit: 1500, color: '#ec4899', icon: '👧', isMain: false }
-        ],
-        creditCards: [
-          { id: 'card-1', name: 'Itaú Mastercard', limit: 4000, color: '#f97316', brand: 'Mastercard', skin: 'titanium', cvv: '849', isBlocked: false },
-          { id: 'card-2', name: 'Bradesco Visa', limit: 3000, color: '#ef4444', brand: 'Visa', skin: 'ultraviolet', cvv: '312', isBlocked: false },
-          { id: 'card-3', name: 'Amazon Bradesco', limit: 2500, color: '#0ea5e9', brand: 'Visa', skin: 'emerald', cvv: '159', isBlocked: false },
-          { id: 'card-4', name: 'Samsung Itaú', limit: 3500, color: '#334155', brand: 'Visa Platinum', skin: 'midnight', cvv: '742', isBlocked: false }
-        ],
-        transactions: [],
-        extraIncomes: [],
-        savingsGoals: [
-          { id: 1, name: 'Reserva de Emergência', targetValue: 10000, currentValue: 2500, color: '#10b981', icon: '🛡️' }
-        ],
-        recurringBills: [
-          { id: '1', name: 'Netflix 4K', value: 55.90, dueDay: 12, icon: '🍿' },
-          { id: '2', name: 'Internet Fibra', value: 129.90, dueDay: 10, icon: '🌐' }
-        ]
-      };
-
-      function loadData() {
-        const chaves = [
-          STORAGE_KEY,
-          'FINANCAS_PRO_DATA_AUTONOMO',
-          'financas_pro_v32_modern_panel',
-          'financas_pro_v31_extra_income',
-          'financas_pro_v30_clean_real'
-        ];
-
-        for (const k of chaves) {
-          try {
-            const raw = localStorage.getItem(k);
-            if (raw) {
-              const parsed = JSON.parse(raw);
-              if (parsed && typeof parsed === 'object') {
-                return {
-                  boxes: Array.isArray(parsed.boxes) && parsed.boxes.length > 0 ? parsed.boxes : (Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes.map(b => ({ ...b, limit: b.amount, icon: b.icon || '📦' })) : DEFAULT_DATA.boxes),
-                  creditCards: Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : DEFAULT_DATA.creditCards,
-                  transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                  extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
-                  savingsGoals: Array.isArray(parsed.savingsGoals) ? parsed.savingsGoals : (Array.isArray(parsed.goals) ? parsed.goals.map(g => ({ ...g, targetValue: g.target, currentValue: g.current, icon: '🎯' })) : DEFAULT_DATA.savingsGoals),
-                  recurringBills: Array.isArray(parsed.recurringBills) ? parsed.recurringBills : DEFAULT_DATA.recurringBills
-                };
-              }
+        @media (min-width: 450px) {
+            .phone-container {
+                height: 95vh;
+                border-radius: 36px;
+                border: 6px solid #1e293b;
             }
-          } catch (e) {
-            console.error('Erro de leitura:', e);
-          }
         }
-        return JSON.parse(JSON.stringify(DEFAULT_DATA));
-      }
 
-      const state = {
-        data: loadData(),
-        currentYear: new Date().getFullYear(),
-        currentMonth: new Date().getMonth() + 1,
-        currentTab: localStorage.getItem(CURRENT_TAB_KEY) || 'painel',
-        privacyMode: false,
-        darkMode: true,
-        revealedCvv: {},
-        newTransType: 'despesa',
-        selectedCardId: null
-      };
-
-      function saveData() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-        } catch (e) {
-          console.error(e);
+        .lock-screen {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, #1e1b4b 0%, #070a14 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 36px 24px;
+            text-align: center;
+            color: white;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-      }
 
-      function formatMoeda(num) {
-        if (state.privacyMode) return 'R$ ••••••';
-        return (Number(num) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      }
-
-      let toastTimeout = null;
-      function showToast(msg) {
-        const toast = document.getElementById('toast');
-        if (!toast) return;
-        toast.textContent = msg;
-        toast.classList.remove('hidden');
-        if (toastTimeout) clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => {
-          toast.classList.add('hidden');
-        }, 3000);
-      }
-
-      const phoneFrame = document.getElementById('phone-frame');
-      const viewContent = document.getElementById('view-content');
-      const monthLabel = document.getElementById('month-label');
-      const btnPrivacy = document.getElementById('btn-privacy');
-      const btnTheme = document.getElementById('btn-theme');
-      const btnPrevMonth = document.getElementById('btn-prev-month');
-      const btnNextMonth = document.getElementById('btn-next-month');
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      const modalContainer = document.getElementById('modal-container');
-      const modalBox = document.getElementById('modal-box');
-
-      btnPrivacy.addEventListener('click', () => {
-        state.privacyMode = !state.privacyMode;
-        btnPrivacy.textContent = state.privacyMode ? '🙈' : '👁️';
-        render();
-      });
-
-      btnTheme.addEventListener('click', () => {
-        state.darkMode = !state.darkMode;
-        if (state.darkMode) {
-          phoneFrame.classList.add('dark');
-          btnTheme.textContent = '☀️';
-        } else {
-          phoneFrame.classList.remove('dark');
-          btnTheme.textContent = '🌙';
+        .lock-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
-      });
 
-      btnPrevMonth.addEventListener('click', () => {
-        if (state.currentMonth === 1) {
-          state.currentMonth = 12;
-          state.currentYear--;
-        } else {
-          state.currentMonth--;
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+            z-index: 10;
         }
-        render();
-      });
 
-      btnNextMonth.addEventListener('click', () => {
-        if (state.currentMonth === 12) {
-          state.currentMonth = 1;
-          state.currentYear++;
-        } else {
-          state.currentMonth++;
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        render();
-      });
 
-      tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.currentTab = btn.getAttribute('data-tab');
-          localStorage.setItem(CURRENT_TAB_KEY, state.currentTab);
-          updateNavButtons();
-          render();
-        });
-      });
+        .app-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
 
-      function updateNavButtons() {
-        tabButtons.forEach(b => {
-          const isCur = b.getAttribute('data-tab') === state.currentTab;
-          b.className = 'tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer ' +
-            (isCur ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-400 font-bold');
-        });
-      }
+        .app-logo svg {
+            width: 18px;
+            height: 18px;
+            stroke: #ffffff;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
-      window.closeModal = function() {
-        modalContainer.classList.add('hidden');
-        modalBox.innerHTML = '';
-      };
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
 
-      modalContainer.addEventListener('click', (e) => {
-        if (e.target === modalContainer) closeModal();
-      });
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-      // MODAIS DE CAIXINHA
-      window.openModalEditarCaixinha = function(boxId) {
-        const box = state.data.boxes.find(b => String(b.id) === String(boxId));
-        if (!box) return;
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
 
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-            <span>✏️</span>
-            <span>Editar Caixinha: ${box.name}</span>
-          </h3>
-          <div>
-            <label class="text-[11px] font-bold text-slate-500 block">Nome da Verba:</label>
-            <input type="text" id="m-box-name" value="${box.name}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          </div>
-          <div>
-            <label class="text-[11px] font-bold text-slate-500 block">Valor Mensal (R$):</label>
-            <input type="number" step="50" id="m-box-limit" value="${box.limit || 0}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          </div>
-          <div>
-            <label class="text-[11px] font-bold text-slate-500 block">Cor do Indicador:</label>
-            <input type="color" id="m-box-color" value="${box.color || '#6366f1'}" class="w-full mt-1 h-9 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 cursor-pointer" />
-          </div>
-          <div class="flex gap-2 pt-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveEditarCaixinha('${box.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
-          </div>
-          <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteCaixinha('${box.id}')" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
-              🗑️ Excluir Caixinha
+        .tab-bar {
+            display: flex;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            z-index: 5;
+        }
+
+        .tab-button {
+            flex: 1 1 0;
+            padding: 9px 2px;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            position: relative;
+        }
+
+        .tab-button .tab-icon { font-size: 1.05rem; }
+        .tab-button .tab-label { font-size: 0.65rem; font-weight: 800; white-space: nowrap; }
+        .tab-button.active { color: var(--primary); }
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .content {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .tab-pane {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tab-pane.active { display: flex; }
+
+        .date-control-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 6px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .date-nav-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 28px;
+            height: 26px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+        }
+
+        .hero-wallet-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 22px;
+            box-shadow: 0 14px 28px rgba(49, 46, 129, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-actions-bar {
+            display: flex;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+        }
+        .quick-btn:hover { background: var(--input-bg); }
+
+        .section-box {
+            background: var(--card-bg);
+            padding: 14px;
+            border-radius: 18px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-box h3 {
+            font-size: 0.88rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ========================================================
+           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
+           ======================================================== */
+        .budget-summary-banner {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .budget-list-elegant {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .elegant-box-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .elegant-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-badge-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .elegant-box-amount {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .elegant-progress-track {
+            background: rgba(0, 0, 0, 0.05);
+            height: 6px;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        body.dark-mode .elegant-progress-track { background: rgba(255, 255, 255, 0.08); }
+
+        .elegant-box-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding-top: 2px;
+        }
+
+        .btn-box-action {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
+
+        /* DEMAIS COMPONENTES */
+        .mobile-entry-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lancar-header-dashboard {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .lancar-date-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .lancar-metrics-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lancar-metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .lancar-metric-item span {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .lancar-metric-item b {
+            font-size: 0.84rem;
+            font-weight: 900;
+        }
+
+        .entry-top-switch {
+            display: flex;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 3px;
+            border-radius: 12px;
+            gap: 4px;
+        }
+
+        .top-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 6px 0;
+            border-radius: 9px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .top-btn.active.expense {
+            background: #fff;
+            color: var(--red);
+            box-shadow: 0 2px 6px rgba(244, 63, 94, 0.15);
+        }
+
+        .top-btn.active.income {
+            background: #fff;
+            color: var(--green);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+        }
+
+        body.dark-mode .top-btn.active { background: #1e293b; }
+
+        .amount-hero-box {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mode-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mode-chip-group {
+            display: flex;
+            gap: 4px;
+            background: rgba(0,0,0,0.04);
+            padding: 2px;
+            border-radius: 8px;
+        }
+
+        .mode-chip {
+            border: none;
+            background: transparent;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .mode-chip.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .val-controls-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .val-input-group {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .val-input-group span {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--text-muted);
+        }
+
+        .clean-val-input {
+            width: 100%;
+            border: none !important;
+            background: transparent !important;
+            font-size: 1.6rem !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            color: var(--text-main) !important;
+            outline: none !important;
+        }
+
+        .stepper-times {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .step-btn {
+            border: none;
+            background: transparent;
+            width: 26px;
+            height: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-input {
+            width: 32px !important;
+            border: none !important;
+            background: transparent !important;
+            text-align: center !important;
+            font-size: 0.82rem !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            color: var(--primary) !important;
+        }
+
+        .calc-preview-bar {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2px 10px;
+            gap: 8px;
+        }
+
+        .detail-row i {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            width: 16px;
+            text-align: center;
+        }
+
+        .detail-row select, .detail-row input {
+            border: none !important;
+            background: transparent !important;
+            padding: 8px 0 !important;
+            font-size: 0.8rem !important;
+            font-weight: 700 !important;
+            color: var(--text-main) !important;
+            outline: none !important;
+            width: 100% !important;
+        }
+
+        .two-cols-clean {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .card-tags-scroll-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            border-radius: 12px;
+        }
+
+        .card-tags-scroll {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+        .card-tags-scroll::-webkit-scrollbar { display: none; }
+
+        .card-pill-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            padding: 5px 9px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-main);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .card-pill-btn.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(99, 102, 241, 0.15);
+        }
+
+        .card-pill-btn .color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 2px 0;
+        }
+
+        .clean-statement-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .statement-icon-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .statement-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .statement-top-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .statement-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .statement-value {
+            font-size: 0.86rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .statement-value.expense { color: var(--red); }
+        .statement-value.income { color: var(--green); }
+
+        .statement-bottom-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .statement-meta-tags {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .box-pill-tag {
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+
+        .statement-action-btns {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-mini-action {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 3px 5px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+        }
+
+        .btn-mini-action:hover { color: var(--primary); background: var(--input-bg); }
+        .btn-mini-action.del:hover { color: var(--red); }
+
+        .credit-card-widget {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .credit-card-widget::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .year-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .year-summary-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            color: white;
+            padding: 14px 16px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(49, 46, 129, 0.2);
+        }
+
+        .months-elegant-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .month-card-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .month-name-badge {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 65px;
+        }
+
+        .month-values-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        button.btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button.btn-secondary {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .backup-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 18px;
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+
+        <div id="lock-screen" class="lock-screen">
+            <div class="w-full flex flex-col items-center pt-2 space-y-2">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-indigo-500 to-pink-500 p-1 shadow-xl">
+                    <div class="w-full h-full bg-[#0f172a] rounded-[14px] flex items-center justify-center">
+                        <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
+                    </div>
+                </div>
+                <h2 class="text-2xl font-black text-white">Finanças Pro</h2>
+                <p class="text-xs text-indigo-300 font-semibold">Controle Pessoal Inteligente</p>
+            </div>
+
+            <div class="flex flex-col items-center space-y-3 my-auto">
+                <button id="biometric-btn" onclick="desbloquearApp()" class="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-lg flex items-center justify-center cursor-pointer border-none text-white text-2xl">
+                    <i id="bio-icon" class="fa-solid fa-fingerprint"></i>
+                </button>
+                <button onclick="desbloquearApp()" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2 px-5 rounded-xl border border-white/15 text-white">
+                    🔓 Entrar no Painel
+                </button>
+            </div>
+            <div></div>
+        </div>
+
+        <header>
+            <div class="header-brand">
+                <div class="app-logo">
+                    <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
+                </div>
+                <div>
+                    <h1>Finanças Pro</h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="bloquearManualmente()">🔒</button>
+                <button class="header-btn theme-toggle" onclick="alternarTema()">🌙</button>
+            </div>
+        </header>
+
+        <nav class="tab-bar">
+            <button class="tab-button" id="btn-tab-painel" onclick="trocarAba('painel')">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">Painel</span>
             </button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
+            <button class="tab-button" id="btn-tab-lancar" onclick="trocarAba('lancar')">
+                <span class="tab-icon">✍️</span>
+                <span class="tab-label">Lançar</span>
+            </button>
+            <button class="tab-button" id="btn-tab-cartoes" onclick="trocarAba('cartoes')">
+                <span class="tab-icon">💳</span>
+                <span class="tab-label">Cartões</span>
+            </button>
+            <button class="tab-button" id="btn-tab-meses" onclick="trocarAba('meses')">
+                <span class="tab-icon">📅</span>
+                <span class="tab-label">Meses</span>
+            </button>
+            <button class="tab-button" id="btn-tab-mais" onclick="trocarAba('mais')">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">Mais</span>
+            </button>
+        </nav>
+        
+        <div class="content">
 
-      window.saveEditarCaixinha = function(id) {
-        const name = document.getElementById('m-box-name').value.trim();
-        const limit = parseFloat(document.getElementById('m-box-limit').value);
-        const color = document.getElementById('m-box-color').value;
-        if (!name || isNaN(limit) || limit < 0) return alert('Informe dados válidos.');
-        const box = state.data.boxes.find(b => String(b.id) === String(id));
-        if (box) {
-          box.name = name;
-          box.limit = limit;
-          box.color = color;
-          saveData();
-          closeModal();
-          showToast('Caixinha atualizada!');
-          render();
-        }
-      };
+            <!-- TELA 1: PAINEL COM CAIXINHAS MODERNAS E CORES EQUILIBRADAS -->
+            <div id="tab-painel" class="tab-pane">
+                <div class="date-control-bar">
+                    <div style="display:flex; align-items:center; gap:3px;">
+                        <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
+                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;"></select>
+                        <button class="date-nav-btn" onclick="mudarAno(1)">»</button>
+                    </div>
 
-      window.deleteCaixinha = function(id) {
-        if (confirm('Tem certeza que deseja excluir esta caixinha?')) {
-          state.data.boxes = state.data.boxes.filter(b => String(b.id) !== String(id));
-          saveData();
-          closeModal();
-          showToast('Caixinha excluída!');
-          render();
-        }
-      };
+                    <div style="display:flex; align-items:center; gap:3px;">
+                        <button class="date-nav-btn" onclick="mudarMes(-1)">◀</button>
+                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:800; font-size:0.82rem; color:var(--text-main); background:transparent; border:none;">
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                        <button class="date-nav-btn" onclick="mudarMes(1)">▶</button>
+                    </div>
+                </div>
 
-      window.openModalNovaCaixinha = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-            <span>📦</span>
-            <span>Nova Caixinha de Verba</span>
-          </h3>
-          <input type="text" id="m-newbox-name" placeholder="Nome da Caixinha (Ex: Salário, Glória, Pensão)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" step="50" id="m-newbox-limit" placeholder="Valor Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <div>
-            <label class="text-[11px] font-bold text-slate-500 block">Cor do Indicador:</label>
-            <input type="color" id="m-newbox-color" value="#3b82f6" class="w-full mt-1 h-9 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 cursor-pointer" />
-          </div>
-          <div class="flex gap-2 pt-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovaCaixinha()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Caixinha</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
+                <div class="hero-wallet-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
+                        <span id="hero-badge-status" style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(16,185,129,0.25); color:#34d399; border:1px solid rgba(52,211,153,0.3);">
+                            🟢 Orçamento Seguro
+                        </span>
+                    </div>
 
-      window.saveNovaCaixinha = function() {
-        const name = document.getElementById('m-newbox-name').value.trim();
-        const limit = parseFloat(document.getElementById('m-newbox-limit').value);
-        const color = document.getElementById('m-newbox-color').value;
-        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os campos corretamente.');
-        state.data.boxes.push({
-          id: String(Date.now()),
-          name,
-          limit,
-          color: color || '#6366f1',
-          icon: '📦',
-          isMain: state.data.boxes.length === 0
-        });
-        saveData();
-        closeModal();
-        showToast('Nova caixinha criada!');
-        render();
-      };
+                    <div>
+                        <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total da família / mês</span>
+                    </div>
 
-      // VERBAS EXTRAS DO MÊS
-      window.openModalNovaVerbaExtra = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-            <span>💵</span>
-            <span>Adicionar Verba Extra no Mês</span>
-          </h3>
-          <p class="text-[11px] text-slate-500 leading-relaxed">
-            Entradas avulsas deste mês (13º, bônus, vendas ou rendas extras) para somar à verba disponível.
-          </p>
-          <input type="text" id="m-extra-desc" placeholder="Descrição (Ex: 13º Salário, Venda celular)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" step="50" id="m-extra-val" placeholder="Valor R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="date" id="m-extra-date" value="${new Date().toISOString().slice(0, 10)}" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <div class="flex gap-2 pt-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovaVerbaExtra()" class="flex-1 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold cursor-pointer">Adicionar</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
+                    <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.85); font-weight:700;">
+                            <span id="hero-percent-txt">0% consumido</span>
+                            <span>R$ <span id="hero-spent-txt">0,00</span> de R$ <span id="hero-verba-txt">0,00</span></span>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.15); height:7px; border-radius:6px; overflow:hidden;">
+                            <div id="hero-progress-bar" style="width:0%; height:100%; background:#34d399; border-radius:6px; transition:width 0.4s ease;"></div>
+                        </div>
+                    </div>
 
-      window.saveNovaVerbaExtra = function() {
-        const desc = document.getElementById('m-extra-desc').value.trim();
-        const val = parseFloat(document.getElementById('m-extra-val').value);
-        const date = document.getElementById('m-extra-date').value;
-        if (!desc || isNaN(val) || val <= 0) return alert('Informe descrição e valor válidos.');
+                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:8px; margin-top:4px;">
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">📥 Verba Total</span>
+                            <b id="hero-verba-total-small" style="color:white;">R$ 0,00</b>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">📉 Total Gasto</span>
+                            <b id="hero-total-gasto-small" style="color:#fb7185;">- R$ 0,00</b>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">💳 No Cartão</span>
+                            <b id="hero-fatura-cartao-small" style="color:#fbbf24;">R$ 0,00</b>
+                        </div>
+                    </div>
+                </div>
 
-        if (!state.data.extraIncomes) state.data.extraIncomes = [];
-        state.data.extraIncomes.push({
-          id: Date.now(),
-          desc,
-          value: val,
-          date,
-          year: state.currentYear,
-          month: state.currentMonth
-        });
+                <div class="quick-actions-bar">
+                    <button class="quick-btn" onclick="trocarAba('lancar')">
+                        <i class="fa-solid fa-plus text-indigo-500"></i> Lançar Despesa
+                    </button>
+                    <button class="quick-btn" onclick="trocarAba('cartoes')">
+                        <i class="fa-solid fa-credit-card text-amber-500"></i> Ver Cartões
+                    </button>
+                    <button class="quick-btn" onclick="abrirModalNovaCaixinhaVerba()">
+                        <i class="fa-solid fa-box-open text-pink-500"></i> Nova Caixinha
+                    </button>
+                </div>
 
-        saveData();
-        closeModal();
-        showToast('Verba extra adicionada!');
-        render();
-      };
+                <!-- SOMA TOTAL DAS VERBAS E LISTA REFORMULADA -->
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <div class="budget-summary-banner">
+                        <div>
+                            <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; display:block;">
+                                📦 Soma Total das Verbas
+                            </span>
+                            <b id="txt-soma-total-verbas" style="font-size:1.25rem; font-weight:900; color:var(--text-main);">
+                                R$ 0,00
+                            </b>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="font-size:0.62rem; font-weight:700; color:var(--text-muted); display:block;">Consumo Geral:</span>
+                            <b id="txt-consumo-total-verbas" style="font-size:0.9rem; font-weight:900; color:var(--red);">- R$ 0,00</b>
+                        </div>
+                    </div>
 
-      window.removerVerbaExtra = function(id) {
-        if (confirm('Remover esta verba extra?')) {
-          state.data.extraIncomes = (state.data.extraIncomes || []).filter(e => e.id !== id);
-          saveData();
-          showToast('Verba extra removida!');
-          render();
-        }
-      };
+                    <div class="budget-list-elegant" id="budget-boxes-container"></div>
+                </div>
 
-      window.lancarDiretoNaCaixinha = function(boxId) {
-        state.currentTab = 'lancar';
-        updateNavButtons();
-        render();
-        setTimeout(() => {
-          const sel = document.getElementById('input-caixinha');
-          if (sel) sel.value = String(boxId);
-        }, 100);
-      };
+                <div class="section-box" style="padding:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">🕒 ÚLTIMOS LANÇAMENTOS</span>
+                        <a href="#" onclick="trocarAba('lancar')" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">Ver extrato →</a>
+                    </div>
+                    <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
+                </div>
 
-      // BACKUP
-      window.copyBackup = function () {
-        const json = JSON.stringify(state.data, null, 2);
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(json);
-          showToast('Backup copiado para o WhatsApp! 📋');
-        } else {
-          prompt('Copie seu código de backup abaixo:', json);
-        }
-      };
+                <div style="background:var(--input-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span> • <span id="txt-meses-preenchidos">0 meses</span></span>
+                        <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
+                    </div>
+                    <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:1px solid var(--border-color); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
+                        Ver Meses
+                    </button>
+                </div>
+            </div>
 
-      window.restoreBackup = function () {
-        const text = prompt('Cole aqui o texto do backup:');
-        if (text) {
-          try {
-            const parsed = JSON.parse(text);
-            if (parsed && typeof parsed === 'object') {
-              state.data = parsed;
-              saveData();
-              showToast('Backup restaurado! 🎉');
-              render();
-            }
-          } catch {
-            alert('Texto de backup inválido.');
-          }
-        }
-      };
+            <!-- TELA 2: LANÇAR -->
+            <div id="tab-lancar" class="tab-pane">
+                <div class="lancar-header-dashboard">
+                    <div class="lancar-date-row">
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(-1)">◀</button>
+                            <span id="txt-lancar-mes-ano" style="font-size:0.82rem; font-weight:900; color:var(--primary);">Setembro 2026</span>
+                            <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(1)">▶</button>
+                        </div>
+                        <button onclick="trocarAba('painel')" style="background:none; border:none; color:var(--text-muted); font-size:0.68rem; font-weight:800; cursor:pointer;">
+                            Ver Painel →
+                        </button>
+                    </div>
 
-      window.deleteTrans = function (id) {
-        if (confirm('Deseja excluir este lançamento?')) {
-          state.data.transactions = state.data.transactions.filter(t => t.id !== id);
-          saveData();
-          showToast('Lançamento excluído!');
-          render();
-        }
-      };
+                    <div class="lancar-metrics-row">
+                        <div class="lancar-metric-item">
+                            <span>Gasto Mês:</span>
+                            <b id="txt-lancar-total-gasto" style="color:var(--red);">- R$ 0,00</b>
+                        </div>
+                        <div class="lancar-metric-item">
+                            <span>No Cartão:</span>
+                            <b id="txt-lancar-total-cartao" style="color:var(--yellow);">R$ 0,00</b>
+                        </div>
+                        <div class="lancar-metric-item" style="text-align:right;">
+                            <span>Sobra Livre:</span>
+                            <b id="txt-lancar-sobra-livre" style="color:var(--green);">R$ 0,00</b>
+                        </div>
+                    </div>
+                </div>
 
-      function render() {
-        monthLabel.textContent = MONTHS[state.currentMonth - 1] + ' de ' + state.currentYear;
+                <div class="mobile-entry-card">
+                    <div class="entry-top-switch">
+                        <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
+                            <i class="fa-solid fa-arrow-down"></i> Despesa
+                        </button>
+                        <button type="button" id="btn-type-income" class="top-btn" onclick="alternarTipoTransacao('income')">
+                            <i class="fa-solid fa-arrow-up"></i> Receita
+                        </button>
+                    </div>
 
-        const transactions = Array.isArray(state.data.transactions) ? state.data.transactions : [];
-        const monthTrans = transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
-        const extraIncomes = Array.isArray(state.data.extraIncomes) ? state.data.extraIncomes : [];
-        const monthExtras = extraIncomes.filter(e => e.year === state.currentYear && e.month === state.currentMonth);
-        const totalExtras = monthExtras.reduce((a, b) => a + (Number(b.value) || 0), 0);
+                    <div class="amount-hero-box">
+                        <div class="mode-row">
+                            <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
+                            <div class="mode-chip-group">
+                                <button type="button" id="btn-mode-total" class="mode-chip active" onclick="alternarModoCalculo('total')">Total Compra</button>
+                                <button type="button" id="btn-mode-parcela" class="mode-chip" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
+                            </div>
+                        </div>
 
-        const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : [];
-        const totalVerbaFixa = boxes.reduce((acc, b) => acc + (Number(b.limit) || 0), 0);
-        const receitasLancadas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
-        const totalDisponivelMes = totalVerbaFixa + totalExtras + receitasLancadas;
+                        <div class="val-controls-line">
+                            <div class="val-input-group">
+                                <span>R$</span>
+                                <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="clean-val-input" oninput="calcularResumoParcelas()">
+                            </div>
+                            
+                            <div class="stepper-times" title="Quantidade de parcelas">
+                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(-1)">-</button>
+                                <input type="number" id="trans-installments-num" min="1" max="120" value="1" class="step-input" oninput="calcularResumoParcelas()">
+                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(1)">+</button>
+                            </div>
+                        </div>
 
-        const totalDespesas = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
-        const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
-        const sobraLiquida = totalDisponivelMes - totalDespesas;
-        const percGeral = totalDisponivelMes > 0 ? Math.min(100, Math.round((totalDespesas / totalDisponivelMes) * 100)) : 0;
+                        <div class="calc-preview-bar">
+                            <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
+                            <span id="calc-preview-pill-sub">1x</span>
+                        </div>
+                    </div>
 
-        let html = '';
+                    <div class="detail-row">
+                        <i class="fa-solid fa-pen"></i>
+                        <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
+                    </div>
 
-        // ABA 1: PAINEL REESTRUTURADO E HARMONIOSO
-        if (state.currentTab === 'painel') {
-          html = `
-            <div class="space-y-3.5">
-              
-              <!-- 1. CARD HERO PRINCIPAL UNIFICADO -->
-              <div class="p-4 rounded-3xl bg-slate-900 text-white shadow-xl space-y-3 border border-slate-800">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Disponível no Mês</span>
-                  <span class="text-[10px] font-black px-2 py-0.5 rounded-full ${sobraLiquida >= 0 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
-                    ${sobraLiquida >= 0 ? '🟢 Orçamento Saudável' : '🔴 Orçamento no Limite'}
-                  </span>
+                    <div class="two-cols-clean">
+                        <div class="detail-row">
+                            <i class="fa-solid fa-box"></i>
+                            <select id="trans-box-id"></select>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="row-select-card" class="card-tags-scroll-wrap">
+                        <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
+                            Selecione o Cartão Utilizado:
+                        </span>
+                        <div id="card-tags-container" class="card-tags-scroll"></div>
+                    </div>
+
+                    <div class="two-cols-clean">
+                        <div class="detail-row" style="position:relative;">
+                            <i class="fa-solid fa-tag"></i>
+                            <select id="trans-category"></select>
+                            <button type="button" onclick="abrirModalNovaCategoria()" title="Nova Categoria" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer;">+</button>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            <input type="date" id="trans-date">
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="adicionarTransacao()">
+                        💾 Salvar Lançamento
+                    </button>
+                </div>
+
+                <div class="section-box">
+                    <h3>
+                        <span>📑 Extrato do Mês</span>
+                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 2px 6px; font-size: 0.7rem; border-radius: 8px;">
+                            <option value="all">Todos</option>
+                            <option value="cartao">💳 Só Cartão</option>
+                        </select>
+                    </h3>
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 6px; font-size: 0.78rem; padding: 7px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); width:100%;">
+                    
+                    <div class="list-container" id="transaction-list"></div>
+                </div>
+            </div>
+
+            <!-- TELA 3: ABA CARTÕES -->
+            <div id="tab-cartoes" class="tab-pane">
+                <div class="hero-wallet-card" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Fatura Total dos Cartões</span>
+                        <span style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(251,191,36,0.25); color:#fbbf24; border:1px solid rgba(251,191,36,0.3);">
+                            💳 Soma Consolidada
+                        </span>
+                    </div>
+
+                    <div>
+                        <h2 id="card-hero-total-faturas" style="font-size:1.85rem; font-weight:900; color:#fbbf24; letter-spacing:-0.5px;">R$ 0,00</h2>
+                        <span id="card-hero-impacto" style="font-size:0.68rem; color:rgba(255,255,255,0.7);">0% do seu orçamento mensal</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:8px; margin-top:4px;">
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Somado</span>
+                            <b id="card-hero-limite-total" style="color:white;">R$ 0,00</b>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Disponível</span>
+                            <b id="card-hero-limite-livre" style="color:#34d399;">R$ 0,00</b>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Cartões Ativos</span>
+                            <b id="card-hero-qtd-badge" style="color:#60a5fa;">0 cartões</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions-bar">
+                    <button class="quick-btn" onclick="abrirModalNovoCartao()">
+                        <i class="fa-solid fa-plus text-indigo-500"></i> Adicionar Cartão
+                    </button>
+                    <button class="quick-btn" onclick="abrirModalPagarFatura()">
+                        <i class="fa-solid fa-check text-green-500"></i> Abater/Pagar Fatura
+                    </button>
                 </div>
 
                 <div>
-                  <div class="text-2xl font-black tracking-tight ${sobraLiquida < 0 ? 'text-rose-400' : 'text-white'}">
-                    ${formatMoeda(sobraLiquida)}
-                  </div>
-                  <span class="text-[11px] text-slate-400 font-medium">Sobra livre acumulada</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 SEUS CARTÕES CADASTRADOS</span>
+                        <span id="txt-qtd-cartoes" style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">0 cartões</span>
+                    </div>
+                    <div id="cards-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+                </div>
+            </div>
+
+            <!-- TELA 4: MESES -->
+            <div id="tab-meses" class="tab-pane">
+                <div class="year-selector-header">
+                    <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-calendar-days text-indigo-500"></i>
+                        <select id="select-year-tabela" onchange="alterarAnoTabela(this.value)" style="width:auto; border:none; background:transparent; font-size:1.05rem; font-weight:900; color:var(--primary); outline:none; cursor:pointer;">
+                        </select>
+                    </div>
+                    <button class="date-nav-btn" onclick="mudarAnoTabela(1)">»</button>
                 </div>
 
-                <!-- Barra de Consumo Geral -->
-                <div class="space-y-1 pt-1 border-t border-slate-800">
-                  <div class="flex justify-between text-[11px] font-bold text-slate-300">
-                    <span>${percGeral}% consumido</span>
-                    <span>${formatMoeda(totalDespesas)} de ${formatMoeda(totalDisponivelMes)}</span>
-                  </div>
-                  <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div class="h-full rounded-full transition-all duration-300 ${percGeral >= 90 ? 'bg-rose-500' : (percGeral >= 70 ? 'bg-amber-400' : 'bg-emerald-400')}" style="width: ${percGeral}%;"></div>
-                  </div>
+                <div class="year-summary-card">
+                    <div>
+                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Anual Acumulado</span>
+                        <b id="txt-ano-saldo-acumulado" style="font-size:1.35rem; font-weight:900;">R$ 0,00</b>
+                    </div>
+                    <div style="text-align:right; font-size:0.72rem;">
+                        <div style="color:#34d399;">Entradas: <b id="txt-ano-entradas-total">R$ 0</b></div>
+                        <div style="color:#fb7185;">Gastos: <b id="txt-ano-gastos-total">R$ 0</b></div>
+                    </div>
                 </div>
 
-                <!-- 3 Métricas com Contraste -->
-                <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800 text-center">
-                  <div class="p-2 rounded-2xl bg-slate-800/60">
-                    <span class="text-[9px] text-slate-400 uppercase font-black block">Verba Total</span>
-                    <b class="text-xs text-slate-100 font-black">${formatMoeda(totalDisponivelMes)}</b>
-                  </div>
-                  <div class="p-2 rounded-2xl bg-slate-800/60">
-                    <span class="text-[9px] text-slate-400 uppercase font-black block">Gasto Total</span>
-                    <b class="text-xs text-rose-400 font-black">- ${formatMoeda(totalDespesas)}</b>
-                  </div>
-                  <div class="p-2 rounded-2xl bg-slate-800/60">
-                    <span class="text-[9px] text-slate-400 uppercase font-black block">No Cartão</span>
-                    <b class="text-xs text-amber-400 font-black">${formatMoeda(totalCartao)}</b>
-                  </div>
-                </div>
-              </div>
+                <div class="months-elegant-grid" id="months-cards-container"></div>
+            </div>
 
-              <!-- 2. ATALHOS RÁPIDOS -->
-              <div class="grid grid-cols-3 gap-2">
-                <button onclick="state.currentTab = 'lancar'; updateNavButtons(); render();" class="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center gap-1.5 text-xs font-black text-slate-800 dark:text-slate-100 shadow-xs cursor-pointer active:scale-95">
-                  <span class="text-indigo-500">➕</span>
-                  <span>Despesa</span>
-                </button>
-                <button onclick="state.currentTab = 'cartoes'; updateNavButtons(); render();" class="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center gap-1.5 text-xs font-black text-slate-800 dark:text-slate-100 shadow-xs cursor-pointer active:scale-95">
-                  <span class="text-amber-500">💳</span>
-                  <span>Cartões</span>
-                </button>
-                <button onclick="openModalNovaCaixinha()" class="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center gap-1.5 text-xs font-black text-slate-800 dark:text-slate-100 shadow-xs cursor-pointer active:scale-95">
-                  <span class="text-pink-500">📦</span>
-                  <span>Caixinha</span>
-                </button>
-              </div>
-
-              <!-- 3. CAIXINHAS DE VERBA COM CARDS ALINHADOS E TIPOGRAFIA ESCURA -->
-              <div class="space-y-2.5">
-                <div class="flex justify-between items-center px-1">
-                  <span class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">📦 Suas Caixinhas de Verba</span>
-                  <span class="text-[10px] text-slate-400 font-bold">${boxes.length} caixinhas ativas</span>
-                </div>
-
-                <div class="space-y-2">
-                  ${boxes.map((box, index) => {
-                    const isPrimary = index === 0;
-                    const gastosBox = monthTrans.filter(t => t.type === 'despesa' && t.boxId === box.id).reduce((a, b) => a + (Number(b.value) || 0), 0);
-                    const spentCard = monthTrans.filter(t => t.type === 'despesa' && t.boxId === box.id && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
+            <!-- TELA 5: MAIS -->
+            <div id="tab-mais" class="tab-pane">
+                <div class="backup-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
+                        <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
+                    </div>
+                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
+                        Não precisa procurar arquivos no celular. Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
+                    </p>
                     
-                    let displaySpent = gastosBox;
-                    let displayRemain = (Number(box.limit) || 0) - gastosBox;
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-primary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="copiarBackupTexto()">
+                            📋 Copiar Backup
+                        </button>
+                        <button class="btn-secondary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
+                            📥 Restaurar Dados
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>
+                        <span>🐷 Caixinhas de Reserva</span>
+                        <button class="btn-icon" onclick="abrirModalNovaMeta()" style="font-size:0.8rem; color:var(--primary); font-weight:bold;">+ Nova</button>
+                    </h3>
+                    <div class="list-container" id="goals-list"></div>
+                </div>
+
+                <div class="section-box">
+                    <h3>💼 Total Investido em Ativos</h3>
+                    <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                        <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
+                        <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>🚀 Registrar Aporte / Ativo</h3>
+                    <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
+                        <div class="two-cols-clean">
+                            <select id="invest-platform" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                                <option value="XP Investimentos">XP Investimentos</option>
+                                <option value="Binance">Binance</option>
+                                <option value="Outros">Outra Corretora</option>
+                            </select>
+                            <select id="invest-type" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                                <option value="Renda Fixa">Renda Fixa / CDB</option>
+                                <option value="Criptomoeda">Criptomoeda</option>
+                                <option value="Ações">Ações / FIIs</option>
+                            </select>
+                        </div>
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>📁 Carteira de Ativos</h3>
+                    <div class="list-container" id="investment-list"></div>
+                </div>
+
+                <div style="text-align:center; padding:10px;">
+                    <button onclick="limparTodosDados()" style="background:none; border:none; color:var(--red); font-size:0.75rem; font-weight:800; cursor:pointer;">
+                        🗑️ Zerar Todos os Dados
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="app-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
+                <div id="modal-body" class="form-group" style="display:flex; flex-direction:column; gap:8px;"></div>
+                <div class="form-row" style="margin-top:6px; display:flex; gap:8px;">
+                    <button class="btn-secondary" style="flex:1;" onclick="fecharModal()">Cancelar</button>
+                    <button class="btn-primary" style="flex:1;" id="modal-confirm-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const STORAGE_KEY = "financas_pro_v29_box_elegance";
+        const CURRENT_TAB_KEY = "financas_pro_active_tab";
+        const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        const hoje = new Date();
+        let currentYear = hoje.getFullYear();
+        let currentMonthNum = hoje.getMonth() + 1;
+        let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+        let selectedYearTabela = currentYear;
+
+        let selectedTransactionType = 'expense';
+        let selectedCalcMode = 'total';
+        let selectedCardIdSelected = null;
+
+        const defaultData = {
+            cash: 0.00,
+            budgetBoxes: [
+                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#10b981" },
+                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#3b82f6" },
+                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#ec4899" }
+            ],
+            creditCards: [
+                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" }
+            ],
+            categories: [
+                { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
+                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
+                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
+            ],
+            transactions: [],
+            goals: [
+                { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
+            ],
+            investments: []
+        };
+
+        function carregarDados() {
+            const chaves = [
+                STORAGE_KEY,
+                "financas_pro_v28_future_years",
+                "financas_pro_v27_boxes_redesign",
+                "financas_pro_v26_complete_dash",
+                "financas_pro_v25_lancar_totals",
+                "financas_pro_v24_stay_tab",
+                "financas_pro_v23_card_tags",
+                "financas_pro_v22_linked_cards",
+                "financas_pro_v21_samsung_card",
+                "financas_pro_v20_free_card_input",
+                "financas_pro_v19_card_skins",
+                "financas_pro_v18_cards_tab",
+                "financas_pro_v17_clean_statement",
+                "financas_pro_v16_mobile_native",
+                "financas_pro_v15_ultra",
+                "financas_pro_v14_clean_backup",
+                "financas_pro_v13_compact_form",
+                "financas_pro_v12_calculator",
+                "financas_pro_v11_spillover",
+                "financas_pro_v10_livre",
+                "financas_pro_v9_revitalizado",
+                "financas_pro_v8_custom_boxes"
+            ];
+
+            for (const k of chaves) {
+                const salvo = localStorage.getItem(k);
+                if (salvo) {
+                    try {
+                        const parsed = JSON.parse(salvo);
+                        let cartoes = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards;
+                        
+                        if (!cartoes.some(c => c.name.toLowerCase().includes("samsung"))) {
+                            cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" });
+                        }
+
+                        return {
+                            cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
+                            budgetBoxes: Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes : defaultData.budgetBoxes,
+                            creditCards: cartoes,
+                            categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
+                            transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+                            goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
+                            investments: Array.isArray(parsed.investments) ? parsed.investments : []
+                        };
+                    } catch (e) {
+                        console.error("Erro na leitura:", e);
+                    }
+                }
+            }
+            return JSON.parse(JSON.stringify(defaultData));
+        }
+
+        let financialData = carregarDados();
+
+        function salvarDados() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
+                const lock = document.getElementById("lock-screen");
+                if (lock) lock.classList.add("hidden");
+            }
+            
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
+            
+            const abaSalva = localStorage.getItem(CURRENT_TAB_KEY) || 'painel';
+            trocarAba(abaSalva);
+            
+            atualizarTela();
+        });
+
+        function popularSeletoresDeAno() {
+            const anos = [];
+            for (let y = 2024; y <= 2035; y++) anos.push(y);
+
+            const selPainel = document.getElementById("select-year");
+            if (selPainel) {
+                selPainel.innerHTML = anos.map(y => `<option value="${y}" ${y === currentYear ? 'selected' : ''}>${y}</option>`).join('');
+            }
+
+            const selTabela = document.getElementById("select-year-tabela");
+            if (selTabela) {
+                selTabela.innerHTML = anos.map(y => `<option value="${y}" ${y === selectedYearTabela ? 'selected' : ''}>Ano ${y}</option>`).join('');
+            }
+        }
+
+        function sincronizarDataFormulario() {
+            const dateInput = document.getElementById("trans-date");
+            if (!dateInput) return;
+
+            let dia = hoje.getDate();
+            const ultimoDiaDoMes = new Date(currentYear, currentMonthNum, 0).getDate();
+            if (dia > ultimoDiaDoMes) dia = ultimoDiaDoMes;
+
+            const mStr = String(currentMonthNum).padStart(2, '0');
+            const dStr = String(dia).padStart(2, '0');
+            dateInput.value = `${currentYear}-${mStr}-${dStr}`;
+        }
+
+        function alternarTipoTransacao(tipo) {
+            selectedTransactionType = tipo;
+            const btnExp = document.getElementById('btn-type-expense');
+            const btnInc = document.getElementById('btn-type-income');
+
+            if (tipo === 'expense') {
+                btnExp.className = 'top-btn active expense';
+                btnInc.className = 'top-btn';
+            } else {
+                btnExp.className = 'top-btn';
+                btnInc.className = 'top-btn active income';
+            }
+            calcularResumoParcelas();
+        }
+
+        function alternarModoCalculo(modo) {
+            selectedCalcMode = modo;
+            document.getElementById('btn-mode-total').classList.toggle('active', modo === 'total');
+            document.getElementById('btn-mode-parcela').classList.toggle('active', modo === 'parcela');
+            calcularResumoParcelas();
+        }
+
+        function mudarParcelasRapido(delta) {
+            const input = document.getElementById("trans-installments-num");
+            let val = (parseInt(input.value, 10) || 1) + delta;
+            if (val < 1) val = 1;
+            if (val > 120) val = 120;
+            input.value = val;
+            calcularResumoParcelas();
+        }
+
+        function calcularResumoParcelas() {
+            const inputVal = parseFloat(document.getElementById("trans-value").value);
+            const parcelas = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
+            const previewText = document.getElementById("calc-preview-pill-text");
+            const previewSub = document.getElementById("calc-preview-pill-sub");
+
+            if (isNaN(inputVal) || inputVal <= 0) {
+                previewText.innerHTML = "À vista: R$ 0,00";
+                previewSub.innerText = `${parcelas}x`;
+                return;
+            }
+
+            if (selectedCalcMode === 'parcela') {
+                const totalCalculado = inputVal * parcelas;
+                previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                previewSub.innerHTML = `<b>${parcelas}x de R$ ${inputVal.toFixed(2)}</b>`;
+            } else {
+                const valorParcela = inputVal / parcelas;
+                if (parcelas === 1) {
+                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewSub.innerText = "1x";
+                } else {
+                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewSub.innerHTML = `<b>${parcelas}x de R$ ${valorParcela.toFixed(2)}</b>/mês`;
+                }
+            }
+        }
+
+        function verificarExibicaoCartao(forma) {
+            const rowCard = document.getElementById("row-select-card");
+            if (rowCard) {
+                rowCard.style.display = forma === "Cartão de Crédito" ? "flex" : "none";
+            }
+        }
+
+        function selecionarTagCartao(cardId) {
+            selectedCardIdSelected = cardId;
+            atualizarTagsCartoesVisual();
+        }
+
+        function atualizarTagsCartoesVisual() {
+            const container = document.getElementById("card-tags-container");
+            if (!container) return;
+
+            const cards = financialData.creditCards || [];
+            if (!selectedCardIdSelected && cards.length > 0) {
+                selectedCardIdSelected = cards[0].id;
+            }
+
+            container.innerHTML = '';
+            cards.forEach(c => {
+                const isSelected = c.id === selectedCardIdSelected;
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = `card-pill-btn ${isSelected ? 'active' : ''}`;
+                if (isSelected) {
+                    btn.style.borderColor = c.color || 'var(--primary)';
+                    btn.style.color = c.color || 'var(--primary)';
+                }
+                btn.innerHTML = `
+                    <span class="color-dot" style="background:${c.color || 'var(--primary)'};"></span>
+                    <span>${c.name}</span>
+                    ${isSelected ? '<i class="fa-solid fa-check" style="font-size:0.65rem;"></i>' : ''}
+                `;
+                btn.onclick = () => selecionarTagCartao(c.id);
+                container.appendChild(btn);
+            });
+
+            const btnAdd = document.createElement("button");
+            btnAdd.type = "button";
+            btnAdd.className = "card-pill-btn";
+            btnAdd.style.borderStyle = "dashed";
+            btnAdd.innerHTML = `<i class="fa-solid fa-plus text-primary"></i><span>Novo</span>`;
+            btnAdd.onclick = abrirModalNovoCartao;
+            container.appendChild(btnAdd);
+        }
+
+        function desbloquearApp() {
+            sessionStorage.setItem('app_ja_desbloqueado', 'true');
+            const lock = document.getElementById("lock-screen");
+            if (lock) lock.classList.add("hidden");
+        }
+
+        function bloquearManualmente() {
+            sessionStorage.removeItem('app_ja_desbloqueado');
+            const lock = document.getElementById("lock-screen");
+            if (lock) lock.classList.remove("hidden");
+        }
+
+        function trocarAba(aba) {
+            const tabs = ['painel', 'lancar', 'cartoes', 'meses', 'mais'];
+            localStorage.setItem(CURRENT_TAB_KEY, aba);
+
+            tabs.forEach(t => {
+                const btn = document.getElementById(`btn-tab-${t}`);
+                if (btn) btn.classList.toggle('active', t === aba);
+                const pane = document.getElementById(`tab-${t}`);
+                if (pane) pane.classList.toggle('active', t === aba);
+            });
+        }
+
+        function mudarAno(delta) {
+            currentYear += delta;
+            selectedYearTabela = currentYear;
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
+            atualizarTela();
+        }
+
+        function alterarAnoDireto(novoAno) {
+            currentYear = parseInt(novoAno, 10);
+            selectedYearTabela = currentYear;
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
+            atualizarTela();
+        }
+
+        function mudarMes(delta) {
+            currentMonthNum += delta;
+            if (currentMonthNum > 12) { currentMonthNum = 1; currentYear += 1; }
+            else if (currentMonthNum < 1) { currentMonthNum = 12; currentYear -= 1; }
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
+            atualizarTela();
+        }
+
+        function alterarMesDireto(novoMes) {
+            currentMonthNum = parseInt(novoMes, 10);
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            sincronizarDataFormulario();
+            atualizarTela();
+        }
+
+        function mudarAnoTabela(delta) {
+            selectedYearTabela += delta;
+            if (selectedYearTabela < 2024) selectedYearTabela = 2024;
+            if (selectedYearTabela > 2035) selectedYearTabela = 2035;
+            popularSeletoresDeAno();
+            atualizarTela();
+        }
+
+        function alterarAnoTabela(novoAno) {
+            selectedYearTabela = parseInt(novoAno, 10);
+            atualizarTela();
+        }
+
+        function atualizarTela() {
+            const boxes = financialData.budgetBoxes || [];
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+
+            const totalVerbaCaixinhas = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+            const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            const verbaTotalMes = totalVerbaCaixinhas + receitasExtrasMes;
+
+            const despesasTotalMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
+            const sobraTotalMes = verbaTotalMes - despesasTotalMes;
+            const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
+
+            // SOMA TOTAL DAS VERBAS NO PAINEL
+            const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
+            if (bannerSomaVerbas) {
+                bannerSomaVerbas.innerText = `R$ ${totalVerbaCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            const bannerConsumoVerbas = document.getElementById("txt-consumo-total-verbas");
+            if (bannerConsumoVerbas) {
+                bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            // MINI PAINEL NA ABA LANÇAR
+            const txtLancarMesAno = document.getElementById("txt-lancar-mes-ano");
+            if (txtLancarMesAno) {
+                txtLancarMesAno.innerText = `${mesesNomes[currentMonthNum - 1]} ${currentYear}`;
+            }
+
+            const txtLancarTotalGasto = document.getElementById("txt-lancar-total-gasto");
+            if (txtLancarTotalGasto) {
+                txtLancarTotalGasto.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            const txtLancarTotalCartao = document.getElementById("txt-lancar-total-cartao");
+            if (txtLancarTotalCartao) {
+                txtLancarTotalCartao.innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            const txtLancarSobraLivre = document.getElementById("txt-lancar-sobra-livre");
+            if (txtLancarSobraLivre) {
+                txtLancarSobraLivre.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                txtLancarSobraLivre.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
+            }
+
+            // HERO CARD PAINEL
+            const heroSobra = document.getElementById("hero-sobra-livre");
+            heroSobra.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            heroSobra.style.color = sobraTotalMes >= 0 ? '#ffffff' : '#fb7185';
+
+            const percConsumido = verbaTotalMes > 0 ? Math.min(Math.round((despesasTotalMes / verbaTotalMes) * 100), 100) : 0;
+            document.getElementById("hero-percent-txt").innerText = `${percConsumido}% consumido`;
+            document.getElementById("hero-spent-txt").innerText = despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById("hero-verba-txt").innerText = verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+            const progressBar = document.getElementById("hero-progress-bar");
+            progressBar.style.width = `${percConsumido}%`;
+            
+            const badge = document.getElementById("hero-badge-status");
+            if (percConsumido >= 95) {
+                progressBar.style.background = '#f43f5e';
+                badge.innerText = '🔴 Orçamento no Limite';
+                badge.style.color = '#f43f5e';
+                badge.style.background = 'rgba(244,63,94,0.2)';
+            } else if (percConsumido >= 70) {
+                progressBar.style.background = '#f59e0b';
+                badge.innerText = '🟡 Atenção aos Gastos';
+                badge.style.color = '#f59e0b';
+                badge.style.background = 'rgba(245,158,11,0.2)';
+            } else {
+                progressBar.style.background = '#34d399';
+                badge.innerText = '🟢 Orçamento Seguro';
+                badge.style.color = '#34d399';
+                badge.style.background = 'rgba(16,185,129,0.2)';
+            }
+
+            document.getElementById("hero-verba-total-small").innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("hero-total-gasto-small").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            // TRANSBORDO ENTRE CAIXINHAS
+            const boxStats = boxes.map((box, index) => {
+                const transBox = transDoMes.filter(t => t.type === 'expense' && t.boxId === box.id);
+                const rawSpent = transBox.reduce((acc, curr) => acc + curr.value, 0);
+                const spentCard = transBox.filter(t => t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
+                const spentCash = rawSpent - spentCard;
+                return {
+                    box,
+                    index,
+                    isPrimary: index === 0,
+                    amount: box.amount || 0,
+                    rawSpent,
+                    spentCard,
+                    spentCash,
+                    spilloverReceived: 0,
+                    spilloverSent: 0
+                };
+            });
+
+            let totalExcedenteSecundarias = 0;
+            boxStats.forEach(b => {
+                if (!b.isPrimary) {
+                    if (b.rawSpent > b.amount) {
+                        b.spilloverSent = b.rawSpent - b.amount;
+                        totalExcedenteSecundarias += b.spilloverSent;
+                    }
+                }
+            });
+
+            if (boxStats.length > 0) {
+                boxStats[0].spilloverReceived = totalExcedenteSecundarias;
+            }
+
+            const semCaixinha = transDoMes.filter(t => t.type === 'expense' && !t.boxId).reduce((acc, c) => acc + c.value, 0);
+            if (boxStats.length > 0) {
+                boxStats[0].spilloverReceived += semCaixinha;
+            }
+
+            // ========================================================
+            // RENDERIZAÇÃO DAS CAIXINHAS (TIPOGRAFIA LIMPA E ALTO CONTRASTE)
+            // ========================================================
+            const boxesContainer = document.getElementById("budget-boxes-container");
+            boxesContainer.innerHTML = '';
+
+            if (boxes.length === 0) {
+                boxesContainer.innerHTML = `
+                    <div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color);">
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">Nenhuma caixinha ativa.</p>
+                        <button onclick="abrirModalNovaCaixinhaVerba()" class="btn-primary" style="padding:6px 12px; font-size:0.75rem; margin:0 auto;">+ Criar Caixinha</button>
+                    </div>
+                `;
+            } else {
+                boxStats.forEach((stat) => {
+                    const box = stat.box;
+                    let displaySpent = stat.rawSpent;
+                    let displayRemain = stat.amount - stat.rawSpent;
                     let msgTransbordo = '';
 
-                    if (!isPrimary && gastosBox > box.limit) {
-                      displaySpent = box.limit;
-                      displayRemain = 0;
-                      msgTransbordo = `<span class="text-[10px] text-amber-500 font-bold block pt-0.5">↳ Excedeu ${formatMoeda(gastosBox - box.limit)} (passou para Salário)</span>`;
+                    if (!stat.isPrimary) {
+                        if (stat.rawSpent > stat.amount) {
+                            displaySpent = stat.amount;
+                            displayRemain = 0;
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
+                        }
+                    } else {
+                        displaySpent = stat.rawSpent + stat.spilloverReceived;
+                        displayRemain = stat.amount - displaySpent;
+                        if (stat.spilloverReceived > 0) {
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu R$ ${stat.spilloverReceived.toFixed(2)} de outras verbas</span>`;
+                        }
                     }
 
-                    const percent = box.limit > 0 ? Math.min(100, Math.round((displaySpent / box.limit) * 100)) : 0;
-                    const corBarra = box.color || '#6366f1';
+                    const percBox = stat.amount > 0 ? Math.min(Math.round((displaySpent / stat.amount) * 100), 100) : 0;
+                    
+                    let corBarra = box.color || 'var(--primary)';
+                    if (displayRemain < 0) corBarra = 'var(--red)';
+                    else if (percBox >= 85) corBarra = 'var(--yellow)';
 
-                    return `
-                      <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2" style="border-left: 4px solid ${corBarra};">
-                        
-                        <!-- Linha 1: Tag e Valor Claro -->
-                        <div class="flex justify-between items-center">
-                          <span class="text-[11px] font-black px-2.5 py-0.5 rounded-lg inline-flex items-center gap-1.5" style="background-color: ${corBarra}18; color: ${corBarra}; border: 1px solid${corBarra}35;">
-                            ${box.name}
-                          </span>
-                          
-                          <div class="flex items-center gap-2">
-                            <b class="text-sm font-black text-slate-900 dark:text-slate-100">
-                              ${formatMoeda(box.limit)}
-                            </b>
-                            <button onclick="openModalEditarCaixinha('${box.id}')" class="p-1 text-slate-400 hover:text-indigo-500 text-xs cursor-pointer active:scale-95" title="Editar">
-                              ✏️
-                            </button>
-                          </div>
+                    const bElem = document.createElement("div");
+                    bElem.className = "elegant-box-card";
+                    bElem.style.borderLeft = `4px solid ${box.color || 'var(--primary)'}`;
+                    
+                    bElem.innerHTML = `
+                        <div class="elegant-box-header">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                    ${box.name}
+                                </span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <b class="elegant-box-amount">
+                                    R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                </b>
+                                <div style="display:flex; gap:3px;">
+                                    <button onclick="abrirModalEditarCaixinhaVerba('${box.id}')" class="btn-icon" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.7rem;"></i></button>
+                                    <button onclick="removerCaixinhaVerba('${box.id}')" class="btn-icon del" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.7rem;"></i></button>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Linha 2: Barra Fina -->
-                        <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                          <div class="h-full rounded-full transition-all duration-300" style="width: ${percent}\%; background-color:${corBarra};"></div>
+                        <div class="elegant-progress-track">
+                            <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px; transition:width 0.3s;"></div>
                         </div>
 
                         ${msgTransbordo}
 
-                        <!-- Linha 3: Informações Alinhadas e Botão de Gasto -->
-                        <div class="flex justify-between items-center text-[11px] font-bold pt-0.5">
-                          <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                            <span>Gasto: <b class="text-rose-500">${formatMoeda(displaySpent)}</b> (${percent}\%)</span>${spentCard > 0 ? `<span>• 💳 ${formatMoeda(spentCard)}</span>` : ''}
-                          </div>
-
-                          <div class="flex items-center gap-2">
-                            <span class="${displayRemain >= 0 ? 'text-indigo-600 dark:text-indigo-400' : 'text-rose-500'} font-black">
-                              Sobra: ${formatMoeda(displayRemain)}
-                            </span>
-                            <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-black hover:bg-indigo-50 dark:hover:bg-slate-700 cursor-pointer active:scale-95">
-                              + Gasto
+                        <div class="elegant-box-footer">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <span style="color:var(--text-muted);">
+                                    Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
+                                </span>
+                                <span style="color:var(--text-muted);">
+                                    Sobra: <b style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'};">R$ ${displayRemain.toFixed(2)}</b>
+                                </span>
+                            </div>
+                            <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="btn-box-action" title="Lançar gasto nesta verba">
+                                <i class="fa-solid fa-plus"></i> Gasto
                             </button>
-                          </div>
+                        </div>
+                    `;
+                    boxesContainer.appendChild(bElem);
+                });
+            }
+
+            // ÚLTIMOS LANÇAMENTOS NO PAINEL
+            const recentContainer = document.getElementById("painel-recent-transactions");
+            if (recentContainer) {
+                recentContainer.innerHTML = '';
+                const ultimos = transDoMes.slice(0, 3);
+                if (ultimos.length === 0) {
+                    recentContainer.innerHTML = '<span style="font-size:0.72rem; color:var(--text-muted); text-align:center; padding:6px;">Nenhum gasto neste mês.</span>';
+                } else {
+                    ultimos.forEach(t => {
+                        const boxObj = boxes.find(b => b.id === t.boxId);
+                        const boxTag = boxObj ? `<span class="tag-person" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}30;">${boxObj.name}</span>` : '';
+                        const payTag = t.payment === "Cartão de Crédito" ? '💳' : '💵';
+                        
+                        const item = document.createElement("div");
+                        item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:6px 10px; border-radius:10px; font-size:0.75rem;";
+                        item.innerHTML = `
+                            <div style="display:flex; flex-direction:column; gap:1px;">
+                                <b style="font-size:0.78rem;">${t.desc}</b>
+                                <div style="display:flex; gap:4px; align-items:center; font-size:0.65rem; color:var(--text-muted);">
+                                    ${boxTag}
+                                    <span>${payTag} ${t.date ? t.date.split('-').slice(1).reverse().join('/') : ''}</span>
+                                </div>
+                            </div>
+                            <b style="color:var(--red); font-size:0.82rem;">- R$ ${t.value.toFixed(2)}</b>
+                        `;
+                        recentContainer.appendChild(item);
+                    });
+                }
+            }
+
+            // ABA CARTÕES
+            const cards = financialData.creditCards || [];
+            document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
+
+            let totalGastoCartoesGeral = 0;
+            let totalLimiteCartoesGeral = 0;
+
+            const cardsContainer = document.getElementById("cards-container");
+            if (cardsContainer) {
+                cardsContainer.innerHTML = '';
+                if (cards.length === 0) {
+                    cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>';
+                } else {
+                    cards.forEach(card => {
+                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id))).reduce((acc, curr) => acc + curr.value, 0);
+
+                        const totalUsado = (card.initialUsed || 0) + gastosDoCartao;
+                        const limite = card.limit || 0;
+                        const limiteDisponivel = limite - totalUsado;
+                        const percConsumo = limite > 0 ? Math.min(Math.round((totalUsado / limite) * 100), 100) : 0;
+
+                        totalGastoCartoesGeral += totalUsado;
+                        totalLimiteCartoesGeral += limite;
+
+                        let corBarra = card.color || 'var(--primary)';
+                        if (percConsumo >= 90) corBarra = 'var(--red)';
+                        else if (percConsumo >= 70) corBarra = 'var(--yellow)';
+
+                        const cardElem = document.createElement("div");
+                        cardElem.className = "credit-card-widget";
+                        cardElem.style.background = `linear-gradient(135deg, ${card.color || '#1e293b'} 0%, #0f172a 100%)`;
+                        cardElem.style.borderLeft = `5px solid ${card.color || '#6366f1'}`;
+                        cardElem.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <div style="width:30px; height:20px; background:rgba(255,255,255,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                                        <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fbbf24;"></i>
+                                    </div>
+                                    <span style="font-size:0.9rem; font-weight:900;">${card.name}</span>
+                                </div>
+                                <div style="display:flex; gap:8px;">
+                                    <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
+                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
+                                </div>
+                            </div>
+
+                            <div style="margin: 4px 0;">
+                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ R$ ${gastosDoCartao.toFixed(2)} lançados neste mês` : 'Fatura atual'}</span>
+                            </div>
+
+                            <div style="display:flex; flex-direction:column; gap:4px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.85); font-weight:700;">
+                                    <span>${percConsumo}% utilizado</span>
+                                    <span>Livre: R$ ${limiteDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.15); height:6px; border-radius:6px; overflow:hidden;">
+                                    <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
+                                </div>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                                <span>Limite: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
+                            </div>
+                        `;
+                        cardsContainer.appendChild(cardElem);
+                    });
+                }
+            }
+
+            const heroTotalFaturas = document.getElementById("card-hero-total-faturas");
+            if (heroTotalFaturas) heroTotalFaturas.innerText = `R$ ${totalGastoCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const heroLimiteTotal = document.getElementById("card-hero-limite-total");
+            if (heroLimiteTotal) heroLimiteTotal.innerText = `R$ ${totalLimiteCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const heroLimiteLivre = document.getElementById("card-hero-limite-livre");
+            const limiteLivreGeral = totalLimiteCartoesGeral - totalGastoCartoesGeral;
+            if (heroLimiteLivre) heroLimiteLivre.innerText = `R$ ${limiteLivreGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const heroQtdBadge = document.getElementById("card-hero-qtd-badge");
+            if (heroQtdBadge) heroQtdBadge.innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
+
+            const heroImpacto = document.getElementById("card-hero-impacto");
+            if (heroImpacto) {
+                const percImpacto = verbaTotalMes > 0 ? Math.round((totalGastoCartoesGeral / verbaTotalMes) * 100) : 0;
+                heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
+            }
+
+            atualizarTagsCartoesVisual();
+
+            const selectBox = document.getElementById("trans-box-id");
+            if (selectBox) {
+                selectBox.innerHTML = '';
+                if (boxes.length === 0) {
+                    selectBox.innerHTML = '<option value="">Sem Caixinha</option>';
+                } else {
+                    boxes.forEach(b => {
+                        const opt = document.createElement("option");
+                        opt.value = b.id;
+                        opt.textContent = `${b.name}`;
+                        selectBox.appendChild(opt);
+                    });
+                    const optGeral = document.createElement("option");
+                    optGeral.value = "";
+                    optGeral.textContent = "Outro / Geral";
+                    selectBox.appendChild(optGeral);
+                }
+            }
+
+            const selectCat = document.getElementById("trans-category");
+            if (selectCat) {
+                selectCat.innerHTML = '<option value="">Categoria...</option>';
+                (financialData.categories || []).forEach(cat => {
+                    const opt = document.createElement("option");
+                    opt.value = cat.name; opt.textContent = cat.name;
+                    selectCat.appendChild(opt);
+                });
+            }
+
+            // EXTRATO
+            const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
+            const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
+            const listContainer = document.getElementById("transaction-list");
+            
+            if (listContainer) {
+                listContainer.innerHTML = '';
+                const filtrados = transDoMes.filter(t => {
+                    let bateTipo = true;
+                    if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
+                    const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
+                    return bateTipo && bateTexto;
+                });
+
+                if (filtrados.length === 0) {
+                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:16px;">Nenhum lançamento encontrado neste mês.</span>';
+                } else {
+                    filtrados.forEach((trans) => {
+                        const isExpense = trans.type === 'expense';
+                        const prefix = isExpense ? '- R$' : '+ R$';
+                        const valClass = isExpense ? 'expense' : 'income';
+                        const dataFormatada = trans.date ? trans.date.split('-').slice(1).reverse().join('/') : '';
+                        
+                        const boxObj = boxes.find(b => b.id === trans.boxId);
+                        const isCard = trans.payment === 'Cartão de Crédito';
+                        const iconBadge = isCard ? '💳' : '💵';
+
+                        const cardObj = cards.find(c => c.id === trans.cardId);
+                        const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:${cardObj.color || 'var(--yellow)'}; font-weight:800;">[${cardObj.name}]</span>` : '';
+
+                        const boxTagHtml = boxObj 
+                            ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}35;">${boxObj.name}</span>`
+                            : `<span class="box-pill-tag" style="background:rgba(0,0,0,0.05); color:var(--text-muted);">Geral</span>`;
+
+                        const item = document.createElement("div");
+                        item.className = "clean-statement-item";
+                        if (boxObj) {
+                            item.style.borderLeft = `3px solid ${boxObj.color}`;
+                        }
+
+                        item.innerHTML = `
+                            <div class="statement-icon-badge" title="${trans.payment}">
+                                ${iconBadge}
+                            </div>
+
+                            <div class="statement-content">
+                                <div class="statement-top-line">
+                                    <span class="statement-title" title="${trans.desc}">${trans.desc}</span>
+                                    <span class="statement-value ${valClass}">
+                                        ${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                    </span>
+                                </div>
+
+                                <div class="statement-bottom-line">
+                                    <div class="statement-meta-tags">
+                                        <span>${dataFormatada}</span>
+                                        <span>•</span>
+                                        <span>${trans.category || 'Geral'}</span>
+                                        ${cardTag ? '<span>•</span>' + cardTag : ''}
+                                        <span>•</span>
+                                        ${boxTagHtml}
+                                    </div>
+                                    <div class="statement-action-btns">
+                                        <button class="btn-mini-action" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-mini-action del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        listContainer.appendChild(item);
+                    });
+                }
+            }
+
+            // ABA MESES
+            let anoEntradasTotal = 0;
+            let anoGastosTotal = 0;
+
+            const monthsContainer = document.getElementById("months-cards-container");
+            if (monthsContainer) {
+                monthsContainer.innerHTML = '';
+
+                for (let m = 1; m <= 12; m++) {
+                    const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
+                    const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
+                    const temDados = mTrans.length > 0;
+
+                    let mInc = 0;
+                    let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
+
+                    if (temDados || selectedYearTabela >= currentYear) {
+                        const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                        mInc = totalVerbaCaixinhas + mExt;
+                    }
+
+                    const mNet = mInc - mExp;
+
+                    if (temDados || mInc > 0) {
+                        anoEntradasTotal += mInc;
+                        anoGastosTotal += mExp;
+                    }
+
+                    const isMesAtual = (selectedYearTabela === currentYear && m === currentMonthNum);
+
+                    const cardMes = document.createElement("div");
+                    cardMes.className = "month-card-item";
+                    if (isMesAtual) {
+                        cardMes.style.borderColor = "var(--primary)";
+                        cardMes.style.boxShadow = "0 0 0 1px var(--primary)";
+                    }
+
+                    let statusBadge = '';
+                    if (temDados) {
+                        statusBadge = mNet >= 0 
+                            ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(16,185,129,0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>`
+                            : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(244,63,94,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`;
+                    } else {
+                        statusBadge = `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Projetado</span>`;
+                    }
+
+                    cardMes.innerHTML = `
+                        <div class="month-name-badge">
+                            <b style="font-size:0.9rem; color:var(--text-main);">${mesesNomes[m - 1]}</b>
+                            ${statusBadge}
                         </div>
 
-                      </div>
+                        <div class="month-values-group">
+                            <div style="text-align:right;">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Gastos</span>
+                                <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'};">
+                                    ${mExp > 0 ? '- R$ ' + mExp.toFixed(0) : 'R$ 0'}
+                                </b>
+                            </div>
+                            <div style="text-align:right; min-width:75px;">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra Líquida</span>
+                                <b style="color:${mNet >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.85rem;">
+                                    R$ ${mNet.toFixed(0)}
+                                </b>
+                            </div>
+                            <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:4px 8px;">
+                                Abrir →
+                            </button>
+                        </div>
                     `;
-                  }).join('')}
-                </div>
-              </div>
-
-              <!-- 4. BLOCO HARMONIOSO DE VERBAS EXTRAS -->
-              <div class="p-3.5 rounded-2xl bg-emerald-500/5 border border-dashed border-emerald-500/30 space-y-2">
-                <div class="flex justify-between items-center">
-                  <div>
-                    <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                      <span>💵</span>
-                      <span>Verbas Extras do Mês</span>
-                    </span>
-                    <span class="text-[10px] text-slate-400 font-semibold block">13º, vendas avulsas ou bônus</span>
-                  </div>
-                  <button onclick="openModalNovaVerbaExtra()" class="px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-[10px] cursor-pointer active:scale-95 shadow-2xs">
-                    + Extra
-                  </button>
-                </div>
-
-                <div class="space-y-1.5">
-                  ${monthExtras.length === 0 ? `
-                    <div class="text-[11px] text-slate-400 font-medium py-1">Nenhuma verba extra adicionada neste mês.</div>
-                  ` : monthExtras.map(extra => `
-                    <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 flex justify-between items-center text-xs">
-                      <div>
-                        <span class="font-black text-slate-800 dark:text-slate-200 block">${extra.desc}</span>
-                        <span class="text-[10px] text-slate-400">${extra.date}</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <b class="text-emerald-500 font-black">+ ${formatMoeda(extra.value)}</b>
-                        <button onclick="removerVerbaExtra(${extra.id})" class="text-slate-400 hover:text-rose-500 cursor-pointer p-0.5">
-                          🗑️
-                        </button>
-                      </div>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-
-              <!-- 5. ÚLTIMOS LANÇAMENTOS -->
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 text-[10px]">🕒 Últimos Lançamentos</span>
-                  <button onclick="state.currentTab = 'lancar'; updateNavButtons(); render();" class="text-indigo-600 dark:text-indigo-400 font-black text-[11px] cursor-pointer">
-                    Ver extrato →
-                  </button>
-                </div>
-
-                <div class="space-y-1.5">
-                  ${monthTrans.slice(0, 3).map(t => `
-                    <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-100 dark:border-slate-800">
-                      <div>
-                        <b class="text-slate-800 dark:text-slate-200 text-xs block">${t.desc}</b>
-                        <span class="text-[10px] text-slate-400">${t.date} •${t.payment}</span>
-                      </div>
-                      <b class="text-xs ${t.type === 'despesa' ? 'text-rose-500' : 'text-emerald-500'}">
-                        ${t.type === 'despesa' ? '-' : '+'}${formatMoeda(t.value)}
-                      </b>
-                    </div>
-                  `).join('')}
-                  ${monthTrans.length === 0 ? '<div class="text-[11px] text-slate-400 text-center py-2">Nenhum lançamento neste mês.</div>' : ''}
-                </div>
-              </div>
-
-            </div>
-          `;
-        }
-
-        // DEMAIS TELAS (LANÇAR, CARTÕES, MESES, MAIS)
-        else if (state.currentTab === 'lancar') {
-          html = `
-            <div class="space-y-3.5">
-              <form id="form-lancar" class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">Novo Lançamento</span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                  <button type="button" id="btn-type-despesa" class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'despesa' ? 'bg-rose-500 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">
-                    📉 Despesa (-)
-                  </button>
-                  <button type="button" id="btn-type-receita" class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'receita' ? 'bg-emerald-500 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">
-                    📈 Receita (+)
-                  </button>
-                </div>
-
-                <input type="text" id="input-desc" placeholder="Descrição da compra (ex: Supermercado)" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none" />
-
-                <div class="grid grid-cols-2 gap-2">
-                  <input type="number" step="0.01" id="input-valor" placeholder="Valor Total R$" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none" />
-                  <select id="input-parcelas" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none">
-                    <option value="1">À vista (1x)</option>
-                    ${[2,3,4,5,6,10,12,18,24].map(n => `<option value="${n}">${n}x parcelas</option>`).join('')}
-                  </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                  <select id="input-caixinha" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100">
-                    ${boxes.map(b => `<option value="${b.id}">${b.name}</option>`).join('')}
-                  </select>
-                  <select id="input-pagamento" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100">
-                    <option value="Cartão de Crédito">💳 Cartão</option>
-                    <option value="Pix">⚡ Pix</option>
-                    <option value="Débito">💵 Débito</option>
-                  </select>
-                </div>
-
-                <div id="card-select-container">
-                  <select id="input-cartao" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100">
-                    ${(state.data.creditCards || []).map(c => `<option value="${c.id}">💳 ${c.name}</option>`).join('')}
-                  </select>
-                </div>
-
-                <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md transition-all active:scale-[0.98] cursor-pointer">
-                  Salvar Lançamento
-                </button>
-              </form>
-
-              <!-- Extrato do Mês -->
-              <div class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 text-[10px]">Extrato do Mês (${monthTrans.length})</span>
-                </div>
-                <div class="space-y-1.5 max-h-72 overflow-y-auto">
-                  ${monthTrans.map(t => `
-                    <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-100 dark:border-slate-800">
-                      <div>
-                        <b class="text-slate-800 dark:text-slate-200 block text-xs">${t.desc}</b>
-                        <span class="text-[10px] text-slate-400">${t.date} •${t.payment}</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <b class="text-xs ${t.type === 'despesa' ? 'text-rose-500' : 'text-emerald-500'}">
-                          ${t.type === 'despesa' ? '-' : '+'}${formatMoeda(t.value)}
-                        </b>
-                        <button onclick="deleteTrans(${t.id})" class="text-slate-400 hover:text-rose-500 p-0.5 cursor-pointer">🗑️</button>
-                      </div>
-                    </div>
-                  `).join('')}
-                  ${monthTrans.length === 0 ? '<div class="text-[11px] text-slate-400 text-center py-4">Nenhum lançamento neste mês.</div>' : ''}
-                </div>
-              </div>
-            </div>
-          `;
-        }
-
-        else if (state.currentTab === 'cartoes') {
-          html = `
-            <div class="space-y-3.5">
-              <div class="flex justify-between items-center px-1">
-                <span class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">💳 Seus Cartões</span>
-                <span class="text-[10px] text-slate-400 font-bold">${(state.data.creditCards || []).length} cartões</span>
-              </div>
-
-              ${(state.data.creditCards || []).map(card => {
-                const fatura = monthTrans.filter(t => t.type === 'despesa' && t.cardId === card.id).reduce((a, b) => a + (Number(b.value) || 0), 0);
-                const percent = Math.min(100, Math.round((fatura / (card.limit || 1)) * 100));
-
-                return `
-                  <div class="p-4 rounded-3xl bg-slate-900 text-white shadow-xl space-y-3 border border-slate-800">
-                    <div class="flex justify-between items-center">
-                      <b class="text-sm font-black">${card.name}</b>
-                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">${card.brand || 'Crédito'}</span>
-                    </div>
-
-                    <div>
-                      <span class="text-[10px] text-slate-400 uppercase font-bold block">Fatura Atual</span>
-                      <b class="text-xl font-black text-amber-400">${formatMoeda(fatura)}</b>
-                    </div>
-
-                    <div class="space-y-1">
-                      <div class="flex justify-between text-[10px] font-bold text-slate-400">
-                        <span>${percent}% do limite</span>
-                        <span>Limite: ${formatMoeda(card.limit)}</span>
-                      </div>
-                      <div class="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-amber-400 to-indigo-400 rounded-full" style="width: ${percent}%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          `;
-        }
-
-        else if (state.currentTab === 'meses') {
-          html = `
-            <div class="space-y-3">
-              <span class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 block px-1">📅 Panorama Anual (${state.currentYear})</span>
-              <div class="grid grid-cols-2 gap-2">
-                ${MONTHS.map((nome, idx) => {
-                  const mNum = idx + 1;
-                  const mTrans = transactions.filter(t => t.year === state.currentYear && t.month === mNum);
-                  const mRec = mTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
-                  const mDesp = mTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
-                  const mSobra = (totalVerbaFixa + mRec) - mDesp;
-                  const isCurrent = mNum === state.currentMonth;
-
-                  return `
-                    <button onclick="goToMonth(${mNum})" class="p-3 rounded-2xl border text-left cursor-pointer transition-all ${isCurrent ? 'bg-indigo-600 text-white border-indigo-700 shadow-md' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200'}">
-                      <div class="flex justify-between items-center">
-                        <b class="text-xs font-black">${nome}</b>${isCurrent ? '<span class="text-[8px] bg-white/20 px-1 rounded font-bold">Ativo</span>' : ''}
-                      </div>
-                      <div class="mt-1 text-[10px] font-bold">
-                        <span class="${isCurrent ? 'text-white/80' : 'text-slate-400'} block">Gasto: ${formatMoeda(mDesp)}</span>
-                        <span class="${isCurrent ? 'text-emerald-200' : 'text-emerald-500'} block">Sobra: ${formatMoeda(mSobra)}</span>
-                      </div>
-                    </button>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          `;
-        }
-
-        else if (state.currentTab === 'mais') {
-          html = `
-            <div class="space-y-3.5">
-              <div class="p-4 rounded-3xl bg-slate-900 text-white shadow-xl border border-slate-800 space-y-1">
-                <b class="text-sm font-black block">Central de Dados</b>
-                <span class="text-xs text-slate-400">Guarde suas informações de forma segura</span>
-              </div>
-
-              <div class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
-                <b class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Backup em Texto (1 Toque)</b>
-                <p class="text-[11px] text-slate-500 leading-relaxed">Copie o código das suas finanças para colar no WhatsApp ou bloco de notas.</p>
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                  <button onclick="copyBackup()" class="py-2.5 rounded-2xl bg-indigo-600 text-white font-black text-xs cursor-pointer active:scale-95 shadow-xs">
-                    Copiar Backup
-                  </button>
-                  <button onclick="restoreBackup()" class="py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-700 cursor-pointer active:scale-95">
-                    Restaurar
-                  </button>
-                </div>
-              </div>
-            </div>
-          `;
-        }
-
-        viewContent.innerHTML = html;
-
-        // Binds da aba Lançar
-        if (state.currentTab === 'lancar') {
-          const form = document.getElementById('form-lancar');
-          const btnDesp = document.getElementById('btn-type-despesa');
-          const btnRec = document.getElementById('btn-type-receita');
-          const inputPagamento = document.getElementById('input-pagamento');
-          const cardContainer = document.getElementById('card-select-container');
-
-          if (btnDesp && btnRec) {
-            btnDesp.addEventListener('click', () => {
-              state.newTransType = 'despesa';
-              btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-rose-500 text-white shadow-md transition-all cursor-pointer';
-              btnRec.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
-            });
-            btnRec.addEventListener('click', () => {
-              state.newTransType = 'receita';
-              btnRec.className = 'py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-md transition-all cursor-pointer';
-              btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
-            });
-          }
-
-          if (inputPagamento && cardContainer) {
-            inputPagamento.addEventListener('change', () => {
-              cardContainer.style.display = inputPagamento.value === 'Cartão de Crédito' ? 'block' : 'none';
-            });
-          }
-
-          if (form) {
-            form.addEventListener('submit', (e) => {
-              e.preventDefault();
-              const desc = document.getElementById('input-desc').value.trim();
-              const val = parseFloat(document.getElementById('input-valor').value);
-              const parcelas = parseInt(document.getElementById('input-parcelas').value, 10) || 1;
-              const boxId = document.getElementById('input-caixinha').value;
-              const payment = document.getElementById('input-pagamento').value;
-              const cardId = document.getElementById('input-cartao')?.value;
-
-              if (!desc || isNaN(val) || val <= 0) return alert('Informe descrição e valor válidos!');
-
-              const valorPorParcela = +(val / parcelas).toFixed(2);
-              for (let i = 0; i < parcelas; i++) {
-                let lancMes = state.currentMonth + i;
-                let lancAno = state.currentYear;
-                while (lancMes > 12) {
-                  lancMes -= 12;
-                  lancAno++;
+                    monthsContainer.appendChild(cardMes);
                 }
-                state.data.transactions.unshift({
-                  id: Date.now() + i,
-                  desc: parcelas > 1 ? `${desc} (${i + 1}/${parcelas})` : desc,
-                  value: valorPorParcela,
-                  type: state.newTransType,
-                  boxId,
-                  category: 'Geral',
-                  payment,
-                  cardId: payment === 'Cartão de Crédito' ? cardId : undefined,
-                  date: new Date().toISOString().slice(0, 10),
-                  year: lancAno,
-                  month: lancMes
+            }
+
+            const anoSaldoAcumulado = anoEntradasTotal - anoGastosTotal;
+            const elemSaldoAcum = document.getElementById("txt-ano-saldo-acumulado");
+            if (elemSaldoAcum) {
+                elemSaldoAcum.innerText = `R$ ${anoSaldoAcumulado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                elemSaldoAcum.style.color = anoSaldoAcumulado >= 0 ? "#34d399" : "#fb7185";
+            }
+
+            const elemEntradasTotal = document.getElementById("txt-ano-entradas-total");
+            if (elemEntradasTotal) elemEntradasTotal.innerText = `R$ ${anoEntradasTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+
+            const elemGastosTotal = document.getElementById("txt-ano-gastos-total");
+            if (elemGastosTotal) elemGastosTotal.innerText = `R$ ${anoGastosTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+
+            // RESERVAS
+            const goalsContainer = document.getElementById("goals-list");
+            if (goalsContainer) {
+                goalsContainer.innerHTML = '';
+                if ((financialData.goals || []).length === 0) {
+                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma caixinha de reserva criada.</span>';
+                } else {
+                    (financialData.goals || []).forEach((goal) => {
+                        const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
+                        const gItem = document.createElement("div");
+                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
+                        gItem.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700;">
+                                <span>${goal.name}</span>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                                    <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
+                                    <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
+                                </div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
+                                <div style="width:${perc}%; height:100%; background:var(--primary);"></div>
+                            </div>
+                            <div style="display:flex; gap:6px; margin-top:4px;">
+                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                            </div>
+                        `;
+                        goalsContainer.appendChild(gItem);
+                    });
+                }
+            }
+
+            // INVESTIMENTOS
+            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
+            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
+            const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
+
+            const cardTotInv = document.getElementById("card-total-invested");
+            if (cardTotInv) cardTotInv.innerText = `R$ ${totalGeralInvest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const cardXp = document.getElementById("card-xp-total");
+            if (cardXp) cardXp.innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const cardBin = document.getElementById("card-binance-total");
+            if (cardBin) cardBin.innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const investList = document.getElementById("investment-list");
+            if (investList) {
+                investList.innerHTML = '';
+                (financialData.investments || []).forEach((inv) => {
+                    const item = document.createElement("div");
+                    item.className = "item-card";
+                    item.innerHTML = `
+                        <div class="item-info">
+                            <span class="item-title">${inv.asset}</span>
+                            <span class="item-meta">${inv.platform} • ${inv.type}</span>
+                        </div>
+                        <div class="item-right">
+                            <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                            <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    investList.appendChild(item);
                 });
-              }
-
-              saveData();
-              showToast('Lançamento salvo com sucesso!');
-              render();
-            });
-          }
+            }
         }
-      }
 
-      window.goToMonth = function (m) {
-        state.currentMonth = m;
-        state.currentTab = 'painel';
-        localStorage.setItem(CURRENT_TAB_KEY, 'painel');
-        updateNavButtons();
-        render();
-      };
+        function selecionarMesEAbrirAno(ano, mes) {
+            currentYear = ano;
+            currentMonthNum = mes;
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
+            trocarAba('painel');
+            atualizarTela();
+        }
 
-      updateNavButtons();
-      render();
-    })();
-  </script>
+        function lancarDiretoNaCaixinha(boxId) {
+            trocarAba('lancar');
+            const select = document.getElementById("trans-box-id");
+            if (select) select.value = boxId;
+        }
+
+        function lancarDiretoNoCartao(cardId) {
+            trocarAba('lancar');
+            document.getElementById("trans-payment").value = "Cartão de Crédito";
+            verificarExibicaoCartao("Cartão de Crédito");
+            selecionarTagCartao(cardId);
+        }
+
+        // --- CARTÕES DE CRÉDITO ---
+        function abrirModalNovoCartao() {
+            abrirModal("Adicionar Novo Cartão", `
+                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Itaú, Bradesco, Amazon, Samsung...):</label>
+                <input type="text" id="new-card-name" placeholder="Nome do Cartão">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
+                <input type="number" id="new-card-limit" step="100" placeholder="Ex: 5000">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
+                <input type="number" id="new-card-initial" step="50" value="0" placeholder="Ex: 0 se fatura zerada">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
+                <input type="color" id="new-card-color" value="#334155" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("new-card-name").value.trim();
+                const limit = parseFloat(document.getElementById("new-card-limit").value);
+                const initialUsed = parseFloat(document.getElementById("new-card-initial").value) || 0;
+                const color = document.getElementById("new-card-color").value;
+
+                if (!name || isNaN(limit) || limit <= 0) {
+                    alert("Informe o nome e um limite válido.");
+                    return;
+                }
+
+                if (!financialData.creditCards) financialData.creditCards = [];
+                const novoCartao = {
+                    id: "card_" + Date.now(),
+                    name,
+                    limit,
+                    initialUsed,
+                    color
+                };
+                financialData.creditCards.push(novoCartao);
+                selectedCardIdSelected = novoCartao.id;
+
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
+        function abrirModalEditarCartao(cardId) {
+            const card = (financialData.creditCards || []).find(c => c.id === cardId);
+            if (!card) return;
+
+            abrirModal("Editar Cartão", `
+                <label class="text-xs text-gray-500 font-bold">Nome do Cartão:</label>
+                <input type="text" id="edit-card-name" value="${card.name}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
+                <input type="number" id="edit-card-limit" step="100" value="${card.limit}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
+                <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
+                <input type="color" id="edit-card-color" value="${card.color || '#334155'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("edit-card-name").value.trim();
+                const limit = parseFloat(document.getElementById("edit-card-limit").value);
+                const initialUsed = parseFloat(document.getElementById("edit-card-initial").value) || 0;
+                const color = document.getElementById("edit-card-color").value;
+
+                if (name && !isNaN(limit)) {
+                    card.name = name;
+                    card.limit = limit;
+                    card.initialUsed = initialUsed;
+                    card.color = color;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function removerCartao(cardId) {
+            const card = (financialData.creditCards || []).find(c => c.id === cardId);
+            if (!card) return;
+            if (confirm(`Tem certeza que deseja excluir o cartão "${card.name}"?`)) {
+                financialData.creditCards = financialData.creditCards.filter(c => c.id !== cardId);
+                if (selectedCardIdSelected === cardId) {
+                    selectedCardIdSelected = null;
+                }
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        // --- CAIXINHAS DE VERBA ---
+        function abrirModalNovaCaixinhaVerba() {
+            abrirModal("Criar Nova Caixinha de Verba", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
+                <input type="text" id="new-box-name" placeholder="Ex: Renda Extra, Outros">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
+                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
+                <input type="color" id="new-box-color" value="#3b82f6" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("new-box-name").value.trim();
+                const amount = parseFloat(document.getElementById("new-box-amount").value);
+                const color = document.getElementById("new-box-color").value;
+
+                if (!name || isNaN(amount) || amount < 0) {
+                    alert("Informe um nome e um valor válido.");
+                    return;
+                }
+
+                if (!financialData.budgetBoxes) financialData.budgetBoxes = [];
+                financialData.budgetBoxes.push({
+                    id: "box_" + Date.now(),
+                    name,
+                    amount,
+                    color
+                });
+
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
+        function abrirModalEditarCaixinhaVerba(boxId) {
+            const box = financialData.budgetBoxes.find(b => b.id === boxId);
+            if (!box) return;
+
+            abrirModal("Editar Caixinha de Verba", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
+                <input type="text" id="edit-box-name" value="${box.name}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
+                <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#3b82f6'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("edit-box-name").value.trim();
+                const amount = parseFloat(document.getElementById("edit-box-amount").value);
+                const color = document.getElementById("edit-box-color").value;
+
+                if (name && !isNaN(amount)) {
+                    box.name = name;
+                    box.amount = amount;
+                    box.color = color;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function removerCaixinhaVerba(boxId) {
+            const box = financialData.budgetBoxes.find(b => b.id === boxId);
+            if (!box) return;
+            if (confirm(`Tem certeza que deseja excluir a caixinha "${box.name}"?`)) {
+                financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        // --- LANÇAMENTOS ---
+        function adicionarTransacao() {
+            const type = selectedTransactionType;
+            const desc = document.getElementById("trans-desc").value.trim();
+            const inputVal = parseFloat(document.getElementById("trans-value").value);
+            const modo = selectedCalcMode;
+            const category = document.getElementById("trans-category").value;
+            const boxId = document.getElementById("trans-box-id").value;
+            const payment = document.getElementById("trans-payment").value;
+            const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
+            const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
+            const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
+
+            if (!desc || isNaN(inputVal) || inputVal <= 0) {
+                alert("Preencha a descrição e um valor numérico válido.");
+                return;
+            }
+
+            let valorParcela = 0;
+            if (modo === "parcela") {
+                valorParcela = inputVal;
+            } else {
+                valorParcela = inputVal / installments;
+            }
+
+            const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
+
+            for (let i = 0; i < installments; i++) {
+                let m = mesBase + i; let a = anoBase;
+                while (m > 12) { m -= 12; a += 1; }
+                const mKey = `${a}-${String(m).padStart(2, '0')}`;
+                
+                const ultimoDiaDesseMes = new Date(a, m, 0).getDate();
+                const diaAjustado = Math.min(diaBase, ultimoDiaDesseMes);
+                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaAjustado).padStart(2, '0')}`;
+                
+                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parcela)` : desc;
+
+                financialData.transactions.unshift({
+                    id: Date.now() + i,
+                    type,
+                    desc: descricaoFinal,
+                    value: valorParcela,
+                    category: category || "Geral",
+                    boxId: boxId || null,
+                    cardId: cardId || null,
+                    payment,
+                    date: dataParcela,
+                    monthKey: mKey
+                });
+            }
+
+            document.getElementById("trans-desc").value = '';
+            document.getElementById("trans-value").value = '';
+            document.getElementById("trans-installments-num").value = '1';
+            calcularResumoParcelas();
+            salvarDados();
+            
+            atualizarTela();
+            alert("Lançamento salvo com sucesso!");
+        }
+
+        function abrirModalEditarTransacao(id) {
+            const t = financialData.transactions.find(x => x.id === id);
+            if (!t) return;
+
+            let optionsCaixinhas = '<option value="">Sem caixinha (Geral)</option>';
+            (financialData.budgetBoxes || []).forEach(b => {
+                optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
+            });
+
+            let optionsCartoes = '<option value="">Sem cartão específico</option>';
+            (financialData.creditCards || []).forEach(c => {
+                optionsCartoes += `<option value="${c.id}" ${t.cardId === c.id ? 'selected' : ''}>${c.name}</option>`;
+            });
+
+            let optionsCategorias = '<option value="">Sem categoria</option>';
+            (financialData.categories || []).forEach(c => {
+                optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
+            });
+
+            abrirModal("Editar Lançamento", `
+                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
+                <input type="text" id="edit-trans-desc" value="${t.desc}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor da Parcela/Mês (R$):</label>
+                <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Tipo:</label>
+                <select id="edit-trans-type">
+                    <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
+                    <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Data:</label>
+                <input type="date" id="edit-trans-date" value="${t.date || ''}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Pagamento:</label>
+                <select id="edit-trans-payment">
+                    <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
+                    <option value="Dinheiro/Caixa" ${t.payment === 'Dinheiro/Caixa' ? 'selected' : ''}>💵 Dinheiro / Débito / Pix</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Cartão Vinculado:</label>
+                <select id="edit-trans-card">${optionsCartoes}</select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
+                <select id="edit-trans-box">${optionsCaixinhas}</select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Categoria:</label>
+                <select id="edit-trans-cat">${optionsCategorias}</select>
+            `, () => {
+                const desc = document.getElementById("edit-trans-desc").value.trim();
+                const val = parseFloat(document.getElementById("edit-trans-val").value);
+                const type = document.getElementById("edit-trans-type").value;
+                const date = document.getElementById("edit-trans-date").value;
+                const payment = document.getElementById("edit-trans-payment").value;
+                const cardId = document.getElementById("edit-trans-card").value;
+                const boxId = document.getElementById("edit-trans-box").value;
+                const cat = document.getElementById("edit-trans-cat").value;
+
+                if (!desc || isNaN(val) || val <= 0) {
+                    alert("Dados inválidos.");
+                    return;
+                }
+
+                t.desc = desc;
+                t.value = val;
+                t.type = type;
+                t.date = date;
+                if (date) {
+                    const parts = date.split('-');
+                    t.monthKey = `${parts[0]}-${parts[1]}`;
+                }
+                t.payment = payment;
+                t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
+                t.boxId = boxId || null;
+                t.category = cat || "Geral";
+
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
+        function removerTransacao(id) {
+            if (confirm("Deseja realmente excluir este lançamento?")) {
+                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        function abrirModalPagarFatura() {
+            const cards = financialData.creditCards || [];
+            let optionsCartoes = '<option value="all">Todos os Cartões</option>';
+            cards.forEach(c => {
+                optionsCartoes += `<option value="${c.id}">${c.name}</option>`;
+            });
+
+            abrirModal("Abater ou Pagar Fatura", `
+                <p class="text-xs text-gray-500 mb-2">Informe o valor que você quer pagar da fatura para liberar seu limite:</p>
+                <label class="text-xs text-gray-500 font-bold">Escolha o Cartão:</label>
+                <select id="modal-pay-card-id">${optionsCartoes}</select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Pago / Abatido (R$):</label>
+                <input type="number" id="input-modal-fatura" step="0.01" placeholder="Ex: 500.00">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-fatura").value);
+                const cardId = document.getElementById("modal-pay-card-id").value;
+
+                if (!isNaN(val) && val > 0) {
+                    if (cardId === "all") {
+                        cards.forEach(c => {
+                            if (c.initialUsed > 0) {
+                                const abat = Math.min(c.initialUsed, val);
+                                c.initialUsed -= abat;
+                            }
+                        });
+                    } else {
+                        const targetCard = cards.find(c => c.id === cardId);
+                        if (targetCard) {
+                            targetCard.initialUsed = Math.max(0, (targetCard.initialUsed || 0) - val);
+                        }
+                    }
+                    financialData.cash -= val;
+                    salvarDados();
+                    atualizarTela();
+                    alert("Fatura abatida com sucesso!");
+                }
+            });
+        }
+
+        // --- BACKUP EM TEXTO ---
+        function copiarBackupTexto() {
+            const texto = JSON.stringify(financialData);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(texto).then(() => {
+                    alert("✅ Backup copiado! Agora você pode abrir o WhatsApp ou Bloco de Notas e colar lá para guardar.");
+                }).catch(() => fallbackCopiar(texto));
+            } else {
+                fallbackCopiar(texto);
+            }
+        }
+
+        function fallbackCopiar(texto) {
+            abrirModal("Seu Código de Backup", `
+                <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo e guarde no seu WhatsApp:</p>
+                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;" readonly>${texto}</textarea>
+            `, () => {});
+        }
+
+        function abrirModalRestaurarTexto() {
+            abrirModal("Restaurar Dados em Texto", `
+                <p class="text-xs text-gray-500 mb-2">Cole aqui o código que você salvou no WhatsApp ou Bloco de Notas:</p>
+                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;"></textarea>
+            `, () => {
+                const input = document.getElementById("txt-restore-input").value.trim();
+                if (!input) return;
+                try {
+                    const parsed = JSON.parse(input);
+                    if (parsed && typeof parsed === 'object') {
+                        financialData = parsed;
+                        salvarDados();
+                        atualizarTela();
+                        alert("🎉 Dados restaurados com sucesso!");
+                    } else {
+                        alert("Código inválido.");
+                    }
+                } catch (e) {
+                    alert("O texto colado não é um backup válido.");
+                }
+            });
+        }
+
+        // --- RESERVAS ---
+        function abrirModalNovaMeta() {
+            abrirModal("Nova Caixinha de Reserva", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
+                <input type="text" id="new-goal-name" placeholder="Ex: Reserva Emergência, Carro...">
+                
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Total Pretendido (R$):</label>
+                <input type="number" id="new-goal-target" placeholder="Ex: 5000">
+            `, () => {
+                const name = document.getElementById("new-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("new-goal-target").value);
+                if (name && !isNaN(target) && target > 0) {
+                    if (!financialData.goals) financialData.goals = [];
+                    financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalEditarMeta(id) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal("Editar Reserva", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
+                <input type="text" id="edit-goal-name" value="${goal.name}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
+                <input type="number" id="edit-goal-target" value="${goal.target}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Já Guardado (R$):</label>
+                <input type="number" id="edit-goal-current" value="${goal.current}">
+            `, () => {
+                const name = document.getElementById("edit-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("edit-goal-target").value);
+                const current = parseFloat(document.getElementById("edit-goal-current").value);
+
+                if (name && !isNaN(target) && !isNaN(current)) {
+                    goal.name = name;
+                    goal.target = target;
+                    goal.current = current;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function removerMeta(id) {
+            if (confirm("Deseja realmente remover esta reserva?")) {
+                financialData.goals = financialData.goals.filter(g => g.id !== id);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        function abrirModalCaixinha(id, tipo) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
+                <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
+                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
+                if (!isNaN(val) && val > 0) {
+                    if (tipo === 'guardar') {
+                        financialData.cash -= val;
+                        goal.current += val;
+                    } else {
+                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
+                        goal.current -= val;
+                        financialData.cash += val;
+                    }
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        // --- CATEGORIAS ---
+        function abrirModalNovaCategoria() {
+            abrirModal("Criar Nova Categoria", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Categoria:</label>
+                <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer...">
+            `, () => {
+                const name = document.getElementById("modal-cat-name").value.trim();
+                if (name) {
+                    if (!financialData.categories) financialData.categories = [];
+                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit: 0 });
+                    salvarDados();
+                    atualizarTela();
+                    const sel = document.getElementById("trans-category");
+                    if (sel) sel.value = name;
+                }
+            });
+        }
+
+        // --- INVESTIMENTOS ---
+        function adicionarInvestimento() {
+            const platform = document.getElementById("invest-platform").value;
+            const type = document.getElementById("invest-type").value;
+            const asset = document.getElementById("invest-asset").value.trim();
+            const value = parseFloat(document.getElementById("invest-value").value);
+            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
+
+            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
+            document.getElementById("invest-asset").value = '';
+            document.getElementById("invest-value").value = '';
+            salvarDados();
+            atualizarTela();
+        }
+
+        function removerInvestimento(id) {
+            financialData.investments = financialData.investments.filter(i => i.id !== id);
+            salvarDados();
+            atualizarTela();
+        }
+
+        function limparTodosDados() {
+            if (confirm("Tem certeza que deseja zerar todos os lançamentos e restaurar o app limpo?")) {
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                alert("Aplicativo reiniciado com sucesso.");
+            }
+        }
+
+        // --- MODAL ---
+        function abrirModal(titulo, htmlBody, callbackConfirm) {
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-body").innerHTML = htmlBody;
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            confirmBtn.onclick = () => {
+                callbackConfirm();
+                fecharModal();
+            };
+            document.getElementById("app-modal").classList.add("active");
+        }
+
+        function fecharModal() {
+            document.getElementById("app-modal").classList.remove("active");
+        }
+
+        function alternarTema() { document.body.classList.toggle("dark-mode"); }
+    </script>
 </body>
 </html>
