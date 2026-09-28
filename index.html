@@ -41,7 +41,7 @@
 
         body.dark-mode {
             --primary: #818cf8;
-            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            --primary-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
             --bg-color: #070a14;
             --card-bg: #0f172a;
             --text-main: #f8fafc;
@@ -904,6 +904,13 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
+        // --- MANTER SESSÃO ATIVA (NÃO FECHA NEM PEDE DIGITAL ENQUANTO O APP ESTIVER ABERTO) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
+                document.getElementById("lock-screen").classList.add("hidden");
+            }
+        });
+
         // --- INSTALAÇÃO PWA REAL ---
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -956,16 +963,21 @@
                 status.textContent = "Acesso liberado!";
                 status.className = "text-xs text-emerald-400 font-bold";
 
+                // Salva na sessão que já foi desbloqueado para não pedir mais enquanto navegar
+                sessionStorage.setItem('app_ja_desbloqueado', 'true');
+
                 setTimeout(() => {
                     document.getElementById("lock-screen").classList.add("hidden");
                 }, 400);
 
             } catch (error) {
+                sessionStorage.setItem('app_ja_desbloqueado', 'true');
                 document.getElementById("lock-screen").classList.add("hidden");
             }
         }
 
         function bloquearManualmente() {
+            sessionStorage.removeItem('app_ja_desbloqueado');
             document.getElementById("lock-screen").classList.remove("hidden");
         }
 
