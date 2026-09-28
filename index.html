@@ -306,7 +306,9 @@
             align-items: center;
         }
 
-        /* CAIXINHAS NO PAINEL */
+        /* ========================================================
+           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
+           ======================================================== */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -324,40 +326,43 @@
             gap: 10px;
         }
 
-        .elegant-box-card {
+        .box-clean-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 18px;
-            padding: 14px;
+            padding: 14px 16px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             position: relative;
         }
 
-        .elegant-box-header {
+        .box-clean-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .box-badge-tag {
-            font-size: 0.65rem;
+        .box-clean-tag {
+            font-size: 0.68rem;
             font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 8px;
-            letter-spacing: 0.3px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            letter-spacing: 0.2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .elegant-box-amount {
+        .box-clean-amount {
             font-size: 1.25rem;
             font-weight: 900;
             color: var(--text-main);
-            letter-spacing: -0.3px;
+            letter-spacing: -0.4px;
         }
 
-        .elegant-progress-track {
+        .box-clean-track {
             background: rgba(0, 0, 0, 0.05);
             height: 6px;
             border-radius: 6px;
@@ -365,15 +370,21 @@
             width: 100%;
         }
 
-        body.dark-mode .elegant-progress-track { background: rgba(255, 255, 255, 0.08); }
+        body.dark-mode .box-clean-track { background: rgba(255, 255, 255, 0.08); }
 
-        .elegant-box-footer {
+        .box-clean-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.72rem;
             font-weight: 700;
             padding-top: 2px;
+        }
+
+        .box-clean-footer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .btn-box-action {
@@ -899,9 +910,7 @@
             font-weight: 800;
         }
 
-        /* ========================================================
-           NOVO DESIGN DA ABA MAIS (MODERNA E FINTECH)
-           ======================================================== */
+        /* ABA MAIS */
         .modern-profile-banner {
             background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
             color: white;
@@ -1057,7 +1066,7 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL COM CAIXINHAS E NOVO ESPAÇO DE VERBAS EXTRAS -->
+            <!-- TELA 1: PAINEL COM CAIXINHAS FORMATADAS E CORES CONTRASTADAS -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
@@ -1171,7 +1180,6 @@
                         </button>
                     </div>
 
-                    <!-- Lista dinâmica de verbas extras do mês -->
                     <div id="extra-income-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
@@ -1394,10 +1402,8 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (TOTALMENTE MODERNIZADA E PREMIUM) -->
+            <!-- TELA 5: MAIS (FINTECH PREMIUM) -->
             <div id="tab-mais" class="tab-pane">
-                
-                <!-- BANNER DE PERFIL E SISTEMA -->
                 <div class="modern-profile-banner">
                     <div>
                         <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle</h3>
@@ -1410,7 +1416,6 @@
                     </div>
                 </div>
 
-                <!-- 1. BACKUP DESCOMPLICADO -->
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
@@ -1430,7 +1435,6 @@
                     </div>
                 </div>
 
-                <!-- 2. GESTÃO DE CATEGORIAS E TETOS -->
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
@@ -1443,7 +1447,6 @@
                     <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <!-- 3. CAIXINHAS DE RESERVA -->
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
@@ -1456,7 +1459,6 @@
                     <div class="list-container" id="goals-list" style="max-height:220px;"></div>
                 </div>
 
-                <!-- 4. ATIVOS E INVESTIMENTOS -->
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
@@ -1474,7 +1476,6 @@
                     <div class="list-container" id="investment-list" style="max-height:160px; margin-top:4px;"></div>
                 </div>
 
-                <!-- 5. OPÇÕES DO SISTEMA -->
                 <div class="modern-action-card" style="border-color:rgba(244,63,94,0.25);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
@@ -1486,7 +1487,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -1505,7 +1505,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v31_extra_income";
+        const STORAGE_KEY = "financas_pro_v32_modern_panel";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1539,7 +1539,7 @@
             ],
             transactions: [],
             monthIncomes: {},
-            extraIncomes: [], // Lista de verbas extras esporádicas do mês
+            extraIncomes: [],
             goals: [
                 { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
             ],
@@ -1549,6 +1549,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v31_extra_income",
                 "financas_pro_v30_clean_real",
                 "financas_pro_v29_box_elegance",
                 "financas_pro_v28_future_years",
@@ -1840,7 +1841,6 @@
             return totalBaseCaixinhas;
         }
 
-        // --- SISTEMA DE VERBAS EXTRAS DO MÊS ---
         function abrirModalNovaVerbaExtra() {
             abrirModal("Adicionar Verba Extra no Mês", `
                 <label class="text-xs text-gray-500 font-bold">Descrição da Verba (ex: 13º Salário, Venda...):</label>
@@ -1910,7 +1910,6 @@
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
             const extrasDoMes = (financialData.extraIncomes || []).filter(e => e.monthKey === selectedMonthKey);
 
-            // Soma das caixinhas fixas + verbas extras adicionadas
             const totalVerbaCaixinhasBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
             const verbaCadastradaMes = obterVerbaDoMes(selectedMonthKey, totalVerbaCaixinhasBase);
             const totalExtrasValor = extrasDoMes.reduce((acc, curr) => acc + curr.value, 0);
@@ -1933,7 +1932,7 @@
                 bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             }
 
-            // LISTA DE VERBAS EXTRAS NO PAINEL
+            // LISTA DE VERBAS EXTRAS
             const extraListContainer = document.getElementById("extra-income-list");
             if (extraListContainer) {
                 extraListContainer.innerHTML = '';
@@ -2053,7 +2052,9 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // CAIXINHAS NO PAINEL COM DESIGN ELEGANTE
+            // ========================================================
+            // RENDERIZAÇÃO LIMPA E ELEGANTE DAS CAIXINHAS (ALTO CONTRASTE)
+            // ========================================================
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -2092,18 +2093,16 @@
                     else if (percBox >= 85) corBarra = 'var(--yellow)';
 
                     const bElem = document.createElement("div");
-                    bElem.className = "elegant-box-card";
+                    bElem.className = "box-clean-card";
                     bElem.style.borderLeft = `4px solid ${box.color || 'var(--primary)'}`;
                     
                     bElem.innerHTML = `
-                        <div class="elegant-box-header">
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
-                                    ${box.name}
-                                </span>
-                            </div>
+                        <div class="box-clean-header">
+                            <span class="box-clean-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                <i class="fa-solid fa-wallet" style="font-size:0.65rem;"></i> ${box.name}
+                            </span>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <b class="elegant-box-amount">
+                                <b class="box-clean-amount">
                                     R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </b>
                                 <div style="display:flex; gap:3px;">
@@ -2113,14 +2112,14 @@
                             </div>
                         </div>
 
-                        <div class="elegant-progress-track">
+                        <div class="box-clean-track">
                             <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px; transition:width 0.3s;"></div>
                         </div>
 
                         ${msgTransbordo}
 
-                        <div class="elegant-box-footer">
-                            <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="box-clean-footer">
+                            <div class="box-clean-footer-info">
                                 <span style="color:var(--text-muted);">
                                     Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
                                 </span>
@@ -3171,4 +3170,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-    </html>
+</html>
