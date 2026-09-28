@@ -306,9 +306,6 @@
             align-items: center;
         }
 
-        /* ========================================================
-           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
-           ======================================================== */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -393,7 +390,6 @@
         }
         .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
-        /* DEMAIS COMPONENTES */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -823,6 +819,7 @@
             border-radius: 50%;
         }
 
+        /* ABA MESES */
         .year-selector-header {
             display: flex;
             justify-content: space-between;
@@ -867,13 +864,13 @@
             display: flex;
             flex-direction: column;
             gap: 1px;
-            min-width: 65px;
+            min-width: 75px;
         }
 
         .month-values-group {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-size: 0.75rem;
             font-weight: 800;
         }
@@ -1301,7 +1298,7 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES -->
+            <!-- TELA 4: MESES REAL E SEM VALORES INVENTADOS -->
             <div id="tab-meses" class="tab-pane">
                 <div class="year-selector-header">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
@@ -1315,7 +1312,7 @@
 
                 <div class="year-summary-card">
                     <div>
-                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Anual Acumulado</span>
+                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Real Acumulado</span>
                         <b id="txt-ano-saldo-acumulado" style="font-size:1.35rem; font-weight:900;">R$ 0,00</b>
                     </div>
                     <div style="text-align:right; font-size:0.72rem;">
@@ -1414,7 +1411,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v29_box_elegance";
+        const STORAGE_KEY = "financas_pro_v30_clean_real";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1447,6 +1444,7 @@
                 { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
             ],
             transactions: [],
+            monthIncomes: {}, // Permite editar a verba específica de qualquer mês passado ou futuro
             goals: [
                 { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
             ],
@@ -1456,6 +1454,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v29_box_elegance",
                 "financas_pro_v28_future_years",
                 "financas_pro_v27_boxes_redesign",
                 "financas_pro_v26_complete_dash",
@@ -1496,6 +1495,7 @@
                             creditCards: cartoes,
                             categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                             transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+                            monthIncomes: (parsed.monthIncomes && typeof parsed.monthIncomes === 'object') ? parsed.monthIncomes : {},
                             goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                             investments: Array.isArray(parsed.investments) ? parsed.investments : []
                         };
@@ -1736,22 +1736,50 @@
             atualizarTela();
         }
 
+        function obterVerbaDoMes(mKey, totalBaseCaixinhas) {
+            if (financialData.monthIncomes && typeof financialData.monthIncomes[mKey] === 'number') {
+                return financialData.monthIncomes[mKey];
+            }
+            return totalBaseCaixinhas;
+        }
+
+        function abrirModalEditarVerbaMes(mKey, mesNome, ano) {
+            const boxes = financialData.budgetBoxes || [];
+            const totalBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+            const atual = obterVerbaDoMes(mKey, totalBase);
+
+            abrirModal(`Editar Verba de ${mesNome} / ${ano}`, `
+                <p class="text-xs text-gray-500 mb-2">Defina quanto você recebeu ou planeja receber neste mês específico (sem alterar os outros meses):</p>
+                <label class="text-xs text-gray-500 font-bold">Verba Total do Mês (R$):</label>
+                <input type="number" id="input-edit-verba-mes" step="50" value="${atual}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-edit-verba-mes").value);
+                if (!isNaN(val) && val >= 0) {
+                    if (!financialData.monthIncomes) financialData.monthIncomes = {};
+                    financialData.monthIncomes[mKey] = val;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
         function atualizarTela() {
             const boxes = financialData.budgetBoxes || [];
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
-            const totalVerbaCaixinhas = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+            const totalVerbaCaixinhasBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+            const verbaCadastradaMes = obterVerbaDoMes(selectedMonthKey, totalVerbaCaixinhasBase);
             const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            const verbaTotalMes = totalVerbaCaixinhas + receitasExtrasMes;
+            const verbaTotalMes = verbaCadastradaMes + receitasExtrasMes;
 
             const despesasTotalMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // SOMA TOTAL DAS VERBAS NO PAINEL
+            // BANNER NO PAINEL
             const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
             if (bannerSomaVerbas) {
-                bannerSomaVerbas.innerText = `R$ ${totalVerbaCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                bannerSomaVerbas.innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             }
 
             const bannerConsumoVerbas = document.getElementById("txt-consumo-total-verbas");
@@ -1854,9 +1882,7 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // ========================================================
-            // RENDERIZAÇÃO DAS CAIXINHAS (TIPOGRAFIA LIMPA E ALTO CONTRASTE)
-            // ========================================================
+            // CAIXINHAS NO PAINEL COM DESIGN ELEGANTE
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -2165,7 +2191,9 @@
                 }
             }
 
-            // ABA MESES
+            // ========================================================
+            // ABA MESES REAL (SEM PROJEÇÃO FORÇADA OU DADOS FALSOS)
+            // ========================================================
             let anoEntradasTotal = 0;
             let anoGastosTotal = 0;
 
@@ -2176,19 +2204,23 @@
                 for (let m = 1; m <= 12; m++) {
                     const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
                     const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                    const temDados = mTrans.length > 0;
+                    
+                    const temTransacoes = mTrans.length > 0;
+                    const temVerbaDefinida = financialData.monthIncomes && typeof financialData.monthIncomes[mKey] === 'number';
 
+                    // Só exibe valores caso o usuário tenha lançado dados ou definido a verba desse mês
                     let mInc = 0;
                     let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
 
-                    if (temDados || selectedYearTabela >= currentYear) {
+                    if (temTransacoes || temVerbaDefinida || (selectedYearTabela === currentYear && m === currentMonthNum)) {
                         const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
-                        mInc = totalVerbaCaixinhas + mExt;
+                        const verbaBase = obterVerbaDoMes(mKey, totalVerbaCaixinhasBase);
+                        mInc = verbaBase + mExt;
                     }
 
                     const mNet = mInc - mExp;
 
-                    if (temDados || mInc > 0) {
+                    if (mInc > 0 || mExp > 0) {
                         anoEntradasTotal += mInc;
                         anoGastosTotal += mExp;
                     }
@@ -2203,36 +2235,41 @@
                     }
 
                     let statusBadge = '';
-                    if (temDados) {
+                    if (mInc > 0 || mExp > 0) {
                         statusBadge = mNet >= 0 
                             ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(16,185,129,0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>`
                             : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(244,63,94,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`;
                     } else {
-                        statusBadge = `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Projetado</span>`;
+                        statusBadge = `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Sem dados</span>`;
                     }
 
                     cardMes.innerHTML = `
                         <div class="month-name-badge">
-                            <b style="font-size:0.9rem; color:var(--text-main);">${mesesNomes[m - 1]}</b>
+                            <b style="font-size:0.85rem; color:var(--text-main);">${mesesNomes[m - 1]}</b>
                             ${statusBadge}
                         </div>
 
                         <div class="month-values-group">
                             <div style="text-align:right;">
-                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Gastos</span>
-                                <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'};">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Verba: R$ ${mInc > 0 ? mInc.toFixed(0) : '0'}</span>
+                                <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'}; font-size:0.75rem;">
                                     ${mExp > 0 ? '- R$ ' + mExp.toFixed(0) : 'R$ 0'}
                                 </b>
                             </div>
-                            <div style="text-align:right; min-width:75px;">
-                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra Líquida</span>
-                                <b style="color:${mNet >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.85rem;">
-                                    R$ ${mNet.toFixed(0)}
+                            <div style="text-align:right; min-width:70px;">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra</span>
+                                <b style="color:${mNet >= 0 ? (mNet === 0 ? 'var(--text-muted)' : 'var(--blue)') : 'var(--red)'}; font-size:0.85rem;">
+                                    ${(mInc > 0 || mExp > 0) ? 'R$ ' + mNet.toFixed(0) : '-'}
                                 </b>
                             </div>
-                            <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:4px 8px;">
-                                Abrir →
-                            </button>
+                            <div style="display:flex; flex-direction:column; gap:3px;">
+                                <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:2px 6px;">
+                                    Abrir
+                                </button>
+                                <button onclick="abrirModalEditarVerbaMes('${mKey}', '${mesesNomes[m - 1]}', ${selectedYearTabela})" class="btn-icon" title="Editar Verba deste Mês" style="font-size:0.62rem; color:var(--primary); font-weight:bold;">
+                                    ✏️ Verba
+                                </button>
+                            </div>
                         </div>
                     `;
                     monthsContainer.appendChild(cardMes);
@@ -2473,8 +2510,8 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
                 <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#3b82f6'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("edit-box-amount").value);
