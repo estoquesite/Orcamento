@@ -24,7 +24,7 @@
     <style>
         :root {
             --primary: #6366f1;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #db2777 100%);
             --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
@@ -37,6 +37,7 @@
             --blue: #3b82f6;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
+            --pink: #ec4899;
         }
 
         body.dark-mode {
@@ -54,6 +55,7 @@
             --blue: #60a5fa;
             --yellow: #fbbf24;
             --purple: #c084fc;
+            --pink: #f472b6;
         }
 
         * {
@@ -336,6 +338,7 @@
         .card.blue h2 { color: var(--blue); }
         .card.purple h2 { color: var(--purple); }
         .card.yellow h2 { color: var(--yellow); }
+        .card.pink h2 { color: var(--pink); }
 
         .section-box {
             background: var(--card-bg);
@@ -652,6 +655,16 @@
                         <span>💵 Saldo Disponível (Caixa/Conta)</span>
                         <h2 id="card-cash" onclick="editarValor('cash')" title="Clique para editar">R$ 0,00</h2>
                     </div>
+                    
+                    <!-- QUADRADINHO DA PENSÃO DA SOFIA -->
+                    <div class="card pink full-width editable">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span>👧 Pensão da Sofia</span>
+                            <a href="#" onclick="marcarPensaoRecebida()" style="font-size:0.68rem; color:var(--pink); text-decoration:none; font-weight:800;">[ATUALIZAR]</a>
+                        </div>
+                        <h2 id="card-pensao" onclick="editarValor('pensao')" title="Clique para editar">R$ 0,00</h2>
+                    </div>
+
                     <div class="card green">
                         <span>📈 Receitas do Mês</span>
                         <h2 id="card-income">R$ 0,00</h2>
@@ -878,6 +891,7 @@
 
         const defaultData = {
             cash: 0.00,
+            pensao: 0.00,
             credit: 0.00,
             categories: [
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 0 },
@@ -904,7 +918,7 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- MANTER SESSÃO ATIVA (NÃO FECHA NEM PEDE DIGITAL ENQUANTO O APP ESTIVER ABERTO) ---
+        // --- MANTER SESSÃO ATIVA ---
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
                 document.getElementById("lock-screen").classList.add("hidden");
@@ -963,7 +977,6 @@
                 status.textContent = "Acesso liberado!";
                 status.className = "text-xs text-emerald-400 font-bold";
 
-                // Salva na sessão que já foi desbloqueado para não pedir mais enquanto navegar
                 sessionStorage.setItem('app_ja_desbloqueado', 'true');
 
                 setTimeout(() => {
@@ -1037,6 +1050,7 @@
             const liquidoMes = receitasMes - despesasMes;
 
             document.getElementById("card-cash").innerText = `R$ ${financialData.cash.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-pensao").innerText = `R$ ${(financialData.pensao || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-spent").innerText = `R$ ${despesasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-income").innerText = `R$ ${receitasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-net").innerText = `R$ ${liquidoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1167,6 +1181,18 @@
             }
         }
 
+        function marcarPensaoRecebida() {
+            const valorStr = prompt("Atualizar valor da Pensão da Sofia:", financialData.pensao || 0);
+            if (valorStr !== null) {
+                const val = parseFloat(valorStr.replace(',', '.'));
+                if (!isNaN(val)) {
+                    financialData.pensao = val;
+                    salvarDados();
+                    atualizarTela();
+                }
+            }
+        }
+
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1242,8 +1268,8 @@
         }
 
         function editarValor(tipo) {
-            const labels = { cash: "Saldo Disponível", credit: "Fatura do Cartão" };
-            const valorAtual = financialData[tipo];
+            const labels = { cash: "Saldo Disponível", pensao: "Pensão da Sofia", credit: "Fatura do Cartão" };
+            const valorAtual = financialData[tipo] || 0;
             const novoValorStr = prompt(`Definir novo valor para ${labels[tipo]}:`, valorAtual);
             if (novoValorStr !== null) {
                 const novo = parseFloat(novoValorStr.replace(',', '.'));
