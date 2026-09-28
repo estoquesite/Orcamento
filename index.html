@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,10 @@
             --border-color: rgba(0, 0, 0, 0.08);
         }
         .dark-theme {
-            --bg-main: #0d1117;
+            --bg-main: #0b0f19;
             --text-main: #f0f6fc;
-            --card-bg: linear-gradient(135deg, rgba(22, 27, 34, 0.95), rgba(13, 17, 23, 0.95));
-            --border-color: rgba(255, 255, 255, 0.08);
+            --card-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.8), rgba(11, 15, 25, 0.9));
+            --border-color: rgba(255, 255, 255, 0.06);
         }
         body {
             background-color: var(--bg-main);
@@ -51,7 +51,7 @@
 <body class="pb-24">
 
     <!-- Top Bar -->
-    <header class="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-800 bg-opacity-90 sticky top-0 z-50 backdrop-blur" style="background-color: var(--bg-main);">
+    <header class="flex justify-between items-center p-4 border-b border-gray-800 bg-opacity-90 sticky top-0 z-50 backdrop-blur" style="background-color: var(--bg-main);">
         <div class="flex items-center space-x-2">
             <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block shadow-[0_0_8px_#10b981]"></span>
             <h1 class="font-bold tracking-wider text-xs">FINANÇAS PRO</h1>
@@ -59,7 +59,7 @@
         <div class="flex items-center space-x-2">
             <button onclick="alert('Modo Computador ativado!')" class="p-2 rounded-xl card-custom text-xs shadow-sm">💻</button>
             <button onclick="toggleValores()" class="p-2 rounded-xl card-custom text-xs shadow-sm">👁️</button>
-            <button onclick="toggleTheme()" id="btn-theme" class="p-2 rounded-xl card-custom text-xs shadow-sm">🌙</button>
+            <button onclick="toggleTheme()" id="btn-theme" class="p-2 rounded-xl card-custom text-xs shadow-sm">☀️</button>
         </div>
     </header>
 
@@ -67,59 +67,51 @@
 
         <!-- Seletor de Mês -->
         <div class="flex justify-between items-center card-custom p-2.5 rounded-xl text-sm shadow-sm">
-            <button class="text-gray-500 hover:text-indigo-600 px-2">&lt;</button>
+            <button class="text-gray-400 hover:text-indigo-400 px-2">&lt;</button>
             <span class="font-medium">Setembro de 2026</span>
-            <button class="text-gray-500 hover:text-indigo-600 px-2">&gt;</button>
+            <button class="text-gray-400 hover:text-indigo-400 px-2">&gt;</button>
         </div>
 
         <!-- ================= ABA 1: PAINEL PRINCIPAL ================= -->
         <div id="tab-painel" class="tab-content active space-y-4">
             
-            <!-- Cards de Resumo com Luzinhas Piscantes no Topo -->
+            <!-- Cards de Resumo Estilo Segunda Tela -->
             <div class="grid grid-cols-2 gap-3">
                 
-                <!-- Card 1: Verba / Receitas (Azul Informativo) -->
-                <div class="card-custom p-4 rounded-2xl relative shadow-lg bg-gradient-to-br from-indigo-950/40 to-gray-900/40">
+                <!-- Card 1: Verba / Receitas -->
+                <div class="p-4 rounded-3xl relative shadow-lg bg-gradient-to-br from-blue-600 to-indigo-700 text-white border border-blue-400/30">
                     <div class="flex justify-between items-start">
-                        <span id="card-t1" class="text-[10px] text-indigo-400 font-bold tracking-wider">VERBA / RECEITAS</span>
-                        <!-- Luzinha Azul Piscante -->
-                        <span class="w-2.5 h-2.5 bg-blue-400 rounded-full led-piscante shadow-[0_0_8px_#38bdf8]" title="Status: Normal"></span>
+                        <span id="card-t1" class="text-[10px] text-blue-100 font-bold tracking-wider">VERBA / RECEITAS</span>
+                        <span onclick="editarCard('card-t1', 'card-v1')" class="text-xs cursor-pointer bg-white/20 text-white p-1 rounded">✏️</span>
                     </div>
-                    <p id="card-v1" class="text-lg font-bold mt-2 valor-monetario">R$ 0,00</p>
-                    <span onclick="editarCard('card-t1', 'card-v1')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-indigo-500/20 text-indigo-300 p-1 rounded">✏️</span>
+                    <p id="card-v1" class="text-xl font-extrabold mt-3 valor-monetario">R$ 0,00</p>
                 </div>
 
-                <!-- Card 2: Total Gasto (Vermelho - Ultrapassou) -->
-                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-rose-950/40 to-gray-900/40 relative">
+                <!-- Card 2: Total Gasto -->
+                <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-rose-500 to-pink-700 text-white relative border border-rose-400/30">
                     <div class="flex justify-between items-start">
-                        <span id="card-t2" class="text-[10px] text-rose-400 font-bold tracking-wider">TOTAL GASTO</span>
-                        <!-- Luzinha Vermelha Piscante (Ultrapassou) -->
-                        <span class="w-2.5 h-2.5 bg-rose-500 rounded-full led-piscante shadow-[0_0_8px_#f43f5e]" title="Status: Ultrapassou o limite!"></span>
+                        <span id="card-t2" class="text-[10px] text-rose-100 font-bold tracking-wider">TOTAL GASTO</span>
+                        <span onclick="editarCard('card-t2', 'card-v2')" class="text-xs cursor-pointer bg-white/20 text-white p-1 rounded">✏️</span>
                     </div>
-                    <p id="card-v2" class="text-lg font-bold mt-2 text-rose-400 valor-monetario">R$ 1.324,40</p>
-                    <span onclick="editarCard('card-t2', 'card-v2')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-rose-500/20 text-rose-300 p-1 rounded">✏️</span>
+                    <p id="card-v2" class="text-xl font-extrabold mt-3 valor-monetario">R$ 1.324,40</p>
                 </div>
 
-                <!-- Card 3: Fatura Cartões (Laranja - Alerta) -->
-                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-purple-950/40 to-gray-900/40 relative">
+                <!-- Card 3: Fatura Cartões -->
+                <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-purple-600 to-indigo-900 text-white relative border border-purple-400/30">
                     <div class="flex justify-between items-start">
-                        <span id="card-t3" class="text-[10px] text-purple-400 font-bold tracking-wider">FATURA CARTÕES</span>
-                        <!-- Luzinha Laranja Piscante (Alerta) -->
-                        <span class="w-2.5 h-2.5 bg-amber-500 rounded-full led-piscante shadow-[0_0_8px_#f59e0b]" title="Status: Alerta Laranja"></span>
+                        <span id="card-t3" class="text-[10px] text-purple-100 font-bold tracking-wider">FATURA CARTÕES</span>
+                        <span onclick="editarCard('card-t3', 'card-v3')" class="text-xs cursor-pointer bg-white/20 text-white p-1 rounded">✏️</span>
                     </div>
-                    <p id="card-v3" class="text-lg font-bold mt-2 valor-monetario">R$ 944,40</p>
-                    <span onclick="editarCard('card-t3', 'card-v3')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-purple-500/20 text-purple-300 p-1 rounded">✏️</span>
+                    <p id="card-v3" class="text-xl font-extrabold mt-3 valor-monetario">R$ 944,40</p>
                 </div>
 
-                <!-- Card 4: Sobra Líquida (Verde - Tudo OK) -->
-                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-950/40 to-gray-900/40 relative">
+                <!-- Card 4: Sobra Líquida -->
+                <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-700 text-white relative border border-emerald-400/30">
                     <div class="flex justify-between items-start">
-                        <span id="card-t4" class="text-[10px] text-emerald-400 font-bold tracking-wider">SOBRA LÍQUIDA</span>
-                        <!-- Luzinha Verde Piscante (Tudo OK) -->
-                        <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full led-piscante shadow-[0_0_8px_#34d399]" title="Status: Tudo OK"></span>
+                        <span id="card-t4" class="text-[10px] text-emerald-100 font-bold tracking-wider">SOBRA LÍQUIDA</span>
+                        <span onclick="editarCard('card-t4', 'card-v4')" class="text-xs cursor-pointer bg-white/20 text-white p-1 rounded">✏️</span>
                     </div>
-                    <p id="card-v4" class="text-lg font-bold mt-2 text-emerald-400 valor-monetario">-R$ 1.324,40</p>
-                    <span onclick="editarCard('card-t4', 'card-v4')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-emerald-500/20 text-emerald-300 p-1 rounded">✏️</span>
+                    <p id="card-v4" class="text-xl font-extrabold mt-3 valor-monetario">-R$ 1.324,40</p>
                 </div>
             </div>
 
@@ -131,52 +123,55 @@
             </div>
 
             <!-- Caixinhas de Verba -->
-            <div class="card-custom p-4 rounded-2xl space-y-4 shadow-lg">
+            <div class="card-custom p-4 rounded-3xl space-y-4 shadow-lg border border-gray-800">
                 <div class="flex justify-between items-center">
                     <div>
                         <h2 class="text-xs font-bold tracking-wider flex items-center gap-1.5">📦 CAIXINHAS DE VERBA</h2>
-                        <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Transbordo Automático</p>
+                        <p class="text-[10px] text-gray-400 mt-0.5">Transbordo Automático</p>
                     </div>
-                    <button onclick="alert('Criar nova caixinha')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-xl font-medium shadow-md">+ Nova Caixinha</button>
+                    <button onclick="alert('Criar nova caixinha')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3.5 py-2 rounded-2xl font-medium shadow-md">+ Nova Caixinha</button>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
-                        <div class="flex justify-between text-xs mb-1.5">
-                            <span class="font-medium flex items-center gap-1">Meu Salário <span class="bg-indigo-950 text-indigo-300 text-[9px] px-1.5 py-0.2 rounded border border-indigo-800/40">Principal</span></span>
-                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 799,40 / R$ 5.000,00</span>
+                    <div class="card-custom p-3.5 rounded-2xl border border-gray-800 bg-opacity-40 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium flex items-center gap-1.5 text-gray-300">
+                                <span class="text-base">📦</span> Meu Salário 
+                                <span class="bg-indigo-950 text-indigo-300 text-[9px] px-1.5 py-0.5 rounded-md border border-indigo-800/60">Principal</span>
+                            </span>
+                            <span class="text-gray-400 valor-monetario">R$ 799,40 / R$ 5.000,00</span>
                         </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
-                                <div class="bg-emerald-500 h-full w-[16%]"></div>
-                            </div>
-                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-emerald-500 h-full w-[16%]"></div>
                         </div>
-                    </div>
-
-                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
-                        <div class="flex justify-between text-xs mb-1.5">
-                            <span class="font-medium">Glória</span>
-                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 145,00 / R$ 600,00</span>
-                        </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
-                                <div class="bg-blue-500 h-full w-[24%]"></div>
-                            </div>
-                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        <div class="flex justify-end">
+                            <button onclick="alert('Editar caixinha')" class="text-[11px] text-amber-400 font-medium bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 flex items-center gap-1">✏️ Editar</button>
                         </div>
                     </div>
 
-                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
-                        <div class="flex justify-between text-xs mb-1.5">
-                            <span class="font-medium">Pensão Sophia</span>
-                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 380,00 / R$ 1.500,00</span>
+                    <div class="card-custom p-3.5 rounded-2xl border border-gray-800 bg-opacity-40 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium flex items-center gap-1.5 text-gray-300"><span class="text-base">📦</span> Glória</span>
+                            <span class="text-gray-400 valor-monetario">R$ 145,00 / R$ 600,00</span>
                         </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
-                                <div class="bg-pink-500 h-full w-[25%]"></div>
-                            </div>
-                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-blue-500 h-full w-[24%]"></div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button onclick="alert('Editar caixinha')" class="text-[11px] text-amber-400 font-medium bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 flex items-center gap-1">✏️ Editar</button>
+                        </div>
+                    </div>
+
+                    <div class="card-custom p-3.5 rounded-2xl border border-gray-800 bg-opacity-40 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium flex items-center gap-1.5 text-gray-300"><span class="text-base">📦</span> Pensão Sophia</span>
+                            <span class="text-gray-400 valor-monetario">R$ 380,00 / R$ 1.500,00</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-pink-500 h-full w-[25%]"></div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button onclick="alert('Editar caixinha')" class="text-[11px] text-amber-400 font-medium bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/20 flex items-center gap-1">✏️ Editar</button>
                         </div>
                     </div>
                 </div>
@@ -185,25 +180,25 @@
 
         <!-- ================= ABA 2: LANÇAR ================= -->
         <div id="tab-lancar" class="tab-content space-y-4">
-            <div class="card-custom p-4 rounded-2xl space-y-4 shadow-lg">
+            <div class="card-custom p-4 rounded-3xl space-y-4 shadow-lg">
                 <h2 class="text-xs font-bold tracking-wider flex items-center gap-1.5">➕ NOVO LANÇAMENTO</h2>
                 <div class="grid grid-cols-2 gap-2">
                     <button class="bg-rose-600 text-white py-2.5 rounded-xl text-xs font-bold shadow-md">Despesa (-)</button>
-                    <button class="card-custom text-gray-500 py-2.5 rounded-xl text-xs font-medium">Receita (+)</button>
+                    <button class="card-custom text-gray-400 py-2.5 rounded-xl text-xs font-medium">Receita (+)</button>
                 </div>
                 <div class="space-y-3 text-xs">
                     <div>
-                        <label class="text-gray-500 dark:text-gray-400 block mb-1">Descrição da compra</label>
+                        <label class="text-gray-400 block mb-1">Descrição da compra</label>
                         <input type="text" placeholder="ex: Supermercado, Almoço" class="w-full card-custom rounded-xl p-3 focus:outline-none">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-gray-500 dark:text-gray-400 block mb-1">Valor Total R$</label>
+                            <label class="text-gray-400 block mb-1">Valor Total R$</label>
                             <input type="number" placeholder="0,00" class="w-full card-custom rounded-xl p-3 focus:outline-none">
                         </div>
                         <div>
-                            <label class="text-gray-500 dark:text-gray-400 block mb-1">Parcelas</label>
-                            <select class="w-full card-custom rounded-xl p-3 focus:outline-none">
+                            <label class="text-gray-400 block mb-1">Parcelas</label>
+                            <select class="w-full card-custom rounded-xl p-3 focus:outline-none bg-gray-900 text-white">
                                 <option>À vista (1x)</option>
                                 <option>2x Parcelado</option>
                             </select>
@@ -213,12 +208,12 @@
                 </div>
             </div>
 
-            <div class="card-custom p-4 rounded-2xl space-y-3 shadow-lg">
+            <div class="card-custom p-4 rounded-3xl space-y-3 shadow-lg">
                 <span class="font-bold text-xs tracking-wider">EXTRATO RECENTE</span>
                 <div class="card-custom p-3 rounded-xl flex justify-between items-center text-xs shadow-sm">
                     <div>
                         <p class="font-bold">Supermercado Pão de Açúcar</p>
-                        <p class="text-[10px] text-gray-500">28-09-2026 • Alimentação</p>
+                        <p class="text-[10px] text-gray-400">28-09-2026 • Alimentação</p>
                     </div>
                     <span class="text-rose-500 font-bold">-R$ 589,40</span>
                 </div>
@@ -232,7 +227,7 @@
                 <button onclick="alert('Adicionar novo cartão')" class="bg-indigo-600 text-white text-xs px-3 py-1.5 rounded-xl font-medium shadow-md">+ Novo Cartão</button>
             </div>
 
-            <div class="skin-titanium p-4 rounded-2xl space-y-3 shadow-xl">
+            <div class="skin-titanium p-4 rounded-3xl space-y-3 shadow-xl">
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="font-bold text-sm">Itaú Mastercard Black</h3>
@@ -260,18 +255,18 @@
             <div class="grid grid-cols-2 gap-2.5">
                 <div class="card-custom p-3 rounded-xl text-xs">
                     <p class="font-bold">Janeiro</p>
-                    <p class="text-[11px] text-gray-500 mt-1">Gasto: R$ 0,00</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Gasto: R$ 0,00</p>
                 </div>
                 <div class="card-custom p-3 rounded-xl text-xs bg-indigo-950/20 border-indigo-500/40">
                     <p class="font-bold text-indigo-400">Setembro (Atual)</p>
-                    <p class="text-[11px] text-gray-500 mt-1">Gasto: R$ 1.324,40</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Gasto: R$ 1.324,40</p>
                 </div>
             </div>
         </div>
 
         <!-- ================= ABA 5: MAIS ================= -->
         <div id="tab-mais" class="tab-content space-y-4">
-            <div class="card-custom p-4 rounded-2xl space-y-3">
+            <div class="card-custom p-4 rounded-3xl space-y-3">
                 <h2 class="text-xs font-bold tracking-wider">⚙️ ASSINATURAS & CONTAS FIXAS</h2>
                 <div class="space-y-2 text-xs">
                     <div class="flex justify-between items-center card-custom p-2.5 rounded-xl">
@@ -285,24 +280,24 @@
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 card-custom border-t flex justify-around py-3 text-[10px] z-50 shadow-2xl">
-        <button onclick="switchTab('painel', this)" class="nav-btn flex flex-col items-center text-indigo-600 font-bold">
+    <nav class="fixed bottom-0 left-0 right-0 card-custom border-t flex justify-around py-3 text-[10px] z-50 shadow-2xl border-gray-800">
+        <button onclick="switchTab('painel', this)" class="nav-btn flex flex-col items-center text-indigo-500 font-bold">
             <span class="text-lg">📊</span>
             <span>Painel</span>
         </button>
-        <button onclick="switchTab('lancar', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
+        <button onclick="switchTab('lancar', this)" class="nav-btn flex flex-col items-center text-gray-400 hover:text-indigo-400">
             <span class="text-lg">➕</span>
             <span>Lançar</span>
         </button>
-        <button onclick="switchTab('cartoes', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
+        <button onclick="switchTab('cartoes', this)" class="nav-btn flex flex-col items-center text-gray-400 hover:text-indigo-400">
             <span class="text-lg">💳</span>
             <span>Cartões</span>
         </button>
-        <button onclick="switchTab('meses', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
+        <button onclick="switchTab('meses', this)" class="nav-btn flex flex-col items-center text-gray-400 hover:text-indigo-400">
             <span class="text-lg">📅</span>
             <span>Meses</span>
         </button>
-        <button onclick="switchTab('mais', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
+        <button onclick="switchTab('mais', this)" class="nav-btn flex flex-col items-center text-gray-400 hover:text-indigo-400">
             <span class="text-lg">⚙️</span>
             <span>Mais</span>
         </button>
@@ -341,11 +336,11 @@
             document.getElementById('tab-' + tabId).classList.add('active');
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-indigo-600', 'font-bold');
-                btn.classList.add('text-gray-500');
+                btn.classList.remove('text-indigo-500', 'font-bold');
+                btn.classList.add('text-gray-400');
             });
-            element.classList.remove('text-gray-500');
-            element.classList.add('text-indigo-600', 'font-bold');
+            element.classList.remove('text-gray-400');
+            element.classList.add('text-indigo-500', 'font-bold');
         }
     </script>
 </body>
