@@ -20,10 +20,6 @@
 
     <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -96,73 +92,6 @@
                 border-radius: 34px;
                 border: 8px solid var(--card-bg);
             }
-        }
-
-        /* TELA DE BLOQUEIO */
-        .lock-screen {
-            position: absolute;
-            inset: 0;
-            background: var(--bg-color);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            gap: 18px;
-            text-align: center;
-        }
-
-        .lock-screen.hidden {
-            display: none !important;
-        }
-
-        .lock-logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
-            background: var(--primary-gradient);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
-        }
-
-        .lock-logo svg {
-            width: 36px;
-            height: 36px;
-            fill: none;
-            stroke: white;
-            stroke-width: 2.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .fingerprint-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 25px rgba(79, 70, 229, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            margin: 10px 0;
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(79, 70, 229, 0.4); }
-            100% { transform: scale(1); box-shadow: 0 0 15px rgba(79, 70, 229, 0.2); }
-        }
-
-        .fingerprint-btn svg {
-            width: 42px;
-            height: 42px;
-            fill: var(--primary);
         }
 
         header {
@@ -624,110 +553,11 @@
             border-bottom: none;
             font-size: 0.8rem;
         }
-
-        /* MODAL DE INSTALAÇÃO (LANDING PAGE DE DOWNLOAD) */
-        .install-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(11, 15, 25, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .install-modal.hidden {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
-
-        <!-- MODAL / TELA DE INSTALAÇÃO & QR CODE -->
-        <div id="install-modal" class="install-modal hidden">
-            <div class="max-w-md w-full bg-slate-900 border border-slate-700/60 p-6 rounded-3xl shadow-2xl text-white relative flex flex-col space-y-6">
-                <!-- Botão Fechar Modal -->
-                <button onclick="fecharModalInstalacao()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg font-bold w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">✕</button>
-                
-                <div class="text-center space-y-2">
-                    <span class="bg-indigo-600/30 text-indigo-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-500/50">
-                        Aplicativo PWA & Mobile
-                    </span>
-                    <h2 class="text-2xl font-extrabold tracking-tight">Baixe o Finanças Pro</h2>
-                    <p class="text-xs text-gray-300">
-                        Instale na tela inicial do seu celular para acesso rápido, seguro e offline.
-                    </p>
-                </div>
-
-                <!-- Botões das Lojas / Instalação Direta -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="baixarAppDireto()" class="flex items-center justify-center gap-2 bg-black hover:bg-gray-900 border border-gray-700 px-4 py-3 rounded-xl transition shadow-md group">
-                        <i class="fa-solid fa-mobile-screen-button text-2xl text-indigo-400 group-hover:scale-110 transition"></i>
-                        <div class="text-left">
-                            <p class="text-[10px] text-gray-400">INSTALAR NO</p>
-                            <p class="text-xs font-bold">Celular / PWA</p>
-                        </div>
-                    </button>
-
-                    <a href="https://play.google.com" target="_blank" class="flex items-center justify-center gap-2 bg-black hover:bg-gray-900 border border-gray-700 px-4 py-3 rounded-xl transition shadow-md group">
-                        <i class="fa-brands fa-google-play text-2xl text-green-400 group-hover:scale-110 transition"></i>
-                        <div class="text-left">
-                            <p class="text-[10px] text-gray-400">GOOGLE PLAY</p>
-                            <p class="text-xs font-bold">Android</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- QR Code de Exemplo -->
-                <div class="flex flex-col items-center justify-center bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <div class="w-32 h-32 bg-white p-2 rounded-xl shadow flex items-center justify-center mb-2">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://financas-pro.app" alt="QR Code App" class="w-full h-full object-contain">
-                    </div>
-                    <p class="text-[11px] text-gray-300 font-medium text-center">
-                        Escaneie com a câmera para abrir no smartphone
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- TELA DE BLOQUEIO BIOMÉTRICO / PIN -->
-        <div id="lock-screen" class="lock-screen">
-            <div class="lock-logo">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 17l6-6 4 4 8-8"></path>
-                    <path d="M14 7h7v7"></path>
-                </svg>
-            </div>
-            
-            <div>
-                <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Finanças Pro</h2>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">Toque para desbloquear</p>
-            </div>
-
-            <!-- Botão da Digital Nativa -->
-            <button class="fingerprint-btn" onclick="autenticarComDigital()" title="Toque para usar a digital">
-                <svg viewBox="0 0 24 24">
-                    <path d="M17.81 4.87A10 10 0 0 0 4.19 18.5"></path>
-                    <path d="M15.41 7.27a6.5 6.5 0 0 0-8.82 9.54"></path>
-                    <path d="M13 9.68a3 3 0 0 0-4 4.34"></path>
-                    <path d="M9.88 12.18a.5.5 0 0 0 0 .7"></path>
-                    <path d="M12 2a10 10 0 0 1 8.2 15.65"></path>
-                    <path d="M12 6a6.5 6.5 0 0 1 5.3 10.2"></path>
-                </svg>
-            </button>
-
-            <button class="btn-primary" onclick="autenticarComDigital()" style="padding: 9px 18px; font-size: 0.82rem;">
-                👆 Usar Digital
-            </button>
-
-            <div>
-                <button class="btn-secondary" onclick="desbloquearComPIN()">🔢 Usar PIN (Padrão: 1234)</button>
-            </div>
-        </div>
 
         <header>
             <div class="header-brand">
@@ -744,10 +574,6 @@
             </div>
             
             <div class="header-actions">
-                <button class="header-btn" onclick="bloquearManualmente()" title="Trancar Aplicativo">🔒</button>
-                <button class="header-btn" onclick="abrirModalInstalacao()" title="Instalar App no Celular">
-                    <span>📲</span> Baixar
-                </button>
                 <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Modo Escuro</button>
             </div>
         </header>
@@ -1012,8 +838,6 @@
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
-        let userPIN = localStorage.getItem('user_pin') || "1234";
-
         const defaultData = {
             cash: 0.00,
             credit: 0.00,
@@ -1046,127 +870,11 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- REGISTRO OBRIGATÓRIO DO SERVICE WORKER ---
+        // --- REGISTRO DO SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js')
                 .then(() => console.log("SW registrado com sucesso!"))
                 .catch(err => console.warn("Aviso no SW:", err));
-        }
-
-        // --- CAPTURA DO BOTÃO DE INSTALAÇÃO DO CHROME ---
-        let deferredInstallPrompt = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredInstallPrompt = e;
-        });
-
-        function abrirModalInstalacao() {
-            document.getElementById('install-modal').classList.remove('hidden');
-        }
-
-        function fecharModalInstalacao() {
-            document.getElementById('install-modal').classList.add('hidden');
-        }
-
-        function baixarAppDireto() {
-            if (deferredInstallPrompt) {
-                deferredInstallPrompt.prompt();
-                deferredInstallPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('Usuário aceitou a instalação');
-                    }
-                    deferredInstallPrompt = null;
-                    fecharModalInstalacao();
-                });
-            } else {
-                alert("Para instalar na tela do celular:\n\n1. No Chrome: Toque nos 3 pontinhos (⋮) e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n2. No iPhone (Safari): Toque no botão de Compartilhar (caixa com seta) e escolha 'Adicionar à Tela de Início'.");
-            }
-        }
-
-        // --- CONTROLE DE SESSÃO BIOMÉTRICA ---
-        if (sessionStorage.getItem('app_desbloqueado') === 'true') {
-            document.getElementById("lock-screen").classList.add("hidden");
-        }
-
-        async function autenticarComDigital() {
-            if (!window.PublicKeyCredential) {
-                desbloquearComPIN();
-                return;
-            }
-
-            try {
-                const challenge = new Uint8Array(32);
-                window.crypto.getRandomValues(challenge);
-
-                let credIdBase64 = localStorage.getItem('biometria_unica_id');
-
-                if (!credIdBase64) {
-                    const userId = new Uint8Array(16);
-                    window.crypto.getRandomValues(userId);
-
-                    const cred = await navigator.credentials.create({
-                        publicKey: {
-                            challenge: challenge,
-                            rp: { name: "Finanças Pro" },
-                            user: {
-                                id: userId,
-                                name: "usuario_financas",
-                                displayName: "Finanças Pro"
-                            },
-                            pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }],
-                            authenticatorSelection: {
-                                authenticatorAttachment: "platform",
-                                userVerification: "required"
-                            },
-                            timeout: 60000
-                        }
-                    });
-
-                    if (cred) {
-                        const idStr = btoa(String.fromCharCode(...new Uint8Array(cred.rawId)));
-                        localStorage.setItem('biometria_unica_id', idStr);
-                        marcarDesbloqueado();
-                    }
-                } else {
-                    const rawId = Uint8Array.from(atob(credIdBase64), c => c.charCodeAt(0));
-                    const cred = await navigator.credentials.get({
-                        publicKey: {
-                            challenge: challenge,
-                            allowCredentials: [{
-                                id: rawId,
-                                type: 'public-key'
-                            }],
-                            userVerification: "required",
-                            timeout: 60000
-                        }
-                    });
-
-                    if (cred) {
-                        marcarDesbloqueado();
-                    }
-                }
-            } catch (err) {
-                console.warn("Digital não concluída. Você pode tentar novamente ou usar o PIN.");
-            }
-        }
-
-        function marcarDesbloqueado() {
-            sessionStorage.setItem('app_desbloqueado', 'true');
-            document.getElementById("lock-screen").classList.add("hidden");
-        }
-
-        function bloquearManualmente() {
-            sessionStorage.removeItem('app_desbloqueado');
-            document.getElementById("lock-screen").classList.remove("hidden");
-        }
-
-        function desbloquearComPIN() {
-            const digitado = prompt("Digite seu PIN de 4 dígitos:", "");
-            if (digitado === userPIN) {
-                marcarDesbloqueado();
-            } else if (digitado !== null) {
-                alert("PIN incorreto!");
-            }
         }
 
         function limparTodosDados() {
@@ -1721,4 +1429,4 @@
         atualizarTela();
     </script>
 </body>
-    </html>
+</html>
