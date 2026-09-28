@@ -27,17 +27,16 @@
   <style>
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.3); border-radius: 9999px; }
     ::-webkit-scrollbar-track { background: transparent; }
     body {
       user-select: none;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .modal-backdrop {
-      background-color: rgba(15, 23, 42, 0.75);
+      background-color: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
     }
-    /* Indicador deslizante da barra de navegação */
     #nav-indicator {
       position: absolute;
       top: 6px;
@@ -46,17 +45,17 @@
       width: 20%;
       border-radius: 1rem;
       pointer-events: none;
-      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
+<body class="bg-slate-200 text-slate-900 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- FRAME DO SMARTPHONE -->
-  <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-100 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300 dark">
+  <!-- FRAME DO SMARTPHONE (Inicia no Branco / Light Mode) -->
+  <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-50 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300">
     
     <!-- HEADER -->
-    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
+    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
       <div class="flex items-center gap-2">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
@@ -66,7 +65,7 @@
         <button
           id="btn-privacy"
           type="button"
-          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
+          class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
           title="Ocultar / Mostrar Valores"
         >
           👁️
@@ -75,23 +74,23 @@
         <button
           id="btn-theme"
           type="button"
-          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
+          class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
           title="Alternar Tema Claro / Escuro"
         >
-          ☀️
+          🌙
         </button>
       </div>
     </header>
 
     <!-- NAVEGAÇÃO DE MÊS/ANO -->
     <div class="px-4 py-2 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
-      <button id="btn-prev-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer active:scale-95">
+      <button id="btn-prev-month" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
         ◀
       </button>
-      <div id="month-label" class="text-center font-extrabold text-slate-900 dark:text-slate-100">
+      <div id="month-label" class="text-center font-black text-slate-800 dark:text-slate-100">
         Carregando...
       </div>
-      <button id="btn-next-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer active:scale-95">
+      <button id="btn-next-month" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
         ▶
       </button>
     </div>
@@ -104,7 +103,7 @@
     <!-- BARRA INFERIOR DE ABAS COM INDICADOR SUAVE -->
     <nav class="relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center px-2 py-1.5 shrink-0 sticky bottom-0 z-30 shadow-lg pb-[max(env(safe-area-inset-bottom),0.5rem)]">
       <!-- Fundo deslizante animado -->
-      <div id="nav-indicator" class="bg-indigo-500/15 dark:bg-indigo-400/15 border border-indigo-500/20"></div>
+      <div id="nav-indicator" class="bg-indigo-500/15 dark:bg-indigo-400/20 border border-indigo-500/25"></div>
 
       <button data-tab="painel" data-index="0" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
         <span class="text-lg leading-none transition-transform">📊</span>
@@ -129,7 +128,7 @@
     </nav>
 
     <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
-    <div id="toast" class="hidden absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
+    <div id="toast" class="hidden absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
       Notificação
     </div>
 
@@ -155,13 +154,19 @@
           { id: '4', name: 'Lazer e Streaming', limit: 500, color: '#ec4899', icon: '🎮', isMain: false },
           { id: '5', name: 'Saúde e Farmácia', limit: 350, color: '#06b6d4', icon: '💊', isMain: false }
         ],
+        quickButtons: [
+          { desc: 'Mercado Express', val: 80, cat: 'Alimentação', icon: '🛒' },
+          { desc: 'Combustível Posto', val: 100, cat: 'Transporte', icon: '⛽' },
+          { desc: 'Delivery / Lanche', val: 45, cat: 'Alimentação', icon: '🍕' },
+          { desc: 'Farmácia', val: 50, cat: 'Saúde e Farmácia', icon: '💊' }
+        ],
         creditCards: [
           { id: 'card-1', name: 'Nubank Ultravioleta', limit: 8500, color: '#6b21a8', brand: 'Mastercard Black', skin: 'ultraviolet', cvv: '849', isBlocked: false },
           { id: 'card-2', name: 'Inter Black Win', limit: 15000, color: '#0f172a', brand: 'Mastercard Platinum', skin: 'titanium', cvv: '312', isBlocked: false }
         ],
         transactions: [
           { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 2, desc: 'Supermercado Mensal', value: 480, type: 'despesa', boxId: '2', category: 'Supermercado', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
+          { id: 2, desc: 'Supermercado Mensal', value: 480, type: 'despesa', boxId: '2', category: 'Alimentação', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
           { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
           { id: 4, desc: 'Notebook Dell (3/10)', value: 250, type: 'despesa', boxId: '1', category: 'Compras Parceladas', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
         ],
@@ -179,7 +184,10 @@
       function loadData() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          return raw ? JSON.parse(raw) : DEFAULT_DATA;
+          if (!raw) return DEFAULT_DATA;
+          const parsed = JSON.parse(raw);
+          if (!parsed.quickButtons) parsed.quickButtons = DEFAULT_DATA.quickButtons;
+          return parsed;
         } catch {
           return DEFAULT_DATA;
         }
@@ -191,7 +199,7 @@
         currentMonth: new Date().getMonth() + 1,
         currentTab: 'painel',
         privacyMode: false,
-        darkMode: true,
+        darkMode: false, // Inicia no modo claro / branco
         revealedCvv: {},
         showSimulator: false,
         simDiscount: 5,
@@ -306,7 +314,55 @@
         if (e.target === modalContainer) closeModal();
       });
 
-      // 1. EDIÇÃO DE SALÁRIO
+      // MODAL: NOVO BOTÃO DE LANÇAMENTO RÁPIDO
+      window.openModalNovoQuick = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Novo Lançamento Rápido</span>
+          </h3>
+          <p class="text-[11px] text-slate-500">Crie botões de 1 toque para despesas frequentes do dia a dia.</p>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Emoji / Ícone:</label>
+            <input type="text" id="m-quick-icon" value="☕" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Descrição do Lançamento:</label>
+            <input type="text" id="m-quick-desc" placeholder="Ex: Café na Padaria" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Valor Padrão (R$):</label>
+            <input type="number" step="0.5" id="m-quick-val" placeholder="Ex: 15.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Categoria / Caixinha:</label>
+            <select id="m-quick-cat" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+              ${state.data.boxes.map(b => `<option value="${b.name}">${b.icon} ${b.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovoQuick()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Botão</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovoQuick = function() {
+        const icon = document.getElementById('m-quick-icon').value.trim() || '⚡';
+        const desc = document.getElementById('m-quick-desc').value.trim();
+        const val = parseFloat(document.getElementById('m-quick-val').value);
+        const cat = document.getElementById('m-quick-cat').value;
+        if (!desc || isNaN(val) || val <= 0) return alert('Preencha os campos com valores válidos.');
+
+        state.data.quickButtons.push({ icon, desc, val, cat });
+        saveData();
+        closeModal();
+        showToast('Novo atalho rápido criado!');
+        render();
+      };
+
+      // MODAL: EDIÇÃO DE SALÁRIO
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         const currentVal = mainBox ? mainBox.limit : 5000;
@@ -317,7 +373,7 @@
             <span>Editar Salário / Renda Mensal</span>
           </h3>
           <p class="text-[11px] text-slate-500 leading-relaxed">
-            Digite o valor real da sua renda mensal. Ao salvar, a verba total e a <b>Sobra Líquida</b> serão recalculadas imediatamente.
+            Digite sua renda mensal líquida. Ao salvar, a verba total e a sobra serão recalculadas.
           </p>
           <label class="text-xs font-bold text-slate-500 block mt-2">Valor da Renda Mensal (R$):</label>
           <input
@@ -340,9 +396,7 @@
         if (isNaN(val) || val < 0) return alert('Informe um valor válido.');
 
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
-        if (mainBox) {
-          mainBox.limit = val;
-        }
+        if (mainBox) mainBox.limit = val;
 
         const existingRec = state.data.transactions.find(t => t.type === 'receita' && t.year === state.currentYear && t.month === state.currentMonth);
         if (existingRec) {
@@ -368,7 +422,53 @@
         render();
       };
 
-      // 2. EDIÇÃO DE CAIXINHA
+      // MODAL: CRIAR / EDITAR CAIXINHA
+      window.openModalNovaCaixinha = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>📦</span>
+            <span>Nova Caixinha de Verba</span>
+          </h3>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Ícone / Emoji:</label>
+            <input type="text" id="m-newbox-icon" value="📦" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Nome da Categoria:</label>
+            <input type="text" id="m-newbox-name" placeholder="Ex: Pet, Cursos, Farmácia" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Limite Planejado (R$):</label>
+            <input type="number" step="50" id="m-newbox-limit" placeholder="Ex: 500" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaCaixinha()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Caixinha</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaCaixinha = function() {
+        const icon = document.getElementById('m-newbox-icon').value.trim() || '📦';
+        const name = document.getElementById('m-newbox-name').value.trim();
+        const limit = parseFloat(document.getElementById('m-newbox-limit').value);
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os campos obrigatórios.');
+
+        state.data.boxes.push({
+          id: String(Date.now()),
+          name,
+          limit,
+          color: '#6366f1',
+          icon,
+          isMain: false
+        });
+        saveData();
+        closeModal();
+        showToast('Nova caixinha criada!');
+        render();
+      };
+
       window.openModalEditarCaixinha = function(boxId) {
         const box = state.data.boxes.find(b => b.id === String(boxId));
         if (!box) return;
@@ -379,6 +479,10 @@
             <span>Editar Caixinha: ${box.name}</span>
           </h3>
           <div>
+            <label class="text-xs font-bold text-slate-500 block">Emoji / Ícone:</label>
+            <input type="text" id="m-box-icon" value="${box.icon}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
             <label class="text-xs font-bold text-slate-500 block">Nome da Categoria:</label>
             <input type="text" id="m-box-name" value="${box.name}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
@@ -388,12 +492,11 @@
           </div>
           <div class="flex gap-2 pt-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveEditarCaixinha('${box.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Alterações</button>
+            <button onclick="saveEditarCaixinha('${box.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteCaixinha('${box.id}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center justify-center gap-1.5 border border-rose-500/30 cursor-pointer">
-              <span>🗑️</span>
-              <span>Excluir Caixinha</span>
+            <button onclick="deleteCaixinha('${box.id}')" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+              🗑️ Excluir Caixinha
             </button>
           </div>
         `;
@@ -406,11 +509,13 @@
       };
 
       window.saveEditarCaixinha = function(id) {
+        const icon = document.getElementById('m-box-icon').value.trim() || '📦';
         const name = document.getElementById('m-box-name').value.trim();
         const limit = parseFloat(document.getElementById('m-box-limit').value);
         if (!name || isNaN(limit) || limit < 0) return alert('Informe dados válidos.');
         const box = state.data.boxes.find(b => b.id === String(id));
         if (box) {
+          box.icon = icon;
           box.name = name;
           box.limit = limit;
           saveData();
@@ -430,42 +535,7 @@
         }
       };
 
-      // 3. CRIAR NOVA CAIXINHA
-      window.openModalNovaCaixinha = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-            <span>📦</span>
-            <span>Nova Caixinha de Verba</span>
-          </h3>
-          <input type="text" id="m-newbox-name" placeholder="Nome da Categoria (Ex: Pet, Educação)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" step="50" id="m-newbox-limit" placeholder="Limite Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <div class="flex gap-2 pt-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovaCaixinha()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Caixinha</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
-
-      window.saveNovaCaixinha = function() {
-        const name = document.getElementById('m-newbox-name').value.trim();
-        const limit = parseFloat(document.getElementById('m-newbox-limit').value);
-        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os campos obrigatórios.');
-        state.data.boxes.push({
-          id: String(Date.now()),
-          name,
-          limit,
-          color: '#6366f1',
-          icon: '📦',
-          isMain: false
-        });
-        saveData();
-        closeModal();
-        showToast('Nova caixinha criada!');
-        render();
-      };
-
-      // 4. EDIÇÃO E GESTÃO DE COMPRAS PARCELADAS
+      // MODAL: COMPRAS PARCELADAS
       window.openModalNovaParcela = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -473,12 +543,12 @@
             <span>Nova Compra Parcelada</span>
           </h3>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Nome da Compra (ex.: iPhone, Geladeira):</label>
-            <input type="text" id="m-parc-name" placeholder="Ex: Geladeira Frost Free" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <label class="text-xs font-bold text-slate-500 block">Nome da Compra:</label>
+            <input type="text" id="m-parc-name" placeholder="Ex: TV 55 Polegadas" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
-            <input type="number" step="0.01" id="m-parc-val" placeholder="Ex: 250.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="number" step="0.01" id="m-parc-val" placeholder="Ex: 180.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
@@ -538,7 +608,7 @@
 
         saveData();
         closeModal();
-        showToast('Compra parcelada cadastrada! 💳');
+        showToast('Compra parcelada adicionada! 💳');
         render();
       };
 
@@ -561,7 +631,7 @@
             <button onclick="saveEditarParcela('${baseName}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteParcelaGroup('${baseName}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+            <button onclick="deleteParcelaGroup('${baseName}')" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
               🗑️ Excluir Compra e Parcelas
             </button>
           </div>
@@ -599,7 +669,50 @@
         }
       };
 
-      // 5. EDIÇÃO DE CARTÕES DE CRÉDITO
+      // MODAL: CARTÕES
+      window.openModalNovoCartao = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">💳 Novo Cartão de Crédito</h3>
+          <input type="text" id="m-card-name" placeholder="Nome do Cartão (Ex: Nubank, C6)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-card-limit" placeholder="Limite Total R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="text" id="m-card-brand" placeholder="Bandeira (Ex: Mastercard Black)" value="Mastercard Black" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <select id="m-card-skin" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+            <option value="titanium">Skin Titanium (Preto Grafite)</option>
+            <option value="ultraviolet">Skin Ultravioleta (Roxo)</option>
+            <option value="emerald">Skin Emerald (Verde)</option>
+            <option value="gold">Skin Gold (Dourado)</option>
+            <option value="midnight">Skin Midnight (Azul Noturno)</option>
+          </select>
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovoCartao()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Cartão</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovoCartao = function() {
+        const name = document.getElementById('m-card-name').value.trim();
+        const limit = parseFloat(document.getElementById('m-card-limit').value);
+        const brand = document.getElementById('m-card-brand').value.trim() || 'Mastercard';
+        const skin = document.getElementById('m-card-skin').value;
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha nome e limite válidos.');
+        state.data.creditCards.push({
+          id: 'card-' + Date.now(),
+          name,
+          limit,
+          color: '#6366f1',
+          brand,
+          skin,
+          cvv: String(Math.floor(100 + Math.random() * 900)),
+          isBlocked: false
+        });
+        saveData();
+        closeModal();
+        showToast('Cartão cadastrado! 💳');
+        render();
+      };
+
       window.openModalEditarCartao = function(cardId) {
         const card = state.data.creditCards.find(c => c.id === cardId);
         if (!card) return;
@@ -626,7 +739,7 @@
             <button onclick="saveEditarCartao('${card.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteCartao('${card.id}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+            <button onclick="deleteCartao('${card.id}')" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
               🗑️ Excluir Cartão
             </button>
           </div>
@@ -662,7 +775,40 @@
         }
       };
 
-      // 6. EDIÇÃO DE METAS
+      // MODAL: METAS
+      window.openModalNovaMeta = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🎯 Nova Meta Financeira</h3>
+          <input type="text" id="m-meta-name" placeholder="Nome (Ex: Viagem, Carro Novo)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-meta-target" placeholder="Valor Alvo R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-meta-current" placeholder="Valor Inicial Guardado R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaMeta()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Meta</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaMeta = function() {
+        const name = document.getElementById('m-meta-name').value.trim();
+        const target = parseFloat(document.getElementById('m-meta-target').value);
+        const curr = parseFloat(document.getElementById('m-meta-current').value) || 0;
+        if (!name || isNaN(target) || target <= 0) return alert('Preencha os campos obrigatórios.');
+        state.data.savingsGoals.push({
+          id: Date.now(),
+          name,
+          targetValue: target,
+          currentValue: curr,
+          color: '#10b981',
+          icon: '🎯'
+        });
+        saveData();
+        closeModal();
+        showToast('Nova meta cadastrada! 🎯');
+        render();
+      };
+
       window.openModalEditarMeta = function(goalId) {
         const goal = state.data.savingsGoals.find(g => g.id === goalId);
         if (!goal) return;
@@ -689,7 +835,7 @@
             <button onclick="saveEditarMeta(${goal.id})" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteMeta(${goal.id})" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+            <button onclick="deleteMeta(${goal.id})" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
               🗑️ Excluir Meta
             </button>
           </div>
@@ -725,7 +871,39 @@
         }
       };
 
-      // 7. EDIÇÃO DE ASSINATURA / CONTA FIXA
+      // MODAL: ASSINATURAS
+      window.openModalNovaAssinatura = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🔄 Nova Assinatura ou Conta Fixa</h3>
+          <input type="text" id="m-ass-name" placeholder="Nome (Ex: Netflix, Academia)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" step="0.01" id="m-ass-val" placeholder="Valor Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" min="1" max="31" id="m-ass-day" placeholder="Dia de Vencimento (1 a 31)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaAssinatura()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Conta</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaAssinatura = function() {
+        const name = document.getElementById('m-ass-name').value.trim();
+        const val = parseFloat(document.getElementById('m-ass-val').value);
+        const day = parseInt(document.getElementById('m-ass-day').value, 10) || 10;
+        if (!name || isNaN(val) || val <= 0) return alert('Preencha os campos obrigatórios.');
+        state.data.recurringBills.push({
+          id: String(Date.now()),
+          name,
+          value: val,
+          dueDay: day,
+          icon: '🔄'
+        });
+        saveData();
+        closeModal();
+        showToast('Assinatura adicionada! 🔄');
+        render();
+      };
+
       window.openModalEditarAssinatura = function(billId) {
         const bill = state.data.recurringBills.find(b => b.id === String(billId));
         if (!bill) return;
@@ -752,7 +930,7 @@
             <button onclick="saveEditarAssinatura('${bill.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="deleteAssinatura('${bill.id}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+            <button onclick="deleteAssinatura('${bill.id}')" class="w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
               🗑️ Excluir Assinatura
             </button>
           </div>
@@ -788,7 +966,7 @@
         }
       };
 
-      // 8. EDIÇÃO DE LANÇAMENTO INDIVIDUAL NO EXTRATO
+      // MODAL: EDITAR LANÇAMENTO NO EXTRATO
       window.openModalEditarTrans = function(id) {
         const t = state.data.transactions.find(item => item.id === id);
         if (!t) return;
@@ -913,114 +1091,6 @@
         }
       };
 
-      window.openModalNovaMeta = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🎯 Nova Meta Financeira</h3>
-          <input type="text" id="m-meta-name" placeholder="Nome (Ex: Viagem, Carro Novo)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" id="m-meta-target" placeholder="Valor Alvo R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" id="m-meta-current" placeholder="Valor Inicial Guardado R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <div class="flex gap-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovaMeta()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Meta</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
-
-      window.saveNovaMeta = function() {
-        const name = document.getElementById('m-meta-name').value.trim();
-        const target = parseFloat(document.getElementById('m-meta-target').value);
-        const curr = parseFloat(document.getElementById('m-meta-current').value) || 0;
-        if (!name || isNaN(target) || target <= 0) return alert('Preencha os campos obrigatórios.');
-        state.data.savingsGoals.push({
-          id: Date.now(),
-          name,
-          targetValue: target,
-          currentValue: curr,
-          color: '#10b981',
-          icon: '🎯'
-        });
-        saveData();
-        closeModal();
-        showToast('Nova meta cadastrada! 🎯');
-        render();
-      };
-
-      window.openModalNovaAssinatura = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🔄 Nova Assinatura ou Conta Fixa</h3>
-          <input type="text" id="m-ass-name" placeholder="Nome (Ex: Netflix, Academia)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" step="0.01" id="m-ass-val" placeholder="Valor Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" min="1" max="31" id="m-ass-day" placeholder="Dia de Vencimento (1 a 31)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <div class="flex gap-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovaAssinatura()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Conta</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
-
-      window.saveNovaAssinatura = function() {
-        const name = document.getElementById('m-ass-name').value.trim();
-        const val = parseFloat(document.getElementById('m-ass-val').value);
-        const day = parseInt(document.getElementById('m-ass-day').value, 10) || 10;
-        if (!name || isNaN(val) || val <= 0) return alert('Preencha os campos obrigatórios.');
-        state.data.recurringBills.push({
-          id: String(Date.now()),
-          name,
-          value: val,
-          dueDay: day,
-          icon: '🔄'
-        });
-        saveData();
-        closeModal();
-        showToast('Assinatura adicionada! 🔄');
-        render();
-      };
-
-      window.openModalNovoCartao = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">💳 Novo Cartão de Crédito</h3>
-          <input type="text" id="m-card-name" placeholder="Nome do Cartão (Ex: C6 Black)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="number" id="m-card-limit" placeholder="Limite Total R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <input type="text" id="m-card-brand" placeholder="Bandeira (Ex: Mastercard Black)" value="Mastercard Black" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          <select id="m-card-skin" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
-            <option value="titanium">Skin Titanium</option>
-            <option value="ultraviolet">Skin Ultravioleta</option>
-            <option value="emerald">Skin Emerald</option>
-            <option value="gold">Skin Gold</option>
-            <option value="midnight">Skin Midnight</option>
-          </select>
-          <div class="flex gap-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovoCartao()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Cartão</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
-
-      window.saveNovoCartao = function() {
-        const name = document.getElementById('m-card-name').value.trim();
-        const limit = parseFloat(document.getElementById('m-card-limit').value);
-        const brand = document.getElementById('m-card-brand').value.trim() || 'Mastercard';
-        const skin = document.getElementById('m-card-skin').value;
-        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha nome e limite válidos.');
-        state.data.creditCards.push({
-          id: 'card-' + Date.now(),
-          name,
-          limit,
-          color: '#6366f1',
-          brand,
-          skin,
-          cvv: String(Math.floor(100 + Math.random() * 900)),
-          isBlocked: false
-        });
-        saveData();
-        closeModal();
-        showToast('Cartão cadastrado! 💳');
-        render();
-      };
-
       window.shareWhatsApp = function () {
         const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
         const rec = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (b.value || 0), 0);
@@ -1084,7 +1154,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
           }, 300);
-          showToast('Ficheiro index.html descarregado no celular! 🚀');
+          showToast('Ficheiro index.html pronto para uso offline! 🚀');
         } catch (e) {
           alert('Erro ao descarregar HTML.');
         }
@@ -1149,7 +1219,7 @@
             <div class="space-y-4">
               <!-- Cartões de Resumo -->
               <div class="grid grid-cols-2 gap-2.5">
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md relative">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm relative">
                   <div class="flex justify-between items-center">
                     <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Receitas</span>
                     <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Editar Renda Mensal">
@@ -1159,50 +1229,51 @@
                   <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalReceitas)}</span>
                 </div>
 
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white shadow-md">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-sm">
                   <span class="text-[10px] font-bold text-rose-100 uppercase tracking-wider block">Total Gasto</span>
                   <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalDespesas)}</span>
                 </div>
 
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-800 text-white shadow-md">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 text-white shadow-sm">
                   <span class="text-[10px] font-bold text-purple-100 uppercase tracking-wider block">Fatura Cartões</span>
                   <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalCartao)}</span>
                 </div>
 
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-md">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-sm">
                   <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Sobra Líquida</span>
                   <span class="text-base font-black tracking-tight mt-1 block ${sobraLiquida < 0 ? 'text-rose-200' : ''}">${formatMoeda(sobraLiquida)}</span>
                 </div>
               </div>
 
-              <!-- Lançamentos Rápidos de 1 toque -->
-              <div class="flex gap-2 overflow-x-auto pb-1">
-                <button onclick="quickLancar('Mercado Express', 80, 'Alimentação')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all cursor-pointer">
-                  🛒 Mercado R$ 80
-                </button>
-                <button onclick="quickLancar('Combustível', 100, 'Transporte')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all cursor-pointer">
-                  ⛽ Posto R$ 100
-                </button>
-                <button onclick="quickLancar('Delivery / Lanche', 45, 'Alimentação')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all cursor-pointer">
-                  🍕 Lanche R$ 45
-                </button>
-                <button onclick="quickLancar('Farmácia', 50, 'Saúde')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all cursor-pointer">
-                  💊 Farmácia R$ 50
-                </button>
+              <!-- Lançamentos Rápidos de 1 toque + Botão de Adicionar Mais -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-center px-1">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Atalhos de 1 Toque</span>
+                  <button onclick="openModalNovoQuick()" class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
+                    + Adicionar Atalho
+                  </button>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1">
+                  ${state.data.quickButtons.map(qb => `
+                    <button onclick="quickLancar('${qb.desc}', ${qb.val}, '${qb.cat}')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all shadow-xs cursor-pointer">
+                      ${qb.icon} ${qb.desc} R$ ${qb.val}
+                    </button>
+                  `).join('')}
+                </div>
               </div>
 
-              <!-- Caixinhas com Lápis e Botão '+ Nova Caixinha' -->
+              <!-- Caixinhas com Botão + Adicionar e Lápis -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <div>
                     <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
-                    <span class="text-[10px] text-indigo-500 font-bold">Transbordo Ativo</span>
+                    <span class="text-[10px] text-indigo-500 font-bold">Transbordo Automático</span>
                   </div>
                   <button
                     onclick="openModalNovaCaixinha()"
-                    class="py-1.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 shadow-xs cursor-pointer active:scale-95 transition-all"
+                    class="py-1 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95 transition-all"
                   >
-                    + Nova Caixinha
+                    + Adicionar
                   </button>
                 </div>
 
@@ -1219,7 +1290,7 @@
                           <span class="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
                             <span>${box.icon}</span>
                             <span>${box.name}</span>
-                            ${box.isMain ? '<span class="text-[9px] bg-indigo-500/20 text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
+                            ${box.isMain ? '<span class="text-[9px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
                           </span>
                           <div class="flex items-center gap-2">
                             <span class="font-extrabold text-slate-600 dark:text-slate-300">
@@ -1227,11 +1298,10 @@
                             </span>
                             <button
                               onclick="handleEditBox('${box.id}', ${box.isMain})"
-                              class="px-2 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer border border-indigo-200/50 dark:border-indigo-800/50 active:scale-95"
+                              class="px-2 py-0.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer active:scale-95"
                               title="Editar Caixinha"
                             >
-                              <span>✏️</span>
-                              <span>Editar</span>
+                              ✏️
                             </button>
                           </div>
                         </div>
@@ -1245,7 +1315,7 @@
 
                         ${excedeu ? `
                           <div class="text-[10px] font-bold text-rose-500 pt-0.5">
-                            ↳ Excedeu ${formatMoeda(excedente)} (absorvido pelo Salário Geral)
+                            ↳ Excedeu ${formatMoeda(excedente)} (absorvido pela verba Geral)
                           </div>
                         ` : ''}
                       </div>
@@ -1270,14 +1340,14 @@
                   <button
                     type="button"
                     id="btn-type-despesa"
-                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'despesa' ? 'bg-rose-500 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
+                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'despesa' ? 'bg-rose-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
                   >
                     📉 Despesa (-)
                   </button>
                   <button
                     type="button"
                     id="btn-type-receita"
-                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'receita' ? 'bg-emerald-500 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
+                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'receita' ? 'bg-emerald-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
                   >
                     📈 Receita (+)
                   </button>
@@ -1286,7 +1356,7 @@
                 <input
                   type="text"
                   id="input-desc"
-                  placeholder="Descrição da compra (ex: Supermercado, Almoço)"
+                  placeholder="Descrição da compra (ex: Mercado, Farmácia)"
                   required
                   class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
                 />
@@ -1345,7 +1415,7 @@
                     </div>
 
                     <div id="sim-verdict" class="text-[11px] font-bold pt-1 border-t border-indigo-200 dark:border-indigo-800">
-                      Informe o valor acima para comparar a economia do desconto com o ganho no CDI.
+                      Informe o valor acima para comparar o desconto com o CDI.
                     </div>
                   </div>
                 </div>
@@ -1415,7 +1485,7 @@
                   ${monthTrans.length === 0 ? `
                     <div class="text-center py-6 text-xs text-slate-400 font-bold">Nenhum lançamento registrado neste mês.</div>
                   ` : monthTrans.map(t => `
-                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-200/40 dark:border-slate-700/40">
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-200/50 dark:border-slate-700/50">
                       <div>
                         <div class="font-black text-slate-900 dark:text-slate-100">${t.desc}</div>
                         <div class="text-[10px] text-slate-400 mt-0.5">${t.date} • ${t.category} • ${t.payment}</div>
@@ -1424,7 +1494,7 @@
                         <span class="font-black text-xs ${t.type === 'despesa' ? 'text-rose-500' : 'text-emerald-500'}">
                           ${t.type === 'despesa' ? '-' : '+'} ${formatMoeda(t.value)}
                         </span>
-                        <button onclick="openModalEditarTrans(${t.id})" class="p-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-indigo-100 text-[11px] cursor-pointer" title="Editar Lançamento">
+                        <button onclick="openModalEditarTrans(${t.id})" class="p-1.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 hover:bg-indigo-100 text-[11px] cursor-pointer" title="Editar Lançamento">
                           ✏️
                         </button>
                         <button onclick="deleteTrans(${t.id})" class="text-slate-400 hover:text-rose-500 p-1.5 cursor-pointer" title="Excluir">
@@ -1502,7 +1572,7 @@
                 const percent = Math.min(100, Math.round((fatura / card.limit) * 100));
 
                 return `
-                  <div class="relative p-5 rounded-3xl bg-gradient-to-br ${skinGradients[card.skin || 'titanium']} text-white shadow-xl space-y-4 overflow-hidden border border-white/10">
+                  <div class="relative p-5 rounded-3xl bg-gradient-to-br ${skinGradients[card.skin || 'titanium']} text-white shadow-lg space-y-4 overflow-hidden border border-white/10">
                     ${card.isBlocked ? `
                       <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-4">
                         <span class="text-3xl mb-1">🔒</span>
@@ -1564,27 +1634,27 @@
                 `;
               }).join('')}
 
-              <!-- SEÇÃO DE COMPRAS PARCELADAS COM LÁPIS -->
+              <!-- SEÇÃO DE COMPRAS PARCELADAS COM LÁPIS E NOVO -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
                 <div class="flex justify-between items-center">
                   <div>
                     <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
                       🛍️ Compras Parceladas no Cartão
                     </h3>
-                    <span class="text-[10px] text-slate-400">Total liberdade para editar e gerenciar</span>
+                    <span class="text-[10px] text-slate-400">Total liberdade para editar</span>
                   </div>
                   <button
                     onclick="openModalNovaParcela()"
-                    class="py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 shadow-xs cursor-pointer active:scale-95"
+                    class="py-1 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95"
                   >
-                    + Nova Compra Parcelada
+                    + Adicionar
                   </button>
                 </div>
 
                 <div class="space-y-2 pt-1">
                   ${installmentList.length === 0 ? `
                     <div class="text-center py-6 text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                      Nenhuma compra parcelada ativa cadastrada. Clique no botão acima para adicionar.
+                      Nenhuma compra parcelada cadastrada.
                     </div>
                   ` : installmentList.map(item => {
                     const currentP = item.currentMonthParcela || item.minParcela;
@@ -1613,8 +1683,7 @@
                               class="px-2 py-1 rounded-xl bg-slate-200/80 dark:bg-slate-700/80 hover:bg-indigo-100 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
                               title="Editar Compra Parcelada"
                             >
-                              <span>✏️</span>
-                              <span>Editar</span>
+                              ✏️
                             </button>
                             <button
                               onclick="deleteParcelaGroup('${item.baseName}')"
@@ -1633,7 +1702,7 @@
                         <div class="flex justify-between items-center text-[10px] text-slate-400 font-bold">
                           <span>${remainingMonths} parcelas restantes a pagar</span>
                           <span class="text-slate-700 dark:text-slate-300 font-black">
-                            Saldo restante: ${formatMoeda(remainingTotal)}
+                            Total a pagar: ${formatMoeda(remainingTotal)}
                           </span>
                         </div>
                       </div>
@@ -1667,7 +1736,7 @@
                       onclick="goToMonth(${mNum})"
                       class="p-3 rounded-2xl border text-left transition-all cursor-pointer ${
                         isCurrent
-                          ? 'bg-indigo-600 text-white border-indigo-700 shadow-md scale-[1.02]'
+                          ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm scale-[1.02]'
                           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                       }"
                     >
@@ -1697,7 +1766,7 @@
                     🎯 Metas & Reservas Financeiras
                   </h3>
                   <button onclick="openModalNovaMeta()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
-                    + Nova
+                    + Adicionar
                   </button>
                 </div>
                 ${state.data.savingsGoals.map(goal => {
@@ -1808,13 +1877,13 @@
 
           btnDesp.addEventListener('click', () => {
             state.newTransType = 'despesa';
-            btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-rose-500 text-white shadow-md transition-all cursor-pointer';
+            btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-rose-500 text-white shadow-xs transition-all cursor-pointer';
             btnRec.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
           });
 
           btnRec.addEventListener('click', () => {
             state.newTransType = 'receita';
-            btnRec.className = 'py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-md transition-all cursor-pointer';
+            btnRec.className = 'py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-xs transition-all cursor-pointer';
             btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
           });
 
@@ -1840,12 +1909,12 @@
               simVerdict.innerHTML = `
                 <div>💡 Desconto à vista: <b>${formatMoeda(economiaAvista)}</b></div>
                 <div>📈 Rende no CDI (${parcelas}x): <b>~${formatMoeda(rendimentoCdi)}</b></div>
-                <div class="mt-1.5 p-1.5 rounded-lg text-center ${valeAvista ? 'bg-emerald-500/20 text-emerald-400' : 'bg-indigo-500/20 text-indigo-400'}">
+                <div class="mt-1.5 p-1.5 rounded-lg text-center ${valeAvista ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400'}">
                   ${valeAvista ? '🏆 Recomendação: Pague À VISTA com desconto!' : '🏆 Recomendação: PARCELE sem juros e deixe no CDI!'}
                 </div>
               `;
             } else {
-              simVerdict.textContent = 'Informe o valor acima para comparar a economia do desconto com o ganho no CDI.';
+              simVerdict.textContent = 'Informe o valor acima para comparar o desconto com o CDI.';
             }
           }
 
