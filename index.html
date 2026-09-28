@@ -306,6 +306,7 @@
             align-items: center;
         }
 
+        /* CAIXINHAS NO PAINEL */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -390,6 +391,29 @@
         }
         .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
+        /* NOVO BLOCO DE VERBAS EXTRAS */
+        .extra-income-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(59, 130, 246, 0.03) 100%);
+            border: 1px dashed rgba(16, 185, 129, 0.35);
+            border-radius: 16px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .extra-item-pill {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 7px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+
+        /* CARD DE LANÇAMENTO */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -875,6 +899,43 @@
             font-weight: 800;
         }
 
+        /* ========================================================
+           NOVO DESIGN DA ABA MAIS (MODERNA E FINTECH)
+           ======================================================== */
+        .modern-profile-banner {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(49, 46, 129, 0.25);
+        }
+
+        .modern-action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .category-chip-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
@@ -900,16 +961,6 @@
             font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
-        }
-
-        .backup-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
         }
 
         .modal-overlay {
@@ -980,6 +1031,7 @@
             </div>
         </header>
 
+        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button" id="btn-tab-painel" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -1005,7 +1057,7 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL COM CAIXINHAS MODERNAS E CORES EQUILIBRADAS -->
+            <!-- TELA 1: PAINEL COM CAIXINHAS E NOVO ESPAÇO DE VERBAS EXTRAS -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
@@ -1085,7 +1137,7 @@
                     </button>
                 </div>
 
-                <!-- SOMA TOTAL DAS VERBAS E LISTA REFORMULADA -->
+                <!-- SOMA TOTAL DAS VERBAS E LISTA -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner">
                         <div>
@@ -1103,6 +1155,24 @@
                     </div>
 
                     <div class="budget-list-elegant" id="budget-boxes-container"></div>
+                </div>
+
+                <!-- NOVO ESPAÇO: VERBAS EXTRAS DO MÊS -->
+                <div class="extra-income-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <b style="font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:5px;">
+                                <i class="fa-solid fa-money-bill-trend-up"></i> Verbas Extras deste Mês
+                            </b>
+                            <span style="font-size:0.62rem; color:var(--text-muted);">13º, vendas, bônus ou rendas extras</span>
+                        </div>
+                        <button onclick="abrirModalNovaVerbaExtra()" class="btn-box-action" style="color:var(--green); border-color:rgba(16,185,129,0.3);">
+                            <i class="fa-solid fa-plus"></i> Extra
+                        </button>
+                    </div>
+
+                    <!-- Lista dinâmica de verbas extras do mês -->
+                    <div id="extra-income-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
                 <div class="section-box" style="padding:12px;">
@@ -1298,7 +1368,7 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES REAL E SEM VALORES INVENTADOS -->
+            <!-- TELA 4: MESES -->
             <div id="tab-meses" class="tab-pane">
                 <div class="year-selector-header">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
@@ -1324,75 +1394,99 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS -->
+            <!-- TELA 5: MAIS (TOTALMENTE MODERNIZADA E PREMIUM) -->
             <div id="tab-mais" class="tab-pane">
-                <div class="backup-card">
+                
+                <!-- BANNER DE PERFIL E SISTEMA -->
+                <div class="modern-profile-banner">
+                    <div>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle</h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Configurações, backup e ativos</span>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
+                            🟢 Seguro e Local
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 1. BACKUP DESCOMPLICADO -->
+                <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
-                        <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
+                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> Salvar e Restaurar Dados
+                        </b>
                     </div>
-                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
-                        Não precisa procurar arquivos no celular. Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
+                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.3;">
+                        Copie todo o seu aplicativo em formato de texto para salvar no seu WhatsApp ou bloco de notas sem procurar arquivos.
                     </p>
-                    
-                    <div style="display:flex; gap:6px;">
-                        <button class="btn-primary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="copiarBackupTexto()">
-                            📋 Copiar Backup
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn-primary" style="flex:1; padding:9px; font-size:0.75rem;" onclick="copiarBackupTexto()">
+                            <i class="fa-solid fa-copy"></i> Copiar Backup
                         </button>
-                        <button class="btn-secondary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
-                            📥 Restaurar Dados
+                        <button class="btn-secondary" style="flex:1; padding:9px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
+                            <i class="fa-solid fa-paste"></i> Restaurar
                         </button>
                     </div>
                 </div>
 
-                <div class="section-box">
-                    <h3>
-                        <span>🐷 Caixinhas de Reserva</span>
-                        <button class="btn-icon" onclick="abrirModalNovaMeta()" style="font-size:0.8rem; color:var(--primary); font-weight:bold;">+ Nova</button>
-                    </h3>
-                    <div class="list-container" id="goals-list"></div>
+                <!-- 2. GESTÃO DE CATEGORIAS E TETOS -->
+                <div class="modern-action-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-tags text-pink-500"></i> Suas Categorias
+                        </b>
+                        <button onclick="abrirModalNovaCategoria()" class="btn-box-action">
+                            <i class="fa-solid fa-plus"></i> Nova
+                        </button>
+                    </div>
+                    <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div class="section-box">
-                    <h3>💼 Total Investido em Ativos</h3>
-                    <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                <!-- 3. CAIXINHAS DE RESERVA -->
+                <div class="modern-action-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-piggy-bank text-amber-500"></i> Caixinhas de Reserva
+                        </b>
+                        <button onclick="abrirModalNovaMeta()" class="btn-box-action">
+                            <i class="fa-solid fa-plus"></i> Nova
+                        </button>
+                    </div>
+                    <div class="list-container" id="goals-list" style="max-height:220px;"></div>
+                </div>
+
+                <!-- 4. ATIVOS E INVESTIMENTOS -->
+                <div class="modern-action-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Patrimônio Investido:</span>
+                            <h2 id="card-total-invested" style="font-size:1.25rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
+                        </div>
+                        <button onclick="abrirModalNovoInvestimento()" class="btn-box-action">
+                            <i class="fa-solid fa-plus"></i> Aporte
+                        </button>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); border-top:1px solid var(--border-color); padding-top:6px;">
                         <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
                         <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
                     </div>
+                    <div class="list-container" id="investment-list" style="max-height:160px; margin-top:4px;"></div>
                 </div>
 
-                <div class="section-box">
-                    <h3>🚀 Registrar Aporte / Ativo</h3>
-                    <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
-                        <div class="two-cols-clean">
-                            <select id="invest-platform" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                                <option value="XP Investimentos">XP Investimentos</option>
-                                <option value="Binance">Binance</option>
-                                <option value="Outros">Outra Corretora</option>
-                            </select>
-                            <select id="invest-type" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                                <option value="Renda Fixa">Renda Fixa / CDB</option>
-                                <option value="Criptomoeda">Criptomoeda</option>
-                                <option value="Ações">Ações / FIIs</option>
-                            </select>
+                <!-- 5. OPÇÕES DO SISTEMA -->
+                <div class="modern-action-card" style="border-color:rgba(244,63,94,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <b style="font-size:0.82rem; color:var(--red);">Zona de Manutenção</b>
+                            <span style="font-size:0.65rem; color:var(--text-muted); display:block;">Reiniciar dados e limpar aplicativo</span>
                         </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
+                        <button onclick="limparTodosDados()" class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3); font-size:0.7rem; padding:4px 8px;">
+                            🗑️ Limpar Tudo
+                        </button>
                     </div>
                 </div>
 
-                <div class="section-box">
-                    <h3>📁 Carteira de Ativos</h3>
-                    <div class="list-container" id="investment-list"></div>
-                </div>
-
-                <div style="text-align:center; padding:10px;">
-                    <button onclick="limparTodosDados()" style="background:none; border:none; color:var(--red); font-size:0.75rem; font-weight:800; cursor:pointer;">
-                        🗑️ Zerar Todos os Dados
-                    </button>
-                </div>
             </div>
 
         </div>
@@ -1411,7 +1505,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v30_clean_real";
+        const STORAGE_KEY = "financas_pro_v31_extra_income";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1444,7 +1538,8 @@
                 { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
             ],
             transactions: [],
-            monthIncomes: {}, // Permite editar a verba específica de qualquer mês passado ou futuro
+            monthIncomes: {},
+            extraIncomes: [], // Lista de verbas extras esporádicas do mês
             goals: [
                 { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
             ],
@@ -1454,6 +1549,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v30_clean_real",
                 "financas_pro_v29_box_elegance",
                 "financas_pro_v28_future_years",
                 "financas_pro_v27_boxes_redesign",
@@ -1496,6 +1592,7 @@
                             categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                             transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                             monthIncomes: (parsed.monthIncomes && typeof parsed.monthIncomes === 'object') ? parsed.monthIncomes : {},
+                            extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
                             goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                             investments: Array.isArray(parsed.investments) ? parsed.investments : []
                         };
@@ -1743,6 +1840,51 @@
             return totalBaseCaixinhas;
         }
 
+        // --- SISTEMA DE VERBAS EXTRAS DO MÊS ---
+        function abrirModalNovaVerbaExtra() {
+            abrirModal("Adicionar Verba Extra no Mês", `
+                <label class="text-xs text-gray-500 font-bold">Descrição da Verba (ex: 13º Salário, Venda...):</label>
+                <input type="text" id="new-extra-desc" placeholder="Ex: Bônus, Freelance">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Extra (R$):</label>
+                <input type="number" id="new-extra-val" step="50" placeholder="Ex: 1200.00">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Data do Recebimento:</label>
+                <input type="date" id="new-extra-date" value="${new Date().toISOString().slice(0, 10)}">
+            `, () => {
+                const desc = document.getElementById("new-extra-desc").value.trim();
+                const val = parseFloat(document.getElementById("new-extra-val").value);
+                const date = document.getElementById("new-extra-date").value;
+
+                if (!desc || isNaN(val) || val <= 0) {
+                    alert("Informe uma descrição e um valor válido.");
+                    return;
+                }
+
+                if (!financialData.extraIncomes) financialData.extraIncomes = [];
+                const mKey = date ? date.slice(0, 7) : selectedMonthKey;
+
+                financialData.extraIncomes.push({
+                    id: Date.now(),
+                    desc,
+                    value: val,
+                    date,
+                    monthKey: mKey
+                });
+
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
+        function removerVerbaExtra(id) {
+            if (confirm("Remover esta verba extra?")) {
+                financialData.extraIncomes = (financialData.extraIncomes || []).filter(e => e.id !== id);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
         function abrirModalEditarVerbaMes(mKey, mesNome, ano) {
             const boxes = financialData.budgetBoxes || [];
             const totalBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
@@ -1766,11 +1908,15 @@
         function atualizarTela() {
             const boxes = financialData.budgetBoxes || [];
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+            const extrasDoMes = (financialData.extraIncomes || []).filter(e => e.monthKey === selectedMonthKey);
 
+            // Soma das caixinhas fixas + verbas extras adicionadas
             const totalVerbaCaixinhasBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
             const verbaCadastradaMes = obterVerbaDoMes(selectedMonthKey, totalVerbaCaixinhasBase);
-            const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            const verbaTotalMes = verbaCadastradaMes + receitasExtrasMes;
+            const totalExtrasValor = extrasDoMes.reduce((acc, curr) => acc + curr.value, 0);
+            const receitasLançadasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            
+            const verbaTotalMes = verbaCadastradaMes + totalExtrasValor + receitasLançadasMes;
 
             const despesasTotalMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
@@ -1785,6 +1931,31 @@
             const bannerConsumoVerbas = document.getElementById("txt-consumo-total-verbas");
             if (bannerConsumoVerbas) {
                 bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            // LISTA DE VERBAS EXTRAS NO PAINEL
+            const extraListContainer = document.getElementById("extra-income-list");
+            if (extraListContainer) {
+                extraListContainer.innerHTML = '';
+                if (extrasDoMes.length === 0) {
+                    extraListContainer.innerHTML = '<span style="font-size:0.7rem; color:var(--text-muted); text-align:center; padding:4px;">Nenhuma verba extra adicionada para este mês.</span>';
+                } else {
+                    extrasDoMes.forEach(extra => {
+                        const item = document.createElement("div");
+                        item.className = "extra-item-pill";
+                        item.innerHTML = `
+                            <div style="display:flex; flex-direction:column; gap:1px;">
+                                <b style="color:var(--text-main); font-size:0.78rem;">${extra.desc}</b>
+                                <span style="font-size:0.62rem; color:var(--text-muted);">${extra.date ? extra.date.split('-').reverse().join('/') : ''}</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <b style="color:var(--green); font-size:0.85rem;">+ R$ ${extra.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>
+                                <button onclick="removerVerbaExtra(${extra.id})" class="btn-mini-action del" title="Remover"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        extraListContainer.appendChild(item);
+                    });
+                }
             }
 
             // MINI PAINEL NA ABA LANÇAR
@@ -2191,9 +2362,7 @@
                 }
             }
 
-            // ========================================================
-            // ABA MESES REAL (SEM PROJEÇÃO FORÇADA OU DADOS FALSOS)
-            // ========================================================
+            // ABA MESES REAL
             let anoEntradasTotal = 0;
             let anoGastosTotal = 0;
 
@@ -2204,18 +2373,20 @@
                 for (let m = 1; m <= 12; m++) {
                     const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
                     const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
+                    const mExtras = (financialData.extraIncomes || []).filter(e => e.monthKey === mKey);
                     
                     const temTransacoes = mTrans.length > 0;
                     const temVerbaDefinida = financialData.monthIncomes && typeof financialData.monthIncomes[mKey] === 'number';
+                    const temExtras = mExtras.length > 0;
 
-                    // Só exibe valores caso o usuário tenha lançado dados ou definido a verba desse mês
                     let mInc = 0;
                     let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
 
-                    if (temTransacoes || temVerbaDefinida || (selectedYearTabela === currentYear && m === currentMonthNum)) {
-                        const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                    if (temTransacoes || temVerbaDefinida || temExtras || (selectedYearTabela === currentYear && m === currentMonthNum)) {
+                        const mExtLançadas = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                        const mExtrasValor = mExtras.reduce((acc, c) => acc + c.value, 0);
                         const verbaBase = obterVerbaDoMes(mKey, totalVerbaCaixinhasBase);
-                        mInc = verbaBase + mExt;
+                        mInc = verbaBase + mExtLançadas + mExtrasValor;
                     }
 
                     const mNet = mInc - mExp;
@@ -2288,6 +2459,28 @@
 
             const elemGastosTotal = document.getElementById("txt-ano-gastos-total");
             if (elemGastosTotal) elemGastosTotal.innerText = `R$ ${anoGastosTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+
+            // ABA MAIS: CATEGORIAS MODERNIZADAS
+            const maisCatContainer = document.getElementById("mais-categories-list");
+            if (maisCatContainer) {
+                maisCatContainer.innerHTML = '';
+                (financialData.categories || []).forEach((cat, idx) => {
+                    const item = document.createElement("div");
+                    item.className = "category-chip-item";
+                    item.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="width:10px; height:10px; border-radius:50%; background:${cat.color || 'var(--primary)'};"></span>
+                            <span style="color:var(--text-main);">${cat.name}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.7rem; color:var(--text-muted);">${cat.limit > 0 ? 'Teto: R$ ' + cat.limit : 'Sem teto'}</span>
+                            <button onclick="abrirModalEditarCategoria(${idx})" class="btn-mini-action" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="removerCategoria(${idx})" class="btn-mini-action del" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    maisCatContainer.appendChild(item);
+                });
+            }
 
             // RESERVAS
             const goalsContainer = document.getElementById("goals-list");
@@ -2857,11 +3050,14 @@
             abrirModal("Criar Nova Categoria", `
                 <label class="text-xs text-gray-500 font-bold">Nome da Categoria:</label>
                 <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer...">
+                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal R$ (opcional):</label>
+                <input type="number" id="modal-cat-limit" placeholder="Ex: 500">
             `, () => {
                 const name = document.getElementById("modal-cat-name").value.trim();
+                const limit = parseFloat(document.getElementById("modal-cat-limit").value) || 0;
                 if (name) {
                     if (!financialData.categories) financialData.categories = [];
-                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit: 0 });
+                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit });
                     salvarDados();
                     atualizarTela();
                     const sel = document.getElementById("trans-category");
@@ -2870,19 +3066,75 @@
             });
         }
 
-        // --- INVESTIMENTOS ---
-        function adicionarInvestimento() {
-            const platform = document.getElementById("invest-platform").value;
-            const type = document.getElementById("invest-type").value;
-            const asset = document.getElementById("invest-asset").value.trim();
-            const value = parseFloat(document.getElementById("invest-value").value);
-            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
+        function abrirModalEditarCategoria(index) {
+            const cat = financialData.categories[index];
+            if (!cat) return;
 
-            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
-            document.getElementById("invest-asset").value = '';
-            document.getElementById("invest-value").value = '';
-            salvarDados();
-            atualizarTela();
+            abrirModal("Editar Categoria", `
+                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <input type="text" id="edit-cat-name" value="${cat.name}">
+                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal R$:</label>
+                <input type="number" id="edit-cat-limit" value="${cat.limit || 0}">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-cat-color" value="${cat.color || '#6366f1'}" style="width:50px; height:36px; padding:0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("edit-cat-name").value.trim();
+                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
+                const color = document.getElementById("edit-cat-color").value;
+
+                if (name) {
+                    cat.name = name;
+                    cat.limit = limit;
+                    cat.color = color;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function removerCategoria(index) {
+            const cat = financialData.categories[index];
+            if (!cat) return;
+            if (confirm(`Excluir a categoria "${cat.name}"?`)) {
+                financialData.categories.splice(index, 1);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        // --- INVESTIMENTOS ---
+        function abrirModalNovoInvestimento() {
+            abrirModal("Registrar Aporte / Ativo", `
+                <label class="text-xs text-gray-500 font-bold">Corretora / Banco:</label>
+                <select id="invest-platform">
+                    <option value="XP Investimentos">XP Investimentos</option>
+                    <option value="Binance">Binance</option>
+                    <option value="Outros">Outra Corretora</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Tipo de Ativo:</label>
+                <select id="invest-type">
+                    <option value="Renda Fixa">Renda Fixa / CDB</option>
+                    <option value="Criptomoeda">Criptomoeda</option>
+                    <option value="Ações">Ações / FIIs</option>
+                </select>
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Nome do Ativo (ex: CDB 120%, BTC):</label>
+                <input type="text" id="invest-asset" placeholder="Nome do Ativo">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Aplicado (R$):</label>
+                <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
+            `, () => {
+                const platform = document.getElementById("invest-platform").value;
+                const type = document.getElementById("invest-type").value;
+                const asset = document.getElementById("invest-asset").value.trim();
+                const value = parseFloat(document.getElementById("invest-value").value);
+                if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
+
+                financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
+                salvarDados();
+                atualizarTela();
+            });
         }
 
         function removerInvestimento(id) {
@@ -2919,4 +3171,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-</html>
+    </html>
