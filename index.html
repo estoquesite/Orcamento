@@ -306,9 +306,7 @@
             align-items: center;
         }
 
-        /* ========================================================
-           NOVO DESIGN ELEGANTE DAS CAIXINHAS NO PAINEL
-           ======================================================== */
+        /* CAIXINHAS NO PAINEL */
         .budget-summary-banner {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%);
             border: 1px solid rgba(99, 102, 241, 0.2);
@@ -368,9 +366,7 @@
             width: 100%;
         }
 
-        body.dark-mode .elegant-progress-track {
-            background: rgba(255, 255, 255, 0.08);
-        }
+        body.dark-mode .elegant-progress-track { background: rgba(255, 255, 255, 0.08); }
 
         .elegant-box-footer {
             display: flex;
@@ -393,9 +389,8 @@
             align-items: center;
             gap: 4px;
         }
-        .btn-box-action:hover { background: rgba(99, 102, 241, 0.1); }
 
-        /* OUTROS ESTILOS */
+        /* CARD DE LANÇAMENTO */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -825,6 +820,64 @@
             border-radius: 50%;
         }
 
+        /* ========================================================
+           NOVO DESIGN DA ABA MESES (CARDS ELEGANTES + ANOS FUTUROS)
+           ======================================================== */
+        .year-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .year-summary-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            color: white;
+            padding: 14px 16px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(49, 46, 129, 0.2);
+        }
+
+        .months-elegant-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .month-card-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .month-name-badge {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 65px;
+        }
+
+        .month-values-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
@@ -956,18 +1009,12 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL COM AS CAIXINHAS E SOMA TOTAL ELEGANTE -->
+            <!-- TELA 1: PAINEL COM CAIXINHAS E SOMA TOTAL -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
-                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;">
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                        </select>
+                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;"></select>
                         <button class="date-nav-btn" onclick="mudarAno(1)">»</button>
                     </div>
 
@@ -1044,7 +1091,6 @@
 
                 <!-- SOMA TOTAL DAS VERBAS E LISTA ELEGANTE -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
-                    <!-- BANNER DA SOMA TOTAL DAS VERBAS -->
                     <div class="budget-summary-banner">
                         <div>
                             <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; display:block;">
@@ -1060,7 +1106,6 @@
                         </div>
                     </div>
 
-                    <!-- CONTAINER COM OS CARDS ELEGANTES DAS CAIXINHAS -->
                     <div class="budget-list-elegant" id="budget-boxes-container"></div>
                 </div>
 
@@ -1257,29 +1302,37 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES -->
+            <!-- ============================================== -->
+            <!-- TELA 4: MESES (MODERNO, ELEGANTE E COM ANOS FUTUROS) -->
+            <!-- ============================================== -->
             <div id="tab-meses" class="tab-pane">
-                <div class="section-box">
-                    <h3>
-                        <span>📅 Valores Mês a Mês (<span id="txt-ano-tabela">2026</span>)</span>
-                    </h3>
-                    <p class="text-[11px] text-gray-500 mb-2">Clique em "Abrir" para acessar qualquer mês diretamente.</p>
-                    
-                    <div style="overflow-x: auto;">
-                        <table style="width:100%; font-size:0.75rem; border-collapse:collapse;">
-                            <thead>
-                                <tr style="border-bottom:1px solid var(--border-color); color:var(--text-muted); text-align:left;">
-                                    <th style="padding:6px;">Mês</th>
-                                    <th>Entradas</th>
-                                    <th>Despesas</th>
-                                    <th>Sobra</th>
-                                    <th>Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody id="corpo-tabela-meses"></tbody>
-                        </table>
+                
+                <!-- SELETOR DE ANO AMPLIADO (PROJEÇÃO ATÉ 2035) -->
+                <div class="year-selector-header">
+                    <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-calendar-days text-indigo-500"></i>
+                        <select id="select-year-tabela" onchange="alterarAnoTabela(this.value)" style="width:auto; border:none; background:transparent; font-size:1.05rem; font-weight:900; color:var(--primary); outline:none; cursor:pointer;">
+                            <!-- Gerado dinamicamente no JS de 2024 até 2035 -->
+                        </select>
+                    </div>
+                    <button class="date-nav-btn" onclick="mudarAnoTabela(1)">»</button>
+                </div>
+
+                <!-- CARD RESUMO DO ANO SELECIONADO -->
+                <div class="year-summary-card">
+                    <div>
+                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Anual Acumulado</span>
+                        <b id="txt-ano-saldo-acumulado" style="font-size:1.35rem; font-weight:900;">R$ 0,00</b>
+                    </div>
+                    <div style="text-align:right; font-size:0.72rem;">
+                        <div style="color:#34d399;">Entradas: <b id="txt-ano-entradas-total">R$ 0</b></div>
+                        <div style="color:#fb7185;">Gastos: <b id="txt-ano-gastos-total">R$ 0</b></div>
                     </div>
                 </div>
+
+                <!-- LISTA ELEGANTE MÊS A MÊS EM CARDS -->
+                <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
             <!-- TELA 5: MAIS -->
@@ -1369,14 +1422,16 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v27_boxes_redesign";
+        const STORAGE_KEY = "financas_pro_v28_future_years";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const mesesAbrev = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
         const hoje = new Date();
         let currentYear = hoje.getFullYear();
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+        let selectedYearTabela = currentYear; // Ano específico para a aba Meses
 
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
@@ -1410,6 +1465,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v27_boxes_redesign",
                 "financas_pro_v26_complete_dash",
                 "financas_pro_v25_lancar_totals",
                 "financas_pro_v24_stay_tab",
@@ -1470,6 +1526,9 @@
                 const lock = document.getElementById("lock-screen");
                 if (lock) lock.classList.add("hidden");
             }
+            
+            // Popula os seletores de ano até 2035
+            popularSeletoresDeAno();
             sincronizarDataFormulario();
             
             const abaSalva = localStorage.getItem(CURRENT_TAB_KEY) || 'painel';
@@ -1477,6 +1536,21 @@
             
             atualizarTela();
         });
+
+        function popularSeletoresDeAno() {
+            const anos = [];
+            for (let y = 2024; y <= 2035; y++) anos.push(y);
+
+            const selPainel = document.getElementById("select-year");
+            if (selPainel) {
+                selPainel.innerHTML = anos.map(y => `<option value="${y}" ${y === currentYear ? 'selected' : ''}>${y}</option>`).join('');
+            }
+
+            const selTabela = document.getElementById("select-year-tabela");
+            if (selTabela) {
+                selTabela.innerHTML = anos.map(y => `<option value="${y}" ${y === selectedYearTabela ? 'selected' : ''}>Ano ${y}</option>`).join('');
+            }
+        }
 
         function sincronizarDataFormulario() {
             const dateInput = document.getElementById("trans-date");
@@ -1625,14 +1699,18 @@
 
         function mudarAno(delta) {
             currentYear += delta;
+            selectedYearTabela = currentYear;
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
             sincronizarDataFormulario();
             atualizarTela();
         }
 
         function alterarAnoDireto(novoAno) {
             currentYear = parseInt(novoAno, 10);
+            selectedYearTabela = currentYear;
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
             sincronizarDataFormulario();
             atualizarTela();
         }
@@ -1642,6 +1720,7 @@
             if (currentMonthNum > 12) { currentMonthNum = 1; currentYear += 1; }
             else if (currentMonthNum < 1) { currentMonthNum = 12; currentYear -= 1; }
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
             sincronizarDataFormulario();
             atualizarTela();
         }
@@ -1653,13 +1732,21 @@
             atualizarTela();
         }
 
-        function atualizarTela() {
-            document.getElementById("select-year").value = String(currentYear);
-            document.getElementById("select-month").value = String(currentMonthNum);
-            document.getElementById("txt-ano-atual").innerText = String(currentYear);
-            const txtAnoTab = document.getElementById("txt-ano-tabela");
-            if (txtAnoTab) txtAnoTab.innerText = String(currentYear);
+        // CONTROLES DE ANO ESPECÍFICOS DA ABA MESES
+        function mudarAnoTabela(delta) {
+            selectedYearTabela += delta;
+            if (selectedYearTabela < 2024) selectedYearTabela = 2024;
+            if (selectedYearTabela > 2035) selectedYearTabela = 2035;
+            popularSeletoresDeAno();
+            atualizarTela();
+        }
 
+        function alterarAnoTabela(novoAno) {
+            selectedYearTabela = parseInt(novoAno, 10);
+            atualizarTela();
+        }
+
+        function atualizarTela() {
             const boxes = financialData.budgetBoxes || [];
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
@@ -1671,7 +1758,7 @@
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // ATUALIZAÇÃO DA SOMA TOTAL DAS VERBAS NO BANNER DO PAINEL
+            // SOMA TOTAL DAS VERBAS NO PAINEL
             const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
             if (bannerSomaVerbas) {
                 bannerSomaVerbas.innerText = `R$ ${totalVerbaCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1682,7 +1769,7 @@
                 bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             }
 
-            // ATUALIZAÇÃO DO MINI PAINEL NA ABA LANÇAR
+            // MINI PAINEL NA ABA LANÇAR
             const txtLancarMesAno = document.getElementById("txt-lancar-mes-ano");
             if (txtLancarMesAno) {
                 txtLancarMesAno.innerText = `${mesesNomes[currentMonthNum - 1]} ${currentYear}`;
@@ -1777,9 +1864,7 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // ========================================================
-            // RENDERIZAÇÃO ELEGANTE E ALINHADA DAS CAIXINHAS
-            // ========================================================
+            // RENDERIZAÇÃO DAS CAIXINHAS
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -1838,7 +1923,6 @@
                             </div>
                         </div>
 
-                        <!-- Barra de progresso limpa -->
                         <div class="elegant-progress-track">
                             <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px; transition:width 0.3s;"></div>
                         </div>
@@ -1983,7 +2067,7 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // ATUALIZA AS TAGS DE CARTÃO NA TELA DE LANÇAR
+            // ATUALIZA AS TAGS DE CARTÃO
             atualizarTagsCartoesVisual();
 
             const selectBox = document.getElementById("trans-box-id");
@@ -2089,55 +2173,95 @@
                 }
             }
 
-            // TABELA MÊS A MÊS
-            let anoEntradasReal = 0;
-            let anoSaidasReal = 0;
-            let mesesPreenchidosContador = 0;
+            // ========================================================
+            // RENDERIZAÇÃO DA NOVA ABA MESES COM CARDS E ANOS FUTUROS
+            // ========================================================
+            let anoEntradasTotal = 0;
+            let anoGastosTotal = 0;
 
-            const tbodyMeses = document.getElementById("corpo-tabela-meses");
-            if (tbodyMeses) tbodyMeses.innerHTML = '';
+            const monthsContainer = document.getElementById("months-cards-container");
+            if (monthsContainer) {
+                monthsContainer.innerHTML = '';
 
-            for (let m = 1; m <= 12; m++) {
-                const mKey = `${currentYear}-${String(m).padStart(2, '0')}`;
-                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                const temDados = mTrans.length > 0 || (mKey === selectedMonthKey && boxes.length > 0);
+                for (let m = 1; m <= 12; m++) {
+                    const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
+                    const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
+                    const temDados = mTrans.length > 0;
 
-                let mInc = 0;
-                let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
+                    let mInc = 0;
+                    let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
 
-                if (temDados) {
-                    mesesPreenchidosContador++;
-                    const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
-                    mInc = totalVerbaCaixinhas + mExt;
-                    anoEntradasReal += mInc;
-                    anoSaidasReal += mExp;
-                }
+                    // Considera a verba mensal cadastrada como projeção base
+                    if (temDados || selectedYearTabela >= currentYear) {
+                        const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                        mInc = totalVerbaCaixinhas + mExt;
+                    }
 
-                const mNet = mInc - mExp;
+                    const mNet = mInc - mExp;
 
-                if (tbodyMeses) {
-                    const tr = document.createElement("tr");
-                    tr.style.borderBottom = "1px solid var(--border-color)";
-                    const corSobra = mNet >= 0 ? 'var(--blue)' : 'var(--red)';
-                    tr.innerHTML = `
-                        <td style="padding:7px 4px; font-weight:700;">${mesesNomes[m - 1].slice(0, 3)}</td>
-                        <td style="color:${temDados ? 'var(--green)' : 'var(--text-muted)'};">${temDados ? 'R$ ' + mInc.toFixed(0) : '-'}</td>
-                        <td style="color:${temDados ? 'var(--red)' : 'var(--text-muted)'};">${temDados ? 'R$ ' + mExp.toFixed(0) : '-'}</td>
-                        <td style="color:${temDados ? corSobra : 'var(--text-muted)'}; font-weight:700;">${temDados ? 'R$ ' + mNet.toFixed(0) : '-'}</td>
-                        <td>
-                            <button onclick="selecionarMesEAbrir(${m})" style="background:var(--input-bg); border:1px solid var(--border-color); padding:2px 6px; border-radius:6px; font-size:0.65rem; font-weight:700; cursor:pointer;">Abrir</button>
-                        </td>
+                    if (temDados || mInc > 0) {
+                        anoEntradasTotal += mInc;
+                        anoGastosTotal += mExp;
+                    }
+
+                    const isMesAtual = (selectedYearTabela === currentYear && m === currentMonthNum);
+
+                    const cardMes = document.createElement("div");
+                    cardMes.className = "month-card-item";
+                    if (isMesAtual) {
+                        cardMes.style.borderColor = "var(--primary)";
+                        cardMes.style.boxShadow = "0 0 0 1px var(--primary)";
+                    }
+
+                    let statusBadge = '';
+                    if (temDados) {
+                        statusBadge = mNet >= 0 
+                            ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(16,185,129,0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>`
+                            : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(244,63,94,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`;
+                    } else {
+                        statusBadge = `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Projetado</span>`;
+                    }
+
+                    cardMes.innerHTML = `
+                        <div class="month-name-badge">
+                            <b style="font-size:0.9rem; color:var(--text-main);">${mesesNomes[m - 1]}</b>
+                            ${statusBadge}
+                        </div>
+
+                        <div class="month-values-group">
+                            <div style="text-align:right;">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Gastos</span>
+                                <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'};">
+                                    ${mExp > 0 ? '- R$ ' + mExp.toFixed(0) : 'R$ 0'}
+                                </b>
+                            </div>
+                            <div style="text-align:right; min-width:75px;">
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra Líquida</span>
+                                <b style="color:${mNet >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.85rem;">
+                                    R$ ${mNet.toFixed(0)}
+                                </b>
+                            </div>
+                            <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:4px 8px;">
+                                Abrir →
+                            </button>
+                        </div>
                     `;
-                    tbodyMeses.appendChild(tr);
+                    monthsContainer.appendChild(cardMes);
                 }
             }
 
-            const anoEconomiaReal = anoEntradasReal - anoSaidasReal;
-            const anoEconElem = document.getElementById("ano-economia-val");
-            anoEconElem.innerText = `R$ ${anoEconomiaReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            anoEconElem.style.color = anoEconomiaReal >= 0 ? "var(--green)" : "var(--red)";
+            const anoSaldoAcumulado = anoEntradasTotal - anoGastosTotal;
+            const elemSaldoAcum = document.getElementById("txt-ano-saldo-acumulado");
+            if (elemSaldoAcum) {
+                elemSaldoAcum.innerText = `R$ ${anoSaldoAcumulado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                elemSaldoAcum.style.color = anoSaldoAcumulado >= 0 ? "#34d399" : "#fb7185";
+            }
 
-            document.getElementById("txt-meses-preenchidos").innerText = `${mesesPreenchidosContador} ${mesesPreenchidosContador === 1 ? 'mês preenchido' : 'meses preenchidos'}`;
+            const elemEntradasTotal = document.getElementById("txt-ano-entradas-total");
+            if (elemEntradasTotal) elemEntradasTotal.innerText = `R$ ${anoEntradasTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+
+            const elemGastosTotal = document.getElementById("txt-ano-gastos-total");
+            if (elemGastosTotal) elemGastosTotal.innerText = `R$ ${anoGastosTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
 
             // RESERVAS
             const goalsContainer = document.getElementById("goals-list");
@@ -2205,9 +2329,14 @@
             }
         }
 
-        function selecionarMesEAbrir(mes) {
-            alterarMesDireto(mes);
+        function selecionarMesEAbrirAno(ano, mes) {
+            currentYear = ano;
+            currentMonthNum = mes;
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            popularSeletoresDeAno();
+            sincronizarDataFormulario();
             trocarAba('painel');
+            atualizarTela();
         }
 
         function lancarDiretoNaCaixinha(boxId) {
