@@ -3,101 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baixe Nosso Aplicativo</title>
-    <!-- Tailwind CSS para estilização rápida e moderna -->
+    <title>Finanças Pro - Baixe Nosso Aplicativo</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
         @keyframes pulse-slow {
             0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.08); opacity: 1; }
+            50% { transform: scale(1.12); opacity: 1; }
         }
         .animate-pulse-slow {
-            animation: pulse-slow 2s infinite ease-in-out;
+            animation: pulse-slow 2.5s infinite ease-in-out;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-[#0b0f19] text-white min-h-screen flex flex-col justify-between font-sans selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Elementos de Luz Decorativos de Fundo -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
     <!-- Cabeçalho -->
-    <header class="p-6 text-center">
-        <h2 class="text-xl font-bold tracking-wider uppercase text-purple-300">Nome do Seu App</h2>
+    <header class="p-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full backdrop-blur-md shadow-inner">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-xs font-bold tracking-widest uppercase text-indigo-300">Finanças Pro v1.2</span>
+        </div>
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="flex-grow flex flex-col items-center justify-center px-4 py-8 space-y-16">
+    <main class="flex-grow flex flex-col items-center justify-center px-6 py-8 space-y-16 relative z-10 max-w-6xl mx-auto w-full">
         
         <!-- Seção de Download (Topo) -->
-        <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             
             <!-- Lado Esquerdo: Textos e Botões de Download -->
             <div class="text-center md:text-left space-y-6">
-                <span class="bg-purple-700 bg-opacity-40 text-purple-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-purple-500">
-                    Disponível para iOS e Android
-                </span>
-                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-                    Leve a sua experiência para o próximo nível.
+                <div class="inline-block">
+                    <span class="bg-indigo-500/10 text-indigo-400 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-indigo-500/30">
+                        ✨ Disponível para iOS e Android
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-[1.1]">
+                    Leve o seu <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500">controle financeiro</span> para o próximo nível.
                 </h1>
-                <p class="text-gray-300 text-lg">
-                    Baixe nosso aplicativo agora mesmo e tenha todas as funcionalidades na palma da sua mão com total segurança.
+                <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+                    Baixe nosso aplicativo PWA agora mesmo e gerencie seus gastos, metas e investimentos na palma da sua mão com total segurança e praticidade offline.
                 </p>
 
                 <!-- Botões das Lojas -->
-                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-2">
                     <!-- Botão Google Play -->
-                    <a href="#" class="flex items-center gap-3 bg-black hover:bg-gray-900 border border-gray-700 px-5 py-3 rounded-xl transition duration-300 shadow-lg group">
-                        <i class="fa-brands fa-google-play text-3xl text-green-400 group-hover:scale-110 transition"></i>
+                    <a href="#" class="flex items-center gap-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 px-5 py-3.5 rounded-2xl transition duration-300 shadow-xl group hover:border-indigo-500/50">
+                        <i class="fa-brands fa-google-play text-3xl text-emerald-400 group-hover:scale-110 transition duration-300"></i>
                         <div class="text-left">
-                            <p class="text-xs text-gray-400">DISPONÍVEL NO</p>
-                            <p class="text-sm font-bold">Google Play</p>
+                            <p class="text-[10px] text-gray-400 tracking-wider font-semibold">DISPONÍVEL NO</p>
+                            <p class="text-sm font-bold tracking-wide">Google Play</p>
                         </div>
                     </a>
 
                     <!-- Botão App Store -->
-                    <a href="#" class="flex items-center gap-3 bg-black hover:bg-gray-900 border border-gray-700 px-5 py-3 rounded-xl transition duration-300 shadow-lg group">
-                        <i class="fa-brands fa-apple text-3xl text-white group-hover:scale-110 transition"></i>
+                    <a href="#" class="flex items-center gap-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 px-5 py-3.5 rounded-2xl transition duration-300 shadow-xl group hover:border-indigo-500/50">
+                        <i class="fa-brands fa-apple text-3xl text-white group-hover:scale-110 transition duration-300"></i>
                         <div class="text-left">
-                            <p class="text-xs text-gray-400">Baixe na</p>
-                            <p class="text-sm font-bold">App Store</p>
+                            <p class="text-[10px] text-gray-400 tracking-wider font-semibold">Baixe na</p>
+                            <p class="text-sm font-bold tracking-wide">App Store</p>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <!-- Lado Direito: QR Code -->
-            <div class="flex flex-col items-center justify-center bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl">
-                <div class="w-48 h-48 bg-white p-3 rounded-2xl shadow-md flex items-center justify-center mb-4">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://suaurl-de-download.com" alt="QR Code para Download" class="w-full h-full object-contain">
+            <!-- Lado Direito: QR Code com Efeito Flutuante -->
+            <div class="flex justify-center">
+                <div class="animate-float w-full max-w-sm bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 shadow-2xl flex flex-col items-center text-center space-y-5">
+                    <div class="w-44 h-44 bg-white p-3 rounded-2xl shadow-inner flex items-center justify-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://suaurl-de-download.com" alt="QR Code para Download" class="w-full h-full object-contain">
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm tracking-wide text-indigo-200">Escaneie com a câmera</h4>
+                        <p class="text-xs text-gray-400 leading-normal">
+                            Aponte a câmera do seu celular para baixar instantaneamente.
+                        </p>
+                    </div>
                 </div>
-                <p class="text-sm text-gray-300 font-medium text-center">
-                    Aponte a câmera do seu celular <br>para baixar instantaneamente
-                </p>
             </div>
 
         </div>
 
         <!-- Seção: Simulação de Tela de Bloqueio por Digital / Biometria -->
-        <div class="max-w-md w-full bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl text-center space-y-6">
+        <div class="max-w-md w-full bg-gradient-to-b from-white/[0.07] to-white/[0.02] backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 shadow-2xl text-center space-y-6">
             <div class="space-y-2">
-                <span class="text-purple-400 text-xs uppercase tracking-widest font-bold">Segurança Avançada</span>
-                <h3 class="text-2xl font-bold">Acesso Biométrico</h3>
-                <p class="text-sm text-gray-300">
-                    Entre no aplicativo de forma rápida e segura utilizando apenas a sua impressão digital ou Face ID.
+                <span class="inline-block bg-purple-500/10 text-purple-400 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest border border-purple-500/30">
+                    🛡️ Segurança Avançada
+                </span>
+                <h3 class="text-2xl font-black tracking-tight">Acesso Biométrico</h3>
+                <p class="text-sm text-gray-400">
+                    Entre no aplicativo com total privacidade utilizando apenas a sua impressão digital ou Face ID.
                 </p>
             </div>
 
             <!-- Ícone de Digital Interativo -->
-            <div class="relative flex justify-center items-center py-4">
+            <div class="relative flex justify-center items-center py-2">
                 <!-- Anel de fundo animado -->
-                <div class="absolute w-24 h-24 bg-purple-600/20 rounded-full animate-pulse-slow"></div>
+                <div class="absolute w-24 h-24 bg-indigo-500/20 rounded-full animate-pulse-slow"></div>
                 <!-- Botão da Digital -->
-                <div id="biometric-btn" onclick="simularDesbloqueio()" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-purple-600 to-indigo-500 rounded-2xl shadow-lg flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 group">
-                    <i id="bio-icon" class="fa-solid fa-fingerprint text-4xl text-white group-hover:text-purple-200 transition"></i>
+                <div id="biometric-btn" onclick="simularDesbloqueio()" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 rounded-2xl shadow-lg shadow-indigo-500/25 flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 group">
+                    <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white group-hover:scale-110 transition"></i>
                 </div>
             </div>
 
-            <p id="bio-status" class="text-xs text-gray-400 font-medium">
+            <p id="bio-status" class="text-xs text-indigo-300 font-medium">
                 Toque na digital para simular o desbloqueio
             </p>
         </div>
@@ -105,31 +128,31 @@
     </main>
 
     <!-- Rodapé -->
-    <footer class="p-6 text-center text-xs text-gray-400 border-t border-white/10">
-        &copy; 2026 Nome da sua Empresa. Todos os direitos reservados.
+    <footer class="p-6 text-center text-xs text-gray-500 border-t border-white/5 relative z-10">
+        &copy; 2026 Finanças Pro. Todos os direitos reservados.
     </footer>
 
-    <!-- Script Simples para Interação da Digital -->
+    <!-- Script de Simulação da Digital -->
     <script>
         function simularDesbloqueio() {
             const icon = document.getElementById('bio-icon');
             const status = document.getElementById('bio-status');
             const btn = document.getElementById('biometric-btn');
 
-            // Muda o estado para "sucesso"
-            icon.className = "fa-solid fa-check text-4xl text-green-400 scale-110 transition";
-            btn.classList.remove('from-purple-600', 'to-indigo-500');
-            btn.classList.add('bg-green-900/60', 'border', 'border-green-500');
+            // Muda o estado para sucesso
+            icon.className = "fa-solid fa-check text-3xl text-emerald-300 scale-110 transition";
+            btn.classList.remove('from-indigo-600', 'via-purple-600', 'to-pink-500', 'shadow-indigo-500/25');
+            btn.classList.add('bg-emerald-950', 'border', 'border-emerald-500/60', 'shadow-emerald-500/20');
             status.textContent = "Acesso autorizado com sucesso!";
-            status.className = "text-xs text-green-400 font-bold transition";
+            status.className = "text-xs text-emerald-400 font-bold transition";
 
             // Reseta após 3 segundos
             setTimeout(() => {
-                icon.className = "fa-solid fa-fingerprint text-4xl text-white transition";
-                btn.classList.remove('bg-green-900/60', 'border', 'border-green-500');
-                btn.classList.add('from-purple-600', 'to-indigo-500');
+                icon.className = "fa-solid fa-fingerprint text-3xl text-white transition";
+                btn.classList.remove('bg-emerald-950', 'border', 'border-emerald-500/60', 'shadow-emerald-500/20');
+                btn.classList.add('from-indigo-600', 'via-purple-600', 'to-pink-500', 'shadow-indigo-500/25');
                 status.textContent = "Toque na digital para simular o desbloqueio";
-                status.className = "text-xs text-gray-400 font-medium transition";
+                status.className = "text-xs text-indigo-300 font-medium transition";
             }, 3000);
         }
     </script>
