@@ -324,25 +324,155 @@
             align-items: center;
         }
 
-        .form-group {
+        /* NOVO DESIGN DO CARD COMPACTO DE LANÇAMENTO */
+        .compact-entry-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
+            gap: 10px;
+        }
+
+        .pill-switch {
+            display: flex;
+            background: var(--input-bg);
+            padding: 3px;
+            border-radius: 12px;
+            gap: 3px;
+        }
+
+        .pill-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 6px;
+            border-radius: 9px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .pill-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .pill-btn.active.expense { color: var(--red); }
+        .pill-btn.active.income { color: var(--green); }
+
+        .value-calculator-box {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .value-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 8px;
         }
 
-        .form-row {
+        .val-input-wrap {
             display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .val-input-wrap span {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--text-muted);
+        }
+
+        .big-val-input {
+            border: none !important;
+            background: transparent !important;
+            font-size: 1.4rem !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            color: var(--text-main) !important;
+            outline: none !important;
+            width: 100% !important;
+        }
+
+        .installment-badge-input {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .installment-badge-input input {
+            width: 42px !important;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            text-align: center !important;
+            font-size: 0.82rem !important;
+            font-weight: 900 !important;
+            color: var(--primary) !important;
+        }
+
+        .calc-live-pill {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding-top: 4px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .calc-live-pill b { color: var(--primary); }
+
+        .fields-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
-        .form-row > * { flex: 1; }
+
+        .field-unit {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .field-unit label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
 
         input, select {
-            padding: 10px 12px;
+            padding: 8px 10px;
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             border-radius: 10px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
             outline: none;
             width: 100%;
@@ -352,9 +482,9 @@
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 11px;
+            padding: 10px;
             border-radius: 12px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
@@ -411,18 +541,6 @@
         .btn-icon { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 0.8rem; }
         .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
-
-        .calculator-preview-box {
-            background: rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            color: var(--text-main);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
         .modal-overlay {
             position: absolute;
@@ -630,79 +748,80 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR COM CALCULADORA DE PARCELAS INTEGRADA -->
+            <!-- TELA 2: LANÇAR REESTRUTURADO (CARD COMPACTO E INTELIGENTE) -->
             <div id="tab-lancar" class="tab-pane">
-                <div class="section-box">
-                    <h3>✍️ Imputar Lançamento</h3>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <select id="trans-type">
-                                <option value="expense">📉 Despesa (-)</option>
-                                <option value="income">📈 Receita Extra (+)</option>
-                            </select>
-                            
-                            <!-- Escolha se o valor digitado é o total ou cada parcela -->
-                            <select id="trans-calc-mode" onchange="calcularResumoParcelas()">
-                                <option value="total">Valor Total da Compra (R$)</option>
-                                <option value="parcela">Valor de Cada Parcela (R$)</option>
-                            </select>
+                
+                <div class="compact-entry-card">
+                    <!-- 1. SELETOR RÁPIDO DESPESA / RECEITA -->
+                    <div class="pill-switch">
+                        <button type="button" id="btn-type-expense" class="pill-btn active expense" onclick="alternarTipoTransacao('expense')">
+                            📉 Despesa
+                        </button>
+                        <button type="button" id="btn-type-income" class="pill-btn" onclick="alternarTipoTransacao('income')">
+                            📈 Receita
+                        </button>
+                    </div>
+
+                    <!-- 2. VALOR E MODO DE CÁLCULO (TOTAL VS PARCELA) -->
+                    <div class="value-calculator-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor & Quantidade:</span>
+                            <!-- Modo de cálculo -->
+                            <div style="display:flex; gap:3px;">
+                                <button type="button" id="btn-mode-total" class="pill-btn active" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('total')">Total</button>
+                                <button type="button" id="btn-mode-parcela" class="pill-btn" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
+                            </div>
                         </div>
 
-                        <div class="form-row">
-                            <input type="number" id="trans-value" step="0.01" min="0" placeholder="Digite o valor aqui..." oninput="calcularResumoParcelas()">
+                        <div class="value-row">
+                            <div class="val-input-wrap">
+                                <span>R$</span>
+                                <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="big-val-input" oninput="calcularResumoParcelas()">
+                            </div>
+                            <div class="installment-badge-input" title="Quantidade de parcelas">
+                                <i class="fa-solid fa-repeat" style="font-size:0.7rem;"></i>
+                                <input type="number" id="trans-installments-num" min="1" max="120" value="1" oninput="calcularResumoParcelas()">
+                                <span>x</span>
+                            </div>
                         </div>
 
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Pós-graduação)">
-                        
-                        <div class="form-row">
+                        <!-- Mini resumo que calcula o total sem abrir calculadora -->
+                        <div class="calc-live-pill">
+                            <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
+                            <span id="calc-preview-pill-sub" style="font-size:0.62rem; opacity:0.8;">1x parcela</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. DESCRIÇÃO PRINCIPAL -->
+                    <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Pós-graduação...)" style="font-weight:700;">
+
+                    <!-- 4. GRADE COMPACTA COM OS OUTROS DADOS -->
+                    <div class="fields-grid">
+                        <div class="field-unit">
+                            <label>Pagar com:</label>
                             <select id="trans-box-id"></select>
+                        </div>
+                        <div class="field-unit">
+                            <label>Forma:</label>
                             <select id="trans-payment">
                                 <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
-                                <option value="Dinheiro/Caixa">💵 Dinheiro / Débito / Pix</option>
+                                <option value="Dinheiro/Caixa">💵 À vista (Pix/Débito)</option>
                             </select>
                         </div>
-
-                        <div class="form-row" style="align-items: center;">
-                            <div style="display: flex; gap: 4px; flex: 1;">
-                                <select id="trans-category" style="flex: 1;">
-                                    <option value="">Selecione Categoria</option>
-                                </select>
-                                <button type="button" onclick="trocarAba('metas')" title="Criar nova categoria" style="background:var(--input-bg); border:1px solid var(--border-color); padding:0 10px; border-radius:10px; font-weight:bold; cursor:pointer;">+</button>
+                        <div class="field-unit">
+                            <label>Categoria:</label>
+                            <div style="display:flex; gap:3px;">
+                                <select id="trans-category" style="flex:1;"></select>
+                                <button type="button" onclick="trocarAba('metas')" title="Criar categoria" style="width:28px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:10px; font-weight:900;">+</button>
                             </div>
-                            <input type="date" id="trans-date" style="flex: 1;">
                         </div>
-
-                        <!-- Quantidade de Parcelas -->
-                        <div class="form-row" style="align-items: center;">
-                            <select id="trans-installments" onchange="verificarParcelamentoCustom(this.value)">
-                                <option value="1">À vista (1x)</option>
-                                <option value="2">2x parcelas</option>
-                                <option value="3">3x parcelas</option>
-                                <option value="4">4x parcelas</option>
-                                <option value="5">5x parcelas</option>
-                                <option value="6">6x parcelas</option>
-                                <option value="10">10x parcelas</option>
-                                <option value="12">12x parcelas (1 ano)</option>
-                                <option value="18">18x parcelas (1 ano e meio)</option>
-                                <option value="24">24x parcelas (2 anos)</option>
-                                <option value="36">36x parcelas (3 anos)</option>
-                                <option value="48">48x parcelas (4 anos)</option>
-                                <option value="custom">Outro número de parcelas...</option>
-                            </select>
-                            <input type="number" id="trans-custom-installments" min="1" max="120" placeholder="Qtd vezes" style="display:none; max-width: 120px;" oninput="calcularResumoParcelas()">
+                        <div class="field-unit">
+                            <label>Data:</label>
+                            <input type="date" id="trans-date">
                         </div>
-
-                        <!-- CALCULADORA AUTOMÁTICA VISÍVEL -->
-                        <div id="calculator-preview" class="calculator-preview-box">
-                            <div>
-                                <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">CALCULADORA DE PARCELAS:</span>
-                                <b id="calc-preview-text" style="color:var(--primary); font-size:0.82rem;">Digite o valor acima para calcular</b>
-                            </div>
-                            <span id="calc-preview-badge" style="font-size:0.65rem; padding:2px 6px; border-radius:6px; background:rgba(99,102,241,0.15); font-weight:800;">1x</span>
-                        </div>
-
-                        <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                     </div>
+
+                    <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                 </div>
 
                 <div class="section-box">
@@ -842,13 +961,17 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v12_calculator";
+        const STORAGE_KEY = "financas_pro_v13_compact_form";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
         let currentYear = hoje.getFullYear();
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+
+        // Estados locais do formulário de lançamento
+        let selectedTransactionType = 'expense';
+        let selectedCalcMode = 'total'; // 'total' ou 'parcela'
 
         const defaultData = {
             cash: 0.00,
@@ -871,6 +994,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v12_calculator",
                 "financas_pro_v11_spillover",
                 "financas_pro_v10_livre",
                 "financas_pro_v9_revitalizado",
@@ -926,57 +1050,59 @@
             dateInput.value = `${currentYear}-${mStr}-${dStr}`;
         }
 
-        // LÓGICA DA CALCULADORA DE PARCELAS
-        function obterQtdParcelas() {
-            const select = document.getElementById("trans-installments").value;
-            if (select === "custom") {
-                return parseInt(document.getElementById("trans-custom-installments").value, 10) || 1;
+        // LÓGICA DO NOVO FORMULÁRIO COMPACTO
+        function alternarTipoTransacao(tipo) {
+            selectedTransactionType = tipo;
+            const btnExp = document.getElementById('btn-type-expense');
+            const btnInc = document.getElementById('btn-type-income');
+
+            if (tipo === 'expense') {
+                btnExp.className = 'pill-btn active expense';
+                btnInc.className = 'pill-btn';
+            } else {
+                btnExp.className = 'pill-btn';
+                btnInc.className = 'pill-btn active income';
             }
-            return parseInt(select, 10) || 1;
+            calcularResumoParcelas();
+        }
+
+        function alternarModoCalculo(modo) {
+            selectedCalcMode = modo;
+            document.getElementById('btn-mode-total').classList.toggle('active', modo === 'total');
+            document.getElementById('btn-mode-parcela').classList.toggle('active', modo === 'parcela');
+            calcularResumoParcelas();
         }
 
         function calcularResumoParcelas() {
             const inputVal = parseFloat(document.getElementById("trans-value").value);
-            const modo = document.getElementById("trans-calc-mode").value;
-            const parcelas = obterQtdParcelas();
-
-            const txtPreview = document.getElementById("calc-preview-text");
-            const badgePreview = document.getElementById("calc-preview-badge");
-            badgePreview.innerText = `${parcelas}x`;
+            const parcelas = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
+            const previewText = document.getElementById("calc-preview-pill-text");
+            const previewSub = document.getElementById("calc-preview-pill-sub");
 
             if (isNaN(inputVal) || inputVal <= 0) {
-                txtPreview.innerText = "Digite o valor acima para calcular";
+                previewText.innerHTML = "À vista: R$ 0,00";
+                previewSub.innerText = `${parcelas}x parcela${parcelas > 1 ? 's' : ''}`;
                 return;
             }
 
-            if (modo === "parcela") {
-                const valorParcela = inputVal;
-                const totalCalculado = valorParcela * parcelas;
+            if (selectedCalcMode === 'parcela') {
+                const totalCalculado = inputVal * parcelas;
                 if (parcelas === 1) {
-                    txtPreview.innerHTML = `Total à vista: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
                 } else {
-                    txtPreview.innerHTML = `<b>${parcelas}x de R$ ${valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b> = Total de <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
                 }
+                previewSub.innerHTML = `<b>${parcelas}x de R$ ${inputVal.toFixed(2)}</b>`;
             } else {
-                const totalCalculado = inputVal;
-                const valorParcela = totalCalculado / parcelas;
+                const valorParcela = inputVal / parcelas;
                 if (parcelas === 1) {
-                    txtPreview.innerHTML = `Total à vista: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewSub.innerText = "À vista (1x)";
                 } else {
-                    txtPreview.innerHTML = `Total R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} = <b>${parcelas}x de R$ ${valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>/mês`;
+                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewSub.innerHTML = `<b>${parcelas}x de R$ ${valorParcela.toFixed(2)}</b>/mês`;
                 }
             }
-        }
-
-        function verificarParcelamentoCustom(valor) {
-            const inputCustom = document.getElementById("trans-custom-installments");
-            if (valor === "custom") {
-                inputCustom.style.display = "block";
-                inputCustom.focus();
-            } else {
-                inputCustom.style.display = "none";
-            }
-            calcularResumoParcelas();
         }
 
         function desbloquearApp() {
@@ -1544,16 +1670,16 @@
             }
         }
 
-        // --- LANÇAMENTOS COM CALCULO INTELIGENTE ---
+        // --- LANÇAMENTOS DO NOVO FORMULÁRIO ---
         function adicionarTransacao() {
-            const type = document.getElementById("trans-type").value;
+            const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
             const inputVal = parseFloat(document.getElementById("trans-value").value);
-            const modo = document.getElementById("trans-calc-mode").value;
+            const modo = selectedCalcMode;
             const category = document.getElementById("trans-category").value;
             const boxId = document.getElementById("trans-box-id").value;
             const payment = document.getElementById("trans-payment").value;
-            const installments = obterQtdParcelas();
+            const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(inputVal) || inputVal <= 0) {
@@ -1561,7 +1687,6 @@
                 return;
             }
 
-            // Calcula o valor por parcela dependendo do modo selecionado
             let valorParcela = 0;
             if (modo === "parcela") {
                 valorParcela = inputVal;
@@ -1597,9 +1722,7 @@
 
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
-            document.getElementById("trans-installments").value = '1';
-            document.getElementById("trans-custom-installments").style.display = 'none';
-            document.getElementById("trans-custom-installments").value = '';
+            document.getElementById("trans-installments-num").value = '1';
             calcularResumoParcelas();
             salvarDados();
             atualizarTela();
