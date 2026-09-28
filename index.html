@@ -526,7 +526,6 @@
             gap: 6px;
         }
 
-        /* CONTAINER DE TAGS RÁPIDAS DE CARTÕES */
         .card-tags-scroll-wrap {
             display: flex;
             flex-direction: column;
@@ -816,24 +815,25 @@
             </div>
         </header>
 
+        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
-            <button class="tab-button active" onclick="trocarAba('painel')">
+            <button class="tab-button" id="btn-tab-painel" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
                 <span class="tab-label">Painel</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('lancar')">
+            <button class="tab-button" id="btn-tab-lancar" onclick="trocarAba('lancar')">
                 <span class="tab-icon">✍️</span>
                 <span class="tab-label">Lançar</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('cartoes')">
+            <button class="tab-button" id="btn-tab-cartoes" onclick="trocarAba('cartoes')">
                 <span class="tab-icon">💳</span>
                 <span class="tab-label">Cartões</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('meses')">
+            <button class="tab-button" id="btn-tab-meses" onclick="trocarAba('meses')">
                 <span class="tab-icon">📅</span>
                 <span class="tab-label">Meses</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('mais')">
+            <button class="tab-button" id="btn-tab-mais" onclick="trocarAba('mais')">
                 <span class="tab-icon">⚙️</span>
                 <span class="tab-label">Mais</span>
             </button>
@@ -842,7 +842,7 @@
         <div class="content">
 
             <!-- TELA 1: PAINEL -->
-            <div id="tab-painel" class="tab-pane active">
+            <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
@@ -1209,7 +1209,8 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v23_card_tags";
+        const STORAGE_KEY = "financas_pro_v24_stay_tab";
+        const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1248,6 +1249,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v23_card_tags",
                 "financas_pro_v22_linked_cards",
                 "financas_pro_v21_samsung_card",
                 "financas_pro_v20_free_card_input",
@@ -1305,6 +1307,11 @@
                 if (lock) lock.classList.add("hidden");
             }
             sincronizarDataFormulario();
+            
+            // Lembra exatamente em qual tela você estava
+            const abaSalva = localStorage.getItem(CURRENT_TAB_KEY) || 'painel';
+            trocarAba(abaSalva);
+            
             atualizarTela();
         });
 
@@ -1441,12 +1448,14 @@
             if (lock) lock.classList.remove("hidden");
         }
 
+        // TROCA E MEMORIZA A TELA ATUAL
         function trocarAba(aba) {
             const tabs = ['painel', 'lancar', 'cartoes', 'meses', 'mais'];
-            document.querySelectorAll('.tab-button').forEach((btn, idx) => {
-                btn.classList.toggle('active', tabs[idx] === aba);
-            });
+            localStorage.setItem(CURRENT_TAB_KEY, aba);
+
             tabs.forEach(t => {
+                const btn = document.getElementById(`btn-tab-${t}`);
+                if (btn) btn.classList.toggle('active', t === aba);
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
@@ -2166,7 +2175,7 @@
             }
         }
 
-        // --- LANÇAMENTOS COM TAGS VINCULADAS ---
+        // --- LANÇAMENTOS COM PERMANÊNCIA NA MESMA TELA ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -2218,11 +2227,14 @@
                 });
             }
 
+            // Limpa apenas os campos de entrada para o próximo gasto
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
             document.getElementById("trans-installments-num").value = '1';
             calcularResumoParcelas();
             salvarDados();
+            
+            // Atualiza tudo mantendo você exatamente na tela em que estava
             atualizarTela();
             alert("Lançamento salvo com sucesso!");
         }
@@ -2357,7 +2369,7 @@
             });
         }
 
-        // --- BACKUP SIMPLES EM TEXTO ---
+        // --- BACKUP EM TEXTO ---
         function copiarBackupTexto() {
             const texto = JSON.stringify(financialData);
             if (navigator.clipboard && navigator.clipboard.writeText) {
