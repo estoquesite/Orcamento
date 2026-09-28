@@ -15,6 +15,9 @@
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js para gráficos financeiros de ponta -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
@@ -59,6 +62,7 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -160,58 +164,27 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .header-btn {
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 4px 10px;
-            border-radius: 14px;
+            padding: 5px 9px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 700;
-        }
-
-        .tab-bar {
             display: flex;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            width: 100%;
-            z-index: 5;
-        }
-
-        .tab-button {
-            flex: 1 1 0;
-            padding: 9px 2px;
-            border: none;
-            background: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 2px;
-            position: relative;
+            justify-content: center;
         }
+        .header-btn:active { transform: scale(0.95); }
 
-        .tab-button .tab-icon { font-size: 1.05rem; }
-        .tab-button .tab-label { font-size: 0.65rem; font-weight: 800; white-space: nowrap; }
-        .tab-button.active { color: var(--primary); }
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px 3px 0 0;
-        }
-
+        /* ÁREA DE CONTEÚDO COM ESPAÇO PARA A BOTTOM BAR */
         .content {
-            padding: 12px;
+            padding: 12px 14px 75px 14px;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -225,6 +198,61 @@
             gap: 12px;
         }
         .tab-pane.active { display: flex; }
+
+        /* NOVA BARRA DE NAVEGAÇÃO INFERIOR (BOTTOM BAR NATIVA) */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 8px;
+            z-index: 50;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            gap: 3px;
+            padding: 6px 0;
+            transition: all 0.2s;
+        }
+
+        .bottom-nav-item i { font-size: 1.15rem; }
+        .bottom-nav-item span { font-size: 0.65rem; font-weight: 800; }
+        .bottom-nav-item.active { color: var(--primary); }
+        .bottom-nav-item.active i { transform: translateY(-2px); }
+
+        .bottom-nav-center {
+            position: relative;
+            top: -14px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 18px rgba(99, 102, 241, 0.45);
+            border: 3px solid var(--bg-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .bottom-nav-center:active { transform: scale(0.92); }
 
         .date-control-bar {
             display: flex;
@@ -306,9 +334,7 @@
             align-items: center;
         }
 
-        /* ========================================================
-           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
-           ======================================================== */
+        /* CAIXINHAS NO PAINEL */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -402,7 +428,7 @@
         }
         .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
-        /* NOVO BLOCO DE VERBAS EXTRAS */
+        /* VERBAS EXTRAS */
         .extra-income-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(59, 130, 246, 0.03) 100%);
             border: 1px dashed rgba(16, 185, 129, 0.35);
@@ -997,11 +1023,47 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+
+        /* TOAST FLUTUANTE MODERNO */
+        #toast-container {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 380px;
+        }
+        .toast-msg {
+            background: #0f172a;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: slideDown 0.3s ease forwards;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
+        
+        <!-- TOAST CONTAINER -->
+        <div id="toast-container"></div>
 
         <div id="lock-screen" class="lock-screen">
             <div class="w-full flex flex-col items-center pt-2 space-y-2">
@@ -1035,35 +1097,15 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="bloquearManualmente()">🔒</button>
-                <button class="header-btn theme-toggle" onclick="alternarTema()">🌙</button>
+                <!-- OLHO MÁGICO / MODO PRIVACIDADE -->
+                <button class="header-btn" onclick="alternarModoPrivacidade()" title="Modo Privacidade (Ocultar Valores)">
+                    <i id="btn-eye-icon" class="fa-solid fa-eye"></i>
+                </button>
+                <button class="header-btn" onclick="bloquearManualmente()" title="Bloquear">🔒</button>
+                <button class="header-btn theme-toggle" onclick="alternarTema()" title="Tema Escuro">🌙</button>
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO -->
-        <nav class="tab-bar">
-            <button class="tab-button" id="btn-tab-painel" onclick="trocarAba('painel')">
-                <span class="tab-icon">🏠</span>
-                <span class="tab-label">Painel</span>
-            </button>
-            <button class="tab-button" id="btn-tab-lancar" onclick="trocarAba('lancar')">
-                <span class="tab-icon">✍️</span>
-                <span class="tab-label">Lançar</span>
-            </button>
-            <button class="tab-button" id="btn-tab-cartoes" onclick="trocarAba('cartoes')">
-                <span class="tab-icon">💳</span>
-                <span class="tab-label">Cartões</span>
-            </button>
-            <button class="tab-button" id="btn-tab-meses" onclick="trocarAba('meses')">
-                <span class="tab-icon">📅</span>
-                <span class="tab-label">Meses</span>
-            </button>
-            <button class="tab-button" id="btn-tab-mais" onclick="trocarAba('mais')">
-                <span class="tab-icon">⚙️</span>
-                <span class="tab-label">Mais</span>
-            </button>
-        </nav>
-        
         <div class="content">
 
             <!-- TELA 1: PAINEL COM CAIXINHAS FORMATADAS E CORES CONTRASTADAS -->
@@ -1144,6 +1186,17 @@
                     <button class="quick-btn" onclick="abrirModalNovaCaixinhaVerba()">
                         <i class="fa-solid fa-box-open text-pink-500"></i> Nova Caixinha
                     </button>
+                </div>
+
+                <!-- NOVO: GRÁFICO DINÂMICO DE GASTOS POR CATEGORIA -->
+                <div class="section-box" style="padding:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);"><i class="fa-solid fa-chart-pie text-indigo-500"></i> DISTRIBUIÇÃO DAS DESPESAS</span>
+                        <span id="chart-total-label" style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">Mês atual</span>
+                    </div>
+                    <div style="position:relative; width:100%; height:160px; display:flex; justify-content:center; align-items:center;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- SOMA TOTAL DAS VERBAS E LISTA -->
@@ -1314,20 +1367,28 @@
                 </div>
 
                 <div class="section-box">
-                    <h3>
-                        <span>📑 Extrato do Mês</span>
-                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 2px 6px; font-size: 0.7rem; border-radius: 8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h3><span>📑 Extrato do Mês</span></h3>
+                        <!-- BOTÃO EXPORTAR CSV -->
+                        <button onclick="exportarCSV()" class="btn-box-action" title="Exportar Extrato em Planilha Excel">
+                            <i class="fa-solid fa-file-excel text-green-500"></i> Exportar CSV
+                        </button>
+                    </div>
+                    
+                    <div style="display:flex; gap:6px; margin-bottom:8px;">
+                        <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:6px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color);">
                             <option value="all">Todos</option>
                             <option value="cartao">💳 Só Cartão</option>
+                            <option value="cash">💵 Só À Vista</option>
                         </select>
-                    </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 6px; font-size: 0.78rem; padding: 7px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); width:100%;">
+                    </div>
                     
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES -->
+            <!-- TELA 3: ABA CARTÕES (COM VENCIMENTO E FECHAMENTO) -->
             <div id="tab-cartoes" class="tab-pane">
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1491,6 +1552,32 @@
 
         </div>
 
+        <!-- BARRA INFERIOR MODERNA (BOTTOM NAVIGATION BAR) -->
+        <nav class="bottom-nav">
+            <button class="bottom-nav-item active" id="btn-tab-painel" onclick="trocarAba('painel')">
+                <i class="fa-solid fa-house"></i>
+                <span>Painel</span>
+            </button>
+            <button class="bottom-nav-item" id="btn-tab-cartoes" onclick="trocarAba('cartoes')">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Cartões</span>
+            </button>
+
+            <!-- BOTÃO CENTRAL LANÇAR (+) -->
+            <button class="bottom-nav-center" onclick="trocarAba('lancar')" title="Novo Lançamento">
+                <i class="fa-solid fa-plus" style="font-size:1.2rem;"></i>
+            </button>
+
+            <button class="bottom-nav-item" id="btn-tab-meses" onclick="trocarAba('meses')">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Meses</span>
+            </button>
+            <button class="bottom-nav-item" id="btn-tab-mais" onclick="trocarAba('mais')">
+                <i class="fa-solid fa-ellipsis"></i>
+                <span>Mais</span>
+            </button>
+        </nav>
+
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
                 <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
@@ -1507,6 +1594,7 @@
     <script>
         const STORAGE_KEY = "financas_pro_v32_modern_panel";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
+        const PRIVACY_KEY = "financas_pro_privacy_mode";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1518,6 +1606,8 @@
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
+        let privacyMode = localStorage.getItem(PRIVACY_KEY) === 'true';
+        let categoryChartInstance = null;
 
         const defaultData = {
             cash: 0.00,
@@ -1527,15 +1617,16 @@
                 { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#ec4899" }
             ],
             creditCards: [
-                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
-                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" },
-                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" }
+                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316", closingDay: 25, dueDay: 5 },
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444", closingDay: 20, dueDay: 28 },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9", closingDay: 15, dueDay: 22 },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155", closingDay: 10, dueDay: 17 }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
                 { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
-                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
+                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 },
+                { id: "cat_4", name: "💊 Saúde & Farmácia", color: "#10b981", limit: 400 }
             ],
             transactions: [],
             monthIncomes: {},
@@ -1545,6 +1636,39 @@
             ],
             investments: []
         };
+
+        // --- SISTEMA DE TOAST MODERNO ---
+        function showToast(msg, icon = "fa-check-circle") {
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+            const toast = document.createElement("div");
+            toast.className = "toast-msg";
+            toast.innerHTML = `<i class="fa-solid ${icon} text-indigo-400"></i> <span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // --- FORMATADOR DE MOEDA COM SUPORTE AO MODO PRIVACIDADE ---
+        function formatarMoeda(val) {
+            if (privacyMode) return "••••••";
+            return `R$ ${(val || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        function alternarModoPrivacidade() {
+            privacyMode = !privacyMode;
+            localStorage.setItem(PRIVACY_KEY, privacyMode);
+            const icon = document.getElementById("btn-eye-icon");
+            if (icon) {
+                icon.className = privacyMode ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+            }
+            atualizarTela();
+            showToast(privacyMode ? "Valores ocultados" : "Valores visíveis", privacyMode ? "fa-eye-slash" : "fa-eye");
+        }
 
         function carregarDados() {
             const chaves = [
@@ -1583,7 +1707,7 @@
                         let cartoes = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards;
                         
                         if (!cartoes.some(c => c.name.toLowerCase().includes("samsung"))) {
-                            cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" });
+                            cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155", closingDay: 10, dueDay: 17 });
                         }
 
                         return {
@@ -1617,6 +1741,9 @@
                 if (lock) lock.classList.add("hidden");
             }
             
+            const icon = document.getElementById("btn-eye-icon");
+            if (icon && privacyMode) icon.className = "fa-solid fa-eye-slash";
+
             popularSeletoresDeAno();
             sincronizarDataFormulario();
             
@@ -1699,16 +1826,16 @@
 
             if (selectedCalcMode === 'parcela') {
                 const totalCalculado = inputVal * parcelas;
-                previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
-                previewSub.innerHTML = `<b>${parcelas}x de R$ ${inputVal.toFixed(2)}</b>`;
+                previewText.innerHTML = `Total: <b>${formatarMoeda(totalCalculado)}</b>`;
+                previewSub.innerHTML = `<b>${parcelas}x de ${formatarMoeda(inputVal)}</b>`;
             } else {
                 const valorParcela = inputVal / parcelas;
                 if (parcelas === 1) {
-                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
+                    previewText.innerHTML = `Total: <b>${formatarMoeda(inputVal)}</b>`;
                     previewSub.innerText = "1x";
                 } else {
-                    previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
-                    previewSub.innerHTML = `<b>${parcelas}x de R$ ${valorParcela.toFixed(2)}</b>/mês`;
+                    previewText.innerHTML = `Total: <b>${formatarMoeda(inputVal)}</b>`;
+                    previewSub.innerHTML = `<b>${parcelas}x de ${formatarMoeda(valorParcela)}</b>/mês`;
                 }
             }
         }
@@ -1784,6 +1911,10 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
+
+            if (aba === 'painel') {
+                setTimeout(renderizarGrafico, 50);
+            }
         }
 
         function mudarAno(delta) {
@@ -1841,6 +1972,86 @@
             return totalBaseCaixinhas;
         }
 
+        // --- RENDERIZAÇÃO DO GRÁFICO (CHART.JS) ---
+        function renderizarGrafico() {
+            const ctx = document.getElementById('categoryChart');
+            if (!ctx) return;
+
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey && t.type === 'expense');
+            const catMap = {};
+            transDoMes.forEach(t => {
+                const cat = t.category || "Geral";
+                catMap[cat] = (catMap[cat] || 0) + t.value;
+            });
+
+            const labels = Object.keys(catMap);
+            const data = Object.values(catMap);
+            const cores = ["#6366f1", "#f43f5e", "#10b981", "#f59e0b", "#3b82f6", "#8b5cf6", "#ec4899", "#64748b"];
+
+            if (categoryChartInstance) categoryChartInstance.destroy();
+
+            if (data.length === 0) {
+                categoryChartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Sem Gastos'],
+                        datasets: [{ data: [1], backgroundColor: ['#e2e8f0'] }]
+                    },
+                    options: {
+                        cutout: '72%',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } }
+                    }
+                });
+                return;
+            }
+
+            categoryChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: cores.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: document.body.classList.contains('dark-mode') ? '#0f172a' : '#ffffff'
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' } } }
+                    }
+                }
+            });
+        }
+
+        // --- EXPORTAR EXTRATO PARA CSV / EXCEL ---
+        function exportarCSV() {
+            const trans = financialData.transactions || [];
+            if (trans.length === 0) {
+                showToast("Não há transações para exportar!", "fa-circle-exclamation");
+                return;
+            }
+
+            let csv = "ID;Data;Descrição;Tipo;Valor;Categoria;Pagamento;Caixinha\n";
+            trans.forEach(t => {
+                const val = t.value.toFixed(2).replace('.', ',');
+                csv += `${t.id};${t.date || ''};"${t.desc}";${t.type === 'expense' ? 'Despesa' : 'Receita'};${val};"${t.category || ''}";"${t.payment || ''}";"${t.boxId || ''}"\n`;
+            });
+
+            const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `extrato_financas_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            showToast("Planilha CSV baixada com sucesso!");
+        }
+
+        // --- SISTEMA DE VERBAS EXTRAS DO MÊS ---
         function abrirModalNovaVerbaExtra() {
             abrirModal("Adicionar Verba Extra no Mês", `
                 <label class="text-xs text-gray-500 font-bold">Descrição da Verba (ex: 13º Salário, Venda...):</label>
@@ -1857,7 +2068,7 @@
                 const date = document.getElementById("new-extra-date").value;
 
                 if (!desc || isNaN(val) || val <= 0) {
-                    alert("Informe uma descrição e um valor válido.");
+                    showToast("Informe uma descrição e um valor válido.", "fa-circle-exclamation");
                     return;
                 }
 
@@ -1874,6 +2085,7 @@
 
                 salvarDados();
                 atualizarTela();
+                showToast("Verba extra adicionada!");
             });
         }
 
@@ -1882,6 +2094,7 @@
                 financialData.extraIncomes = (financialData.extraIncomes || []).filter(e => e.id !== id);
                 salvarDados();
                 atualizarTela();
+                showToast("Verba extra removida.");
             }
         }
 
@@ -1901,6 +2114,7 @@
                     financialData.monthIncomes[mKey] = val;
                     salvarDados();
                     atualizarTela();
+                    showToast("Verba do mês atualizada!");
                 }
             });
         }
@@ -1910,6 +2124,7 @@
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
             const extrasDoMes = (financialData.extraIncomes || []).filter(e => e.monthKey === selectedMonthKey);
 
+            // Soma das caixinhas fixas + verbas extras adicionadas
             const totalVerbaCaixinhasBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
             const verbaCadastradaMes = obterVerbaDoMes(selectedMonthKey, totalVerbaCaixinhasBase);
             const totalExtrasValor = extrasDoMes.reduce((acc, curr) => acc + curr.value, 0);
@@ -1924,12 +2139,12 @@
             // BANNER NO PAINEL
             const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
             if (bannerSomaVerbas) {
-                bannerSomaVerbas.innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                bannerSomaVerbas.innerText = formatarMoeda(verbaTotalMes);
             }
 
             const bannerConsumoVerbas = document.getElementById("txt-consumo-total-verbas");
             if (bannerConsumoVerbas) {
-                bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                bannerConsumoVerbas.innerText = `- ${formatarMoeda(despesasTotalMes)}`;
             }
 
             // LISTA DE VERBAS EXTRAS
@@ -1948,7 +2163,7 @@
                                 <span style="font-size:0.62rem; color:var(--text-muted);">${extra.date ? extra.date.split('-').reverse().join('/') : ''}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <b style="color:var(--green); font-size:0.85rem;">+ R$ ${extra.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>
+                                <b style="color:var(--green); font-size:0.85rem;">+ ${formatarMoeda(extra.value)}</b>
                                 <button onclick="removerVerbaExtra(${extra.id})" class="btn-mini-action del" title="Remover"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `;
@@ -1965,29 +2180,29 @@
 
             const txtLancarTotalGasto = document.getElementById("txt-lancar-total-gasto");
             if (txtLancarTotalGasto) {
-                txtLancarTotalGasto.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                txtLancarTotalGasto.innerText = `- ${formatarMoeda(despesasTotalMes)}`;
             }
 
             const txtLancarTotalCartao = document.getElementById("txt-lancar-total-cartao");
             if (txtLancarTotalCartao) {
-                txtLancarTotalCartao.innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                txtLancarTotalCartao.innerText = formatarMoeda(faturaCartao);
             }
 
             const txtLancarSobraLivre = document.getElementById("txt-lancar-sobra-livre");
             if (txtLancarSobraLivre) {
-                txtLancarSobraLivre.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                txtLancarSobraLivre.innerText = formatarMoeda(sobraTotalMes);
                 txtLancarSobraLivre.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
             }
 
             // HERO CARD PAINEL
             const heroSobra = document.getElementById("hero-sobra-livre");
-            heroSobra.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            heroSobra.innerText = formatarMoeda(sobraTotalMes);
             heroSobra.style.color = sobraTotalMes >= 0 ? '#ffffff' : '#fb7185';
 
             const percConsumido = verbaTotalMes > 0 ? Math.min(Math.round((despesasTotalMes / verbaTotalMes) * 100), 100) : 0;
             document.getElementById("hero-percent-txt").innerText = `${percConsumido}% consumido`;
-            document.getElementById("hero-spent-txt").innerText = despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            document.getElementById("hero-verba-txt").innerText = verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById("hero-spent-txt").innerText = privacyMode ? "••••••" : despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById("hero-verba-txt").innerText = privacyMode ? "••••••" : verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
             const progressBar = document.getElementById("hero-progress-bar");
             progressBar.style.width = `${percConsumido}%`;
@@ -2010,9 +2225,9 @@
                 badge.style.background = 'rgba(16,185,129,0.2)';
             }
 
-            document.getElementById("hero-verba-total-small").innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("hero-total-gasto-small").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("hero-verba-total-small").innerText = formatarMoeda(verbaTotalMes);
+            document.getElementById("hero-total-gasto-small").innerText = `- ${formatarMoeda(despesasTotalMes)}`;
+            document.getElementById("hero-fatura-cartao-small").innerText = formatarMoeda(faturaCartao);
 
             // TRANSBORDO ENTRE CAIXINHAS
             const boxStats = boxes.map((box, index) => {
@@ -2052,9 +2267,7 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // ========================================================
-            // RENDERIZAÇÃO LIMPA E ELEGANTE DAS CAIXINHAS (ALTO CONTRASTE)
-            // ========================================================
+            // CAIXINHAS NO PAINEL COM DESIGN ELEGANTE
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -2076,13 +2289,13 @@
                         if (stat.rawSpent > stat.amount) {
                             displaySpent = stat.amount;
                             displayRemain = 0;
-                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu ${formatarMoeda(stat.spilloverSent)} (passou pro Salário)</span>`;
                         }
                     } else {
                         displaySpent = stat.rawSpent + stat.spilloverReceived;
                         displayRemain = stat.amount - displaySpent;
                         if (stat.spilloverReceived > 0) {
-                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu R$ ${stat.spilloverReceived.toFixed(2)} de outras verbas</span>`;
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu ${formatarMoeda(stat.spilloverReceived)} de outras verbas</span>`;
                         }
                     }
 
@@ -2103,7 +2316,7 @@
                             </span>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <b class="box-clean-amount">
-                                    R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                    ${formatarMoeda(stat.amount)}
                                 </b>
                                 <div style="display:flex; gap:3px;">
                                     <button onclick="abrirModalEditarCaixinhaVerba('${box.id}')" class="btn-icon" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.7rem;"></i></button>
@@ -2121,10 +2334,10 @@
                         <div class="box-clean-footer">
                             <div class="box-clean-footer-info">
                                 <span style="color:var(--text-muted);">
-                                    Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
+                                    Gasto: <b style="color:var(--red);">${formatarMoeda(displaySpent)}</b> (${percBox}%)
                                 </span>
                                 <span style="color:var(--text-muted);">
-                                    Sobra: <b style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'};">R$ ${displayRemain.toFixed(2)}</b>
+                                    Sobra: <b style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'};">${formatarMoeda(displayRemain)}</b>
                                 </span>
                             </div>
                             <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="btn-box-action" title="Lançar gasto nesta verba">
@@ -2159,14 +2372,14 @@
                                     <span>${payTag} ${t.date ? t.date.split('-').slice(1).reverse().join('/') : ''}</span>
                                 </div>
                             </div>
-                            <b style="color:var(--red); font-size:0.82rem;">- R$ ${t.value.toFixed(2)}</b>
+                            <b style="color:var(--red); font-size:0.82rem;">- ${formatarMoeda(t.value)}</b>
                         `;
                         recentContainer.appendChild(item);
                     });
                 }
             }
 
-            // ABA CARTÕES
+            // ABA CARTÕES (COM VENCIMENTO E FECHAMENTO)
             const cards = financialData.creditCards || [];
             document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
 
@@ -2204,7 +2417,10 @@
                                     <div style="width:30px; height:20px; background:rgba(255,255,255,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center;">
                                         <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fbbf24;"></i>
                                     </div>
-                                    <span style="font-size:0.9rem; font-weight:900;">${card.name}</span>
+                                    <div>
+                                        <span style="font-size:0.9rem; font-weight:900; display:block;">${card.name}</span>
+                                        <span style="font-size:0.62rem; color:rgba(255,255,255,0.7);">Fecha dia ${card.closingDay || '25'} • Vence dia ${card.dueDay || '05'}</span>
+                                    </div>
                                 </div>
                                 <div style="display:flex; gap:8px;">
                                     <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
@@ -2213,14 +2429,14 @@
                             </div>
 
                             <div style="margin: 4px 0;">
-                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ R$ ${gastosDoCartao.toFixed(2)} lançados neste mês` : 'Fatura atual'}</span>
+                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">${formatarMoeda(totalUsado)}</span>
+                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ ${formatarMoeda(gastosDoCartao)} lançados neste mês` : 'Fatura atual'}</span>
                             </div>
 
                             <div style="display:flex; flex-direction:column; gap:4px;">
                                 <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.85); font-weight:700;">
                                     <span>${percConsumo}% utilizado</span>
-                                    <span>Livre: R$ ${limiteDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                    <span>Livre: ${formatarMoeda(limiteDisponivel)}</span>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.15); height:6px; border-radius:6px; overflow:hidden;">
                                     <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
@@ -2228,7 +2444,7 @@
                             </div>
 
                             <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
-                                <span>Limite: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <span>Limite: ${formatarMoeda(limite)}</span>
                                 <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
                             </div>
                         `;
@@ -2238,14 +2454,14 @@
             }
 
             const heroTotalFaturas = document.getElementById("card-hero-total-faturas");
-            if (heroTotalFaturas) heroTotalFaturas.innerText = `R$ ${totalGastoCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (heroTotalFaturas) heroTotalFaturas.innerText = formatarMoeda(totalGastoCartoesGeral);
 
             const heroLimiteTotal = document.getElementById("card-hero-limite-total");
-            if (heroLimiteTotal) heroLimiteTotal.innerText = `R$ ${totalLimiteCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (heroLimiteTotal) heroLimiteTotal.innerText = formatarMoeda(totalLimiteCartoesGeral);
 
             const heroLimiteLivre = document.getElementById("card-hero-limite-livre");
             const limiteLivreGeral = totalLimiteCartoesGeral - totalGastoCartoesGeral;
-            if (heroLimiteLivre) heroLimiteLivre.innerText = `R$ ${limiteLivreGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (heroLimiteLivre) heroLimiteLivre.innerText = formatarMoeda(limiteLivreGeral);
 
             const heroQtdBadge = document.getElementById("card-hero-qtd-badge");
             if (heroQtdBadge) heroQtdBadge.innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
@@ -2297,6 +2513,7 @@
                 const filtrados = transDoMes.filter(t => {
                     let bateTipo = true;
                     if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
+                    if (filter === 'cash') bateTipo = (t.payment !== 'Cartão de Crédito');
                     const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
                     return bateTipo && bateTexto;
                 });
@@ -2306,7 +2523,7 @@
                 } else {
                     filtrados.forEach((trans) => {
                         const isExpense = trans.type === 'expense';
-                        const prefix = isExpense ? '- R$' : '+ R$';
+                        const prefix = isExpense ? '- ' : '+ ';
                         const valClass = isExpense ? 'expense' : 'income';
                         const dataFormatada = trans.date ? trans.date.split('-').slice(1).reverse().join('/') : '';
                         
@@ -2336,7 +2553,7 @@
                                 <div class="statement-top-line">
                                     <span class="statement-title" title="${trans.desc}">${trans.desc}</span>
                                     <span class="statement-value ${valClass}">
-                                        ${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                        ${prefix} ${formatarMoeda(trans.value)}
                                     </span>
                                 </div>
 
@@ -2421,15 +2638,15 @@
 
                         <div class="month-values-group">
                             <div style="text-align:right;">
-                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Verba: R$ ${mInc > 0 ? mInc.toFixed(0) : '0'}</span>
+                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Verba: ${formatarMoeda(mInc)}</span>
                                 <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'}; font-size:0.75rem;">
-                                    ${mExp > 0 ? '- R$ ' + mExp.toFixed(0) : 'R$ 0'}
+                                    ${mExp > 0 ? '- ' + formatarMoeda(mExp) : 'R$ 0'}
                                 </b>
                             </div>
                             <div style="text-align:right; min-width:70px;">
                                 <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra</span>
                                 <b style="color:${mNet >= 0 ? (mNet === 0 ? 'var(--text-muted)' : 'var(--blue)') : 'var(--red)'}; font-size:0.85rem;">
-                                    ${(mInc > 0 || mExp > 0) ? 'R$ ' + mNet.toFixed(0) : '-'}
+                                    ${(mInc > 0 || mExp > 0) ? formatarMoeda(mNet) : '-'}
                                 </b>
                             </div>
                             <div style="display:flex; flex-direction:column; gap:3px;">
@@ -2449,15 +2666,15 @@
             const anoSaldoAcumulado = anoEntradasTotal - anoGastosTotal;
             const elemSaldoAcum = document.getElementById("txt-ano-saldo-acumulado");
             if (elemSaldoAcum) {
-                elemSaldoAcum.innerText = `R$ ${anoSaldoAcumulado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                elemSaldoAcum.innerText = formatarMoeda(anoSaldoAcumulado);
                 elemSaldoAcum.style.color = anoSaldoAcumulado >= 0 ? "#34d399" : "#fb7185";
             }
 
             const elemEntradasTotal = document.getElementById("txt-ano-entradas-total");
-            if (elemEntradasTotal) elemEntradasTotal.innerText = `R$ ${anoEntradasTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+            if (elemEntradasTotal) elemEntradasTotal.innerText = formatarMoeda(anoEntradasTotal);
 
             const elemGastosTotal = document.getElementById("txt-ano-gastos-total");
-            if (elemGastosTotal) elemGastosTotal.innerText = `R$ ${anoGastosTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+            if (elemGastosTotal) elemGastosTotal.innerText = formatarMoeda(anoGastosTotal);
 
             // ABA MAIS: CATEGORIAS MODERNIZADAS
             const maisCatContainer = document.getElementById("mais-categories-list");
@@ -2472,7 +2689,7 @@
                             <span style="color:var(--text-main);">${cat.name}</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${cat.limit > 0 ? 'Teto: R$ ' + cat.limit : 'Sem teto'}</span>
+                            <span style="font-size:0.7rem; color:var(--text-muted);">${cat.limit > 0 ? 'Teto: ' + formatarMoeda(cat.limit) : 'Sem teto'}</span>
                             <button onclick="abrirModalEditarCategoria(${idx})" class="btn-mini-action" title="Editar"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="removerCategoria(${idx})" class="btn-mini-action del" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
@@ -2496,7 +2713,7 @@
                             <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700;">
                                 <span>${goal.name}</span>
                                 <div style="display:flex; align-items:center; gap:6px;">
-                                    <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                                    <span>${formatarMoeda(goal.current)} / ${formatarMoeda(goal.target)} (${perc}%)</span>
                                     <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
                                     <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
                                 </div>
@@ -2520,11 +2737,11 @@
             const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
 
             const cardTotInv = document.getElementById("card-total-invested");
-            if (cardTotInv) cardTotInv.innerText = `R$ ${totalGeralInvest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (cardTotInv) cardTotInv.innerText = formatarMoeda(totalGeralInvest);
             const cardXp = document.getElementById("card-xp-total");
-            if (cardXp) cardXp.innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (cardXp) cardXp.innerText = formatarMoeda(totalXP);
             const cardBin = document.getElementById("card-binance-total");
-            if (cardBin) cardBin.innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            if (cardBin) cardBin.innerText = formatarMoeda(totalBinance);
 
             const investList = document.getElementById("investment-list");
             if (investList) {
@@ -2538,13 +2755,15 @@
                             <span class="item-meta">${inv.platform} • ${inv.type}</span>
                         </div>
                         <div class="item-right">
-                            <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                            <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">${formatarMoeda(inv.value)}</span>
                             <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                     investList.appendChild(item);
                 });
             }
+
+            renderizarGrafico();
         }
 
         function selecionarMesEAbrirAno(ano, mes) {
@@ -2582,16 +2801,29 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
                 <input type="number" id="new-card-initial" step="50" value="0" placeholder="Ex: 0 se fatura zerada">
 
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
+                    <div>
+                        <label class="text-xs text-gray-500 font-bold">Dia Fechamento:</label>
+                        <input type="number" id="new-card-closing" min="1" max="31" value="25">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-500 font-bold">Dia Vencimento:</label>
+                        <input type="number" id="new-card-due" min="1" max="31" value="5">
+                    </div>
+                </div>
+
                 <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
                 <input type="color" id="new-card-color" value="#334155" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
                 const initialUsed = parseFloat(document.getElementById("new-card-initial").value) || 0;
+                const closingDay = parseInt(document.getElementById("new-card-closing").value, 10) || 25;
+                const dueDay = parseInt(document.getElementById("new-card-due").value, 10) || 5;
                 const color = document.getElementById("new-card-color").value;
 
                 if (!name || isNaN(limit) || limit <= 0) {
-                    alert("Informe o nome e um limite válido.");
+                    showToast("Informe o nome e um limite válido.", "fa-circle-exclamation");
                     return;
                 }
 
@@ -2601,6 +2833,8 @@
                     name,
                     limit,
                     initialUsed,
+                    closingDay,
+                    dueDay,
                     color
                 };
                 financialData.creditCards.push(novoCartao);
@@ -2608,6 +2842,7 @@
 
                 salvarDados();
                 atualizarTela();
+                showToast("Cartão adicionado com sucesso!");
             });
         }
 
@@ -2625,21 +2860,37 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
                 <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
 
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
+                    <div>
+                        <label class="text-xs text-gray-500 font-bold">Dia Fechamento:</label>
+                        <input type="number" id="edit-card-closing" min="1" max="31" value="${card.closingDay || 25}">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-500 font-bold">Dia Vencimento:</label>
+                        <input type="number" id="edit-card-due" min="1" max="31" value="${card.dueDay || 5}">
+                    </div>
+                </div>
+
                 <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
                 <input type="color" id="edit-card-color" value="${card.color || '#334155'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-card-limit").value);
                 const initialUsed = parseFloat(document.getElementById("edit-card-initial").value) || 0;
+                const closingDay = parseInt(document.getElementById("edit-card-closing").value, 10) || 25;
+                const dueDay = parseInt(document.getElementById("edit-card-due").value, 10) || 5;
                 const color = document.getElementById("edit-card-color").value;
 
                 if (name && !isNaN(limit)) {
                     card.name = name;
                     card.limit = limit;
                     card.initialUsed = initialUsed;
+                    card.closingDay = closingDay;
+                    card.dueDay = dueDay;
                     card.color = color;
                     salvarDados();
                     atualizarTela();
+                    showToast("Cartão atualizado!");
                 }
             });
         }
@@ -2654,6 +2905,7 @@
                 }
                 salvarDados();
                 atualizarTela();
+                showToast("Cartão excluído.");
             }
         }
 
@@ -2674,7 +2926,7 @@
                 const color = document.getElementById("new-box-color").value;
 
                 if (!name || isNaN(amount) || amount < 0) {
-                    alert("Informe um nome e um valor válido.");
+                    showToast("Informe um nome e um valor válido.", "fa-circle-exclamation");
                     return;
                 }
 
@@ -2688,6 +2940,7 @@
 
                 salvarDados();
                 atualizarTela();
+                showToast("Caixinha criada!");
             });
         }
 
@@ -2715,6 +2968,7 @@
                     box.color = color;
                     salvarDados();
                     atualizarTela();
+                    showToast("Caixinha atualizada!");
                 }
             });
         }
@@ -2726,6 +2980,7 @@
                 financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
                 salvarDados();
                 atualizarTela();
+                showToast("Caixinha removida.");
             }
         }
 
@@ -2743,7 +2998,7 @@
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(inputVal) || inputVal <= 0) {
-                alert("Preencha a descrição e um valor numérico válido.");
+                showToast("Preencha a descrição e um valor válido.", "fa-circle-exclamation");
                 return;
             }
 
@@ -2788,7 +3043,7 @@
             salvarDados();
             
             atualizarTela();
-            alert("Lançamento salvo com sucesso!");
+            showToast("Lançamento salvo com sucesso!");
         }
 
         function abrirModalEditarTransacao(id) {
@@ -2851,7 +3106,7 @@
                 const cat = document.getElementById("edit-trans-cat").value;
 
                 if (!desc || isNaN(val) || val <= 0) {
-                    alert("Dados inválidos.");
+                    showToast("Dados inválidos.", "fa-circle-exclamation");
                     return;
                 }
 
@@ -2870,6 +3125,7 @@
 
                 salvarDados();
                 atualizarTela();
+                showToast("Lançamento alterado com sucesso!");
             });
         }
 
@@ -2878,6 +3134,7 @@
                 financialData.transactions = financialData.transactions.filter(t => t.id !== id);
                 salvarDados();
                 atualizarTela();
+                showToast("Lançamento excluído.");
             }
         }
 
@@ -2916,7 +3173,7 @@
                     financialData.cash -= val;
                     salvarDados();
                     atualizarTela();
-                    alert("Fatura abatida com sucesso!");
+                    showToast("Fatura abatida com sucesso!");
                 }
             });
         }
@@ -2926,7 +3183,7 @@
             const texto = JSON.stringify(financialData);
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(texto).then(() => {
-                    alert("✅ Backup copiado! Agora você pode abrir o WhatsApp ou Bloco de Notas e colar lá para guardar.");
+                    showToast("Backup copiado para a Área de Transferência!");
                 }).catch(() => fallbackCopiar(texto));
             } else {
                 fallbackCopiar(texto);
@@ -2953,12 +3210,12 @@
                         financialData = parsed;
                         salvarDados();
                         atualizarTela();
-                        alert("🎉 Dados restaurados com sucesso!");
+                        showToast("Dados restaurados com sucesso!");
                     } else {
-                        alert("Código inválido.");
+                        showToast("Código inválido.", "fa-circle-exclamation");
                     }
                 } catch (e) {
-                    alert("O texto colado não é um backup válido.");
+                    showToast("O texto colado não é um backup válido.", "fa-circle-exclamation");
                 }
             });
         }
@@ -2979,6 +3236,7 @@
                     financialData.goals.push({ id: Date.now(), name, target, current: 0 });
                     salvarDados();
                     atualizarTela();
+                    showToast("Reserva criada!");
                 }
             });
         }
@@ -3007,6 +3265,7 @@
                     goal.current = current;
                     salvarDados();
                     atualizarTela();
+                    showToast("Reserva atualizada!");
                 }
             });
         }
@@ -3016,6 +3275,7 @@
                 financialData.goals = financialData.goals.filter(g => g.id !== id);
                 salvarDados();
                 atualizarTela();
+                showToast("Reserva removida.");
             }
         }
 
@@ -3025,7 +3285,7 @@
 
             abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
                 <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>${formatarMoeda(goal.current)}</b></p>
                 <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
             `, () => {
                 const val = parseFloat(document.getElementById("input-modal-goal-val").value);
@@ -3033,10 +3293,12 @@
                     if (tipo === 'guardar') {
                         financialData.cash -= val;
                         goal.current += val;
+                        showToast(`Guardado ${formatarMoeda(val)} com sucesso!`);
                     } else {
-                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
+                        if (val > goal.current) { showToast("Saldo insuficiente na reserva.", "fa-circle-exclamation"); return; }
                         goal.current -= val;
                         financialData.cash += val;
+                        showToast(`Resgatado ${formatarMoeda(val)}!`);
                     }
                     salvarDados();
                     atualizarTela();
@@ -3061,6 +3323,7 @@
                     atualizarTela();
                     const sel = document.getElementById("trans-category");
                     if (sel) sel.value = name;
+                    showToast("Categoria adicionada!");
                 }
             });
         }
@@ -3087,6 +3350,7 @@
                     cat.color = color;
                     salvarDados();
                     atualizarTela();
+                    showToast("Categoria atualizada!");
                 }
             });
         }
@@ -3098,6 +3362,7 @@
                 financialData.categories.splice(index, 1);
                 salvarDados();
                 atualizarTela();
+                showToast("Categoria removida.");
             }
         }
 
@@ -3128,11 +3393,12 @@
                 const type = document.getElementById("invest-type").value;
                 const asset = document.getElementById("invest-asset").value.trim();
                 const value = parseFloat(document.getElementById("invest-value").value);
-                if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
+                if (!asset || isNaN(value) || value <= 0) { showToast("Informe o ativo e um valor válido.", "fa-circle-exclamation"); return; }
 
                 financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
                 salvarDados();
                 atualizarTela();
+                showToast("Investimento registrado!");
             });
         }
 
@@ -3140,6 +3406,7 @@
             financialData.investments = financialData.investments.filter(i => i.id !== id);
             salvarDados();
             atualizarTela();
+            showToast("Investimento excluído.");
         }
 
         function limparTodosDados() {
@@ -3147,7 +3414,7 @@
                 financialData = JSON.parse(JSON.stringify(defaultData));
                 salvarDados();
                 atualizarTela();
-                alert("Aplicativo reiniciado com sucesso.");
+                showToast("Aplicativo reiniciado com sucesso.");
             }
         }
 
@@ -3170,4 +3437,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-</html>
+    </html>
