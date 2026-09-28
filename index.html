@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V10</title>
+    <title>Finanças Pro V11</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -15,14 +15,16 @@
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js para gráficos financeiros -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* TEMA 1: ROXO CYBER (FUNDO NEON ESCURO) */
         :root {
             --primary: #a855f7;
             --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
-            --neon-glow: 0 0 20px rgba(168, 85, 247, 0.35);
-            --border-neon: 1.5px solid rgba(168, 85, 247, 0.45);
+            --neon-glow: 0 0 15px rgba(168, 85, 247, 0.3);
+            --custom-border-color: rgba(168, 85, 247, 0.45);
             --bg-color: #05050a;
             --card-bg: #0c0c14;
             --text-main: #f3f4f6;
@@ -35,105 +37,6 @@
             --blue: #06b6d4;
             --yellow: #f59e0b;
             --purple: #c084fc;
-        }
-
-        /* TEMAS EXTRAS PERSONALIZADOS */
-        body.theme-roxo-branco {
-            --primary: #9333ea;
-            --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #3b82f6 100%);
-            --neon-glow: 0 0 20px rgba(147, 51, 234, 0.25);
-            --border-neon: 1.5px solid rgba(147, 51, 234, 0.4);
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #cbd5e1;
-            --input-bg: #f8fafc;
-            --card-shadow: 0 4px 20px rgba(147, 51, 234, 0.1);
-        }
-
-        body.theme-ciano-escuro {
-            --primary: #06b6d4;
-            --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
-            --neon-glow: 0 0 20px rgba(6, 182, 212, 0.35);
-            --border-neon: 1.5px solid rgba(6, 182, 212, 0.45);
-            --bg-color: #030712;
-            --card-bg: #0b1120;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #1e293b;
-            --input-bg: #0f172a;
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-
-        body.theme-ciano-branco {
-            --primary: #0891b2;
-            --primary-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #2563eb 100%);
-            --neon-glow: 0 0 20px rgba(8, 145, 178, 0.25);
-            --border-neon: 1.5px solid rgba(8, 145, 178, 0.4);
-            --bg-color: #f0fdf4;
-            --card-bg: #ffffff;
-            --text-main: #082f49;
-            --text-muted: #475569;
-            --border-color: #bae6fd;
-            --input-bg: #f0f9ff;
-            --card-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
-        }
-
-        body.theme-verde-escuro {
-            --primary: #10b981;
-            --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
-            --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
-            --border-neon: 1.5px solid rgba(16, 185, 129, 0.45);
-            --bg-color: #020c08;
-            --card-bg: #061a12;
-            --text-main: #ecfdf5;
-            --text-muted: #6ee7b7;
-            --border-color: #065f46;
-            --input-bg: #042f2e;
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-
-        body.theme-verde-branco {
-            --primary: #059669;
-            --primary-gradient: linear-gradient(135deg, #059669 0%, #10b981 50%, #0d9488 100%);
-            --neon-glow: 0 0 20px rgba(5, 150, 105, 0.25);
-            --border-neon: 1.5px solid rgba(5, 150, 105, 0.4);
-            --bg-color: #f0fdf4;
-            --card-bg: #ffffff;
-            --text-main: #064e3b;
-            --text-muted: #047857;
-            --border-color: #a7f3d0;
-            --input-bg: #f7fee7;
-            --card-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
-        }
-
-        body.theme-rosa-escuro {
-            --primary: #ec4899;
-            --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
-            --neon-glow: 0 0 20px rgba(236, 72, 153, 0.35);
-            --border-neon: 1.5px solid rgba(236, 72, 153, 0.45);
-            --bg-color: #0f050a;
-            --card-bg: #1c0c15;
-            --text-main: #fdf2f8;
-            --text-muted: #f472b6;
-            --border-color: #831843;
-            --input-bg: #320822;
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-
-        body.theme-ouro-luxo {
-            --primary: #f59e0b;
-            --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
-            --neon-glow: 0 0 20px rgba(245, 158, 11, 0.35);
-            --border-neon: 1.5px solid rgba(245, 158, 11, 0.45);
-            --bg-color: #0d0a02;
-            --card-bg: #1c1605;
-            --text-main: #fffbeb;
-            --text-muted: #fbbf24;
-            --border-color: #78350f;
-            --input-bg: #292108;
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -316,13 +219,13 @@
             background: var(--card-bg);
             padding: 8px 14px;
             border-radius: 16px;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             box-shadow: var(--card-shadow);
         }
 
         .date-nav-btn {
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             color: var(--text-main);
             width: 28px;
             height: 26px;
@@ -346,7 +249,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .quick-actions-bar {
@@ -359,7 +262,7 @@
             padding: 10px;
             border-radius: 14px;
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             color: var(--text-main);
             font-size: 0.72rem;
             font-weight: 800;
@@ -376,13 +279,13 @@
             background: var(--card-bg);
             padding: 16px;
             border-radius: 18px;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             box-shadow: var(--card-shadow);
         }
 
         .budget-summary-banner {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 16px;
             padding: 14px 16px;
             display: flex;
@@ -399,7 +302,7 @@
 
         .box-clean-card {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 16px;
             padding: 14px;
             display: flex;
@@ -436,7 +339,7 @@
             border-radius: 6px;
             overflow: hidden;
             width: 100%;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .box-clean-footer {
@@ -449,7 +352,7 @@
 
         .btn-box-action {
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 6px 10px;
             border-radius: 8px;
             font-size: 0.7rem;
@@ -464,7 +367,7 @@
 
         .extra-income-card {
             background: var(--card-bg);
-            border: 1px dashed var(--primary);
+            border: 1.5px dashed var(--primary);
             border-radius: 16px;
             padding: 14px;
             display: flex;
@@ -478,7 +381,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 8px 12px;
             border-radius: 12px;
             font-size: 0.75rem;
@@ -486,7 +389,7 @@
 
         .mobile-entry-card {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 18px;
             padding: 16px;
             box-shadow: var(--card-shadow);
@@ -497,7 +400,7 @@
 
         .lancar-header-dashboard {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 16px;
             padding: 12px 14px;
             display: flex;
@@ -535,7 +438,7 @@
         .entry-top-switch {
             display: flex;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 4px;
             border-radius: 12px;
             gap: 4px;
@@ -573,7 +476,7 @@
 
         .amount-hero-box {
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 14px;
             padding: 12px 14px;
             display: flex;
@@ -647,7 +550,7 @@
             display: flex;
             align-items: center;
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -687,14 +590,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .detail-row {
             display: flex;
             align-items: center;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 12px;
             padding: 2px 12px;
             gap: 10px;
@@ -729,7 +632,7 @@
             flex-direction: column;
             gap: 6px;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 10px;
             border-radius: 12px;
         }
@@ -748,7 +651,7 @@
             align-items: center;
             gap: 6px;
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 6px 12px;
             border-radius: 10px;
             font-size: 0.75rem;
@@ -782,7 +685,7 @@
 
         .clean-statement-item {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 14px;
             padding: 12px 14px;
             display: flex;
@@ -796,7 +699,7 @@
             height: 38px;
             border-radius: 12px;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -890,7 +793,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .year-selector-header {
@@ -898,7 +801,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 16px;
             padding: 10px 14px;
             box-shadow: var(--card-shadow);
@@ -913,7 +816,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .months-elegant-grid {
@@ -924,7 +827,7 @@
 
         .month-card-item {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 14px;
             padding: 12px 16px;
             display: flex;
@@ -957,12 +860,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
         }
 
         .modern-action-card {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 18px;
             padding: 16px;
             display: flex;
@@ -976,7 +879,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--input-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 0.8rem;
@@ -1002,41 +905,12 @@
         button.btn-secondary {
             background: var(--input-bg);
             color: var(--text-main);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
-        }
-
-        .color-palette-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-top: 6px;
-        }
-        .color-theme-card {
-            padding: 10px;
-            border-radius: 12px;
-            border: var(--border-neon);
-            background: var(--input-bg);
-            cursor: pointer;
-            text-align: center;
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .color-theme-card:hover { border-color: var(--primary); box-shadow: var(--neon-glow); }
-        .color-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.4);
         }
 
         .modal-overlay {
@@ -1053,7 +927,7 @@
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: var(--card-bg);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             border-radius: 20px;
             padding: 20px;
             width: 100%;
@@ -1090,7 +964,7 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4), var(--neon-glow);
-            border: var(--border-neon);
+            border: 1.5px solid var(--custom-border-color);
             animation: slideDown 0.3s ease forwards;
         }
         @keyframes slideDown {
@@ -1112,7 +986,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V10</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V11</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1133,7 +1007,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V10</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V11</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1290,12 +1164,12 @@
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div style="background:var(--input-bg); border:var(--border-neon); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="background:var(--input-bg); border:1.5px solid var(--custom-border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
                     </div>
-                    <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:var(--border-neon); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
+                    <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:1.5px solid var(--custom-border-color); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
                         Ver Meses
                     </button>
                 </div>
@@ -1421,8 +1295,8 @@
                     </div>
                     
                     <div style="display:flex; gap:6px; margin-bottom:8px;">
-                        <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:8px 10px; border-radius:10px; background:var(--input-bg); border:var(--border-neon); color:var(--text-main);">
-                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:var(--border-neon); color:var(--text-main);">
+                        <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:8px 10px; border-radius:10px; background:var(--input-bg); border:1.5px solid var(--custom-border-color); color:var(--text-main);">
+                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:1.5px solid var(--custom-border-color); color:var(--text-main);">
                             <option value="all">Todos</option>
                             <option value="cartao">💳 Só Cartão</option>
                             <option value="cash">💵 Só À Vista</option>
@@ -1508,56 +1382,48 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES & TEMAS) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES PERSONALIZADAS RECOLHIDINHO) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V10</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Neon com fundo escuro ou fundo branco</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V11</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Controle total das bordas e temas</span>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
-                            🎨 Custom
+                            🎨 100% Livre
                         </span>
                     </div>
                 </div>
 
+                <!-- PAINEL RECOLHIDINHO DE CORES CUSTOM -->
                 <div class="modern-action-card">
-                    <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha o Estilo (Bordas & Fundos):
-                    </b>
-                    <div class="color-palette-grid">
-                        <div class="color-theme-card" onclick="mudarTemaCor('neon')">
-                            <div class="color-circle" style="background: #05050a; border-color: #a855f7;"></div>
-                            <span>Roxo Cyber (Escuro)</span>
+                    <div onclick="togglePainelCores()" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-palette text-purple-400"></i> Personalizar Cores e Bordas
+                        </b>
+                        <i id="icone-seta-cores" class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:var(--text-muted);"></i>
+                    </div>
+
+                    <div id="conteudo-painel-cores" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border-color); padding-top:10px;">
+                        
+                        <div>
+                            <span style="font-size:0.7rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">Selecione a Cor da Borda/Quadrados:</span>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="color" id="picker-borda-cor" value="#a855f7" onchange="aplicarCorBordaCustomizada(this.value)" style="width:45px; height:38px; border:none; background:transparent; cursor:pointer; border-radius:8px;">
+                                <span style="font-size:0.75rem; font-weight:700; color:var(--text-main);">Cor livre (Vermelho normal, Azul, Neon...)</span>
+                            </div>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('roxo-branco')">
-                            <div class="color-circle" style="background: #ffffff; border-color: #9333ea;"></div>
-                            <span>Roxo Neon (Fundo Branco)</span>
+
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="aplicarTemaCor('neon')" class="btn-secondary" style="flex:1; font-size:0.7rem;">💜 Roxo Cyber</button>
+                            <button onclick="aplicarTemaCor('ciano-escuro')" class="btn-secondary" style="flex:1; font-size:0.7rem;">💙 Ciano</button>
+                            <button onclick="aplicarTemaCor('verde-escuro')" class="btn-secondary" style="flex:1; font-size:0.7rem;">💚 Verde</button>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('ciano-escuro')">
-                            <div class="color-circle" style="background: #030712; border-color: #06b6d4;"></div>
-                            <span>Ciano (Escuro)</span>
-                        </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('ciano-branco')">
-                            <div class="color-circle" style="background: #ffffff; border-color: #0891b2;"></div>
-                            <span>Ciano Neon (Fundo Branco)</span>
-                        </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('verde-escuro')">
-                            <div class="color-circle" style="background: #020c08; border-color: #10b981;"></div>
-                            <span>Verde Matrix (Escuro)</span>
-                        </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('verde-branco')">
-                            <div class="color-circle" style="background: #ffffff; border-color: #059669;"></div>
-                            <span>Verde Neon (Fundo Branco)</span>
-                        </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('rosa-escuro')">
-                            <div class="color-circle" style="background: #0f050a; border-color: #ec4899;"></div>
-                            <span>Rosa Choque (Escuro)</span>
-                        </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('ouro-luxo')">
-                            <div class="color-circle" style="background: #0d0a02; border-color: #f59e0b;"></div>
-                            <span>Ouro Luxo (Escuro)</span>
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="aplicarTemaCor('rosa-escuro')" class="btn-secondary" style="flex:1; font-size:0.7rem;">🩷 Rosa</button>
+                            <button onclick="aplicarTemaCor('ouro-luxo')" class="btn-secondary" style="flex:1; font-size:0.7rem;">💛 Ouro</button>
+                            <button onclick="aplicarTemaCor('roxo-branco')" class="btn-secondary" style="flex:1; font-size:0.7rem;">🤍 Fundo Branco</button>
                         </div>
                     </div>
                 </div>
@@ -1651,10 +1517,11 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v40";
+        const STORAGE_KEY = "financas_pro_neon_v41";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_custom_theme";
+        const BORDER_COLOR_KEY = "financas_pro_custom_border_color";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hojeReal = new Date();
@@ -1767,6 +1634,13 @@
             const savedTheme = localStorage.getItem(THEME_KEY) || 'neon';
             aplicarTemaCor(savedTheme, false);
 
+            const savedBorderColor = localStorage.getItem(BORDER_COLOR_KEY);
+            if (savedBorderColor) {
+                document.documentElement.style.setProperty('--custom-border-color', savedBorderColor);
+                const picker = document.getElementById("picker-borda-cor");
+                if (picker) picker.value = savedBorderColor;
+            }
+
             const icon = document.getElementById("btn-eye-icon");
             if (icon && privacyMode) icon.className = "fa-solid fa-eye-slash";
 
@@ -1783,6 +1657,24 @@
             
             atualizarTela();
         });
+
+        function togglePainelCores() {
+            const conteudo = document.getElementById("conteudo-painel-cores");
+            const seta = document.getElementById("icone-seta-cores");
+            if (conteudo.style.display === "flex") {
+                conteudo.style.display = "none";
+                seta.className = "fa-solid fa-chevron-down";
+            } else {
+                conteudo.style.display = "flex";
+                seta.className = "fa-solid fa-chevron-up";
+            }
+        }
+
+        function aplicarCorBordaCustomizada(corHex) {
+            document.documentElement.style.setProperty('--custom-border-color', corHex);
+            localStorage.setItem(BORDER_COLOR_KEY, corHex);
+            showToast("Cor das bordas atualizada!");
+        }
 
         function mudarTemaCor(tema) {
             aplicarTemaCor(tema, true);
@@ -2018,7 +1910,7 @@
         }
 
         function renderizarGrafico() {
-            // Removido o gráfico do painel principal conforme solicitado
+            // Removido do painel principal
         }
 
         function exportarCSV() {
@@ -3297,4 +3189,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
