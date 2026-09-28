@@ -904,7 +904,7 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR COM CAMPO LIVRE DE CARTÃO -->
+            <!-- TELA 2: LANÇAR -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="mobile-entry-card">
                     <div class="entry-top-switch">
@@ -963,10 +963,9 @@
                         </div>
                     </div>
 
-                    <!-- CAMPO TOTALMENTE LIVRE PARA DIGITAÇÃO DO CARTÃO COM SUGESTÕES -->
                     <div id="row-select-card" class="detail-row">
                         <i class="fa-solid fa-wallet"></i>
-                        <input type="text" id="trans-card-name" list="cards-datalist" placeholder="Qual cartão? (digite o que quiser: Itaú, Bradesco, Amazon...)" style="font-weight:700;">
+                        <input type="text" id="trans-card-name" list="cards-datalist" placeholder="Qual cartão? (Itaú, Bradesco, Amazon, Samsung...)" style="font-weight:700;">
                         <datalist id="cards-datalist"></datalist>
                     </div>
 
@@ -1001,7 +1000,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES -->
+            <!-- TELA 3: ABA CARTÕES (COM SAMSUNG ITAÚ INCLUÍDO) -->
             <div id="tab-cartoes" class="tab-pane">
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1158,7 +1157,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v20_free_card_input";
+        const STORAGE_KEY = "financas_pro_v21_samsung_card";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1176,9 +1175,10 @@
                 { id: "box_sofia", name: "👧 Verba Sofia", amount: 1500.00, color: "#ec4899" }
             ],
             creditCards: [
-                { id: "card_itau", name: "Itaú", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
-                { id: "card_bradesco", name: "Bradesco", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
-                { id: "card_amazon", name: "Amazon", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" }
+                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
@@ -1195,6 +1195,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v20_free_card_input",
                 "financas_pro_v19_card_skins",
                 "financas_pro_v18_cards_tab",
                 "financas_pro_v17_clean_statement",
@@ -1214,10 +1215,17 @@
                 if (salvo) {
                     try {
                         const parsed = JSON.parse(salvo);
+                        let cartoes = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards;
+                        
+                        // Garante que o Samsung Itaú seja adicionado se ainda não existir
+                        if (!cartoes.some(c => c.name.toLowerCase().includes("samsung"))) {
+                            cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" });
+                        }
+
                         return {
                             cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
                             budgetBoxes: Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes : defaultData.budgetBoxes,
-                            creditCards: Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards,
+                            creditCards: cartoes,
                             categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                             transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                             goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
@@ -1576,7 +1584,7 @@
                 }
             }
 
-            // ATUALIZAÇÃO DA ABA CARTÕES
+            // ABA CARTÕES COM SAMSUNG ITAÚ
             const cards = financialData.creditCards || [];
             document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
 
@@ -1663,7 +1671,7 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // ATUALIZA AS SUGESTÕES (DATALIST) COM OS CARTÕES CADASTRADOS
+            // DATALIST
             const datalist = document.getElementById("cards-datalist");
             if (datalist) {
                 datalist.innerHTML = '';
@@ -1915,7 +1923,7 @@
         // --- CARTÕES DE CRÉDITO ---
         function abrirModalNovoCartao() {
             abrirModal("Adicionar Novo Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Itaú, Bradesco, Amazon...):</label>
+                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Itaú, Bradesco, Amazon, Samsung...):</label>
                 <input type="text" id="new-card-name" placeholder="Nome do Cartão">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
@@ -1925,7 +1933,7 @@
                 <input type="number" id="new-card-initial" step="50" value="0" placeholder="Ex: 0 se fatura zerada">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
-                <input type="color" id="new-card-color" value="#f97316" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="color" id="new-card-color" value="#334155" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
@@ -1966,7 +1974,7 @@
                 <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#f97316'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="color" id="edit-card-color" value="${card.color || '#334155'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-card-limit").value);
@@ -2066,7 +2074,7 @@
             }
         }
 
-        // --- LANÇAMENTOS COM DIGITAÇÃO LIVRE DE CARTÃO ---
+        // --- LANÇAMENTOS ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -2084,7 +2092,6 @@
                 return;
             }
 
-            // Se digitou um cartão novo, cadastra ele automaticamente na lista
             let cardId = null;
             if (payment === "Cartão de Crédito" && cardTypedName) {
                 let cardObj = (financialData.creditCards || []).find(c => c.name.toLowerCase() === cardTypedName.toLowerCase());
