@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V18 - Com Alertas</title>
+    <title>Finanças Pro V18 - Bordas Piscantes</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -77,7 +77,7 @@
             }
         }
 
-        /* Estilo das bolinhas de status com animação de piscar */
+        /* Estilo das bolinhas de status */
         .status-dot {
             width: 10px;
             height: 10px;
@@ -86,26 +86,34 @@
             flex-shrink: 0;
         }
 
-        .status-dot.green {
-            background-color: #059669;
-            box-shadow: 0 0 6px rgba(5, 150, 105, 0.5);
-        }
+        .status-dot.green { background-color: #059669; box-shadow: 0 0 6px rgba(5, 150, 105, 0.5); }
+        .status-dot.yellow { background-color: #d97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.5); }
+        .status-dot.red { background-color: #e11d48; box-shadow: 0 0 8px rgba(225, 29, 72, 0.8); animation: piscarDot 1.2s infinite ease-in-out; }
 
-        .status-dot.yellow {
-            background-color: #d97706;
-            box-shadow: 0 0 6px rgba(217, 119, 6, 0.5);
-        }
-
-        .status-dot.red {
-            background-color: #e11d48;
-            box-shadow: 0 0 8px rgba(225, 29, 72, 0.8);
-            animation: piscar 1.2s infinite ease-in-out;
-        }
-
-        @keyframes piscar {
+        @keyframes piscarDot {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(0.85); }
             100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ANIMAÇÃO DA BORDA PISCANTE SUAVE (GLOW) */
+        .borda-piscante-suave {
+            animation: bordaPiscando 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bordaPiscando {
+            0% {
+                border-color: rgba(225, 29, 72, 0.3);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 0px rgba(225, 29, 72, 0);
+            }
+            50% {
+                border-color: rgba(225, 29, 72, 1);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 12px rgba(225, 29, 72, 0.6);
+            }
+            100% {
+                border-color: rgba(225, 29, 72, 0.3);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 0px rgba(225, 29, 72, 0);
+            }
         }
 
         .lock-screen {
@@ -2208,7 +2216,6 @@
 
             const percConsumido = verbaTotalMes > 0 ? Math.min(Math.round((despesasTotalMes / verbaTotalMes) * 100), 100) : 0;
             
-            // Definir cor da bolinha do painel geral principal
             const heroStatusDot = document.getElementById("hero-status-dot");
             if (heroStatusDot) {
                 heroStatusDot.className = "status-dot " + (percConsumido >= 90 ? "red" : (percConsumido >= 75 ? "yellow" : "green"));
@@ -2295,10 +2302,11 @@
 
                         const percBox = stat.amount > 0 ? Math.min(Math.round((displaySpent / stat.amount) * 100), 100) : 0;
                         
-                        // Lógica de status para a caixinha (Bolinha piscando se >= 90% ou estourado)
                         let statusColorClass = 'green';
+                        let cardPiscandoClass = '';
                         if (displayRemain < 0 || percBox >= 90) {
                             statusColorClass = 'red';
+                            cardPiscandoClass = 'borda-piscante-suave'; // Borda inteira piscando suavemente!
                         } else if (percBox >= 75) {
                             statusColorClass = 'yellow';
                         }
@@ -2308,7 +2316,7 @@
                         else if (percBox >= 75) corBarra = 'var(--yellow)';
 
                         const bElem = document.createElement("div");
-                        bElem.className = "box-clean-card";
+                        bElem.className = `box-clean-card ${cardPiscandoClass}`;
                         bElem.style.borderLeft = `4px solid ${box.color || 'var(--primary)'}`;
                         
                         bElem.innerHTML = `
@@ -3162,4 +3170,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
