@@ -526,6 +526,56 @@
             gap: 6px;
         }
 
+        /* CONTAINER DE TAGS RÁPIDAS DE CARTÕES */
+        .card-tags-scroll-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            border-radius: 12px;
+        }
+
+        .card-tags-scroll {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+        .card-tags-scroll::-webkit-scrollbar { display: none; }
+
+        .card-pill-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            padding: 5px 9px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-main);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .card-pill-btn.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(99, 102, 241, 0.15);
+        }
+
+        .card-pill-btn .color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
         .list-container {
             display: flex;
             flex-direction: column;
@@ -766,7 +816,6 @@
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -905,7 +954,7 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR COM SELEÇÃO DIRETA DOS CARTÕES -->
+            <!-- TELA 2: LANÇAR COM TAGS DE CARTÃO CONECTADAS -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="mobile-entry-card">
                     <div class="entry-top-switch">
@@ -964,11 +1013,12 @@
                         </div>
                     </div>
 
-                    <!-- CAMPO DINÂMICO CONECTADO AOS CARTÕES COM BOTÃO '+' -->
-                    <div id="row-select-card" class="detail-row" style="position:relative;">
-                        <i class="fa-solid fa-wallet"></i>
-                        <select id="trans-card-id" style="flex:1;"></select>
-                        <button type="button" onclick="abrirModalNovoCartao()" title="Novo Cartão" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer; padding-left:4px;">+</button>
+                    <!-- FILEIRA DE TAGS DE CARTÃO CONECTADAS DIRETO À ABA DE CARTÕES -->
+                    <div id="row-select-card" class="card-tags-scroll-wrap">
+                        <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
+                            Selecione o Cartão Utilizado:
+                        </span>
+                        <div id="card-tags-container" class="card-tags-scroll"></div>
                     </div>
 
                     <div class="two-cols-clean">
@@ -1002,7 +1052,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES -->
+            <!-- TELA 3: ABA CARTÕES (O CADASTRO CENTRAL) -->
             <div id="tab-cartoes" class="tab-pane">
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1159,7 +1209,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v22_linked_cards";
+        const STORAGE_KEY = "financas_pro_v23_card_tags";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1169,6 +1219,7 @@
 
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
+        let selectedCardIdSelected = null;
 
         const defaultData = {
             cash: 0.00,
@@ -1197,6 +1248,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v22_linked_cards",
                 "financas_pro_v21_samsung_card",
                 "financas_pro_v20_free_card_input",
                 "financas_pro_v19_card_skins",
@@ -1333,6 +1385,48 @@
             if (rowCard) {
                 rowCard.style.display = forma === "Cartão de Crédito" ? "flex" : "none";
             }
+        }
+
+        function selecionarTagCartao(cardId) {
+            selectedCardIdSelected = cardId;
+            atualizarTagsCartoesVisual();
+        }
+
+        function atualizarTagsCartoesVisual() {
+            const container = document.getElementById("card-tags-container");
+            if (!container) return;
+
+            const cards = financialData.creditCards || [];
+            if (!selectedCardIdSelected && cards.length > 0) {
+                selectedCardIdSelected = cards[0].id;
+            }
+
+            container.innerHTML = '';
+            cards.forEach(c => {
+                const isSelected = c.id === selectedCardIdSelected;
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = `card-pill-btn ${isSelected ? 'active' : ''}`;
+                if (isSelected) {
+                    btn.style.borderColor = c.color || 'var(--primary)';
+                    btn.style.color = c.color || 'var(--primary)';
+                }
+                btn.innerHTML = `
+                    <span class="color-dot" style="background:${c.color || 'var(--primary)'};"></span>
+                    <span>${c.name}</span>
+                    ${isSelected ? '<i class="fa-solid fa-check" style="font-size:0.65rem;"></i>' : ''}
+                `;
+                btn.onclick = () => selecionarTagCartao(c.id);
+                container.appendChild(btn);
+            });
+
+            const btnAdd = document.createElement("button");
+            btnAdd.type = "button";
+            btnAdd.className = "card-pill-btn";
+            btnAdd.style.borderStyle = "dashed";
+            btnAdd.innerHTML = `<i class="fa-solid fa-plus text-primary"></i><span>Novo</span>`;
+            btnAdd.onclick = abrirModalNovoCartao;
+            container.appendChild(btnAdd);
         }
 
         function desbloquearApp() {
@@ -1673,21 +1767,8 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // SELETOR DINÂMICO CONECTADO AOS CARTÕES DA ABA CARTÕES
-            const selectCard = document.getElementById("trans-card-id");
-            if (selectCard) {
-                selectCard.innerHTML = '';
-                if (cards.length === 0) {
-                    selectCard.innerHTML = '<option value="">Nenhum cartão cadastrado</option>';
-                } else {
-                    cards.forEach(c => {
-                        const opt = document.createElement("option");
-                        opt.value = c.id;
-                        opt.textContent = `Cartão: ${c.name}`;
-                        selectCard.appendChild(opt);
-                    });
-                }
-            }
+            // ATUALIZA AS TAGS DE CARTÃO NA TELA DE LANÇAR
+            atualizarTagsCartoesVisual();
 
             const selectBox = document.getElementById("trans-box-id");
             if (selectBox) {
@@ -1746,7 +1827,7 @@
                         const iconBadge = isCard ? '💳' : '💵';
 
                         const cardObj = cards.find(c => c.id === trans.cardId);
-                        const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:var(--yellow); font-weight:800;">[${cardObj.name}]</span>` : '';
+                        const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:${cardObj.color || 'var(--yellow)'}; font-weight:800;">[${cardObj.name}]</span>` : '';
 
                         const boxTagHtml = boxObj 
                             ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}35;">${boxObj.name}</span>`
@@ -1923,8 +2004,7 @@
             trocarAba('lancar');
             document.getElementById("trans-payment").value = "Cartão de Crédito";
             verificarExibicaoCartao("Cartão de Crédito");
-            const selectCard = document.getElementById("trans-card-id");
-            if (selectCard) selectCard.value = cardId;
+            selecionarTagCartao(cardId);
         }
 
         // --- CARTÕES DE CRÉDITO ---
@@ -1953,13 +2033,15 @@
                 }
 
                 if (!financialData.creditCards) financialData.creditCards = [];
-                financialData.creditCards.push({
+                const novoCartao = {
                     id: "card_" + Date.now(),
                     name,
                     limit,
                     initialUsed,
                     color
-                });
+                };
+                financialData.creditCards.push(novoCartao);
+                selectedCardIdSelected = novoCartao.id;
 
                 salvarDados();
                 atualizarTela();
@@ -2004,6 +2086,9 @@
             if (!card) return;
             if (confirm(`Tem certeza que deseja excluir o cartão "${card.name}"?`)) {
                 financialData.creditCards = financialData.creditCards.filter(c => c.id !== cardId);
+                if (selectedCardIdSelected === cardId) {
+                    selectedCardIdSelected = null;
+                }
                 salvarDados();
                 atualizarTela();
             }
@@ -2081,7 +2166,7 @@
             }
         }
 
-        // --- LANÇAMENTOS ---
+        // --- LANÇAMENTOS COM TAGS VINCULADAS ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -2090,7 +2175,7 @@
             const category = document.getElementById("trans-category").value;
             const boxId = document.getElementById("trans-box-id").value;
             const payment = document.getElementById("trans-payment").value;
-            const cardId = payment === "Cartão de Crédito" ? document.getElementById("trans-card-id").value : null;
+            const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
             const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
@@ -2183,7 +2268,7 @@
                     <option value="Dinheiro/Caixa" ${t.payment === 'Dinheiro/Caixa' ? 'selected' : ''}>💵 Dinheiro / Débito / Pix</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cartão de Crédito Usado:</label>
+                <label class="text-xs text-gray-500 font-bold mt-2">Cartão Vinculado:</label>
                 <select id="edit-trans-card">${optionsCartoes}</select>
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
