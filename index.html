@@ -306,32 +306,35 @@
             align-items: center;
         }
 
-        /* CAIXINHAS NO PAINEL */
+        /* ========================================================
+           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
+           ======================================================== */
         .budget-summary-banner {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 16px;
-            padding: 10px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--card-shadow);
         }
 
         .budget-list-elegant {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .elegant-box-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 12px 14px;
+            border-radius: 18px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
             position: relative;
         }
 
@@ -341,25 +344,23 @@
             align-items: center;
         }
 
-        .elegant-box-title-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .box-color-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 4px;
+        .box-badge-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 8px;
+            letter-spacing: 0.3px;
         }
 
         .elegant-box-amount {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
         }
 
         .elegant-progress-track {
-            background: rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.05);
             height: 6px;
             border-radius: 6px;
             overflow: hidden;
@@ -374,23 +375,25 @@
             align-items: center;
             font-size: 0.72rem;
             font-weight: 700;
+            padding-top: 2px;
         }
 
         .btn-box-action {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 8px;
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--text-main);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 4px;
         }
+        .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
-        /* CARD DE LANÇAMENTO */
+        /* DEMAIS COMPONENTES */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -820,9 +823,6 @@
             border-radius: 50%;
         }
 
-        /* ========================================================
-           NOVO DESIGN DA ABA MESES (CARDS ELEGANTES + ANOS FUTUROS)
-           ======================================================== */
         .year-selector-header {
             display: flex;
             justify-content: space-between;
@@ -983,7 +983,6 @@
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button" id="btn-tab-painel" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -1009,7 +1008,7 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL COM CAIXINHAS E SOMA TOTAL -->
+            <!-- TELA 1: PAINEL COM CAIXINHAS MODERNAS E CORES EQUILIBRADAS -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
@@ -1089,20 +1088,20 @@
                     </button>
                 </div>
 
-                <!-- SOMA TOTAL DAS VERBAS E LISTA ELEGANTE -->
+                <!-- SOMA TOTAL DAS VERBAS E LISTA REFORMULADA -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner">
                         <div>
                             <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; display:block;">
                                 📦 Soma Total das Verbas
                             </span>
-                            <b id="txt-soma-total-verbas" style="font-size:1.15rem; font-weight:900; color:var(--primary);">
+                            <b id="txt-soma-total-verbas" style="font-size:1.25rem; font-weight:900; color:var(--text-main);">
                                 R$ 0,00
                             </b>
                         </div>
                         <div style="text-align:right;">
                             <span style="font-size:0.62rem; font-weight:700; color:var(--text-muted); display:block;">Consumo Geral:</span>
-                            <b id="txt-consumo-total-verbas" style="font-size:0.85rem; font-weight:900; color:var(--red);">- R$ 0,00</b>
+                            <b id="txt-consumo-total-verbas" style="font-size:0.9rem; font-weight:900; color:var(--red);">- R$ 0,00</b>
                         </div>
                     </div>
 
@@ -1302,24 +1301,18 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- TELA 4: MESES (MODERNO, ELEGANTE E COM ANOS FUTUROS) -->
-            <!-- ============================================== -->
+            <!-- TELA 4: MESES -->
             <div id="tab-meses" class="tab-pane">
-                
-                <!-- SELETOR DE ANO AMPLIADO (PROJEÇÃO ATÉ 2035) -->
                 <div class="year-selector-header">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
                     <div style="display:flex; align-items:center; gap:6px;">
                         <i class="fa-solid fa-calendar-days text-indigo-500"></i>
                         <select id="select-year-tabela" onchange="alterarAnoTabela(this.value)" style="width:auto; border:none; background:transparent; font-size:1.05rem; font-weight:900; color:var(--primary); outline:none; cursor:pointer;">
-                            <!-- Gerado dinamicamente no JS de 2024 até 2035 -->
                         </select>
                     </div>
                     <button class="date-nav-btn" onclick="mudarAnoTabela(1)">»</button>
                 </div>
 
-                <!-- CARD RESUMO DO ANO SELECIONADO -->
                 <div class="year-summary-card">
                     <div>
                         <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Anual Acumulado</span>
@@ -1331,7 +1324,6 @@
                     </div>
                 </div>
 
-                <!-- LISTA ELEGANTE MÊS A MÊS EM CARDS -->
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
@@ -1422,16 +1414,15 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v28_future_years";
+        const STORAGE_KEY = "financas_pro_v29_box_elegance";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const mesesAbrev = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
         const hoje = new Date();
         let currentYear = hoje.getFullYear();
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
-        let selectedYearTabela = currentYear; // Ano específico para a aba Meses
+        let selectedYearTabela = currentYear;
 
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
@@ -1440,9 +1431,9 @@
         const defaultData = {
             cash: 0.00,
             budgetBoxes: [
-                { id: "box_principal", name: "💼 Meu Salário", amount: 5000.00, color: "#10b981" },
-                { id: "box_gloria", name: "🪙 Glória", amount: 600.00, color: "#84cc16" },
-                { id: "box_sofia", name: "👧 Pensão Sophia", amount: 1500.00, color: "#ec4899" }
+                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#10b981" },
+                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#3b82f6" },
+                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#ec4899" }
             ],
             creditCards: [
                 { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
@@ -1465,6 +1456,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v28_future_years",
                 "financas_pro_v27_boxes_redesign",
                 "financas_pro_v26_complete_dash",
                 "financas_pro_v25_lancar_totals",
@@ -1527,7 +1519,6 @@
                 if (lock) lock.classList.add("hidden");
             }
             
-            // Popula os seletores de ano até 2035
             popularSeletoresDeAno();
             sincronizarDataFormulario();
             
@@ -1732,7 +1723,6 @@
             atualizarTela();
         }
 
-        // CONTROLES DE ANO ESPECÍFICOS DA ABA MESES
         function mudarAnoTabela(delta) {
             selectedYearTabela += delta;
             if (selectedYearTabela < 2024) selectedYearTabela = 2024;
@@ -1864,7 +1854,9 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // RENDERIZAÇÃO DAS CAIXINHAS
+            // ========================================================
+            // RENDERIZAÇÃO DAS CAIXINHAS (TIPOGRAFIA LIMPA E ALTO CONTRASTE)
+            // ========================================================
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -1886,13 +1878,13 @@
                         if (stat.rawSpent > stat.amount) {
                             displaySpent = stat.amount;
                             displayRemain = 0;
-                            msgTransbordo = `<span style="font-size:0.6rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
                         }
                     } else {
                         displaySpent = stat.rawSpent + stat.spilloverReceived;
                         displayRemain = stat.amount - displaySpent;
                         if (stat.spilloverReceived > 0) {
-                            msgTransbordo = `<span style="font-size:0.6rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu R$ ${stat.spilloverReceived.toFixed(2)} de outras verbas</span>`;
+                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu R$ ${stat.spilloverReceived.toFixed(2)} de outras verbas</span>`;
                         }
                     }
 
@@ -1908,12 +1900,13 @@
                     
                     bElem.innerHTML = `
                         <div class="elegant-box-header">
-                            <div class="elegant-box-title-group">
-                                <span class="box-color-indicator" style="background:${box.color || 'var(--primary)'};"></span>
-                                <b style="font-size:0.85rem; color:var(--text-main);">${box.name}</b>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                    ${box.name}
+                                </span>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <b class="elegant-box-amount" style="color:${box.color || 'var(--primary)'};">
+                                <b class="elegant-box-amount">
                                     R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </b>
                                 <div style="display:flex; gap:3px;">
@@ -1934,8 +1927,8 @@
                                 <span style="color:var(--text-muted);">
                                     Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
                                 </span>
-                                <span style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.78rem;">
-                                    Sobra: <b>R$ ${displayRemain.toFixed(2)}</b>
+                                <span style="color:var(--text-muted);">
+                                    Sobra: <b style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'};">R$ ${displayRemain.toFixed(2)}</b>
                                 </span>
                             </div>
                             <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="btn-box-action" title="Lançar gasto nesta verba">
@@ -2067,7 +2060,6 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // ATUALIZA AS TAGS DE CARTÃO
             atualizarTagsCartoesVisual();
 
             const selectBox = document.getElementById("trans-box-id");
@@ -2173,9 +2165,7 @@
                 }
             }
 
-            // ========================================================
-            // RENDERIZAÇÃO DA NOVA ABA MESES COM CARDS E ANOS FUTUROS
-            // ========================================================
+            // ABA MESES
             let anoEntradasTotal = 0;
             let anoGastosTotal = 0;
 
@@ -2191,7 +2181,6 @@
                     let mInc = 0;
                     let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
 
-                    // Considera a verba mensal cadastrada como projeção base
                     if (temDados || selectedYearTabela >= currentYear) {
                         const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
                         mInc = totalVerbaCaixinhas + mExt;
@@ -2484,8 +2473,8 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
                 <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#3b82f6'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("edit-box-amount").value);
