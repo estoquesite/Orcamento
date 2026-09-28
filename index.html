@@ -39,19 +39,19 @@
     }
     #nav-indicator {
       position: absolute;
-      top: 6px;
+      top: 5px;
       left: 0;
-      height: calc(100% - 12px);
+      height: calc(100% - 10px);
       width: 20%;
-      border-radius: 1rem;
+      border-radius: 1.25rem;
       pointer-events: none;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
   </style>
 </head>
 <body class="bg-slate-200 text-slate-900 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- FRAME DO SMARTPHONE (Inicia no Branco / Light Mode) -->
+  <!-- FRAME DO SMARTPHONE -->
   <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-50 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300">
     
     <!-- HEADER -->
@@ -95,40 +95,42 @@
       </button>
     </div>
 
-    <!-- VIEWPORT COM PADDING-BOTTOM PARA NÃO TAPAR BOTÕES -->
-    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 md:pb-20">
+    <!-- VIEWPORT COM ESPAÇAMENTO EXTRA INFERIOR (pb-28) -->
+    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-28 md:pb-24">
       <!-- Injetado dinamicamente -->
     </main>
 
-    <!-- BARRA INFERIOR DE ABAS COM INDICADOR SUAVE -->
-    <nav class="relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center px-2 py-1.5 shrink-0 sticky bottom-0 z-30 shadow-lg pb-[max(env(safe-area-inset-bottom),0.5rem)]">
-      <!-- Fundo deslizante animado -->
-      <div id="nav-indicator" class="bg-indigo-500/15 dark:bg-indigo-400/20 border border-indigo-500/25"></div>
+    <!-- BARRA INFERIOR ELEVADA E FLUTUANTE (FÁCIL DE TOCAR) -->
+    <div class="absolute bottom-3 sm:bottom-4 left-0 right-0 px-3 z-30 pointer-events-none pb-[env(safe-area-inset-bottom)]">
+      <nav class="pointer-events-auto relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-1.5 shadow-xl shadow-slate-950/15">
+        <!-- Fundo deslizante animado -->
+        <div id="nav-indicator" class="bg-indigo-600/15 dark:bg-indigo-400/20 border border-indigo-500/30"></div>
 
-      <button data-tab="painel" data-index="0" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
-        <span class="text-lg leading-none transition-transform">📊</span>
-        <span class="text-[10px] mt-0.5">Painel</span>
-      </button>
-      <button data-tab="lancar" data-index="1" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-lg leading-none transition-transform">➕</span>
-        <span class="text-[10px] mt-0.5">Lançar</span>
-      </button>
-      <button data-tab="cartoes" data-index="2" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-lg leading-none transition-transform">💳</span>
-        <span class="text-[10px] mt-0.5">Cartões</span>
-      </button>
-      <button data-tab="meses" data-index="3" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-lg leading-none transition-transform">📅</span>
-        <span class="text-[10px] mt-0.5">Meses</span>
-      </button>
-      <button data-tab="mais" data-index="4" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-        <span class="text-lg leading-none transition-transform">⚙️</span>
-        <span class="text-[10px] mt-0.5">Mais</span>
-      </button>
-    </nav>
+        <button data-tab="painel" data-index="0" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
+          <span class="text-lg leading-none transition-transform">📊</span>
+          <span class="text-[10px] mt-0.5">Painel</span>
+        </button>
+        <button data-tab="lancar" data-index="1" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
+          <span class="text-lg leading-none transition-transform">➕</span>
+          <span class="text-[10px] mt-0.5">Lançar</span>
+        </button>
+        <button data-tab="cartoes" data-index="2" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
+          <span class="text-lg leading-none transition-transform">💳</span>
+          <span class="text-[10px] mt-0.5">Cartões</span>
+        </button>
+        <button data-tab="meses" data-index="3" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
+          <span class="text-lg leading-none transition-transform">📅</span>
+          <span class="text-[10px] mt-0.5">Meses</span>
+        </button>
+        <button data-tab="mais" data-index="4" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
+          <span class="text-lg leading-none transition-transform">⚙️</span>
+          <span class="text-[10px] mt-0.5">Mais</span>
+        </button>
+      </nav>
+    </div>
 
     <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
-    <div id="toast" class="hidden absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
+    <div id="toast" class="hidden absolute bottom-24 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
       Notificação
     </div>
 
@@ -147,6 +149,15 @@
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
       const DEFAULT_DATA = {
+        // CARD EXCLUSIVO: PENSÃO DA SOPHIA
+        sophiaPension: {
+          title: 'Pensão da Sophia',
+          value: 1200,
+          dueDay: 10,
+          recipient: 'Sophia',
+          pixKey: 'Chave Pix Cadastrada',
+          notes: 'Pagamento mensal prioritário'
+        },
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
           { id: '2', name: 'Alimentação', limit: 1200, color: '#10b981', icon: '🍔', isMain: false },
@@ -167,8 +178,7 @@
         transactions: [
           { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
           { id: 2, desc: 'Supermercado Mensal', value: 480, type: 'despesa', boxId: '2', category: 'Alimentação', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 4, desc: 'Notebook Dell (3/10)', value: 250, type: 'despesa', boxId: '1', category: 'Compras Parceladas', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
+          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
         ],
         savingsGoals: [
           { id: 1, name: 'Reserva de Emergência', targetValue: 15000, currentValue: 6500, color: '#10b981', icon: '🛡️' },
@@ -186,6 +196,7 @@
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return DEFAULT_DATA;
           const parsed = JSON.parse(raw);
+          if (!parsed.sophiaPension) parsed.sophiaPension = DEFAULT_DATA.sophiaPension;
           if (!parsed.quickButtons) parsed.quickButtons = DEFAULT_DATA.quickButtons;
           return parsed;
         } catch {
@@ -199,7 +210,7 @@
         currentMonth: new Date().getMonth() + 1,
         currentTab: 'painel',
         privacyMode: false,
-        darkMode: false, // Inicia no modo claro / branco
+        darkMode: false,
         revealedCvv: {},
         showSimulator: false,
         simDiscount: 5,
@@ -314,25 +325,126 @@
         if (e.target === modalContainer) closeModal();
       });
 
-      // MODAL: NOVO BOTÃO DE LANÇAMENTO RÁPIDO
+      // ==================== GESTÃO DA PENSÃO DA SOPHIA ====================
+      window.openModalEditarPensaoSophia = function() {
+        const p = state.data.sophiaPension;
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>✏️</span>
+            <span>Editar Pensão da Sophia</span>
+          </h3>
+          <p class="text-[11px] text-slate-500">Ajuste os valores, dia de vencimento ou observações da pensão.</p>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Título do Card:</label>
+            <input type="text" id="m-pensao-title" value="${p.title || 'Pensão da Sophia'}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Valor Mensal (R$):</label>
+            <input type="number" step="10" id="m-pensao-val" value="${p.value}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[10px] text-slate-500 font-bold block">Dia do Vencimento:</label>
+              <input type="number" min="1" max="31" id="m-pensao-day" value="${p.dueDay || 10}" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-500 font-bold block">Favorecida:</label>
+              <input type="text" id="m-pensao-recip" value="${p.recipient || 'Sophia'}" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Chave Pix ou Notas:</label>
+            <input type="text" id="m-pensao-pix" value="${p.pixKey || ''}" placeholder="Ex: CPF ou Celular" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="savePensaoSophia()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Alterações</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.savePensaoSophia = function() {
+        const title = document.getElementById('m-pensao-title').value.trim() || 'Pensão da Sophia';
+        const val = parseFloat(document.getElementById('m-pensao-val').value);
+        const day = parseInt(document.getElementById('m-pensao-day').value, 10) || 10;
+        const recip = document.getElementById('m-pensao-recip').value.trim() || 'Sophia';
+        const pix = document.getElementById('m-pensao-pix').value.trim();
+
+        if (isNaN(val) || val <= 0) return alert('Informe um valor de pensão válido.');
+
+        state.data.sophiaPension = {
+          title,
+          value: val,
+          dueDay: day,
+          recipient: recip,
+          pixKey: pix,
+          notes: 'Pagamento mensal prioritário'
+        };
+
+        saveData();
+        closeModal();
+        showToast('Card da Pensão atualizado com sucesso! 🌸');
+        render();
+      };
+
+      window.pagarPensaoSophia = function() {
+        const p = state.data.sophiaPension;
+        const jaPago = state.data.transactions.find(t => 
+          t.year === state.currentYear && 
+          t.month === state.currentMonth && 
+          t.desc.includes('Pensão da Sophia') && 
+          t.type === 'despesa'
+        );
+
+        if (jaPago) {
+          if (confirm('A Pensão da Sophia já consta como paga neste mês. Deseja desmarcar o pagamento?')) {
+            state.data.transactions = state.data.transactions.filter(t => t.id !== jaPago.id);
+            saveData();
+            showToast('Pagamento da pensão desmarcado.');
+            render();
+          }
+          return;
+        }
+
+        const dataStr = state.currentYear + '-' + String(state.currentMonth).padStart(2, '0') + '-' + String(p.dueDay).padStart(2, '0');
+        state.data.transactions.unshift({
+          id: Date.now(),
+          desc: 'Pensão da Sophia (' + MONTHS[state.currentMonth - 1] + ')',
+          value: p.value,
+          type: 'despesa',
+          boxId: '1',
+          category: 'Pensão Alimentícia',
+          payment: 'Pix',
+          date: dataStr,
+          year: state.currentYear,
+          month: state.currentMonth
+        });
+
+        saveData();
+        showToast('Pensão da Sophia paga e registrada! ✅ 💖');
+        render();
+      };
+
+      // ==================== DEMAIS MODAIS ====================
       window.openModalNovoQuick = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
             <span>⚡</span>
             <span>Novo Lançamento Rápido</span>
           </h3>
-          <p class="text-[11px] text-slate-500">Crie botões de 1 toque para despesas frequentes do dia a dia.</p>
+          <p class="text-[11px] text-slate-500">Crie botões de 1 toque para despesas do dia a dia.</p>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Emoji / Ícone:</label>
             <input type="text" id="m-quick-icon" value="☕" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Descrição do Lançamento:</label>
-            <input type="text" id="m-quick-desc" placeholder="Ex: Café na Padaria" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <label class="text-xs font-bold text-slate-500 block">Descrição:</label>
+            <input type="text" id="m-quick-desc" placeholder="Ex: Farmácia" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Valor Padrão (R$):</label>
-            <input type="number" step="0.5" id="m-quick-val" placeholder="Ex: 15.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="number" step="0.5" id="m-quick-val" placeholder="Ex: 50.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Categoria / Caixinha:</label>
@@ -358,11 +470,10 @@
         state.data.quickButtons.push({ icon, desc, val, cat });
         saveData();
         closeModal();
-        showToast('Novo atalho rápido criado!');
+        showToast('Novo atalho criado!');
         render();
       };
 
-      // MODAL: EDIÇÃO DE SALÁRIO
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         const currentVal = mainBox ? mainBox.limit : 5000;
@@ -373,7 +484,7 @@
             <span>Editar Salário / Renda Mensal</span>
           </h3>
           <p class="text-[11px] text-slate-500 leading-relaxed">
-            Digite sua renda mensal líquida. Ao salvar, a verba total e a sobra serão recalculadas.
+            Digite sua renda mensal líquida para recalcular a verba e a sobra.
           </p>
           <label class="text-xs font-bold text-slate-500 block mt-2">Valor da Renda Mensal (R$):</label>
           <input
@@ -422,7 +533,6 @@
         render();
       };
 
-      // MODAL: CRIAR / EDITAR CAIXINHA
       window.openModalNovaCaixinha = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -535,7 +645,6 @@
         }
       };
 
-      // MODAL: COMPRAS PARCELADAS
       window.openModalNovaParcela = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -544,7 +653,7 @@
           </h3>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Nome da Compra:</label>
-            <input type="text" id="m-parc-name" placeholder="Ex: TV 55 Polegadas" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="m-parc-name" placeholder="Ex: Celular Novo" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
@@ -608,7 +717,7 @@
 
         saveData();
         closeModal();
-        showToast('Compra parcelada adicionada! 💳');
+        showToast('Compra parcelada cadastrada! 💳');
         render();
       };
 
@@ -623,7 +732,7 @@
             <input type="text" id="m-edit-parc-name" value="${baseName}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
+            <label class="text-xs font-bold text-slate-500 block">Valor da Parcela (R$):</label>
             <input type="number" step="0.01" id="m-edit-parc-val" value="${val}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="flex gap-2 pt-2">
@@ -669,7 +778,6 @@
         }
       };
 
-      // MODAL: CARTÕES
       window.openModalNovoCartao = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">💳 Novo Cartão de Crédito</h3>
@@ -677,11 +785,11 @@
           <input type="number" id="m-card-limit" placeholder="Limite Total R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           <input type="text" id="m-card-brand" placeholder="Bandeira (Ex: Mastercard Black)" value="Mastercard Black" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           <select id="m-card-skin" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
-            <option value="titanium">Skin Titanium (Preto Grafite)</option>
-            <option value="ultraviolet">Skin Ultravioleta (Roxo)</option>
-            <option value="emerald">Skin Emerald (Verde)</option>
-            <option value="gold">Skin Gold (Dourado)</option>
-            <option value="midnight">Skin Midnight (Azul Noturno)</option>
+            <option value="titanium">Skin Titanium</option>
+            <option value="ultraviolet">Skin Ultravioleta</option>
+            <option value="emerald">Skin Emerald</option>
+            <option value="gold">Skin Gold</option>
+            <option value="midnight">Skin Midnight</option>
           </select>
           <div class="flex gap-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
@@ -696,7 +804,7 @@
         const limit = parseFloat(document.getElementById('m-card-limit').value);
         const brand = document.getElementById('m-card-brand').value.trim() || 'Mastercard';
         const skin = document.getElementById('m-card-skin').value;
-        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha nome e limite válidos.');
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os campos corretamente.');
         state.data.creditCards.push({
           id: 'card-' + Date.now(),
           name,
@@ -731,7 +839,7 @@
             <input type="number" step="100" id="m-edit-card-limit" value="${card.limit}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Bandeira / Categoria:</label>
+            <label class="text-xs font-bold text-slate-500 block">Bandeira:</label>
             <input type="text" id="m-edit-card-brand" value="${card.brand}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="flex gap-2 pt-2">
@@ -751,7 +859,7 @@
         const name = document.getElementById('m-edit-card-name').value.trim();
         const limit = parseFloat(document.getElementById('m-edit-card-limit').value);
         const brand = document.getElementById('m-edit-card-brand').value.trim();
-        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os dados corretamente.');
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os dados.');
 
         const card = state.data.creditCards.find(c => c.id === cardId);
         if (card) {
@@ -760,13 +868,13 @@
           card.brand = brand;
           saveData();
           closeModal();
-          showToast('Cartão atualizado com sucesso!');
+          showToast('Cartão atualizado!');
           render();
         }
       };
 
       window.deleteCartao = function(cardId) {
-        if (confirm('Deseja realmente remover este cartão?')) {
+        if (confirm('Deseja remover este cartão?')) {
           state.data.creditCards = state.data.creditCards.filter(c => c.id !== cardId);
           saveData();
           closeModal();
@@ -775,7 +883,6 @@
         }
       };
 
-      // MODAL: METAS
       window.openModalNovaMeta = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🎯 Nova Meta Financeira</h3>
@@ -871,7 +978,6 @@
         }
       };
 
-      // MODAL: ASSINATURAS
       window.openModalNovaAssinatura = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🔄 Nova Assinatura ou Conta Fixa</h3>
@@ -890,7 +996,7 @@
         const name = document.getElementById('m-ass-name').value.trim();
         const val = parseFloat(document.getElementById('m-ass-val').value);
         const day = parseInt(document.getElementById('m-ass-day').value, 10) || 10;
-        if (!name || isNaN(val) || val <= 0) return alert('Preencha os campos obrigatórios.');
+        if (!name || isNaN(val) || val <= 0) return alert('Preencha os campos.');
         state.data.recurringBills.push({
           id: String(Date.now()),
           name,
@@ -966,7 +1072,6 @@
         }
       };
 
-      // MODAL: EDITAR LANÇAMENTO NO EXTRATO
       window.openModalEditarTrans = function(id) {
         const t = state.data.transactions.find(item => item.id === id);
         if (!t) return;
@@ -1211,12 +1316,64 @@
         const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (b.value || 0), 0);
         const sobraLiquida = totalReceitas - totalDespesas;
 
+        // Status Pensão da Sophia neste mês
+        const pensaoPaga = monthTrans.find(t => 
+          t.type === 'despesa' && 
+          t.desc.includes('Pensão da Sophia')
+        );
+
         let html = '';
 
         // 1. ABA PAINEL
         if (state.currentTab === 'painel') {
+          const pSophia = state.data.sophiaPension;
+
           html = `
             <div class="space-y-4">
+
+              <!-- CARD ESPECIAL: PENSÃO DA SOPHIA -->
+              <div class="relative overflow-hidden rounded-3xl p-4 bg-gradient-to-br from-pink-500 via-rose-500 to-indigo-600 text-white shadow-lg space-y-3">
+                <div class="flex justify-between items-start">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl p-2 rounded-2xl bg-white/20 backdrop-blur-xs">🌸</span>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <h3 class="text-xs font-black uppercase tracking-wider text-white">${pSophia.title || 'Pensão da Sophia'}</h3>
+                        <button onclick="openModalEditarPensaoSophia()" class="p-1 rounded-lg bg-white/20 hover:bg-white/30 text-white text-[11px] cursor-pointer active:scale-95" title="Editar Pensão da Sophia">
+                          ✏️
+                        </button>
+                      </div>
+                      <p class="text-[10px] text-pink-100 font-semibold">Vencimento todo dia ${pSophia.dueDay || 10} • ${pSophia.recipient || 'Sophia'}</p>
+                    </div>
+                  </div>
+
+                  <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${pensaoPaga ? 'bg-emerald-400 text-slate-950 shadow-sm' : 'bg-white/25 text-white backdrop-blur-xs animate-pulse'}">
+                    ${pensaoPaga ? '✓ Pago neste mês' : '⏳ Pendente'}
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-end pt-1">
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-pink-200 block">Valor Mensal</span>
+                    <span class="text-xl font-black tracking-tight">${formatMoeda(pSophia.value)}</span>
+                  </div>
+
+                  <button
+                    onclick="pagarPensaoSophia()"
+                    class="py-2 px-3.5 rounded-2xl text-xs font-black flex items-center gap-1.5 shadow-md cursor-pointer transition-all active:scale-95 ${pensaoPaga ? 'bg-white text-rose-600 hover:bg-rose-50' : 'bg-emerald-400 hover:bg-emerald-300 text-slate-950 ring-2 ring-white/30'}"
+                  >
+                    <span>${pensaoPaga ? '🔄 Desmarcar' : '✅ Marcar como Pago'}</span>
+                  </button>
+                </div>
+
+                ${pSophia.pixKey ? `
+                  <div class="pt-2 border-t border-white/20 flex justify-between items-center text-[10px] text-pink-100">
+                    <span>🔑 Pix: <b class="text-white">${pSophia.pixKey}</b></span>
+                    <button onclick="navigator.clipboard.writeText('${pSophia.pixKey}'); showToast('Chave Pix copiada! 📋');" class="underline text-white font-bold cursor-pointer">Copiar Pix</button>
+                  </div>
+                ` : ''}
+              </div>
+
               <!-- Cartões de Resumo -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm relative">
@@ -1245,7 +1402,7 @@
                 </div>
               </div>
 
-              <!-- Lançamentos Rápidos de 1 toque + Botão de Adicionar Mais -->
+              <!-- Lançamentos Rápidos de 1 toque -->
               <div class="space-y-1.5">
                 <div class="flex justify-between items-center px-1">
                   <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Atalhos de 1 Toque</span>
@@ -1387,7 +1544,7 @@
                     id="btn-toggle-sim"
                     class="w-full py-1.5 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex justify-between items-center cursor-pointer"
                   >
-                    <span>⚡ Simulador Inteligente: À Vista vs. Parcelar (CDI)</span>
+                    <span>⚡ Simulador: À Vista vs. Parcelar (CDI)</span>
                     <span id="sim-indicator">${state.showSimulator ? 'Fechar' : 'Calcular'}</span>
                   </button>
 
