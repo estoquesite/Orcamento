@@ -12,10 +12,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Ícones & Bibliotecas -->
+    <!-- Ícones & Tailwind -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -29,7 +28,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --input-bg: #f1f5f9;
-            --card-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.08);
+            --card-shadow: 0 4px 15px -2px rgba(99, 102, 241, 0.06);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #3b82f6;
@@ -47,7 +46,7 @@
             --text-muted: #94a3b8;
             --border-color: #1e293b;
             --input-bg: #0b0f19;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             --green: #34d399;
             --red: #fb7185;
             --blue: #60a5fa;
@@ -133,8 +132,8 @@
         }
 
         .app-logo {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
@@ -145,8 +144,8 @@
         }
 
         .app-logo svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             stroke: #ffffff;
             stroke-width: 2.2;
             fill: none;
@@ -155,7 +154,7 @@
         }
 
         header h1 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             letter-spacing: -0.3px;
         }
@@ -170,13 +169,14 @@
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 5px 10px;
-            border-radius: 16px;
+            padding: 4px 10px;
+            border-radius: 14px;
             cursor: pointer;
             font-size: 0.72rem;
             font-weight: 700;
         }
 
+        /* NAVEGAÇÃO DE 5 ABAS LIMPAS */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
@@ -187,7 +187,7 @@
 
         .tab-button {
             flex: 1 1 0;
-            padding: 9px 4px;
+            padding: 9px 2px;
             border: none;
             background: none;
             color: var(--text-muted);
@@ -199,8 +199,8 @@
             position: relative;
         }
 
-        .tab-button .tab-icon { font-size: 1.1rem; }
-        .tab-button .tab-label { font-size: 0.7rem; font-weight: 700; }
+        .tab-button .tab-icon { font-size: 1.05rem; }
+        .tab-button .tab-label { font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
         .tab-button.active { color: var(--primary); }
         .tab-button.active::after {
             content: '';
@@ -232,34 +232,28 @@
         /* SELETOR DE ANO E MÊS */
         .date-control-bar {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            background: var(--card-bg);
-            padding: 10px 14px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-        }
-
-        .date-control-row {
-            display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
         }
 
         .date-nav-btn {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            width: 32px;
-            height: 30px;
+            width: 30px;
+            height: 28px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .card {
@@ -274,14 +268,14 @@
         }
 
         .card-verba-total {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(236, 72, 153, 0.12) 100%);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
             border: 2px solid var(--primary);
         }
 
         .budget-duo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
 
         .budget-box {
@@ -289,23 +283,6 @@
             border: 1px solid var(--border-color);
             padding: 10px;
             border-radius: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .indicators-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .indicator-mini-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 14px;
-            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
             gap: 2px;
@@ -384,7 +361,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-height: 260px;
+            max-height: 280px;
             overflow-y: auto;
         }
 
@@ -454,7 +431,7 @@
                     </div>
                 </div>
                 <h2 class="text-2xl font-black text-white">Finanças Pro</h2>
-                <p class="text-xs text-indigo-300 font-semibold">Orçamento Completo & Família</p>
+                <p class="text-xs text-indigo-300 font-semibold">Meu Salário & Pensão Sofia</p>
             </div>
 
             <div class="flex flex-col items-center space-y-3 my-auto">
@@ -484,51 +461,54 @@
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO -->
+        <!-- NAVEGAÇÃO ENTRE AS 5 TELAS -->
         <nav class="tab-bar">
-            <button class="tab-button active" onclick="trocarAba('gastos')">
-                <span class="tab-icon">💳</span>
-                <span class="tab-label">Gastos</span>
+            <button class="tab-button active" onclick="trocarAba('painel')">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">Painel</span>
+            </button>
+            <button class="tab-button" onclick="trocarAba('lancar')">
+                <span class="tab-icon">✍️</span>
+                <span class="tab-label">Lançar</span>
+            </button>
+            <button class="tab-button" onclick="trocarAba('meses')">
+                <span class="tab-icon">📅</span>
+                <span class="tab-label">Meses</span>
             </button>
             <button class="tab-button" onclick="trocarAba('metas')">
                 <span class="tab-icon">🎯</span>
                 <span class="tab-label">Metas</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('investimentos')">
-                <span class="tab-icon">📈</span>
-                <span class="tab-label">Investir</span>
-            </button>
-            <button class="tab-button" onclick="trocarAba('relatorios')">
-                <span class="tab-icon">📊</span>
-                <span class="tab-label">Relatórios</span>
+            <button class="tab-button" onclick="trocarAba('mais')">
+                <span class="tab-icon">💼</span>
+                <span class="tab-label">Mais</span>
             </button>
         </nav>
         
         <div class="content">
 
-            <!-- ABA 1: GASTOS E ORÇAMENTO -->
-            <div id="tab-gastos" class="tab-pane active">
+            <!-- ============================================== -->
+            <!-- TELA 1: PAINEL PRINCIPAL LIMPO & DIRETO AO PONTO -->
+            <!-- ============================================== -->
+            <div id="tab-painel" class="tab-pane active">
                 
-                <!-- SELETOR DE ANO E MÊS INDEPENDENTES -->
+                <!-- SELETOR DE ANO E MÊS COMPACTO -->
                 <div class="date-control-bar">
-                    <div class="date-control-row">
-                        <button class="date-nav-btn" onclick="mudarAno(-1)" title="Ano Anterior">«</button>
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">ANO:</span>
-                            <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width: auto; padding: 3px 8px; font-weight:900; font-size:0.95rem; color:var(--primary); background:var(--input-bg);">
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                            </select>
-                        </div>
-                        <button class="date-nav-btn" onclick="mudarAno(1)" title="Próximo Ano">»</button>
+                    <div style="display:flex; align-items:center; gap:4px;">
+                        <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
+                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:2px 6px; font-weight:900; font-size:0.9rem; color:var(--primary); background:transparent; border:none;">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                        <button class="date-nav-btn" onclick="mudarAno(1)">»</button>
                     </div>
 
-                    <div class="date-control-row" style="border-top:1px solid var(--border-color); padding-top:6px;">
+                    <div style="display:flex; align-items:center; gap:4px;">
                         <button class="date-nav-btn" onclick="mudarMes(-1)">◀</button>
-                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width: auto; padding: 3px 8px; font-weight:800; font-size:0.88rem; color:var(--text-main); background:var(--input-bg);">
+                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width:auto; padding:2px 6px; font-weight:800; font-size:0.85rem; color:var(--text-main); background:transparent; border:none;">
                             <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
                             <option value="3">Março</option>
@@ -546,54 +526,32 @@
                     </div>
                 </div>
 
-                <!-- CARD: SOMA DO ANO (ACUMULADO ANUAL) -->
-                <div class="card" style="border-left: 4px solid var(--purple); background: var(--input-bg);">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:800; font-size:0.75rem; color:var(--purple);">📅 SOMA DO ANO (<span id="txt-ano-atual">2026</span>)</span>
-                        <span style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">ACUMULADO ANUAL</span>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:4px;">
-                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
-                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">📈 Entradas Ano</span>
-                            <b id="ano-entradas-val" style="font-size:0.8rem; color:var(--green);">R$ 0,00</b>
-                        </div>
-                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
-                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">📉 Saídas Ano</span>
-                            <b id="ano-saidas-val" style="font-size:0.8rem; color:var(--red);">R$ 0,00</b>
-                        </div>
-                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
-                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">💰 Economia Ano</span>
-                            <b id="ano-economia-val" style="font-size:0.8rem; color:var(--blue);">R$ 0,00</b>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CARD: VERBA TOTAL DO MÊS & SOBRA GERAL -->
+                <!-- CARD 1: VERBA DO MÊS ATUAL -->
                 <div class="card card-verba-total">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL DO MÊS (ENTRADAS)</span>
-                        <a href="#" onclick="abrirModalOrcamento()" style="font-size:0.7rem; color:var(--primary); font-weight:800; text-decoration:none;">[AJUSTAR VERBA ✏️]</a>
+                        <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA DESTE MÊS</span>
+                        <a href="#" onclick="abrirModalOrcamentoMes()" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">[DEFINIR VERBA ✏️]</a>
                     </div>
                     
                     <h2 id="card-verba-total-mes" style="font-size:1.6rem; color:var(--primary); font-weight:900;">R$ 6.500,00</h2>
                     
                     <div style="display:flex; justify-content:space-between; font-size:0.75rem; border-top:1px dashed var(--border-color); padding-top:6px; margin-top:2px;">
-                        <span>Total de Despesas: <b id="sub-total-despesas" style="color:var(--red); font-weight:800;">- R$ 0,00</b></span>
+                        <span>Despesas do Mês: <b id="sub-total-despesas" style="color:var(--red); font-weight:800;">- R$ 0,00</b></span>
                         <span>Sobra Total: <b id="sub-sobra-total" style="color:var(--green); font-weight:900;">R$ 6.500,00</b></span>
                     </div>
                 </div>
 
-                <!-- PAINEL DE SOBRAS (SALÁRIO vs PENSÃO) -->
+                <!-- CARD 2: PAINEL DUPLO (SALÁRIO vs PENSÃO) -->
                 <div class="budget-duo-grid">
                     <!-- Coluna 1: MEU SALÁRIO -->
                     <div class="budget-box" style="border-left: 3px solid var(--green);">
                         <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">💼 MEU SALÁRIO</span>
                         <div id="box-meu-salario-val" style="font-size:1.05rem; font-weight:900; color:var(--green);">R$ 5.000,00</div>
-                        <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">
-                            Meus Gastos: <b id="box-meus-gastos-val" style="color:var(--red);">- R$ 0,00</b>
+                        <div style="font-size:0.66rem; color:var(--text-muted); margin-top:2px;">
+                            Gastos: <b id="box-meus-gastos-val" style="color:var(--red);">- R$ 0,00</b>
                         </div>
-                        <div style="font-size:0.74rem; font-weight:900; margin-top:4px; padding-top:4px; border-top:1px solid var(--border-color);">
-                            Sobra Salário: <br><span id="box-sobra-salario-val" style="color:var(--blue); font-size:0.95rem;">R$ 5.000,00</span>
+                        <div style="font-size:0.72rem; font-weight:900; margin-top:4px; padding-top:4px; border-top:1px solid var(--border-color);">
+                            Sobra: <span id="box-sobra-salario-val" style="color:var(--blue); font-size:0.92rem;">R$ 5.000,00</span>
                         </div>
                     </div>
 
@@ -601,44 +559,61 @@
                     <div class="budget-box" style="border-left: 3px solid var(--pink);">
                         <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">👧 PENSÃO SOFIA</span>
                         <div id="box-pensao-sofia-val" style="font-size:1.05rem; font-weight:900; color:var(--pink);">R$ 1.500,00</div>
-                        <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">
-                            Gastos Sofia: <b id="box-gastos-sofia-val" style="color:var(--red);">- R$ 0,00</b>
+                        <div style="font-size:0.66rem; color:var(--text-muted); margin-top:2px;">
+                            Gastos: <b id="box-gastos-sofia-val" style="color:var(--red);">- R$ 0,00</b>
                         </div>
-                        <div style="font-size:0.74rem; font-weight:900; margin-top:4px; padding-top:4px; border-top:1px solid var(--border-color);">
-                            Sobra Pensão: <br><span id="box-sobra-pensao-val" style="color:var(--green); font-size:0.95rem;">R$ 1.500,00</span>
+                        <div style="font-size:0.72rem; font-weight:900; margin-top:4px; padding-top:4px; border-top:1px solid var(--border-color);">
+                            Sobra: <span id="box-sobra-pensao-val" style="color:var(--green); font-size:0.92rem;">R$ 1.500,00</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- INDICADORES MENSAIS DETALHADOS -->
-                <div class="indicators-grid">
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--blue); cursor:pointer;" onclick="abrirModalSaldo()" title="Clique para editar">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 Saldo em Caixa / Conta</span>
+                <!-- CARD 3: FORMAS DE PAGAMENTO DO MÊS -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <div class="card" style="border-left: 3px solid var(--yellow); padding:8px 12px;">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
+                        <h2 id="card-fatura-cartao" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--blue); padding:8px 12px; cursor:pointer;" onclick="abrirModalSaldo()" title="Editar saldo em caixa">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 Saldo em Conta</span>
                         <h2 id="ind-saldo-caixa" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
                     </div>
+                </div>
 
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--yellow);">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
-                            <a href="#" onclick="abrirModalPagarFatura()" style="font-size:0.65rem; color:var(--yellow); font-weight:800; text-decoration:none;">[PAGAR]</a>
+                <!-- CARD 4: ACUMULADO DO ANO REAL (SOMENTE MESES PREENCHIDOS) -->
+                <div class="card" style="border-left: 4px solid var(--purple); background: var(--input-bg);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:800; font-size:0.72rem; color:var(--purple);">📅 SOMA DO ANO (<span id="txt-ano-atual">2026</span>)</span>
+                        <span id="txt-meses-preenchidos" style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">1 mês preenchido</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:4px;">
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.6rem; color:var(--text-muted); display:block; font-weight:700;">📈 Entradas</span>
+                            <b id="ano-entradas-val" style="font-size:0.78rem; color:var(--green);">R$ 0,00</b>
                         </div>
-                        <h2 id="ind-fatura-cartao" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
-                    </div>
-
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--red);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Despesas do Mês</span>
-                        <h2 id="ind-despesas-mes" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
-                    </div>
-
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--green);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📈 Receitas Extras</span>
-                        <h2 id="ind-receitas-extras" style="font-size:0.95rem; font-weight:900; color:var(--green);">R$ 0,00</h2>
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.6rem; color:var(--text-muted); display:block; font-weight:700;">📉 Saídas</span>
+                            <b id="ano-saidas-val" style="font-size:0.78rem; color:var(--red);">R$ 0,00</b>
+                        </div>
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.6rem; color:var(--text-muted); display:block; font-weight:700;">💰 Economia</span>
+                            <b id="ano-economia-val" style="font-size:0.78rem; color:var(--blue);">R$ 0,00</b>
+                        </div>
                     </div>
                 </div>
 
-                <!-- FORMULÁRIO DE LANÇAMENTO -->
+                <!-- BOTÃO DE AÇÃO RÁPIDA -->
+                <button class="btn-primary" onclick="trocarAba('lancar')">
+                    <i class="fa-solid fa-plus-circle"></i> Fazer Novo Lançamento
+                </button>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TELA 2: LANÇAR CUSTOS, DESPESAS & EXTRATO -->
+            <!-- ============================================== -->
+            <div id="tab-lancar" class="tab-pane">
                 <div class="section-box">
-                    <h3>✍️ Novo Lançamento</h3>
+                    <h3>✍️ Imputar Lançamento</h3>
                     <div class="form-group">
                         <div class="form-row">
                             <select id="trans-type">
@@ -683,7 +658,7 @@
                     </div>
                 </div>
 
-                <!-- EXTRATO COM BUSCA -->
+                <!-- EXTRATO COMPLETO DO MÊS -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
@@ -694,133 +669,21 @@
                             <option value="cartao">💳 Só Cartão</option>
                         </select>
                     </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar despesas..." style="margin-bottom: 8px; font-size: 0.78rem; padding: 7px 10px;">
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 8px; font-size: 0.78rem; padding: 7px 10px;">
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
 
-            <!-- ABA 2: METAS E CAIXINHAS -->
-            <div id="tab-metas" class="tab-pane">
-                <!-- Nova Categoria e Teto -->
+            <!-- ============================================== -->
+            <!-- TELA 3: MESES DO ANO (TABELA REAL SEM GRÁFICOS) -->
+            <!-- ============================================== -->
+            <div id="tab-meses" class="tab-pane">
                 <div class="section-box">
-                    <h3>🏷️ Nova Categoria & Teto de Gastos</h3>
-                    <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
-                        <div class="form-row">
-                            <input type="number" id="cat-limit" placeholder="Teto Mensal R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0; cursor:pointer; border-radius:8px;">
-                        </div>
-                        <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
-                    </div>
-                </div>
-
-                <!-- Acompanhamento dos Tetos de Categoria -->
-                <div class="section-box">
-                    <h3>📊 Orçamento do Mês (Consumo vs Limite)</h3>
-                    <div class="list-container" id="budget-progress-list"></div>
-                </div>
-
-                <!-- Nova Caixinha / Reserva -->
-                <div class="section-box">
-                    <h3>🏦 Nova Caixinha / Reserva</h3>
-                    <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Futuro Sofia, 🛡️ Emergência)">
-                        <input type="number" id="goal-target" min="1" placeholder="Meta Total (R$)">
-                        <button class="btn-primary" onclick="adicionarMeta()">🎯 Criar Caixinha</button>
-                    </div>
-                </div>
-
-                <!-- Lista de Caixinhas Guardadas -->
-                <div class="section-box">
-                    <h3>🐷 Minhas Caixinhas Guardadas</h3>
-                    <div class="list-container" id="goals-list"></div>
-                </div>
-            </div>
-
-            <!-- ABA 3: INVESTIMENTOS & ATIVOS -->
-            <div id="tab-investimentos" class="tab-pane">
-                <!-- Cards de Resumo da Carteira -->
-                <div class="summary-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <div class="card" style="grid-column: span 2; border-left: 4px solid var(--purple); background:var(--input-bg);">
-                        <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">💼 Total Geral em Ativos</span>
-                        <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
-                    </div>
-                    <div class="card" style="border-left: 3px solid var(--yellow);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">🟡 XP Investimentos</span>
-                        <h2 id="card-xp-total" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
-                    </div>
-                    <div class="card" style="border-left: 3px solid #eab308;">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">🟡 Binance (Cripto)</span>
-                        <h2 id="card-binance-total" style="font-size:0.95rem; font-weight:900; color:#eab308;">R$ 0,00</h2>
-                    </div>
-                </div>
-
-                <!-- Formulário de Aporte -->
-                <div class="section-box">
-                    <h3>🚀 Registrar Aporte / Ativo</h3>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <select id="invest-platform">
-                                <option value="XP Investimentos">XP Investimentos</option>
-                                <option value="Binance">Binance</option>
-                                <option value="Nubank">Nubank</option>
-                                <option value="Banco Inter">Banco Inter</option>
-                                <option value="Outros">Outra Corretora</option>
-                            </select>
-                            <select id="invest-type">
-                                <option value="Renda Fixa">🏛️ Renda Fixa / CDB</option>
-                                <option value="Criptomoeda">🪙 Criptomoeda</option>
-                                <option value="Ações">📈 Ações</option>
-                                <option value="Fundos Imobiliários">🏢 FIIs</option>
-                                <option value="Outros">📦 Outros</option>
-                            </select>
-                        </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC, Selic)">
-                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor Aportado (R$)">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">➕ Adicionar Ativo</button>
-                    </div>
-                </div>
-
-                <!-- Carteira de Ativos -->
-                <div class="section-box">
-                    <h3>📁 Carteira de Ativos</h3>
-                    <div class="list-container" id="investment-list"></div>
-                </div>
-            </div>
-
-            <!-- ABA 4: RELATÓRIOS & GRÁFICOS -->
-            <div id="tab-relatorios" class="tab-pane">
-                <!-- Desempenho Anual -->
-                <div class="summary-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <div class="card" style="border-left: 3px solid var(--green);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📈 Entradas no Ano</span>
-                        <h2 id="rel-ano-entradas" style="font-size:0.95rem; font-weight:900; color:var(--green);">R$ 0,00</h2>
-                    </div>
-                    <div class="card" style="border-left: 3px solid var(--red);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Saídas no Ano</span>
-                        <h2 id="rel-ano-saidas" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
-                    </div>
-                    <div class="card" style="border-left: 3px solid var(--blue);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💰 Economia Anual</span>
-                        <h2 id="rel-ano-economia" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
-                    </div>
-                    <div class="card" style="border-left: 3px solid var(--purple);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📊 Taxa de Poupança</span>
-                        <h2 id="rel-ano-taxa" style="font-size:0.95rem; font-weight:900; color:var(--purple);">0%</h2>
-                    </div>
-                </div>
-
-                <!-- Gráfico de Evolução Mensal (Barras) -->
-                <div class="section-box">
-                    <h3>📈 Evolução Mensal do Ano (<span id="txt-ano-relatorio">2026</span>)</h3>
-                    <div style="height: 190px; position:relative; margin-bottom:8px;">
-                        <canvas id="monthlyComparisonChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Tabela Mês a Mês -->
-                <div class="section-box">
-                    <h3>📋 Relatório Mensal Detalhado</h3>
+                    <h3>
+                        <span>📅 Valores Mês a Mês (<span id="txt-ano-tabela">2026</span>)</span>
+                    </h3>
+                    <p class="text-[11px] text-gray-500 mb-2">Os meses só somam no total anual conforme você for preenchendo o orçamento deles.</p>
+                    
                     <div style="overflow-x: auto;">
                         <table style="width:100%; font-size:0.75rem; border-collapse:collapse;">
                             <thead>
@@ -829,37 +692,105 @@
                                     <th>Entradas</th>
                                     <th>Despesas</th>
                                     <th>Sobra</th>
+                                    <th>Ação</th>
                                 </tr>
                             </thead>
-                            <tbody id="corpo-tabela-ano"></tbody>
+                            <tbody id="corpo-tabela-meses"></tbody>
                         </table>
                     </div>
                 </div>
+            </div>
 
-                <!-- Gráfico de Rosca de Categorias -->
+            <!-- ============================================== -->
+            <!-- TELA 4: METAS & CAIXINHAS -->
+            <!-- ============================================== -->
+            <div id="tab-metas" class="tab-pane">
                 <div class="section-box">
-                    <h3>🥧 Despesas por Categoria (Mês Ativo)</h3>
-                    <div style="height: 180px; position:relative;">
-                        <canvas id="expenseCategoryChart"></canvas>
+                    <h3>🏷️ Nova Categoria & Teto</h3>
+                    <div class="form-group">
+                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação)">
+                        <div class="form-row">
+                            <input type="number" id="cat-limit" placeholder="Teto R$ (ex: 800)">
+                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0;">
+                        </div>
+                        <button class="btn-primary" onclick="adicionarCategoria()">Salvar Categoria</button>
                     </div>
                 </div>
 
-                <!-- Backup e Exportação -->
                 <div class="section-box">
-                    <h3>💾 Exportação e Backup</h3>
+                    <h3>📊 Orçamento das Categorias</h3>
+                    <div class="list-container" id="budget-progress-list"></div>
+                </div>
+
+                <div class="section-box">
+                    <h3>🏦 Nova Caixinha</h3>
+                    <div class="form-group">
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Futuro Sofia, 🛡️ Reserva)">
+                        <input type="number" id="goal-target" min="1" placeholder="Meta Total (R$)">
+                        <button class="btn-primary" onclick="adicionarMeta()">Criar Caixinha</button>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>🐷 Minhas Caixinhas</h3>
+                    <div class="list-container" id="goals-list"></div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- TELA 5: MAIS (INVESTIMENTOS & BACKUP) -->
+            <!-- ============================================== -->
+            <div id="tab-mais" class="tab-pane">
+                <div class="section-box">
+                    <h3>💼 Total Investido em Ativos</h3>
+                    <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                        <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
+                        <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>🚀 Registrar Aporte / Ativo</h3>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <select id="invest-platform">
+                                <option value="XP Investimentos">XP Investimentos</option>
+                                <option value="Binance">Binance</option>
+                                <option value="Outros">Outra Corretora</option>
+                            </select>
+                            <select id="invest-type">
+                                <option value="Renda Fixa">Renda Fixa / CDB</option>
+                                <option value="Criptomoeda">Criptomoeda</option>
+                                <option value="Ações">Ações / FIIs</option>
+                            </select>
+                        </div>
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)">
+                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
+                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>📁 Carteira de Ativos</h3>
+                    <div class="list-container" id="investment-list"></div>
+                </div>
+
+                <div class="section-box">
+                    <h3>💾 Backup e Restauração</h3>
                     <div class="form-group">
                         <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Planilha (CSV / Excel)</button>
                         <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
                         <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
                         <input type="file" id="import-file" style="display:none;" accept=".json" onchange="importarBackupJSON(event)">
-                        <button class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3);" onclick="limparTodosDados()">🗑️ Zerar / Resetar Todos os Dados</button>
+                        <button class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3);" onclick="limparTodosDados()">🗑️ Zerar Todos os Dados</button>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- MODAL -->
+        <!-- MODAL NATIVO -->
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
                 <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
@@ -874,7 +805,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v6_completo";
+        const STORAGE_KEY = "financas_pro_v7_mes_a_mes";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -882,18 +813,21 @@
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
+        // Estrutura com Orçamento MÊS A MÊS (sem projeção forçada)
         const defaultData = {
             cash: 0.00,
-            sources: {
-                personal: 5000.00,       // Seu salário padrão
-                sofiaPension: 1500.00    // Pensão da Sofia padrão
+            monthlyBudgets: {
+                // Inicia apenas com o mês atual preenchido
+                [`${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`]: {
+                    personal: 5000.00,
+                    sofiaPension: 1500.00
+                }
             },
             categories: [
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
                 { name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
                 { name: "👧 Sofia Cuidados / Escola", color: "#ec4899", limit: 1500 },
-                { name: "🚗 Transporte", color: "#3b82f6", limit: 500 },
-                { name: "🎮 Lazer", color: "#06b6d4", limit: 400 }
+                { name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
             ],
             transactions: [],
             goals: [
@@ -904,19 +838,16 @@
         };
 
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v5_definitivo") || localStorage.getItem("financas_pro_v4_definitivo");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v6_completo");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
                     return {
                         cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
-                        sources: {
-                            personal: (parsed.sources && typeof parsed.sources.personal === 'number') ? parsed.sources.personal : 5000.00,
-                            sofiaPension: (parsed.sources && typeof parsed.sources.sofiaPension === 'number') ? parsed.sources.sofiaPension : 1500.00
-                        },
+                        monthlyBudgets: parsed.monthlyBudgets || defaultData.monthlyBudgets,
                         categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                        goals: Array.isArray(parsed.goals) && parsed.goals.length > 0 ? parsed.goals : defaultData.goals,
+                        goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
                 } catch (e) {
@@ -954,7 +885,7 @@
         }
 
         function trocarAba(aba) {
-            const tabs = ['gastos', 'metas', 'investimentos', 'relatorios'];
+            const tabs = ['painel', 'lancar', 'meses', 'metas', 'mais'];
             document.querySelectorAll('.tab-button').forEach((btn, idx) => {
                 btn.classList.toggle('active', tabs[idx] === aba);
             });
@@ -962,25 +893,19 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
-
-            if (aba === 'relatorios') {
-                renderizarRelatorios();
-            }
         }
 
-        // --- CONTROLE DE ANO E MÊS INDEPENDENTES ---
+        // --- CONTROLE DE ANO E MÊS ---
         function mudarAno(delta) {
             currentYear += delta;
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
-            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function alterarAnoDireto(novoAno) {
             currentYear = parseInt(novoAno, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
-            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function mudarMes(delta) {
@@ -989,32 +914,32 @@
             else if (currentMonthNum < 1) { currentMonthNum = 12; currentYear -= 1; }
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
-            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function alterarMesDireto(novoMes) {
             currentMonthNum = parseInt(novoMes, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
-            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
-        // --- ATUALIZAÇÃO DA TELA E CÁLCULOS ---
+        // --- CÁLCULO GERAL & ATUALIZAÇÃO ---
         function atualizarTela() {
-            // Sincroniza os selects do topo
             document.getElementById("select-year").value = String(currentYear);
             document.getElementById("select-month").value = String(currentMonthNum);
             document.getElementById("txt-ano-atual").innerText = String(currentYear);
-            const elemAnoRel = document.getElementById("txt-ano-relatorio");
-            if (elemAnoRel) elemAnoRel.innerText = String(currentYear);
+            const txtAnoTab = document.getElementById("txt-ano-tabela");
+            if (txtAnoTab) txtAnoTab.innerText = String(currentYear);
 
-            // Transações
-            const transDoAno = (financialData.transactions || []).filter(t => t.monthKey && t.monthKey.startsWith(String(currentYear)));
+            // Orçamento do Mês Ativo (Se não existir, assume 0 até preencher)
+            const orcamentoMes = (financialData.monthlyBudgets && financialData.monthlyBudgets[selectedMonthKey]) 
+                ? financialData.monthlyBudgets[selectedMonthKey] 
+                : null;
+
+            const salario = orcamentoMes ? (orcamentoMes.personal || 0) : 0;
+            const pensao = orcamentoMes ? (orcamentoMes.sofiaPension || 0) : 0;
+
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
-            // 1. CÁLCULO MENSAL
-            const salario = financialData.sources.personal || 0;
-            const pensao = financialData.sources.sofiaPension || 0;
             const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const verbaTotalMes = salario + pensao + receitasExtrasMes;
 
@@ -1027,115 +952,148 @@
             const sobraPensao = pensao - gastosSofia;
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
 
-            // 2. CÁLCULO ANUAL
-            const receitasExtrasAno = transDoAno.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            const entradasAno = (salario + pensao) * 12 + receitasExtrasAno;
-            const despesasAno = transDoAno.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
-            const economiaAno = entradasAno - despesasAno;
-            const taxaPoupanca = entradasAno > 0 ? Math.round((economiaAno / entradasAno) * 100) : 0;
-
-            // PREENCHIMENTO DO CARD ANUAL (SOMA DO ANO)
-            document.getElementById("ano-entradas-val").innerText = `R$ ${entradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("ano-saidas-val").innerText = `R$ ${despesasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const anoEconElem = document.getElementById("ano-economia-val");
-            anoEconElem.innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            anoEconElem.style.color = economiaAno >= 0 ? "var(--green)" : "var(--red)";
-
-            // PREENCHIMENTO DO CARD VERBA TOTAL DO MÊS
+            // PREENCHIMENTO DOS CARDS DA TELA PRINCIPAL (PAINEL)
             document.getElementById("card-verba-total-mes").innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("sub-total-despesas").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            
             const sobraTotalElem = document.getElementById("sub-sobra-total");
             sobraTotalElem.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraTotalElem.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
 
-            // PAINEL MEU SALÁRIO
             document.getElementById("box-meu-salario-val").innerText = `R$ ${salario.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("box-meus-gastos-val").innerText = `- R$ ${gastosMeuSalario.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             const sobraSalElem = document.getElementById("box-sobra-salario-val");
             sobraSalElem.innerText = `R$ ${sobraSalario.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraSalElem.style.color = sobraSalario >= 0 ? "var(--blue)" : "var(--red)";
 
-            // PAINEL PENSÃO SOFIA
             document.getElementById("box-pensao-sofia-val").innerText = `R$ ${pensao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("box-gastos-sofia-val").innerText = `- R$ ${gastosSofia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             const sobraPensaoElem = document.getElementById("box-sobra-pensao-val");
             sobraPensaoElem.innerText = `R$ ${sobraPensao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraPensaoElem.style.color = sobraPensao >= 0 ? "var(--green)" : "var(--red)";
 
-            // INDICADORES MENSAIS DETALHADOS
+            document.getElementById("card-fatura-cartao").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("ind-saldo-caixa").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("ind-despesas-mes").innerText = `R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("ind-fatura-cartao").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("ind-receitas-extras").innerText = `R$ ${receitasExtrasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // RELATÓRIOS DO TOPO
-            const relEnt = document.getElementById("rel-ano-entradas");
-            if (relEnt) relEnt.innerText = `R$ ${entradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const relSai = document.getElementById("rel-ano-saidas");
-            if (relSai) relSai.innerText = `R$ ${despesasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const relEco = document.getElementById("rel-ano-economia");
-            if (relEco) relEco.innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const relTax = document.getElementById("rel-ano-taxa");
-            if (relTax) relTax.innerText = `${taxaPoupanca}%`;
+            // CÁLCULO DO ACUMULADO ANUAL REAL (SOMENTE MESES PREENCHIDOS)
+            let anoEntradasReal = 0;
+            let anoSaidasReal = 0;
+            let mesesPreenchidosContador = 0;
 
-            // SELECT CATEGORIAS
-            const select = document.getElementById("trans-category");
-            select.innerHTML = '<option value="">Selecione Categoria</option>';
-            (financialData.categories || []).forEach(cat => {
-                const opt = document.createElement("option");
-                opt.value = cat.name; opt.textContent = cat.name;
-                select.appendChild(opt);
-            });
+            const tbodyMeses = document.getElementById("corpo-tabela-meses");
+            if (tbodyMeses) tbodyMeses.innerHTML = '';
 
-            // LISTA DO EXTRATO
-            const filter = document.getElementById("filter-type").value;
-            const searchVal = (document.getElementById("search-trans").value || "").toLowerCase().trim();
-            const listContainer = document.getElementById("transaction-list");
-            listContainer.innerHTML = '';
+            for (let m = 1; m <= 12; m++) {
+                const mKey = `${currentYear}-${String(m).padStart(2, '0')}`;
+                const bMes = financialData.monthlyBudgets ? financialData.monthlyBudgets[mKey] : null;
+                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
 
-            const filtrados = transDoMes.filter(t => {
-                let bateTipo = true;
-                if (filter === 'sofia') bateTipo = (t.beneficiary === 'Sofia');
-                else if (filter === 'meu') bateTipo = (t.beneficiary !== 'Sofia');
-                else if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
+                const temDados = bMes || mTrans.length > 0;
 
-                const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
-                return bateTipo && bateTexto;
-            });
+                let mInc = 0;
+                let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
 
-            if (filtrados.length === 0) {
-                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhum lançamento neste mês.</span>';
-            } else {
-                filtrados.forEach((trans) => {
-                    const isExpense = trans.type === 'expense';
-                    const prefix = isExpense ? '- R$' : '+ R$';
-                    const valClass = isExpense ? 'val-expense' : 'val-income';
-                    const dataFormatada = trans.date ? trans.date.split('-').reverse().slice(0, 2).join('/') : '';
-                    const isSofia = trans.beneficiary === 'Sofia';
+                if (temDados) {
+                    mesesPreenchidosContador++;
+                    const mSal = bMes ? (bMes.personal || 0) : 0;
+                    const mPen = bMes ? (bMes.sofiaPension || 0) : 0;
+                    const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                    mInc = mSal + mPen + mExt;
 
-                    const item = document.createElement("div");
-                    item.className = "item-card";
-                    item.style.borderLeftColor = isSofia ? 'var(--pink)' : 'var(--blue)';
-                    item.innerHTML = `
-                        <div class="item-info">
-                            <span class="item-title">${trans.desc}</span>
-                            <div class="item-meta">
-                                ${isSofia ? '<span class="tag-person tag-sofia">👧 Sofia</span>' : '<span style="font-size:0.62rem; color:var(--text-muted);">👤 Pessoal</span>'}
-                                <span>${trans.payment === 'Cartão de Crédito' ? '💳 Cartão' : '💵 À vista'}</span> • 
-                                <span>${dataFormatada}</span>
-                            </div>
-                        </div>
-                        <div class="item-right">
-                            <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                    anoEntradasReal += mInc;
+                    anoSaidasReal += mExp;
+                }
+
+                const mNet = mInc - mExp;
+
+                // Tabela Mês a Mês na Aba "Meses"
+                if (tbodyMeses) {
+                    const tr = document.createElement("tr");
+                    tr.style.borderBottom = "1px solid var(--border-color)";
+                    const corSobra = mNet >= 0 ? 'var(--blue)' : 'var(--red)';
+                    tr.innerHTML = `
+                        <td style="padding:7px 4px; font-weight:700;">${mesesNomes[m - 1].slice(0, 3)}</td>
+                        <td style="color:${temDados ? 'var(--green)' : 'var(--text-muted)'};">${temDados ? 'R$ ' + mInc.toFixed(0) : '-'}</td>
+                        <td style="color:${temDados ? 'var(--red)' : 'var(--text-muted)'};">${temDados ? 'R$ ' + mExp.toFixed(0) : '-'}</td>
+                        <td style="color:${temDados ? corSobra : 'var(--text-muted)'}; font-weight:700;">${temDados ? 'R$ ' + mNet.toFixed(0) : '-'}</td>
+                        <td>
+                            <button onclick="selecionarMesEAbrir(${m})" style="background:var(--input-bg); border:1px solid var(--border-color); padding:2px 6px; border-radius:6px; font-size:0.65rem; font-weight:700;">Abrir</button>
+                        </td>
                     `;
-                    listContainer.appendChild(item);
+                    tbodyMeses.appendChild(tr);
+                }
+            }
+
+            const anoEconomiaReal = anoEntradasReal - anoSaidasReal;
+
+            document.getElementById("ano-entradas-val").innerText = `R$ ${anoEntradasReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("ano-saidas-val").innerText = `R$ ${anoSaidasReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const anoEconElem = document.getElementById("ano-economia-val");
+            anoEconElem.innerText = `R$ ${anoEconomiaReal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            anoEconElem.style.color = anoEconomiaReal >= 0 ? "var(--green)" : "var(--red)";
+
+            document.getElementById("txt-meses-preenchidos").innerText = `${mesesPreenchidosContador} ${mesesPreenchidosContador === 1 ? 'mês preenchido' : 'meses preenchidos'}`;
+
+            // SELECT CATEGORIAS (ABA LANÇAR)
+            const select = document.getElementById("trans-category");
+            if (select) {
+                select.innerHTML = '<option value="">Selecione Categoria</option>';
+                (financialData.categories || []).forEach(cat => {
+                    const opt = document.createElement("option");
+                    opt.value = cat.name; opt.textContent = cat.name;
+                    select.appendChild(opt);
                 });
             }
 
-            // ABA METAS: Tetos de Categorias
+            // EXTRATO DO MÊS (ABA LANÇAR)
+            const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
+            const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
+            const listContainer = document.getElementById("transaction-list");
+            if (listContainer) {
+                listContainer.innerHTML = '';
+                const filtrados = transDoMes.filter(t => {
+                    let bateTipo = true;
+                    if (filter === 'sofia') bateTipo = (t.beneficiary === 'Sofia');
+                    else if (filter === 'meu') bateTipo = (t.beneficiary !== 'Sofia');
+                    else if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
+
+                    const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
+                    return bateTipo && bateTexto;
+                });
+
+                if (filtrados.length === 0) {
+                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhum lançamento neste mês.</span>';
+                } else {
+                    filtrados.forEach((trans) => {
+                        const isExpense = trans.type === 'expense';
+                        const prefix = isExpense ? '- R$' : '+ R$';
+                        const valClass = isExpense ? 'val-expense' : 'val-income';
+                        const dataFormatada = trans.date ? trans.date.split('-').reverse().slice(0, 2).join('/') : '';
+                        const isSofia = trans.beneficiary === 'Sofia';
+
+                        const item = document.createElement("div");
+                        item.className = "item-card";
+                        item.style.borderLeftColor = isSofia ? 'var(--pink)' : 'var(--blue)';
+                        item.innerHTML = `
+                            <div class="item-info">
+                                <span class="item-title">${trans.desc}</span>
+                                <div class="item-meta">
+                                    ${isSofia ? '<span class="tag-person tag-sofia">👧 Sofia</span>' : '<span style="font-size:0.62rem; color:var(--text-muted);">👤 Pessoal</span>'}
+                                    <span>${trans.payment === 'Cartão de Crédito' ? '💳 Cartão' : '💵 À vista'}</span> • 
+                                    <span>${dataFormatada}</span>
+                                </div>
+                            </div>
+                            <div class="item-right">
+                                <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        listContainer.appendChild(item);
+                    });
+                }
+            }
+
+            // ABA METAS
             const budgetContainer = document.getElementById("budget-progress-list");
             if (budgetContainer) {
                 budgetContainer.innerHTML = '';
@@ -1147,54 +1105,46 @@
                     if (perc >= 90) colorFill = 'var(--red)'; else if (perc >= 70) colorFill = 'var(--yellow)';
 
                     const bItem = document.createElement("div");
-                    bItem.style.cssText = "background:var(--input-bg); padding:9px 12px; border-radius:12px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
+                    bItem.style.cssText = "background:var(--input-bg); padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
                     bItem.innerHTML = `
                         <div style="display:flex; justify-content:space-between; font-weight:700;">
-                            <span style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:10px; height:10px; border-radius:50%; background:${cat.color}"></span>
-                                ${cat.name}
-                            </span>
+                            <span>${cat.name}</span>
                             <span>R$ ${gastoCat.toFixed(0)} / R$ ${limit.toFixed(0)} (${perc}%)</span>
                         </div>
-                        <div style="background:rgba(0,0,0,0.1); height:7px; border-radius:6px; margin-top:5px; overflow:hidden;">
-                            <div style="width:${perc}%; height:100%; background:${colorFill}; transition: width 0.3s;"></div>
+                        <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; margin-top:4px; overflow:hidden;">
+                            <div style="width:${perc}%; height:100%; background:${colorFill};"></div>
                         </div>
                     `;
                     budgetContainer.appendChild(bItem);
                 });
             }
 
-            // ABA METAS: Caixinhas
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
                 goalsContainer.innerHTML = '';
-                if (!financialData.goals || financialData.goals.length === 0) {
-                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada.</span>';
-                } else {
-                    financialData.goals.forEach((goal) => {
-                        const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
-                        const gItem = document.createElement("div");
-                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:5px;";
-                        gItem.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700;">
-                                <span>${goal.name}</span>
-                                <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                            </div>
-                            <div style="background:rgba(0,0,0,0.1); height:7px; border-radius:6px; overflow:hidden;">
-                                <div style="width:${perc}%; height:100%; background:var(--primary); transition: width 0.3s;"></div>
-                            </div>
-                            <div style="display:flex; gap:6px; margin-top:4px;">
-                                <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
-                                <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
-                                <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        `;
-                        goalsContainer.appendChild(gItem);
-                    });
-                }
+                (financialData.goals || []).forEach((goal) => {
+                    const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
+                    const gItem = document.createElement("div");
+                    gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
+                    gItem.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700;">
+                            <span>${goal.name}</span>
+                            <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                        </div>
+                        <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
+                            <div style="width:${perc}%; height:100%; background:var(--primary);"></div>
+                        </div>
+                        <div style="display:flex; gap:6px; margin-top:4px;">
+                            <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                            <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                            <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    goalsContainer.appendChild(gItem);
+                });
             }
 
-            // ABA INVESTIMENTOS: Carteira
+            // ABA MAIS (INVESTIMENTOS)
             const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
             const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
             const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
@@ -1209,30 +1159,30 @@
             const investList = document.getElementById("investment-list");
             if (investList) {
                 investList.innerHTML = '';
-                if (!financialData.investments || financialData.investments.length === 0) {
-                    investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum ativo registrado.</span>';
-                } else {
-                    financialData.investments.forEach((inv) => {
-                        const item = document.createElement("div");
-                        item.className = "item-card";
-                        item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
-                        item.innerHTML = `
-                            <div class="item-info">
-                                <span class="item-title">${inv.asset}</span>
-                                <span class="item-meta">${inv.platform} • ${inv.type} • ${inv.date}</span>
-                            </div>
-                            <div class="item-right">
-                                <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        `;
-                        investList.appendChild(item);
-                    });
-                }
+                (financialData.investments || []).forEach((inv) => {
+                    const item = document.createElement("div");
+                    item.className = "item-card";
+                    item.innerHTML = `
+                        <div class="item-info">
+                            <span class="item-title">${inv.asset}</span>
+                            <span class="item-meta">${inv.platform} • ${inv.type}</span>
+                        </div>
+                        <div class="item-right">
+                            <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                            <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                    investList.appendChild(item);
+                });
             }
         }
 
-        // --- LANÇAMENTOS COM PARTES / PARCELAS ---
+        function selecionarMesEAbrir(mes) {
+            alterarMesDireto(mes);
+            trocarAba('painel');
+        }
+
+        // --- LANÇAMENTOS ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1246,12 +1196,6 @@
             if (!desc || isNaN(value) || value <= 0) {
                 alert("Preencha a descrição e um valor numérico válido.");
                 return;
-            }
-
-            if (type === 'expense' && payment !== "Cartão de Crédito") {
-                financialData.cash -= value;
-            } else if (type === 'income') {
-                financialData.cash += value;
             }
 
             const valorParcela = value / installments;
@@ -1281,23 +1225,80 @@
             document.getElementById("trans-value").value = '';
             salvarDados();
             atualizarTela();
+            alert("Lançamento salvo com sucesso!");
         }
 
         function removerTransacao(id) {
-            const idx = financialData.transactions.findIndex(t => t.id === id);
-            if (idx === -1) return;
-            const t = financialData.transactions[idx];
-            if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
-                financialData.cash += t.value;
-            } else if (t.type === 'income') {
-                financialData.cash -= t.value;
-            }
-            financialData.transactions.splice(idx, 1);
+            financialData.transactions = financialData.transactions.filter(t => t.id !== id);
             salvarDados();
             atualizarTela();
         }
 
-        // --- CAIXINHAS, CATEGORIAS & INVESTIMENTOS ---
+        // --- DEFINIR ORÇAMENTO ESPECÍFICO DO MÊS ATIVO ---
+        function abrirModalOrcamentoMes() {
+            const bMes = (financialData.monthlyBudgets && financialData.monthlyBudgets[selectedMonthKey]) 
+                ? financialData.monthlyBudgets[selectedMonthKey] 
+                : { personal: 5000, sofiaPension: 1500 };
+
+            abrirModal(`Orçamento de ${mesesNomes[currentMonthNum - 1]} / ${currentYear}`, `
+                <label class="text-xs text-gray-500 font-bold">💼 Meu Salário / Renda deste Mês (R$):</label>
+                <input type="number" id="input-src-personal" step="50" value="${bMes.personal || 0}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão da Sofia deste Mês (R$):</label>
+                <input type="number" id="input-src-sofia" step="50" value="${bMes.sofiaPension || 0}">
+                
+                <p class="text-[11px] text-gray-400 mt-2">Ao salvar este mês, ele passa a contar oficialmente na soma do ano.</p>
+            `, () => {
+                const personal = parseFloat(document.getElementById("input-src-personal").value) || 0;
+                const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
+
+                if (!financialData.monthlyBudgets) financialData.monthlyBudgets = {};
+                financialData.monthlyBudgets[selectedMonthKey] = { personal, sofiaPension: sofia };
+                
+                salvarDados();
+                atualizarTela();
+            });
+        }
+
+        function abrirModalSaldo() {
+            abrirModal("Definir Saldo em Conta / Caixa", `
+                <label class="text-xs text-gray-500 font-bold">Novo Saldo Real Disponível (R$):</label>
+                <input type="number" id="input-modal-saldo" step="0.01" value="${financialData.cash || 0}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-saldo").value);
+                if (!isNaN(val)) {
+                    financialData.cash = val;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalCaixinha(id, tipo) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
+                <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
+                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
+                if (!isNaN(val) && val > 0) {
+                    if (tipo === 'guardar') {
+                        financialData.cash -= val;
+                        goal.current += val;
+                    } else {
+                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
+                        goal.current -= val;
+                        financialData.cash += val;
+                    }
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
         function adicionarCategoria() {
             const name = document.getElementById("cat-name").value.trim();
             const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
@@ -1339,9 +1340,7 @@
             const value = parseFloat(document.getElementById("invest-value").value);
             if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
 
-            const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value, date: dataAtual });
-
+            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
             document.getElementById("invest-asset").value = '';
             document.getElementById("invest-value").value = '';
             salvarDados();
@@ -1354,202 +1353,6 @@
             atualizarTela();
         }
 
-        // --- MODAIS NATIVOS ---
-        function abrirModalOrcamento() {
-            const src = financialData.sources || { personal: 5000, sofiaPension: 1500 };
-            abrirModal("Definir Orçamento & Verba", `
-                <label class="text-xs text-gray-500 font-bold">💼 Meu Salário / Renda Mensal (R$):</label>
-                <input type="number" id="input-src-personal" step="50" value="${src.personal || 0}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão da Sofia (R$):</label>
-                <input type="number" id="input-src-sofia" step="50" value="${src.sofiaPension || 0}">
-                
-                <p class="text-[11px] text-gray-400 mt-2">A soma desses dois valores forma a Verba Total de cada mês.</p>
-            `, () => {
-                const personal = parseFloat(document.getElementById("input-src-personal").value) || 0;
-                const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
-
-                financialData.sources = { personal, sofiaPension: sofia };
-                salvarDados();
-                atualizarTela();
-            });
-        }
-
-        function abrirModalSaldo() {
-            abrirModal("Definir Saldo em Caixa / Conta", `
-                <label class="text-xs text-gray-500 font-bold">Novo Saldo Disponível (R$):</label>
-                <input type="number" id="input-modal-saldo" step="0.01" value="${financialData.cash || 0}">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-saldo").value);
-                if (!isNaN(val)) {
-                    financialData.cash = val;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalPagarFatura() {
-            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
-            const faturaAtual = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-
-            if (faturaAtual <= 0) {
-                alert("Não há fatura pendente neste mês.");
-                return;
-            }
-
-            abrirModal("Pagar Fatura do Cartão", `
-                <p class="text-xs text-gray-500">Saldo em caixa: <b>R$ ${(financialData.cash || 0).toFixed(2)}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Fatura a pagar: <b>R$ ${faturaAtual.toFixed(2)}</b></p>
-                <input type="number" id="input-modal-fatura" step="0.01" value="${faturaAtual}">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-fatura").value);
-                if (!isNaN(val) && val > 0) {
-                    financialData.cash -= val;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalEditarTransacao(id) {
-            const t = financialData.transactions.find(x => x.id === id);
-            if (!t) return;
-
-            abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
-                <input type="text" id="edit-t-desc" value="${t.desc}">
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
-                <input type="number" id="edit-t-val" step="0.01" value="${t.value}">
-            `, () => {
-                const newDesc = document.getElementById("edit-t-desc").value.trim();
-                const newVal = parseFloat(document.getElementById("edit-t-val").value);
-                if (newDesc && !isNaN(newVal) && newVal > 0) {
-                    if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
-                        financialData.cash += t.value - newVal;
-                    } else if (t.type === 'income') {
-                        financialData.cash -= t.value - newVal;
-                    }
-                    t.desc = newDesc;
-                    t.value = newVal;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalCaixinha(id, tipo) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
-                <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
-                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
-                if (!isNaN(val) && val > 0) {
-                    if (tipo === 'guardar') {
-                        financialData.cash -= val;
-                        goal.current += val;
-                    } else {
-                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
-                        goal.current -= val;
-                        financialData.cash += val;
-                    }
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        // --- RELATÓRIOS E GRÁFICOS (CHART.JS) ---
-        let monthlyChartInstance = null;
-        let expenseChartInstance = null;
-
-        function renderizarRelatorios() {
-            const ano = currentYear;
-            const salario = financialData.sources.personal || 0;
-            const pensao = financialData.sources.sofiaPension || 0;
-
-            const tbody = document.getElementById("corpo-tabela-ano");
-            tbody.innerHTML = '';
-
-            const monthlyIncome = [];
-            const monthlyExpense = [];
-
-            for (let m = 1; m <= 12; m++) {
-                const mKey = `${ano}-${String(m).padStart(2, '0')}`;
-                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                
-                const recExtras = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
-                const inc = salario + pensao + recExtras;
-                const exp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
-                const net = inc - exp;
-
-                monthlyIncome.push(inc);
-                monthlyExpense.push(exp);
-
-                const tr = document.createElement("tr");
-                tr.style.borderBottom = "1px solid var(--border-color)";
-                tr.innerHTML = `
-                    <td style="padding:6px; font-weight:700;">${mesesNomes[m - 1].slice(0, 3)}</td>
-                    <td style="color:var(--green);">R$ ${inc.toFixed(0)}</td>
-                    <td style="color:var(--red);">R$ ${exp.toFixed(0)}</td>
-                    <td style="color:${net >= 0 ? 'var(--blue)' : 'var(--red)'}; font-weight:700;">R$ ${net.toFixed(0)}</td>
-                `;
-                tbody.appendChild(tr);
-            }
-
-            // Gráfico de Barras Mensal
-            const canvas = document.getElementById('monthlyComparisonChart');
-            if (canvas) {
-                if (monthlyChartInstance) monthlyChartInstance.destroy();
-                monthlyChartInstance = new Chart(canvas.getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        datasets: [
-                            { label: 'Entradas (R$)', data: monthlyIncome, backgroundColor: '#10b981', borderRadius: 4 },
-                            { label: 'Saídas (R$)', data: monthlyExpense, backgroundColor: '#f43f5e', borderRadius: 4 }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } },
-                        scales: { x: { grid: { display: false } }, y: { ticks: { font: { size: 9 } } } }
-                    }
-                });
-            }
-
-            // Gráfico Donut de Despesas por Categoria
-            const canvasCat = document.getElementById('expenseCategoryChart');
-            if (canvasCat) {
-                const transMesAtivo = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
-                const catLabels = (financialData.categories || []).map(c => c.name);
-                const catColors = (financialData.categories || []).map(c => c.color);
-                const catTotals = (financialData.categories || []).map(cat => {
-                    return transMesAtivo.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
-                });
-
-                if (expenseChartInstance) expenseChartInstance.destroy();
-                expenseChartInstance = new Chart(canvasCat.getContext('2d'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: catLabels,
-                        datasets: [{ data: catTotals, backgroundColor: catColors, borderWidth: 2, borderColor: '#0f172a' }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } }
-                    }
-                });
-            }
-        }
-
-        // --- BACKUP E RESTAURAÇÃO ---
         function exportarCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Data;Mes;Tipo;Descricao;Destino;Valor;Categoria;Pagamento\n";
@@ -1613,10 +1416,7 @@
             document.getElementById("app-modal").classList.remove("active");
         }
 
-        function alternarTema() {
-            document.body.classList.toggle("dark-mode");
-            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
-        }
+        function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
 </html>
