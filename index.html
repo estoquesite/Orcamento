@@ -745,7 +745,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_clean_v3";
+        const STORAGE_KEY = "financas_pro_clean_v4";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -758,10 +758,17 @@
         let selectedTransactionType = 'expense';
         let selectedCardIdSelected = null;
 
+        // Caixinhas e Cartões padrão sugeridos para já aparecerem certinho
         const defaultData = {
             cash: 0.00,
-            budgetBoxes: [],
-            creditCards: [],
+            budgetBoxes: [
+                { id: "box_1", name: "Meu Salário", amount: 5000, color: "#10b981" },
+                { id: "box_2", name: "Sophia", amount: 1500, color: "#ec4899" }
+            ],
+            creditCards: [
+                { id: "card_1", name: "Itaú Mastercard", limit: 4000, initialUsed: 0, color: "#f97316" },
+                { id: "card_2", name: "Bradesco Visa", limit: 3000, initialUsed: 0, color: "#ef4444" }
+            ],
             categories: [{ id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 0 }],
             transactions: [],
             monthCustomValues: {}
@@ -774,8 +781,8 @@
                     const parsed = JSON.parse(salvo);
                     return {
                         cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
-                        budgetBoxes: Array.isArray(parsed.budgetBoxes) ? parsed.budgetBoxes : [],
-                        creditCards: Array.isArray(parsed.creditCards) ? parsed.creditCards : [],
+                        budgetBoxes: Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes : defaultData.budgetBoxes,
+                        creditCards: Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards,
                         categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                         monthCustomValues: parsed.monthCustomValues || {}
