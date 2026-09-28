@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Finanças Pro Mobile - v2.4.2</title>
+  <title>Finanças Pro Mobile - v2.4.3</title>
   <meta name="description" content="Gestão financeira pessoal completa para telemóvel." />
   <meta name="theme-color" content="#ffffff" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -60,7 +60,7 @@
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <div class="flex items-baseline gap-1.5">
           <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
-          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">v2.4.2</span>
+          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">v2.4.3</span>
         </div>
       </div>
 
@@ -98,14 +98,14 @@
       </button>
     </div>
 
-    <!-- ÁREA PRINCIPAL COM SCROLL E ESPAÇAMENTO INFERIOR SUFICIENTE (pb-40) -->
-    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-40">
-      <!-- Conteúdo inserido dinamicamente -->
+    <!-- ÁREA PRINCIPAL COM SCROLL CONTÍNUO -->
+    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-6">
+      <!-- O conteúdo será injetado aqui -->
     </main>
 
-    <!-- BARRA INFERIOR BEM ELEVADA PARA NÃO FICAR ATRÁS DOS BOTÕES DO ANDROID -->
-    <div class="absolute bottom-8 left-0 right-0 px-4 z-30 pointer-events-none pb-[env(safe-area-inset-bottom)]">
-      <nav class="pointer-events-auto relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-2 shadow-2xl shadow-slate-950/25">
+    <!-- BARRA INFERIOR FLUTUANTE BEM ELEVADA (COM MARGEM REAL PARA NÃO SER COBERTA) -->
+    <div class="shrink-0 px-4 pt-1 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] bg-gradient-to-t from-slate-100 via-slate-50/90 to-transparent dark:from-slate-950 dark:via-slate-950/90 z-30">
+      <nav class="relative w-full bg-white dark:bg-slate-900 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-2 shadow-2xl shadow-slate-950/20">
         <div id="nav-indicator" class="bg-indigo-600/15 dark:bg-indigo-400/20 border border-indigo-500/30"></div>
 
         <button data-tab="painel" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
@@ -132,7 +132,7 @@
     </div>
 
     <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
-    <div id="toast" class="hidden absolute bottom-32 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
+    <div id="toast" class="hidden absolute bottom-36 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
       Notificação
     </div>
 
@@ -147,10 +147,9 @@
 
   <script>
     (function () {
-      const APP_VERSION = 'v2.4.2';
+      const APP_VERSION = 'v2.4.3';
       const APP_BUILD = '2026.09.28';
-      const STORAGE_KEY = 'FINANCAS_PRO_DATA_V242';
-      const OLD_STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
+      const STORAGE_KEY = 'FINANCAS_PRO_DATA_CLEAN_V1';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
       const now = new Date();
@@ -199,70 +198,23 @@
         ]
       };
 
-      // Recuperação e higienização completa dos dados
-      function sanitizeData(raw) {
-        if (!raw || typeof raw !== 'object') return JSON.parse(JSON.stringify(DEFAULT_DATA));
-
-        const data = Object.assign({}, DEFAULT_DATA, raw);
-
-        if (!data.sophiaPension || typeof data.sophiaPension !== 'object') {
-          data.sophiaPension = DEFAULT_DATA.sophiaPension;
-        }
-        if (!Array.isArray(data.quickButtons) || data.quickButtons.length === 0) {
-          data.quickButtons = DEFAULT_DATA.quickButtons;
-        }
-        if (!Array.isArray(data.boxes) || data.boxes.length === 0) {
-          data.boxes = DEFAULT_DATA.boxes;
-        }
-        if (!Array.isArray(data.creditCards)) {
-          data.creditCards = DEFAULT_DATA.creditCards;
-        }
-        if (!Array.isArray(data.savingsGoals)) {
-          data.savingsGoals = DEFAULT_DATA.savingsGoals;
-        }
-        if (!Array.isArray(data.recurringBills)) {
-          data.recurringBills = DEFAULT_DATA.recurringBills;
-        }
-
-        // Reparar lançamentos antigos sem ano ou mês
-        if (Array.isArray(data.transactions)) {
-          data.transactions = data.transactions.map((t, idx) => {
-            const copy = Object.assign({}, t);
-            copy.id = copy.id || Date.now() + idx;
-            copy.value = Number(copy.value) || 0;
-            copy.desc = copy.desc || 'Lançamento';
-            copy.type = copy.type === 'receita' ? 'receita' : 'despesa';
-
-            if (!copy.year || !copy.month) {
-              if (copy.date && typeof copy.date === 'string' && copy.date.includes('-')) {
-                const parts = copy.date.split('-');
-                copy.year = parseInt(parts[0], 10) || currentYear;
-                copy.month = parseInt(parts[1], 10) || currentMonth;
-              } else {
-                copy.year = currentYear;
-                copy.month = currentMonth;
-                copy.date = `${currentYear}-${String(currentMonth).padStart(2, '0')}-01`;
-              }
-            }
-            return copy;
-          });
-        } else {
-          data.transactions = DEFAULT_DATA.transactions;
-        }
-
-        return data;
-      }
-
       function loadData() {
         try {
-          let raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) {
-            raw = localStorage.getItem(OLD_STORAGE_KEY);
-          }
+          const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-          return sanitizeData(JSON.parse(raw));
+          const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return JSON.parse(JSON.stringify(DEFAULT_DATA));
+          
+          if (!parsed.sophiaPension) parsed.sophiaPension = DEFAULT_DATA.sophiaPension;
+          if (!Array.isArray(parsed.quickButtons)) parsed.quickButtons = DEFAULT_DATA.quickButtons;
+          if (!Array.isArray(parsed.boxes)) parsed.boxes = DEFAULT_DATA.boxes;
+          if (!Array.isArray(parsed.creditCards)) parsed.creditCards = DEFAULT_DATA.creditCards;
+          if (!Array.isArray(parsed.savingsGoals)) parsed.savingsGoals = DEFAULT_DATA.savingsGoals;
+          if (!Array.isArray(parsed.recurringBills)) parsed.recurringBills = DEFAULT_DATA.recurringBills;
+          if (!Array.isArray(parsed.transactions)) parsed.transactions = DEFAULT_DATA.transactions;
+
+          return parsed;
         } catch (e) {
-          console.warn('Recuperando dados padrão devido a erro no JSON:', e);
           return JSON.parse(JSON.stringify(DEFAULT_DATA));
         }
       }
@@ -398,7 +350,7 @@
             <span>Editar Pensão da Sophia</span>
           </h3>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Título do Cartão:</label>
+            <label class="text-xs font-bold text-slate-500 block">Título:</label>
             <input type="text" id="m-pensao-title" value="${p.title || 'Pensão da Sophia'}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
@@ -417,7 +369,7 @@
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Chave Pix ou Notas:</label>
-            <input type="text" id="m-pensao-pix" value="${p.pixKey || ''}" placeholder="Ex: CPF ou Telemóvel" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="m-pensao-pix" value="${p.pixKey || ''}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="flex gap-2 pt-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
@@ -454,8 +406,8 @@
       window.pagarPensaoSophia = function() {
         const p = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
         const jaPago = state.data.transactions.find(t => 
-          t.year === state.currentYear && 
-          t.month === state.currentMonth && 
+          Number(t.year) === Number(state.currentYear) && 
+          Number(t.month) === Number(state.currentMonth) && 
           t.desc && t.desc.includes('Pensão da Sophia') && 
           t.type === 'despesa'
         );
@@ -567,7 +519,7 @@
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         if (mainBox) mainBox.limit = val;
 
-        const existingRec = state.data.transactions.find(t => t.type === 'receita' && t.year === state.currentYear && t.month === state.currentMonth);
+        const existingRec = state.data.transactions.find(t => t.type === 'receita' && Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
         if (existingRec) {
           existingRec.value = val;
         } else {
@@ -714,7 +666,7 @@
             <input type="text" id="m-parc-name" placeholder="Ex: Telemóvel" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Valor da Parcela (R$):</label>
+            <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
             <input type="number" step="0.01" id="m-parc-val" placeholder="Ex: 150.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="grid grid-cols-2 gap-2">
@@ -1255,7 +1207,7 @@
       };
 
       window.shareWhatsApp = function () {
-        const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
+        const monthTrans = state.data.transactions.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
         const rec = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
         const desp = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
         const cartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
@@ -1286,7 +1238,7 @@
       };
 
       window.exportCSV = function () {
-        const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
+        const monthTrans = state.data.transactions.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
         if (monthTrans.length === 0) return alert('Nenhum lançamento registado no mês!');
         const rows = [
           ['Data', 'Descricao', 'Tipo', 'Categoria', 'Forma', 'Valor'],
@@ -1345,7 +1297,7 @@
           try {
             const parsed = JSON.parse(text);
             if (parsed && typeof parsed === 'object') {
-              state.data = sanitizeData(parsed.data || parsed);
+              state.data = parsed.data || parsed;
               saveData();
               showToast('Backup restaurado com sucesso! 🎉');
               render();
@@ -1359,7 +1311,6 @@
       window.resetData = function () {
         if (confirm('Tem a certeza de que deseja repor todos os dados de fábrica?')) {
           localStorage.removeItem(STORAGE_KEY);
-          localStorage.removeItem(OLD_STORAGE_KEY);
           state.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
           saveData();
           showToast('Dados repostos de fábrica!');
@@ -1372,880 +1323,870 @@
         switchTab('painel');
       };
 
-      function render() {
-        try {
-          monthLabel.textContent = `${MONTHS[state.currentMonth - 1]} de ${state.currentYear}`;
+      function attachLancarEvents() {
+        const form = document.getElementById('form-lancar');
+        if (!form) return;
 
-          const currentTrans = Array.isArray(state.data.transactions) ? state.data.transactions : [];
-          const monthTrans = currentTrans.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
-          const totalReceitas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
-          const totalDespesas = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
-          const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
-          const sobraLiquida = totalReceitas - totalDespesas;
+        const btnDesp = document.getElementById('btn-type-despesa');
+        const btnRec = document.getElementById('btn-type-receita');
+        const btnToggleSim = document.getElementById('btn-toggle-sim');
+        const simBox = document.getElementById('sim-box');
+        const simIndicator = document.getElementById('sim-indicator');
+        const simDiscountInput = document.getElementById('sim-discount-input');
+        const simCdiInput = document.getElementById('sim-cdi-input');
+        const simVerdict = document.getElementById('sim-verdict');
+        const inputValor = document.getElementById('input-valor');
+        const inputParcelas = document.getElementById('input-parcelas');
+        const inputPagamento = document.getElementById('input-pagamento');
+        const cardContainer = document.getElementById('card-select-container');
 
-          const pensaoPaga = monthTrans.find(t => 
-            t.type === 'despesa' && 
-            t.desc && t.desc.includes('Pensão da Sophia')
-          );
+        if (btnDesp && btnRec) {
+          btnDesp.onclick = () => {
+            state.newTransType = 'despesa';
+            btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-rose-500 text-white shadow-xs transition-all cursor-pointer';
+            btnRec.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
+          };
 
-          let html = '';
+          btnRec.onclick = () => {
+            state.newTransType = 'receita';
+            btnRec.className = 'py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-xs transition-all cursor-pointer';
+            btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
+          };
+        }
 
-          // 1. ABA PAINEL
-          if (state.currentTab === 'painel') {
-            const pSophia = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
-            const qButtons = Array.isArray(state.data.quickButtons) ? state.data.quickButtons : DEFAULT_DATA.quickButtons;
-            const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
+        if (inputPagamento && cardContainer) {
+          inputPagamento.onchange = () => {
+            if (inputPagamento.value === 'Cartão de Crédito') {
+              cardContainer.classList.remove('hidden');
+            } else {
+              cardContainer.classList.add('hidden');
+            }
+          };
+        }
 
-            html = `
-              <div class="space-y-4">
+        function updateSimulator() {
+          if (!inputValor || !simDiscountInput || !simCdiInput || !simVerdict) return;
+          const val = parseFloat(inputValor.value) || 0;
+          const parcelas = parseInt(inputParcelas.value, 10) || 1;
+          const desc = parseFloat(simDiscountInput.value) || 0;
+          const cdi = parseFloat(simCdiInput.value) || 0;
 
-                <!-- CARTÃO DA PENSÃO DA SOPHIA -->
-                <div class="relative overflow-hidden rounded-3xl p-4 bg-gradient-to-br from-pink-500 via-rose-500 to-indigo-600 text-white shadow-lg space-y-3">
-                  <div class="flex justify-between items-start">
-                    <div class="flex items-center gap-2">
-                      <span class="text-2xl p-2 rounded-2xl bg-white/20 backdrop-blur-xs">🌸</span>
-                      <div>
-                        <div class="flex items-center gap-1.5">
-                          <h3 class="text-xs font-black uppercase tracking-wider text-white">${pSophia.title || 'Pensão da Sophia'}</h3>
-                          <button onclick="openModalEditarPensaoSophia()" class="p-1 rounded-lg bg-white/20 hover:bg-white/30 text-white text-[11px] cursor-pointer active:scale-95" title="Editar Pensão da Sophia">
-                            ✏️
-                          </button>
-                        </div>
-                        <p class="text-[10px] text-pink-100 font-semibold">Vencimento todo o dia ${pSophia.dueDay || 10} • ${pSophia.recipient || 'Sophia'}</p>
-                      </div>
-                    </div>
+          if (val > 0) {
+            const economiaAvista = val * (desc / 100);
+            const rendimentoCdi = val * ((cdi / 100) * (parcelas / 2));
+            const valeAvista = economiaAvista >= rendimentoCdi;
 
-                    <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${pensaoPaga ? 'bg-emerald-400 text-slate-950 shadow-sm' : 'bg-white/25 text-white backdrop-blur-xs animate-pulse'}">
-                      ${pensaoPaga ? '✓ Pago neste mês' : '⏳ Pendente'}
-                    </span>
-                  </div>
-
-                  <div class="flex justify-between items-end pt-1">
-                    <div>
-                      <span class="text-[10px] uppercase font-bold text-pink-200 block">Valor Mensal</span>
-                      <span class="text-xl font-black tracking-tight">${formatMoeda(pSophia.value || 1200)}</span>
-                    </div>
-
-                    <button
-                      onclick="pagarPensaoSophia()"
-                      class="py-2 px-3.5 rounded-2xl text-xs font-black flex items-center gap-1.5 shadow-md cursor-pointer transition-all active:scale-95 ${pensaoPaga ? 'bg-white text-rose-600 hover:bg-rose-50' : 'bg-emerald-400 hover:bg-emerald-300 text-slate-950 ring-2 ring-white/30'}"
-                    >
-                      <span>${pensaoPaga ? '🔄 Desmarcar' : '✅ Marcar como Pago'}</span>
-                    </button>
-                  </div>
-
-                  ${pSophia.pixKey ? `
-                    <div class="pt-2 border-t border-white/20 flex justify-between items-center text-[10px] text-pink-100">
-                      <span>🔑 Pix: <b class="text-white">${pSophia.pixKey}</b></span>
-                      <button onclick="navigator.clipboard.writeText('${pSophia.pixKey}'); showToast('Chave Pix copiada! 📋');" class="underline text-white font-bold cursor-pointer">Copiar</button>
-                    </div>
-                  ` : ''}
-                </div>
-
-                <!-- CARTÕES DE RESUMO -->
-                <div class="grid grid-cols-2 gap-2.5">
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm relative">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Renda</span>
-                      <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Editar Rendimento">
-                        ✏️
-                      </button>
-                    </div>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalReceitas)}</span>
-                  </div>
-
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-sm">
-                    <span class="text-[10px] font-bold text-rose-100 uppercase tracking-wider block">Total Gasto</span>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalDespesas)}</span>
-                  </div>
-
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 text-white shadow-sm">
-                    <span class="text-[10px] font-bold text-purple-100 uppercase tracking-wider block">Fatura Cartões</span>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalCartao)}</span>
-                  </div>
-
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-sm">
-                    <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Sobra Líquida</span>
-                    <span class="text-base font-black tracking-tight mt-1 block ${sobraLiquida < 0 ? 'text-rose-200' : ''}">${formatMoeda(sobraLiquida)}</span>
-                  </div>
-                </div>
-
-                <!-- ATALHOS RÁPIDOS -->
-                <div class="space-y-1.5">
-                  <div class="flex justify-between items-center px-1">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Atalhos Rápidos</span>
-                    <button onclick="openModalNovoQuick()" class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
-                      + Novo Atalho
-                    </button>
-                  </div>
-                  <div class="flex gap-2 overflow-x-auto pb-1">
-                    ${qButtons.map(qb => `
-                      <button onclick="quickLancar('${qb.desc}', ${qb.val}, '${qb.cat}')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all shadow-xs cursor-pointer">
-                        ${qb.icon} ${qb.desc} R$ ${qb.val}
-                      </button>
-                    `).join('')}
-                  </div>
-                </div>
-
-                <!-- CAIXINHAS DE VERBA -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
-                    <div>
-                      <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
-                      <span class="text-[10px] text-indigo-500 font-bold">Transbordo Automático</span>
-                    </div>
-                    <button
-                      onclick="openModalNovaCaixinha()"
-                      class="py-1 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95 transition-all"
-                    >
-                      + Adicionar
-                    </button>
-                  </div>
-
-                  <div class="space-y-2.5">
-                    ${boxes.map(box => {
-                      const gastosBox = monthTrans.filter(t => t.type === 'despesa' && t.boxId === box.id).reduce((a, b) => a + (Number(b.value) || 0), 0);
-                      const percent = box.limit > 0 ? Math.min(100, Math.round((gastosBox / box.limit) * 100)) : 0;
-                      const excedeu = !box.isMain && gastosBox > box.limit;
-                      const excedente = excedeu ? gastosBox - box.limit : 0;
-
-                      return `
-                        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1.5 border border-slate-200/50 dark:border-slate-700/50">
-                          <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                              <span>${box.icon}</span>
-                              <span>${box.name}</span>
-                              ${box.isMain ? '<span class="text-[9px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
-                            </span>
-                            <div class="flex items-center gap-2">
-                              <span class="font-extrabold text-slate-600 dark:text-slate-300">
-                                ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
-                              </span>
-                              <button
-                                onclick="handleEditBox('${box.id}', ${box.isMain})"
-                                class="px-2 py-0.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer active:scale-95"
-                                title="Editar Caixinha"
-                              >
-                                ✏️
-                              </button>
-                            </div>
-                          </div>
-
-                          <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                            <div
-                              class="h-full rounded-full transition-all duration-300"
-                              style="width: ${percent}%; background-color: ${excedeu ? '#ef4444' : (box.color || '#6366f1')};"
-                            ></div>
-                          </div>
-
-                          ${excedeu ? `
-                            <div class="text-[10px] font-bold text-rose-500 pt-0.5">
-                              ↳ Excedeu ${formatMoeda(excedente)} (absorvido pela verba Geral)
-                            </div>
-                          ` : ''}
-                        </div>
-                      `;
-                    }).join('')}
-                  </div>
-                </div>
+            simVerdict.innerHTML = `
+              <div>💡 Desconto a pronto: <b>${formatMoeda(economiaAvista)}</b></div>
+              <div>📈 Rende no CDI (${parcelas}x): <b>~${formatMoeda(rendimentoCdi)}</b></div>
+              <div class="mt-1.5 p-1.5 rounded-lg text-center ${valeAvista ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400'}">
+                ${valeAvista ? '🏆 Recomendação: Pague A PRONTO com desconto!' : '🏆 Recomendação: PARCELE sem juros e aplique no CDI!'}
               </div>
             `;
+          } else {
+            simVerdict.textContent = 'Informe o valor acima para comparar o desconto com o CDI.';
+          }
+        }
+
+        if (btnToggleSim && simBox && simIndicator) {
+          btnToggleSim.onclick = () => {
+            state.showSimulator = !state.showSimulator;
+            simBox.classList.toggle('hidden', !state.showSimulator);
+            simIndicator.textContent = state.showSimulator ? 'Fechar' : 'Calcular';
+            if (state.showSimulator) updateSimulator();
+          };
+        }
+
+        if (inputValor) inputValor.oninput = updateSimulator;
+        if (inputParcelas) inputParcelas.onchange = updateSimulator;
+        if (simDiscountInput) simDiscountInput.oninput = updateSimulator;
+        if (simCdiInput) simCdiInput.oninput = updateSimulator;
+
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          const desc = document.getElementById('input-desc').value.trim();
+          const val = parseFloat(document.getElementById('input-valor').value);
+          const parcelas = parseInt(document.getElementById('input-parcelas').value, 10) || 1;
+          const boxId = document.getElementById('input-caixinha').value;
+          const payment = document.getElementById('input-pagamento').value;
+          const cardId = document.getElementById('input-cartao')?.value;
+
+          if (!desc || isNaN(val) || val <= 0) {
+            showToast('Informe uma descrição e valor válidos!');
+            return;
           }
 
-          // 2. ABA LANÇAR
-          else if (state.currentTab === 'lancar') {
-            const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
-            const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+          if (payment === 'Cartão de Crédito') {
+            const cardObj = state.data.creditCards.find(c => c.id === cardId);
+            if (cardObj && cardObj.isBlocked) {
+              showToast('⚠️ O cartão "' + cardObj.name + '" está bloqueado!');
+              return;
+            }
+          }
 
-            html = `
-              <div class="space-y-4">
-                <form id="form-lancar" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                    ➕ Novo Lançamento
-                  </h3>
+          const valorPorParcela = +(val / parcelas).toFixed(2);
+          for (let i = 0; i < parcelas; i++) {
+            let lancMes = state.currentMonth + i;
+            let lancAno = state.currentYear;
+            while (lancMes > 12) {
+              lancMes -= 12;
+              lancAno++;
+            }
+            state.data.transactions.unshift({
+              id: Date.now() + i,
+              desc: parcelas > 1 ? `${desc} (${i + 1}/${parcelas})` : desc,
+              value: valorPorParcela,
+              type: state.newTransType,
+              boxId,
+              category: 'Geral',
+              payment,
+              cardId: payment === 'Cartão de Crédito' ? cardId : undefined,
+              date: `${lancAno}-${String(lancMes).padStart(2, '0')}-01`,
+              year: lancAno,
+              month: lancMes
+            });
+          }
 
-                  <div class="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      id="btn-type-despesa"
-                      class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'despesa' ? 'bg-rose-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
-                    >
-                      📉 Despesa (-)
-                    </button>
-                    <button
-                      type="button"
-                      id="btn-type-receita"
-                      class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'receita' ? 'bg-emerald-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
-                    >
-                      📈 Receita (+)
-                    </button>
+          saveData();
+          showToast(parcelas > 1 ? `${parcelas} parcelas adicionadas!` : 'Lançamento guardado!');
+          render();
+        };
+      }
+
+      function render() {
+        monthLabel.textContent = `${MONTHS[state.currentMonth - 1]} de ${state.currentYear}`;
+
+        const currentTrans = Array.isArray(state.data.transactions) ? state.data.transactions : [];
+        const monthTrans = currentTrans.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
+        const totalReceitas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
+        const totalDespesas = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
+        const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
+        const sobraLiquida = totalReceitas - totalDespesas;
+
+        const pensaoPaga = monthTrans.find(t => 
+          t.type === 'despesa' && 
+          t.desc && t.desc.includes('Pensão da Sophia')
+        );
+
+        let html = '';
+
+        // 1. ABA PAINEL
+        if (state.currentTab === 'painel') {
+          const pSophia = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
+          const qButtons = Array.isArray(state.data.quickButtons) ? state.data.quickButtons : DEFAULT_DATA.quickButtons;
+          const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
+
+          html = `
+            <div class="space-y-4">
+
+              <!-- CARTÃO DA PENSÃO DA SOPHIA -->
+              <div class="relative overflow-hidden rounded-3xl p-4 bg-gradient-to-br from-pink-500 via-rose-500 to-indigo-600 text-white shadow-lg space-y-3">
+                <div class="flex justify-between items-start">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl p-2 rounded-2xl bg-white/20 backdrop-blur-xs">🌸</span>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <h3 class="text-xs font-black uppercase tracking-wider text-white">${pSophia.title || 'Pensão da Sophia'}</h3>
+                        <button onclick="openModalEditarPensaoSophia()" class="p-1 rounded-lg bg-white/20 hover:bg-white/30 text-white text-[11px] cursor-pointer active:scale-95" title="Editar Pensão da Sophia">
+                          ✏️
+                        </button>
+                      </div>
+                      <p class="text-[10px] text-pink-100 font-semibold">Vencimento todo o dia ${pSophia.dueDay || 10} • ${pSophia.recipient || 'Sophia'}</p>
+                    </div>
                   </div>
 
+                  <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${pensaoPaga ? 'bg-emerald-400 text-slate-950 shadow-sm' : 'bg-white/25 text-white backdrop-blur-xs animate-pulse'}">
+                    ${pensaoPaga ? '✓ Pago neste mês' : '⏳ Pendente'}
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-end pt-1">
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-pink-200 block">Valor Mensal</span>
+                    <span class="text-xl font-black tracking-tight">${formatMoeda(pSophia.value || 1200)}</span>
+                  </div>
+
+                  <button
+                    onclick="pagarPensaoSophia()"
+                    class="py-2 px-3.5 rounded-2xl text-xs font-black flex items-center gap-1.5 shadow-md cursor-pointer transition-all active:scale-95 ${pensaoPaga ? 'bg-white text-rose-600 hover:bg-rose-50' : 'bg-emerald-400 hover:bg-emerald-300 text-slate-950 ring-2 ring-white/30'}"
+                  >
+                    <span>${pensaoPaga ? '🔄 Desmarcar' : '✅ Marcar como Pago'}</span>
+                  </button>
+                </div>
+
+                ${pSophia.pixKey ? `
+                  <div class="pt-2 border-t border-white/20 flex justify-between items-center text-[10px] text-pink-100">
+                    <span>🔑 Pix: <b class="text-white">${pSophia.pixKey}</b></span>
+                    <button onclick="navigator.clipboard.writeText('${pSophia.pixKey}'); showToast('Chave Pix copiada! 📋');" class="underline text-white font-bold cursor-pointer">Copiar</button>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- CARTÕES DE RESUMO -->
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm relative">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Renda</span>
+                    <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Editar Rendimento">
+                      ✏️
+                    </button>
+                  </div>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalReceitas)}</span>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-sm">
+                  <span class="text-[10px] font-bold text-rose-100 uppercase tracking-wider block">Total Gasto</span>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalDespesas)}</span>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 text-white shadow-sm">
+                  <span class="text-[10px] font-bold text-purple-100 uppercase tracking-wider block">Fatura Cartões</span>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalCartao)}</span>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-sm">
+                  <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Sobra Líquida</span>
+                  <span class="text-base font-black tracking-tight mt-1 block ${sobraLiquida < 0 ? 'text-rose-200' : ''}">${formatMoeda(sobraLiquida)}</span>
+                </div>
+              </div>
+
+              <!-- ATALHOS RÁPIDOS -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-center px-1">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Atalhos Rápidos</span>
+                  <button onclick="openModalNovoQuick()" class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
+                    + Novo Atalho
+                  </button>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1">
+                  ${qButtons.map(qb => `
+                    <button onclick="quickLancar('${qb.desc}', ${qb.val}, '${qb.cat}')" class="py-1.5 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap hover:border-indigo-400 active:scale-95 transition-all shadow-xs cursor-pointer">
+                      ${qb.icon} ${qb.desc} R$ ${qb.val}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- CAIXINHAS DE VERBA -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
+                    <span class="text-[10px] text-indigo-500 font-bold">Transbordo Automático</span>
+                  </div>
+                  <button
+                    onclick="openModalNovaCaixinha()"
+                    class="py-1 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95 transition-all"
+                  >
+                    + Adicionar
+                  </button>
+                </div>
+
+                <div class="space-y-2.5">
+                  ${boxes.map(box => {
+                    const gastosBox = monthTrans.filter(t => t.type === 'despesa' && t.boxId === box.id).reduce((a, b) => a + (Number(b.value) || 0), 0);
+                    const percent = box.limit > 0 ? Math.min(100, Math.round((gastosBox / box.limit) * 100)) : 0;
+                    const excedeu = !box.isMain && gastosBox > box.limit;
+                    const excedente = excedeu ? gastosBox - box.limit : 0;
+
+                    return `
+                      <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1.5 border border-slate-200/50 dark:border-slate-700/50">
+                        <div class="flex justify-between items-center text-xs">
+                          <span class="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                            <span>${box.icon}</span>
+                            <span>${box.name}</span>
+                            ${box.isMain ? '<span class="text-[9px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
+                          </span>
+                          <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-slate-600 dark:text-slate-300">
+                              ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
+                            </span>
+                            <button
+                              onclick="handleEditBox('${box.id}', ${box.isMain})"
+                              class="px-2 py-0.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer active:scale-95"
+                              title="Editar Caixinha"
+                            >
+                              ✏️
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                          <div
+                            class="h-full rounded-full transition-all duration-300"
+                            style="width: ${percent}%; background-color: ${excedeu ? '#ef4444' : (box.color || '#6366f1')};"
+                          ></div>
+                        </div>
+
+                        ${excedeu ? `
+                          <div class="text-[10px] font-bold text-rose-500 pt-0.5">
+                            ↳ Excedeu ${formatMoeda(excedente)} (absorvido pela verba Geral)
+                          </div>
+                        ` : ''}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 2. ABA LANÇAR
+        else if (state.currentTab === 'lancar') {
+          const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
+          const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+
+          html = `
+            <div class="space-y-4">
+              <form id="form-lancar" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                  ➕ Novo Lançamento
+                </h3>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    id="btn-type-despesa"
+                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'despesa' ? 'bg-rose-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
+                  >
+                    📉 Despesa (-)
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-type-receita"
+                    class="py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${state.newTransType === 'receita' ? 'bg-emerald-500 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}"
+                  >
+                    📈 Receita (+)
+                  </button>
+                </div>
+
+                <input
+                  type="text"
+                  id="input-desc"
+                  placeholder="Descrição da despesa ou ganho"
+                  required
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
+                />
+
+                <div class="grid grid-cols-2 gap-2">
                   <input
-                    type="text"
-                    id="input-desc"
-                    placeholder="Descrição da despesa ou ganho"
+                    type="number"
+                    step="0.01"
+                    id="input-valor"
+                    placeholder="Valor Total R$"
                     required
                     class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
                   />
 
-                  <div class="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      step="0.01"
-                      id="input-valor"
-                      placeholder="Valor Total R$"
-                      required
-                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
-                    />
-
-                    <select
-                      id="input-parcelas"
-                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
-                    >
-                      <option value="1">A pronto (1x)</option>
-                      ${[2,3,4,5,6,10,12,18,24].map(n => `<option value="${n}">${n}x parcelas</option>`).join('')}
-                    </select>
-                  </div>
-
-                  <!-- SIMULADOR CDI -->
-                  <div class="pt-1">
-                    <button
-                      type="button"
-                      id="btn-toggle-sim"
-                      class="w-full py-1.5 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex justify-between items-center cursor-pointer"
-                    >
-                      <span>⚡ Simulador: Pronto vs. Parcelar (CDI)</span>
-                      <span id="sim-indicator">${state.showSimulator ? 'Fechar' : 'Calcular'}</span>
-                    </button>
-
-                    <div id="sim-box" class="${state.showSimulator ? '' : 'hidden'} mt-2 p-3 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-xs space-y-2">
-                      <div class="grid grid-cols-2 gap-2 text-[10px]">
-                        <div>
-                          <span>Desconto A Pronto (%):</span>
-                          <input
-                            type="number"
-                            id="sim-discount-input"
-                            value="${state.simDiscount}"
-                            class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold"
-                          />
-                        </div>
-                        <div>
-                          <span>Rendimento CDI (% a.m.):</span>
-                          <input
-                            type="number"
-                            step="0.1"
-                            id="sim-cdi-input"
-                            value="${state.simCdi}"
-                            class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold"
-                          />
-                        </div>
-                      </div>
-
-                      <div id="sim-verdict" class="text-[11px] font-bold pt-1 border-t border-indigo-200 dark:border-indigo-800">
-                        Informe o valor acima para comparar o desconto com o CDI.
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- CAIXINHA & FORMA DE PAGAMENTO -->
-                  <div class="grid grid-cols-2 gap-2">
-                    <select
-                      id="input-caixinha"
-                      class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
-                    >
-                      ${boxes.map(b => `<option value="${b.id}">${b.icon} ${b.name}</option>`).join('')}
-                    </select>
-
-                    <select
-                      id="input-pagamento"
-                      class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
-                    >
-                      <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
-                      <option value="Pix">⚡ Pix</option>
-                      <option value="Débito">💵 Débito</option>
-                      <option value="Dinheiro">💰 Dinheiro</option>
-                    </select>
-                  </div>
-
-                  <div id="card-select-container">
-                    <select
-                      id="input-cartao"
-                      class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
-                    >
-                      ${cards.map(c => `<option value="${c.id}">💳 ${c.name} ${c.isBlocked ? '(Bloqueado)' : ''}</option>`).join('')}
-                    </select>
-                  </div>
-
-                  <button
-                    type="submit"
-                    class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                  <select
+                    id="input-parcelas"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
                   >
-                    Guardar Lançamento
+                    <option value="1">A pronto (1x)</option>
+                    ${[2,3,4,5,6,10,12,18,24].map(n => `<option value="${n}">${n}x parcelas</option>`).join('')}
+                  </select>
+                </div>
+
+                <!-- SIMULADOR CDI -->
+                <div class="pt-1">
+                  <button
+                    type="button"
+                    id="btn-toggle-sim"
+                    class="w-full py-1.5 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex justify-between items-center cursor-pointer"
+                  >
+                    <span>⚡ Simulador: Pronto vs. Parcelar (CDI)</span>
+                    <span id="sim-indicator">${state.showSimulator ? 'Fechar' : 'Calcular'}</span>
                   </button>
-                </form>
 
-                <!-- EXTRATO COM EDIÇÃO -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                      📑 Extrato (${monthTrans.length})
-                    </h3>
-                    <div class="flex gap-1.5">
-                      <button
-                        onclick="exportCSV()"
-                        class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 cursor-pointer"
-                        title="Exportar CSV"
-                      >
-                        📊 CSV
-                      </button>
-                      <button
-                        onclick="shareWhatsApp()"
-                        class="px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold cursor-pointer"
-                        title="Partilhar no WhatsApp"
-                      >
-                        📲 WhatsApp
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="space-y-2 max-h-80 overflow-y-auto pr-1">
-                    ${monthTrans.length === 0 ? `
-                      <div class="text-center py-6 text-xs text-slate-400 font-bold">Nenhum lançamento registado neste mês.</div>
-                    ` : monthTrans.map(t => `
-                      <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-200/50 dark:border-slate-700/50">
-                        <div>
-                          <div class="font-black text-slate-900 dark:text-slate-100">${t.desc}</div>
-                          <div class="text-[10px] text-slate-400 mt-0.5">${t.date} • ${t.category} • ${t.payment}</div>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                          <span class="font-black text-xs ${t.type === 'despesa' ? 'text-rose-500' : 'text-emerald-500'}">
-                            ${t.type === 'despesa' ? '-' : '+'} ${formatMoeda(t.value)}
-                          </span>
-                          <button onclick="openModalEditarTrans(${t.id})" class="p-1.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 hover:bg-indigo-100 text-[11px] cursor-pointer" title="Editar Lançamento">
-                            ✏️
-                          </button>
-                          <button onclick="deleteTrans(${t.id})" class="text-slate-400 hover:text-rose-500 p-1.5 cursor-pointer" title="Eliminar">
-                            🗑️
-                          </button>
-                        </div>
+                  <div id="sim-box" class="${state.showSimulator ? '' : 'hidden'} mt-2 p-3 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-xs space-y-2">
+                    <div class="grid grid-cols-2 gap-2 text-[10px]">
+                      <div>
+                        <span>Desconto A Pronto (%):</span>
+                        <input
+                          type="number"
+                          id="sim-discount-input"
+                          value="${state.simDiscount}"
+                          class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold"
+                        />
                       </div>
-                    `).join('')}
+                      <div>
+                        <span>Rendimento CDI (% a.m.):</span>
+                        <input
+                          type="number"
+                          step="0.1"
+                          id="sim-cdi-input"
+                          value="${state.simCdi}"
+                          class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold"
+                        />
+                      </div>
+                    </div>
+
+                    <div id="sim-verdict" class="text-[11px] font-bold pt-1 border-t border-indigo-200 dark:border-indigo-800">
+                      Informe o valor acima para comparar o desconto com o CDI.
+                    </div>
                   </div>
                 </div>
-              </div>
-            `;
-          }
 
-          // 3. ABA CARTÕES
-          else if (state.currentTab === 'cartoes') {
-            const skinGradients = {
-              titanium: 'from-slate-700 via-slate-800 to-zinc-950',
-              ultraviolet: 'from-purple-800 via-indigo-900 to-slate-950',
-              emerald: 'from-emerald-700 via-teal-900 to-slate-950',
-              gold: 'from-amber-600 via-yellow-800 to-stone-950',
-              midnight: 'from-blue-900 via-indigo-950 to-black'
-            };
+                <!-- CAIXINHA & FORMA DE PAGAMENTO -->
+                <div class="grid grid-cols-2 gap-2">
+                  <select
+                    id="input-caixinha"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
+                  >
+                    ${boxes.map(b => `<option value="${b.id}">${b.icon}${b.name}</option>`).join('')}
+                  </select>
 
-            const installmentMap = {};
-            (state.data.transactions || []).forEach(t => {
-              if (t.payment === 'Cartão de Crédito' && t.type === 'despesa' && t.desc) {
-                const match = t.desc.match(/^(.*?)\s*\((\d+)\/(\d+)\)$/);
-                if (match) {
-                  const base = match[1].trim();
-                  const pCur = parseInt(match[2], 10);
-                  const pTot = parseInt(match[3], 10);
-                  const card = (state.data.creditCards || []).find(c => c.id === t.cardId) || (state.data.creditCards || [])[0];
-                  const key = `${base}__${t.cardId || 'c'}`;
-                  if (!installmentMap[key]) {
-                    installmentMap[key] = {
-                      baseName: base,
-                      cardId: t.cardId,
-                      cardName: card ? card.name : 'Cartão',
-                      parcelValue: t.value,
-                      minParcela: pCur,
-                      maxParcela: pCur,
-                      totalParcelas: pTot,
-                      transactions: [t]
-                    };
-                  } else {
-                    installmentMap[key].transactions.push(t);
-                    if (pCur < installmentMap[key].minParcela) installmentMap[key].minParcela = pCur;
-                    if (pCur > installmentMap[key].maxParcela) installmentMap[key].maxParcela = pCur;
-                    if (pTot > installmentMap[key].totalParcelas) installmentMap[key].totalParcelas = pTot;
-                  }
-                  if (t.year === state.currentYear && t.month === state.currentMonth) {
-                    installmentMap[key].currentMonthParcela = pCur;
-                  }
-                }
-              }
-            });
-            const installmentList = Object.values(installmentMap);
-            const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+                  <select
+                    id="input-pagamento"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
+                  >
+                    <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
+                    <option value="Pix">⚡ Pix</option>
+                    <option value="Débito">💵 Débito</option>
+                    <option value="Dinheiro">💰 Dinheiro</option>
+                  </select>
+                </div>
 
-            html = `
-              <div class="space-y-4">
+                <div id="card-select-container">
+                  <select
+                    id="input-cartao"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none"
+                  >
+                    ${cards.map(c => `<option value="${c.id}">💳 ${c.name}${c.isBlocked ? '(Bloqueado)' : ''}</option>`).join('')}
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                >
+                  Guardar Lançamento
+                </button>
+              </form>
+
+              <!-- EXTRATO COM EDIÇÃO -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                    💳 Cartões Holográficos
+                    📑 Extrato (${monthTrans.length})
                   </h3>
-                  <button onclick="openModalNovoCartao()" class="px-2.5 py-1 rounded-xl bg-indigo-600 text-white font-bold text-[10px] cursor-pointer active:scale-95 transition-all">
-                    + Novo Cartão
+                  <div class="flex gap-1.5">
+                    <button
+                      onclick="exportCSV()"
+                      class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 cursor-pointer"
+                      title="Exportar CSV"
+                    >
+                      📊 CSV
+                    </button>
+                    <button
+                      onclick="shareWhatsApp()"
+                      class="px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold cursor-pointer"
+                      title="Partilhar no WhatsApp"
+                    >
+                      📲 WhatsApp
+                    </button>
+                  </div>
+                </div>
+
+                <div class="space-y-2 max-h-80 overflow-y-auto pr-1">
+                  ${monthTrans.length === 0 ? `
+                    <div class="text-center py-6 text-xs text-slate-400 font-bold">Nenhum lançamento registado neste mês.</div>
+                  ` : monthTrans.map(t => `
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs border border-slate-200/50 dark:border-slate-700/50">
+                      <div>
+                        <div class="font-black text-slate-900 dark:text-slate-100">${t.desc}</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">${t.date} • ${t.category} •${t.payment}</div>
+                      </div>
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-black text-xs ${t.type === 'despesa' ? 'text-rose-500' : 'text-emerald-500'}">
+                          ${t.type === 'despesa' ? '-' : '+'}${formatMoeda(t.value)}
+                        </span>
+                        <button onclick="openModalEditarTrans(${t.id})" class="p-1.5 rounded-lg bg-slate-200/80 dark:bg-slate-700 hover:bg-indigo-100 text-[11px] cursor-pointer" title="Editar Lançamento">
+                          ✏️
+                        </button>
+                        <button onclick="deleteTrans(${t.id})" class="text-slate-400 hover:text-rose-500 p-1.5 cursor-pointer" title="Eliminar">
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 3. ABA CARTÕES
+        else if (state.currentTab === 'cartoes') {
+          const skinGradients = {
+            titanium: 'from-slate-700 via-slate-800 to-zinc-950',
+            ultraviolet: 'from-purple-800 via-indigo-900 to-slate-950',
+            emerald: 'from-emerald-700 via-teal-900 to-slate-950',
+            gold: 'from-amber-600 via-yellow-800 to-stone-950',
+            midnight: 'from-blue-900 via-indigo-950 to-black'
+          };
+
+          const installmentMap = {};
+          (state.data.transactions || []).forEach(t => {
+            if (t.payment === 'Cartão de Crédito' && t.type === 'despesa' && t.desc) {
+              const match = t.desc.match(/^(.*?)\s*\((\d+)\/(\d+)\)$/);
+              if (match) {
+                const base = match[1].trim();
+                const pCur = parseInt(match[2], 10);
+                const pTot = parseInt(match[3], 10);
+                const card = (state.data.creditCards || []).find(c => c.id === t.cardId) || (state.data.creditCards || [])[0];
+                const key = `${base}__${t.cardId || 'c'}`;
+                if (!installmentMap[key]) {
+                  installmentMap[key] = {
+                    baseName: base,
+                    cardId: t.cardId,
+                    cardName: card ? card.name : 'Cartão',
+                    parcelValue: t.value,
+                    minParcela: pCur,
+                    maxParcela: pCur,
+                    totalParcelas: pTot,
+                    transactions: [t]
+                  };
+                } else {
+                  installmentMap[key].transactions.push(t);
+                  if (pCur < installmentMap[key].minParcela) installmentMap[key].minParcela = pCur;
+                  if (pCur > installmentMap[key].maxParcela) installmentMap[key].maxParcela = pCur;
+                  if (pTot > installmentMap[key].totalParcelas) installmentMap[key].totalParcelas = pTot;
+                }
+                if (t.year === state.currentYear && t.month === state.currentMonth) {
+                  installmentMap[key].currentMonthParcela = pCur;
+                }
+              }
+            }
+          });
+          const installmentList = Object.values(installmentMap);
+          const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+
+          html = `
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                  💳 Cartões Holográficos
+                </h3>
+                <button onclick="openModalNovoCartao()" class="px-2.5 py-1 rounded-xl bg-indigo-600 text-white font-bold text-[10px] cursor-pointer active:scale-95 transition-all">
+                  + Novo Cartão
+                </button>
+              </div>
+
+              ${cards.map(card => {
+                const fatura = monthTrans
+                  .filter(t => t.type === 'despesa' && t.cardId === card.id)
+                  .reduce((a, b) => a + (Number(b.value) || 0), 0);
+                const percent = card.limit > 0 ? Math.min(100, Math.round((fatura / card.limit) * 100)) : 0;
+
+                return `
+                  <div class="relative p-5 rounded-3xl bg-gradient-to-br ${skinGradients[card.skin || 'titanium']} text-white shadow-lg space-y-4 overflow-hidden border border-white/10">
+                    ${card.isBlocked ? `
+                      <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-4">
+                        <span class="text-3xl mb-1">🔒</span>
+                        <span class="text-xs font-black tracking-wider uppercase text-rose-400">Cartão Bloqueado</span>
+                        <span class="text-[10px] text-slate-300 mt-0.5">Nenhuma compra será autorizada.</span>
+                      </div>
+                    ` : ''}
+
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <div class="text-xs font-black tracking-wide flex items-center gap-1.5">
+                          <span>${card.name}</span>
+                          <button onclick="openModalEditarCartao('${card.id}')" class="text-[11px] p-0.5 rounded bg-white/20 hover:bg-white/30 cursor-pointer" title="Editar Cartão">
+                            ✏️
+                          </button>
+                        </div>
+                        <div class="text-[10px] text-white/70 font-semibold">${card.brand}</div>
+                      </div>
+                      <button
+                        onclick="cycleCardSkin('${card.id}')"
+                        class="px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 text-[9px] font-bold cursor-pointer"
+                        title="Trocar Skin do Cartão"
+                      >
+                        🎨 Skin: ${card.skin || 'titanium'}
+                      </button>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <div class="flex justify-between text-xs">
+                        <span class="text-white/70">Fatura Atual:</span>
+                        <span class="font-black text-white">${formatMoeda(fatura)}</span>
+                      </div>
+                      <div class="w-full h-1.5 rounded-full bg-white/20 overflow-hidden">
+                        <div
+                          class="h-full bg-gradient-to-r from-emerald-400 to-indigo-400 rounded-full"
+                          style="width: ${percent}%;"
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div class="flex justify-between items-center text-[11px] pt-2 border-t border-white/10">
+                      <div class="flex items-center gap-2">
+                        <span class="text-white/70">Limite: ${formatMoeda(card.limit)}</span>
+                        <button
+                          onclick="toggleCvv('${card.id}')"
+                          class="text-[10px] text-white/80 underline font-mono cursor-pointer"
+                        >
+                          CVV: ${state.revealedCvv[card.id] ? card.cvv || '849' : '•••'}
+                        </button>
+                      </div>
+                      <button
+                        onclick="toggleCardLock('${card.id}')"
+                        class="px-2.5 py-1 rounded-xl bg-white/15 hover:bg-white/25 text-white text-[10px] font-bold cursor-pointer"
+                      >
+                        ${card.isBlocked ? '🔓 Desbloquear' : '🔒 Bloquear'}
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+
+              <!-- COMPRAS PARCELADAS -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                      🛍️ Compras Parceladas
+                    </h3>
+                    <span class="text-[10px] text-slate-400">Total liberdade para editar</span>
+                  </div>
+                  <button
+                    onclick="openModalNovaParcela()"
+                    class="py-1 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95"
+                  >
+                    + Adicionar
                   </button>
                 </div>
 
-                ${cards.map(card => {
-                  const fatura = monthTrans
-                    .filter(t => t.type === 'despesa' && t.cardId === card.id)
-                    .reduce((a, b) => a + (Number(b.value) || 0), 0);
-                  const percent = card.limit > 0 ? Math.min(100, Math.round((fatura / card.limit) * 100)) : 0;
+                <div class="space-y-2 pt-1">
+                  ${installmentList.length === 0 ? `
+                    <div class="text-center py-6 text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                      Nenhuma compra parcelada registada.
+                    </div>
+                  ` : installmentList.map(item => {
+                    const currentP = item.currentMonthParcela || item.minParcela;
+                    const perc = Math.min(100, Math.round((currentP / item.totalParcelas) * 100));
+                    const remainingMonths = Math.max(1, item.totalParcelas - currentP + 1);
+                    const remainingTotal = remainingMonths * item.parcelValue;
 
-                  return `
-                    <div class="relative p-5 rounded-3xl bg-gradient-to-br ${skinGradients[card.skin || 'titanium']} text-white shadow-lg space-y-4 overflow-hidden border border-white/10">
-                      ${card.isBlocked ? `
-                        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-4">
-                          <span class="text-3xl mb-1">🔒</span>
-                          <span class="text-xs font-black tracking-wider uppercase text-rose-400">Cartão Bloqueado</span>
-                          <span class="text-[10px] text-slate-300 mt-0.5">Nenhuma compra será autorizada.</span>
-                        </div>
-                      ` : ''}
+                    return `
+                      <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                          <div>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                              <span class="font-black text-xs text-slate-900 dark:text-slate-100">${item.baseName}</span>
+                              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/20">
+                                💳 ${item.cardName}
+                              </span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
+                              Parcela ${currentP} de${item.totalParcelas} (${perc}\%) •${formatMoeda(item.parcelValue)}/mês
+                            </div>
+                          </div>
 
-                      <div class="flex justify-between items-center">
-                        <div>
-                          <div class="text-xs font-black tracking-wide flex items-center gap-1.5">
-                            <span>${card.name}</span>
-                            <button onclick="openModalEditarCartao('${card.id}')" class="text-[11px] p-0.5 rounded bg-white/20 hover:bg-white/30 cursor-pointer" title="Editar Cartão">
+                          <div class="flex items-center gap-1">
+                            <button
+                              onclick="openModalEditarParcela('${item.baseName}', '${item.cardId \vert{}\vert{} ''}',${item.parcelValue})"
+                              class="px-2 py-1 rounded-xl bg-slate-200/80 dark:bg-slate-700/80 hover:bg-indigo-100 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
+                              title="Editar Compra Parcelada"
+                            >
                               ✏️
                             </button>
+                            <button
+                              onclick="deleteParcelaGroup('${item.baseName}')"
+                              class="p-1 rounded-xl text-slate-400 hover:text-rose-500 cursor-pointer"
+                              title="Eliminar Parcelas"
+                            >
+                              🗑️
+                            </button>
                           </div>
-                          <div class="text-[10px] text-white/70 font-semibold">${card.brand}</div>
                         </div>
-                        <button
-                          onclick="cycleCardSkin('${card.id}')"
-                          class="px-2 py-0.5 rounded-full bg-white/20 hover:bg-white/30 text-[9px] font-bold cursor-pointer"
-                          title="Trocar Skin do Cartão"
-                        >
-                          🎨 Skin: ${card.skin || 'titanium'}
-                        </button>
-                      </div>
 
-                      <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs">
-                          <span class="text-white/70">Fatura Atual:</span>
-                          <span class="font-black text-white">${formatMoeda(fatura)}</span>
+                        <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                          <div class="h-full bg-gradient-to-r from-amber-400 to-indigo-500 rounded-full" style="width: ${perc}%;"></div>
                         </div>
-                        <div class="w-full h-1.5 rounded-full bg-white/20 overflow-hidden">
-                          <div
-                            class="h-full bg-gradient-to-r from-emerald-400 to-indigo-400 rounded-full"
-                            style="width: ${percent}%;"
-                          ></div>
+
+                        <div class="flex justify-between items-center text-[10px] text-slate-400 font-bold">
+                          <span>${remainingMonths} parcelas restantes</span>
+                          <span class="text-slate-700 dark:text-slate-300 font-black">
+                            Total a pagar: ${formatMoeda(remainingTotal)}
+                          </span>
                         </div>
                       </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
 
-                      <div class="flex justify-between items-center text-[11px] pt-2 border-t border-white/10">
-                        <div class="flex items-center gap-2">
-                          <span class="text-white/70">Limite: ${formatMoeda(card.limit)}</span>
-                          <button
-                            onclick="toggleCvv('${card.id}')"
-                            class="text-[10px] text-white/80 underline font-mono cursor-pointer"
-                          >
-                            CVV: ${state.revealedCvv[card.id] ? card.cvv || '849' : '•••'}
+        // 4. ABA MESES
+        else if (state.currentTab === 'meses') {
+          html = `
+            <div class="space-y-3">
+              <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                📅 Panorama Anual (${state.currentYear})
+              </h3>
+
+              <div class="grid grid-cols-2 gap-2">
+                ${MONTHS.map((nome, idx) => {
+                  const mNum = idx + 1;
+                  const mTrans = (state.data.transactions || []).filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(mNum));
+                  const mRec = mTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
+                  const mDesp = mTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
+                  const mSobra = mRec - mDesp;
+                  const isCurrent = mNum === state.currentMonth;
+
+                  return `
+                    <button
+                      onclick="goToMonth(${mNum})"
+                      class="p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm scale-[1.02]'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      }"
+                    >
+                      <div class="flex justify-between items-center">
+                        <span class="font-black text-xs">${nome}</span>${isCurrent ? '<span class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded font-bold">Ativo</span>' : ''}
+                      </div>
+                      <div class="mt-1 text-[11px] font-bold">
+                        <div class="${isCurrent ? 'text-white/80' : 'text-slate-400'}">Gasto: ${formatMoeda(mDesp)}</div>
+                        <div class="${isCurrent ? 'text-emerald-200' : 'text-emerald-500'}">Sobra: ${formatMoeda(mSobra)}</div>
+                      </div>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        // 5. ABA MAIS
+        else if (state.currentTab === 'mais') {
+          const goals = Array.isArray(state.data.savingsGoals) ? state.data.savingsGoals : DEFAULT_DATA.savingsGoals;
+          const bills = Array.isArray(state.data.recurringBills) ? state.data.recurringBills : DEFAULT_DATA.recurringBills;
+
+          html = `
+            <div class="space-y-4">
+              <!-- METAS -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                    🎯 Metas & Poupança
+                  </h3>
+                  <button onclick="openModalNovaMeta()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
+                    + Adicionar
+                  </button>
+                </div>
+                ${goals.map(goal => {
+                  const percent = goal.targetValue > 0 ? Math.min(100, Math.round((goal.currentValue / goal.targetValue) * 100)) : 0;
+                  return `
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-2 border border-slate-200/50 dark:border-slate-700/50">
+                      <div class="flex justify-between items-center text-xs font-bold">
+                        <span class="flex items-center gap-1.5">
+                          <span>${goal.icon}${goal.name}</span>
+                          <button onclick="openModalEditarMeta(${goal.id})" class="text-[11px] p-0.5 rounded bg-slate-200 dark:bg-slate-700 cursor-pointer" title="Editar Meta">
+                            ✏️
                           </button>
-                        </div>
-                        <button
-                          onclick="toggleCardLock('${card.id}')"
-                          class="px-2.5 py-1 rounded-xl bg-white/15 hover:bg-white/25 text-white text-[10px] font-bold cursor-pointer"
-                        >
-                          ${card.isBlocked ? '🔓 Desbloquear' : '🔒 Bloquear'}
+                        </span>
+                        <span>${formatMoeda(goal.currentValue)} /${formatMoeda(goal.targetValue)}</span>
+                      </div>
+                      <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                        <div class="h-full bg-emerald-500 rounded-full" style="width: ${percent}%;"></div>
+                      </div>
+                      <div class="flex justify-end gap-1.5 pt-1">
+                        <button onclick="alterarMeta(${goal.id}, 'add')" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-bold text-[10px] cursor-pointer">
+                          + Guardar
+                        </button>
+                        <button onclick="alterarMeta(${goal.id}, 'resgatar')" class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[10px] cursor-pointer">
+                          - Resgatar
                         </button>
                       </div>
                     </div>
                   `;
                 }).join('')}
-
-                <!-- COMPRAS PARCELADAS -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
-                  <div class="flex justify-between items-center">
-                    <div>
-                      <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                        🛍️ Compras Parceladas
-                      </h3>
-                      <span class="text-[10px] text-slate-400">Total liberdade para editar</span>
-                    </div>
-                    <button
-                      onclick="openModalNovaParcela()"
-                      class="py-1 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 cursor-pointer active:scale-95"
-                    >
-                      + Adicionar
-                    </button>
-                  </div>
-
-                  <div class="space-y-2 pt-1">
-                    ${installmentList.length === 0 ? `
-                      <div class="text-center py-6 text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                        Nenhuma compra parcelada registada.
-                      </div>
-                    ` : installmentList.map(item => {
-                      const currentP = item.currentMonthParcela || item.minParcela;
-                      const perc = Math.min(100, Math.round((currentP / item.totalParcelas) * 100));
-                      const remainingMonths = Math.max(1, item.totalParcelas - currentP + 1);
-                      const remainingTotal = remainingMonths * item.parcelValue;
-
-                      return `
-                        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 space-y-2">
-                          <div class="flex justify-between items-start gap-2">
-                            <div>
-                              <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="font-black text-xs text-slate-900 dark:text-slate-100">${item.baseName}</span>
-                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/20">
-                                  💳 ${item.cardName}
-                                </span>
-                              </div>
-                              <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
-                                Parcela ${currentP} de${item.totalParcelas} (${perc}\%) •${formatMoeda(item.parcelValue)}/mês
-                              </div>
-                            </div>
-
-                            <div class="flex items-center gap-1">
-                              <button
-                                onclick="openModalEditarParcela('${item.baseName}', '${item.cardId \vert{}\vert{} ''}',${item.parcelValue})"
-                                class="px-2 py-1 rounded-xl bg-slate-200/80 dark:bg-slate-700/80 hover:bg-indigo-100 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
-                                title="Editar Compra Parcelada"
-                              >
-                                ✏️
-                              </button>
-                              <button
-                                onclick="deleteParcelaGroup('${item.baseName}')"
-                                class="p-1 rounded-xl text-slate-400 hover:text-rose-500 cursor-pointer"
-                                title="Eliminar Parcelas"
-                              >
-                                🗑️
-                              </button>
-                            </div>
-                          </div>
-
-                          <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-indigo-500 rounded-full" style="width: ${perc}%;"></div>
-                          </div>
-
-                          <div class="flex justify-between items-center text-[10px] text-slate-400 font-bold">
-                            <span>${remainingMonths} parcelas restantes</span>
-                            <span class="text-slate-700 dark:text-slate-300 font-black">
-                              Total a pagar: ${formatMoeda(remainingTotal)}
-                            </span>
-                          </div>
-                        </div>
-                      `;
-                    }).join('')}
-                  </div>
-                </div>
               </div>
-            `;
-          }
 
-          // 4. ABA MESES
-          else if (state.currentTab === 'meses') {
-            html = `
-              <div class="space-y-3">
-                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                  📅 Panorama Anual (${state.currentYear})
-                </h3>
-
-                <div class="grid grid-cols-2 gap-2">
-                  ${MONTHS.map((nome, idx) => {
-                    const mNum = idx + 1;
-                    const mTrans = (state.data.transactions || []).filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(mNum));
-                    const mRec = mTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
-                    const mDesp = mTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
-                    const mSobra = mRec - mDesp;
-                    const isCurrent = mNum === state.currentMonth;
-
-                    return `
-                      <button
-                        onclick="goToMonth(${mNum})"
-                        class="p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                          isCurrent
-                            ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm scale-[1.02]'
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-                        }"
-                      >
-                        <div class="flex justify-between items-center">
-                          <span class="font-black text-xs">${nome}</span>${isCurrent ? '<span class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded font-bold">Ativo</span>' : ''}
-                        </div>
-                        <div class="mt-1 text-[11px] font-bold">
-                          <div class="${isCurrent ? 'text-white/80' : 'text-slate-400'}">Gasto: ${formatMoeda(mDesp)}</div>
-                          <div class="${isCurrent ? 'text-emerald-200' : 'text-emerald-500'}">Sobra: ${formatMoeda(mSobra)}</div>
-                        </div>
-                      </button>
-                    `;
-                  }).join('')}
-                </div>
-              </div>
-            `;
-          }
-
-          // 5. ABA MAIS
-          else if (state.currentTab === 'mais') {
-            const goals = Array.isArray(state.data.savingsGoals) ? state.data.savingsGoals : DEFAULT_DATA.savingsGoals;
-            const bills = Array.isArray(state.data.recurringBills) ? state.data.recurringBills : DEFAULT_DATA.recurringBills;
-
-            html = `
-              <div class="space-y-4">
-                <!-- METAS -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                      🎯 Metas & Poupança
-                    </h3>
-                    <button onclick="openModalNovaMeta()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
-                      + Adicionar
-                    </button>
-                  </div>
-                  ${goals.map(goal => {
-                    const percent = goal.targetValue > 0 ? Math.min(100, Math.round((goal.currentValue / goal.targetValue) * 100)) : 0;
-                    return `
-                      <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-2 border border-slate-200/50 dark:border-slate-700/50">
-                        <div class="flex justify-between items-center text-xs font-bold">
-                          <span class="flex items-center gap-1.5">
-                            <span>${goal.icon}${goal.name}</span>
-                            <button onclick="openModalEditarMeta(${goal.id})" class="text-[11px] p-0.5 rounded bg-slate-200 dark:bg-slate-700 cursor-pointer" title="Editar Meta">
-                              ✏️
-                            </button>
-                          </span>
-                          <span>${formatMoeda(goal.currentValue)} /${formatMoeda(goal.targetValue)}</span>
-                        </div>
-                        <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                          <div class="h-full bg-emerald-500 rounded-full" style="width: ${percent}%;"></div>
-                        </div>
-                        <div class="flex justify-end gap-1.5 pt-1">
-                          <button onclick="alterarMeta(${goal.id}, 'add')" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-bold text-[10px] cursor-pointer">
-                            + Guardar
-                          </button>
-                          <button onclick="alterarMeta(${goal.id}, 'resgatar')" class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[10px] cursor-pointer">
-                            - Resgatar
-                          </button>
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-
-                <!-- ASSINATURAS -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                      🔄 Assinaturas & Contas Fixas
-                    </h3>
-                    <button onclick="openModalNovaAssinatura()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
-                      + Adicionar
-                    </button>
-                  </div>
-                  ${bills.map(bill => `
-                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
-                      <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                        <span>${bill.icon} ${bill.name} (Dia${bill.dueDay})</span>
-                        <button onclick="openModalEditarAssinatura('${bill.id}')" class="text-[11px] p-0.5 rounded bg-slate-200 dark:bg-slate-700 cursor-pointer" title="Editar Assinatura">
-                          ✏️
-                        </button>
-                      </span>
-                      <span class="font-black text-rose-500">${formatMoeda(bill.value)}</span>
-                    </div>
-                  `).join('')}
-                </div>
-
-                <!-- CÓPIAS DE SEGURANÇA -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+              <!-- ASSINATURAS -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                <div class="flex justify-between items-center">
                   <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                    💾 Cópia de Segurança & Restauro
+                    🔄 Assinaturas & Contas Fixas
                   </h3>
-                  <p class="text-[11px] text-slate-500 dark:text-slate-400">
-                    Descarregue o ficheiro completo e editável para abrir offline no telemóvel.
-                  </p>
-
-                  <button
-                    type="button"
-                    onclick="exportHtmlCompleto()"
-                    class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer transition-all active:scale-[0.98] ring-2 ring-emerald-400/25"
-                    title="Descarregar ficheiro HTML offline"
-                  >
-                    <span class="text-base">📥</span>
-                    <span class="tracking-wide text-xs sm:text-sm font-extrabold">Descarregar index.html</span>
-                  </button>
-
-                  <div class="grid grid-cols-2 gap-2 mt-1">
-                    <button onclick="copyBackup()" class="py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-700 cursor-pointer">
-                      Copiar Dados
-                    </button>
-                    <button onclick="restoreBackup()" class="py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-700 hover:bg-slate-200 cursor-pointer">
-                      Restaurar
-                    </button>
-                  </div>
-
-                  <button onclick="resetData()" class="w-full py-2 rounded-xl text-rose-500 font-bold text-xs hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer">
-                    Repor Valores de Fábrica
+                  <button onclick="openModalNovaAssinatura()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
+                    + Adicionar
                   </button>
                 </div>
-
-                <!-- INFO DE VERSÃO -->
-                <div class="p-4 rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-center space-y-1">
-                  <div class="text-xs font-black tracking-wider uppercase text-slate-800 dark:text-slate-200">
-                    Finanças Pro Mobile
+                ${bills.map(bill => `
+                  <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
+                    <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                      <span>${bill.icon} ${bill.name} (Dia${bill.dueDay})</span>
+                      <button onclick="openModalEditarAssinatura('${bill.id}')" class="text-[11px] p-0.5 rounded bg-slate-200 dark:bg-slate-700 cursor-pointer" title="Editar Assinatura">
+                        ✏️
+                      </button>
+                    </span>
+                    <span class="font-black text-rose-500">${formatMoeda(bill.value)}</span>
                   </div>
-                  <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
-                    Versão ${APP_VERSION} • Build ${APP_BUILD}
-                  </div>
-                  <div class="text-[10px] text-slate-400 pt-0.5">
-                    100% Offline • Sem Dependência de Servidores
-                  </div>
-                </div>
-
+                `).join('')}
               </div>
-            `;
-          }
 
-          viewContent.innerHTML = html;
+              <!-- CÓPIAS DE SEGURANÇA -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                  💾 Cópia de Segurança & Restauro
+                </h3>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                  Descarregue o ficheiro completo e editável para abrir offline no telemóvel.
+                </p>
 
-          // Eventos da aba Lançar
-          if (state.currentTab === 'lancar') {
-            const form = document.getElementById('form-lancar');
-            const btnDesp = document.getElementById('btn-type-despesa');
-            const btnRec = document.getElementById('btn-type-receita');
-            const btnToggleSim = document.getElementById('btn-toggle-sim');
-            const simBox = document.getElementById('sim-box');
-            const simIndicator = document.getElementById('sim-indicator');
-            const simDiscountInput = document.getElementById('sim-discount-input');
-            const simCdiInput = document.getElementById('sim-cdi-input');
-            const simVerdict = document.getElementById('sim-verdict');
-            const inputValor = document.getElementById('input-valor');
-            const inputParcelas = document.getElementById('input-parcelas');
-            const inputPagamento = document.getElementById('input-pagamento');
-            const cardContainer = document.getElementById('card-select-container');
+                <button
+                  type="button"
+                  onclick="exportHtmlCompleto()"
+                  class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer transition-all active:scale-[0.98] ring-2 ring-emerald-400/25"
+                  title="Descarregar ficheiro HTML offline"
+                >
+                  <span class="text-base">📥</span>
+                  <span class="tracking-wide text-xs sm:text-sm font-extrabold">Descarregar index.html</span>
+                </button>
 
-            if (btnDesp && btnRec) {
-              btnDesp.addEventListener('click', () => {
-                state.newTransType = 'despesa';
-                btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-rose-500 text-white shadow-xs transition-all cursor-pointer';
-                btnRec.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
-              });
+                <div class="grid grid-cols-2 gap-2 mt-1">
+                  <button onclick="copyBackup()" class="py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-700 cursor-pointer">
+                    Copiar Dados
+                  </button>
+                  <button onclick="restoreBackup()" class="py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-700 hover:bg-slate-200 cursor-pointer">
+                    Restaurar
+                  </button>
+                </div>
 
-              btnRec.addEventListener('click', () => {
-                state.newTransType = 'receita';
-                btnRec.className = 'py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-xs transition-all cursor-pointer';
-                btnDesp.className = 'py-2 rounded-xl text-xs font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all cursor-pointer';
-              });
-            }
+                <button onclick="resetData()" class="w-full py-2 rounded-xl text-rose-500 font-bold text-xs hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer">
+                  Repor Valores de Fábrica
+                </button>
+              </div>
 
-            if (inputPagamento && cardContainer) {
-              inputPagamento.addEventListener('change', () => {
-                if (inputPagamento.value === 'Cartão de Crédito') {
-                  cardContainer.classList.remove('hidden');
-                } else {
-                  cardContainer.classList.add('hidden');
-                }
-              });
-            }
+              <!-- INFO DE VERSÃO -->
+              <div class="p-4 rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-center space-y-1">
+                <div class="text-xs font-black tracking-wider uppercase text-slate-800 dark:text-slate-200">
+                  Finanças Pro Mobile
+                </div>
+                <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
+                  Versão ${APP_VERSION} • Build ${APP_BUILD}
+                </div>
+                <div class="text-[10px] text-slate-400 pt-0.5">
+                  100% Offline • Sem Dependência de Servidores
+                </div>
+              </div>
 
-            function updateSimulator() {
-              if (!inputValor || !simDiscountInput || !simCdiInput || !simVerdict) return;
-              const val = parseFloat(inputValor.value) || 0;
-              const parcelas = parseInt(inputParcelas.value, 10) || 1;
-              const desc = parseFloat(simDiscountInput.value) || 0;
-              const cdi = parseFloat(simCdiInput.value) || 0;
-
-              if (val > 0) {
-                const economiaAvista = val * (desc / 100);
-                const rendimentoCdi = val * ((cdi / 100) * (parcelas / 2));
-                const valeAvista = economiaAvista >= rendimentoCdi;
-
-                simVerdict.innerHTML = `
-                  <div>💡 Desconto a pronto: <b>${formatMoeda(economiaAvista)}</b></div>
-                  <div>📈 Rende no CDI (${parcelas}x): <b>~${formatMoeda(rendimentoCdi)}</b></div>
-                  <div class="mt-1.5 p-1.5 rounded-lg text-center ${valeAvista ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400'}">
-                    ${valeAvista ? '🏆 Recomendação: Pague A PRONTO com desconto!' : '🏆 Recomendação: PARCELE sem juros e aplique no CDI!'}
-                  </div>
-                `;
-              } else {
-                simVerdict.textContent = 'Informe o valor acima para comparar o desconto com o CDI.';
-              }
-            }
-
-            if (btnToggleSim && simBox && simIndicator) {
-              btnToggleSim.addEventListener('click', () => {
-                state.showSimulator = !state.showSimulator;
-                simBox.classList.toggle('hidden', !state.showSimulator);
-                simIndicator.textContent = state.showSimulator ? 'Fechar' : 'Calcular';
-                if (state.showSimulator) updateSimulator();
-              });
-            }
-
-            if (inputValor) inputValor.addEventListener('input', updateSimulator);
-            if (inputParcelas) inputParcelas.addEventListener('change', updateSimulator);
-            if (simDiscountInput) simDiscountInput.addEventListener('input', updateSimulator);
-            if (simCdiInput) simCdiInput.addEventListener('input', updateSimulator);
-
-            if (form) {
-              form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const desc = document.getElementById('input-desc').value.trim();
-                const val = parseFloat(document.getElementById('input-valor').value);
-                const parcelas = parseInt(document.getElementById('input-parcelas').value, 10) || 1;
-                const boxId = document.getElementById('input-caixinha').value;
-                const payment = document.getElementById('input-pagamento').value;
-                const cardId = document.getElementById('input-cartao')?.value;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                  showToast('Informe uma descrição e valor válidos!');
-                  return;
-                }
-
-                if (payment === 'Cartão de Crédito') {
-                  const cardObj = state.data.creditCards.find(c => c.id === cardId);
-                  if (cardObj && cardObj.isBlocked) {
-                    showToast('⚠️ O cartão "' + cardObj.name + '" está bloqueado!');
-                    return;
-                  }
-                }
-
-                const valorPorParcela = +(val / parcelas).toFixed(2);
-                for (let i = 0; i < parcelas; i++) {
-                  let lancMes = state.currentMonth + i;
-                  let lancAno = state.currentYear;
-                  while (lancMes > 12) {
-                    lancMes -= 12;
-                    lancAno++;
-                  }
-                  state.data.transactions.unshift({
-                    id: Date.now() + i,
-                    desc: parcelas > 1 ? `${desc} (${i + 1}/${parcelas})` : desc,
-                    value: valorPorParcela,
-                    type: state.newTransType,
-                    boxId,
-                    category: 'Geral',
-                    payment,
-                    cardId: payment === 'Cartão de Crédito' ? cardId : undefined,
-                    date: `${lancAno}-${String(lancMes).padStart(2, '0')}-01`,
-                    year: lancAno,
-                    month: lancMes
-                  });
-                }
-
-                saveData();
-                showToast(parcelas > 1 ? `${parcelas} parcelas adicionadas!` : 'Lançamento guardado!');
-                render();
-              });
-            }
-          }
-        } catch (err) {
-          console.error('Erro na renderização:', err);
-          viewContent.innerHTML = `
-            <div class="p-6 text-center space-y-3">
-              <div class="text-3xl">⚠️</div>
-              <div class="text-xs font-black text-rose-500">Erro ao processar dados antigos.</div>
-              <button onclick="resetData()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold">
-                Repor Aplicação
-              </button>
             </div>
           `;
+        }
+
+        viewContent.innerHTML = html;
+
+        if (state.currentTab === 'lancar') {
+          attachLancarEvents();
         }
       }
 
