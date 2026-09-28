@@ -1,10 +1,11 @@
-<html lang="pt-BR"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Finanças Pro Mobile</title>
-  <meta name="description" content="Aplicativo de gestão financeira pessoal completo e autônomo para celular.">
-  <meta name="theme-color" content="#4f46e5">
-  <!-- Tailwind CSS via CDN para renderização moderna imediata -->
+  <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para celular." />
+  <meta name="theme-color" content="#4f46e5" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,10 +25,7 @@
     };
   </script>
   <style>
-    * {
-      -webkit-tap-highlight-color: transparent;
-      box-sizing: border-box;
-    }
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -40,13 +38,13 @@
       backdrop-filter: blur(4px);
     }
   </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-0{bottom:0px}.bottom-20{bottom:5rem}.left-1\/2{left:50%}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-2\.5{height:0.625rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-full{height:100%}.max-h-\[85vh\]{max-height:85vh}.min-h-screen{min-height:100vh}.w-14{width:3.5rem}.w-2\.5{width:0.625rem}.w-full{width:100%}.max-w-\[380px\]{max-width:380px}.max-w-\[430px\]{max-width:430px}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-2{gap:0.5rem}.gap-1\.5{gap:0.375rem}.gap-2\.5{gap:0.625rem}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-slate-200\/50{border-color:rgb(226 232 240 / 0.5)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-white\/95{background-color:rgb(255 255 255 / 0.95)}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-500{--tw-gradient-from:#6366f1 var(--tw-gradient-from-position);--tw-gradient-to:rgb(99 102 241 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgb(147 51 234 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 63 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-emerald-600{--tw-gradient-to:rgb(5 150 105 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #059669 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-indigo-700{--tw-gradient-to:#4338ca var(--tw-gradient-to-position)}.to-rose-700{--tw-gradient-to:#be123c var(--tw-gradient-to-position)}.to-teal-700{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.to-violet-800{--tw-gradient-to:#5b21b6 var(--tw-gradient-to-position)}.to-teal-600{--tw-gradient-to:#0d9488 var(--tw-gradient-to-position)}.p-0{padding:0px}.p-1\.5{padding:0.375rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.pb-2\.5{padding-bottom:0.625rem}.pb-24{padding-bottom:6rem}.pb-\[max\(env\(safe-area-inset-bottom\)\2c 0\.5rem\)\]{padding-bottom:max(env(safe-area-inset-bottom),0.5rem)}.pt-3{padding-top:0.75rem}.pb-1{padding-bottom:0.25rem}.pt-1{padding-top:0.25rem}.text-center{text-align:center}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.tracking-wider{letter-spacing:0.05em}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-emerald-100{--tw-text-opacity:1;color:rgb(209 250 229 / var(--tw-text-opacity, 1))}.text-indigo-100{--tw-text-opacity:1;color:rgb(224 231 255 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255 / var(--tw-text-opacity, 1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-emerald-600\/30{--tw-shadow-color:rgb(5 150 105 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-emerald-400\/25{--tw-ring-color:rgb(52 211 153 / 0.25)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-indigo-400:hover{--tw-border-opacity:1;border-color:rgb(129 140 248 / var(--tw-border-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:from-emerald-600:hover{--tw-gradient-from:#059669 var(--tw-gradient-from-position);--tw-gradient-to:rgb(5 150 105 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-teal-700:hover{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.active\:scale-\[0\.98\]:active{--tw-scale-x:0.98;--tw-scale-y:0.98;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.dark\:border-slate-300:is(.dark *){--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.dark\:border-slate-800:is(.dark *){--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.dark\:border-indigo-800:is(.dark *){--tw-border-opacity:1;border-color:rgb(55 48 163 / var(--tw-border-opacity, 1))}.dark\:border-slate-700\/50:is(.dark *){border-color:rgb(51 65 85 / 0.5)}.dark\:border-slate-700:is(.dark *){--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.dark\:bg-slate-100:is(.dark *){--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-900:is(.dark *){--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-900\/90:is(.dark *){background-color:rgb(15 23 42 / 0.9)}.dark\:bg-slate-900\/95:is(.dark *){background-color:rgb(15 23 42 / 0.95)}.dark\:bg-slate-950:is(.dark *){--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.dark\:bg-indigo-950\/60:is(.dark *){background-color:rgb(30 27 75 / 0.6)}.dark\:bg-slate-700:is(.dark *){--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800\/50:is(.dark *){background-color:rgb(30 41 59 / 0.5)}.dark\:text-indigo-400:is(.dark *){--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.dark\:text-slate-100:is(.dark *){--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.dark\:text-slate-200:is(.dark *){--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.dark\:text-slate-300:is(.dark *){--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.dark\:text-slate-900:is(.dark *){--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.dark\:text-slate-400:is(.dark *){--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.dark\:hover\:bg-slate-700:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.dark\:hover\:bg-rose-950\/30:hover:is(.dark *){background-color:rgb(76 5 25 / 0.3)}@media (min-width: 640px){.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:h-\[92vh\]{height:92vh}.md\:min-h-\[890px\]{min-height:890px}.md\:rounded-\[42px\]{border-radius:42px}.md\:border-\[7px\]{border-width:7px}.md\:border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.md\:p-4{padding:1rem}.md\:pb-20{padding-bottom:5rem}}</style></head>
+</head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- CHASSIS DO CELULAR -->
+  <!-- FRAME DO SMARTPHONE -->
   <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-100 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300 dark">
     
-    <!-- BARRA SUPERIOR (HEADER) -->
+    <!-- HEADER -->
     <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
       <div class="flex items-center gap-2">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -54,11 +52,21 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button id="btn-privacy" type="button" class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer" title="Ocultar / Mostrar Valores">
+        <button
+          id="btn-privacy"
+          type="button"
+          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer"
+          title="Ocultar / Mostrar Valores"
+        >
           👁️
         </button>
 
-        <button id="btn-theme" type="button" class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer" title="Alternar Tema Claro / Escuro">
+        <button
+          id="btn-theme"
+          type="button"
+          class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer"
+          title="Alternar Tema Claro / Escuro"
+        >
           ☀️
         </button>
       </div>
@@ -69,126 +77,22 @@
       <button id="btn-prev-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
         ◀
       </button>
-      <div id="month-label" class="text-center font-extrabold text-slate-900 dark:text-slate-100">Setembro de 2026</div>
+      <div id="month-label" class="text-center font-extrabold text-slate-900 dark:text-slate-100">
+        Carregando...
+      </div>
       <button id="btn-next-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
         ▶
       </button>
     </div>
 
-    <!-- ÁREA DE CONTEÚDO PRINCIPAL COM PB-24 PARA NUNCA TAPAR BOTÕES -->
+    <!-- VIEWPORT COM PADDING-BOTTOM PARA NÃO TAPAR BOTÕES -->
     <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 md:pb-20">
-            <div class="space-y-4">
-              <!-- Metas de Poupança -->
-              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                <div class="flex justify-between items-center">
-                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                    🎯 Metas &amp; Reservas Financeiras
-                  </h3>
-                  <button onclick="openModalNovaMeta()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
-                    + Nova
-                  </button>
-                </div>
-                
-                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-2 border border-slate-200/50 dark:border-slate-700/50">
-                      <div class="flex justify-between text-xs font-bold">
-                        <span>🛡️ Reserva de Emergência</span>
-                        <span>R$&nbsp;6.500,00 / R$&nbsp;15.000,00</span>
-                      </div>
-                      <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                        <div class="h-full bg-emerald-500 rounded-full" style="width: 43%;"></div>
-                      </div>
-                      <div class="flex justify-end gap-1.5 pt-1">
-                        <button onclick="alterarMeta(1, 'add')" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-bold text-[10px] cursor-pointer">
-                          + Guardar
-                        </button>
-                        <button onclick="alterarMeta(1, 'resgatar')" class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[10px] cursor-pointer">
-                          - Resgatar
-                        </button>
-                      </div>
-                    </div>
-                  
-                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-2 border border-slate-200/50 dark:border-slate-700/50">
-                      <div class="flex justify-between text-xs font-bold">
-                        <span>✈️ Viagem de Fim de Ano</span>
-                        <span>R$&nbsp;1.800,00 / R$&nbsp;5.000,00</span>
-                      </div>
-                      <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                        <div class="h-full bg-emerald-500 rounded-full" style="width: 36%;"></div>
-                      </div>
-                      <div class="flex justify-end gap-1.5 pt-1">
-                        <button onclick="alterarMeta(2, 'add')" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-bold text-[10px] cursor-pointer">
-                          + Guardar
-                        </button>
-                        <button onclick="alterarMeta(2, 'resgatar')" class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[10px] cursor-pointer">
-                          - Resgatar
-                        </button>
-                      </div>
-                    </div>
-                  
-              </div>
+      <!-- Injetado dinamicamente -->
+    </main>
 
-              <!-- Assinaturas Recorrentes -->
-              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                <div class="flex justify-between items-center">
-                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                    🔄 Assinaturas &amp; Contas Fixas
-                  </h3>
-                  <button onclick="openModalNovaAssinatura()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
-                    + Adicionar
-                  </button>
-                </div>
-                
-                  <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
-                    <span class="font-bold text-slate-800 dark:text-slate-200">🍿 Netflix 4K Ultra (Dia 12)</span>
-                    <span class="font-black text-rose-500">R$&nbsp;55,90</span>
-                  </div>
-                
-                  <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
-                    <span class="font-bold text-slate-800 dark:text-slate-200">🎵 Spotify Duo (Dia 20)</span>
-                    <span class="font-black text-rose-500">R$&nbsp;34,90</span>
-                  </div>
-                
-                  <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
-                    <span class="font-bold text-slate-800 dark:text-slate-200">🌐 Internet Fibra 600MB (Dia 10)</span>
-                    <span class="font-black text-rose-500">R$&nbsp;129,90</span>
-                  </div>
-                
-              </div>
-
-              <!-- Backup & Restauração com Botão Verde -->
-              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                  💾 Backup &amp; Restauração
-                </h3>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400">
-                  Baixe o site completo e autocontido ou copie os dados para restaurar quando quiser.
-                </p>
-
-                <!-- BOTÃO VERDE BEM VISÍVEL -->
-                <button type="button" onclick="exportHtmlCompleto()" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer transition-all active:scale-[0.98] ring-2 ring-emerald-400/25" title="Descarregar ficheiro index.html pronto para o GitHub Pages">
-                  <span class="text-base">📥</span>
-                  <span class="tracking-wide text-xs sm:text-sm font-extrabold">Exportar / Baixar index.html</span>
-                </button>
-
-                <div class="grid grid-cols-2 gap-2 mt-1">
-                  <button onclick="copyBackup()" class="py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-700 cursor-pointer">
-                    Copiar Backup
-                  </button>
-                  <button onclick="restoreBackup()" class="py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-700 hover:bg-slate-200 cursor-pointer">
-                    Restaurar
-                  </button>
-                </div>
-
-                <button onclick="resetData()" class="w-full py-2 rounded-xl text-rose-500 font-bold text-xs hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer">
-                  Zerar Dados de Fábrica
-                </button>
-              </div>
-            </div>
-          </main>
-
-    <!-- BARRA INFERIOR DE ABAS FIXA NO FUNDO (STICKY BOTTOM-0) -->
+    <!-- BARRA INFERIOR DE ABAS FIXA NO FUNDO -->
     <nav class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex justify-around items-center px-2 py-1 shrink-0 sticky bottom-0 z-30 shadow-lg pb-[max(env(safe-area-inset-bottom),0.5rem)]">
-      <button data-tab="painel" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
+      <button data-tab="painel" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
         <span class="text-lg leading-none">📊</span>
         <span class="text-[10px] mt-0.5">Painel</span>
       </button>
@@ -204,7 +108,7 @@
         <span class="text-lg leading-none">📅</span>
         <span class="text-[10px] mt-0.5">Meses</span>
       </button>
-      <button data-tab="mais" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
+      <button data-tab="mais" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-slate-400 font-bold">
         <span class="text-lg leading-none">⚙️</span>
         <span class="text-[10px] mt-0.5">Mais</span>
       </button>
@@ -215,10 +119,10 @@
       Notificação
     </div>
 
-    <!-- MODAL POPUP DINÂMICO -->
+    <!-- MODAL CONTAINER DINÂMICO -->
     <div id="modal-container" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
       <div id="modal-box" class="w-full max-w-[380px] bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-5 space-y-4 max-h-[85vh] overflow-y-auto">
-        <!-- Injetado por JavaScript -->
+        <!-- Injetado por JS -->
       </div>
     </div>
 
@@ -229,7 +133,7 @@
       const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-      // DADOS INICIAIS COMPLETOS E AUTÔNOMOS
+      // DADOS INICIAIS
       const DEFAULT_DATA = {
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
@@ -246,7 +150,7 @@
           { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
           { id: 2, desc: 'Supermercado Mensal', value: 480, type: 'despesa', boxId: '2', category: 'Supermercado', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
           { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 4, desc: 'Jantar Restaurante', value: 120, type: 'despesa', boxId: '4', category: 'Lazer', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
+          { id: 4, desc: 'Notebook Dell (3/10)', value: 250, type: 'despesa', boxId: '1', category: 'Compras Parceladas', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
         ],
         savingsGoals: [
           { id: 1, name: 'Reserva de Emergência', targetValue: 15000, currentValue: 6500, color: '#10b981', icon: '🛡️' },
@@ -268,14 +172,6 @@
         }
       }
 
-      function saveData() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-        } catch (e) {
-          console.error(e);
-        }
-      }
-
       const state = {
         data: loadData(),
         currentYear: new Date().getFullYear(),
@@ -289,6 +185,14 @@
         simCdi: 0.9,
         newTransType: 'despesa'
       };
+
+      function saveData() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+        } catch (e) {
+          console.error(e);
+        }
+      }
 
       function formatMoeda(num) {
         if (state.privacyMode) return 'R$ ••••••';
@@ -374,6 +278,294 @@
       modalContainer.addEventListener('click', (e) => {
         if (e.target === modalContainer) closeModal();
       });
+
+      // 1. EDIÇÃO DE SALÁRIO / RENDA MENSAL COM LÁPIS
+      window.openModalEditarSalario = function() {
+        let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
+        const currentVal = mainBox ? mainBox.limit : 5000;
+
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>✏️</span>
+            <span>Editar Salário / Renda Mensal</span>
+          </h3>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            Digite o valor real da sua renda mensal. Ao salvar, a verba total, caixinhas e a <b>Sobra Líquida</b> serão recalculadas imediatamente.
+          </p>
+          <label class="text-xs font-bold text-slate-500 block mt-2">Valor da Renda Mensal (R$):</label>
+          <input
+            type="number"
+            step="50"
+            id="m-salario-val"
+            value="${currentVal}"
+            class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 focus:outline-none"
+          />
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveSalario()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Renda</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveSalario = function() {
+        const val = parseFloat(document.getElementById('m-salario-val').value);
+        if (isNaN(val) || val < 0) return alert('Informe um valor válido.');
+
+        let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
+        if (mainBox) {
+          mainBox.limit = val;
+        }
+
+        const existingRec = state.data.transactions.find(t => t.type === 'receita' && t.year === state.currentYear && t.month === state.currentMonth);
+        if (existingRec) {
+          existingRec.value = val;
+        } else {
+          state.data.transactions.unshift({
+            id: Date.now(),
+            desc: 'Salário Mensal',
+            value: val,
+            type: 'receita',
+            boxId: mainBox ? mainBox.id : '1',
+            category: 'Salário',
+            payment: 'Pix',
+            date: new Date().toISOString().slice(0, 10),
+            year: state.currentYear,
+            month: state.currentMonth
+          });
+        }
+
+        saveData();
+        closeModal();
+        showToast('Renda atualizada para ' + formatMoeda(val) + '! 💰');
+        render();
+      };
+
+      // 2. EDIÇÃO DE CAIXINHA COM LÁPIS
+      window.openModalEditarCaixinha = function(boxId) {
+        const box = state.data.boxes.find(b => b.id === String(boxId));
+        if (!box) return;
+
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>✏️</span>
+            <span>Editar Caixinha: ${box.name}</span>
+          </h3>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Nome da Categoria:</label>
+            <input type="text" id="m-box-name" value="${box.name}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Limite Mensal Planejado (R$):</label>
+            <input type="number" step="20" id="m-box-limit" value="${box.limit}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveEditarCaixinha('${box.id}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Alterações</button>
+          </div>
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+            <button onclick="deleteCaixinha('${box.id}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center justify-center gap-1.5 border border-rose-500/30 cursor-pointer">
+              <span>🗑️</span>
+              <span>Excluir Caixinha</span>
+            </button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveEditarCaixinha = function(id) {
+        const name = document.getElementById('m-box-name').value.trim();
+        const limit = parseFloat(document.getElementById('m-box-limit').value);
+        if (!name || isNaN(limit) || limit < 0) return alert('Informe dados válidos.');
+        const box = state.data.boxes.find(b => b.id === String(id));
+        if (box) {
+          box.name = name;
+          box.limit = limit;
+          saveData();
+          closeModal();
+          showToast('Caixinha atualizada!');
+          render();
+        }
+      };
+
+      window.deleteCaixinha = function(id) {
+        if (confirm('Tem certeza que deseja excluir esta caixinha?')) {
+          state.data.boxes = state.data.boxes.filter(b => b.id !== String(id));
+          saveData();
+          closeModal();
+          showToast('Caixinha excluída!');
+          render();
+        }
+      };
+
+      // 3. CRIAR NOVA CAIXINHA (+ Nova Caixinha)
+      window.openModalNovaCaixinha = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>📦</span>
+            <span>Nova Caixinha de Verba</span>
+          </h3>
+          <input type="text" id="m-newbox-name" placeholder="Nome da Categoria (Ex: Pet, Educação)" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" step="50" id="m-newbox-limit" placeholder="Limite Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaCaixinha()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Caixinha</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaCaixinha = function() {
+        const name = document.getElementById('m-newbox-name').value.trim();
+        const limit = parseFloat(document.getElementById('m-newbox-limit').value);
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha os campos obrigatórios.');
+        state.data.boxes.push({
+          id: String(Date.now()),
+          name,
+          limit,
+          color: '#6366f1',
+          icon: '📦',
+          isMain: false
+        });
+        saveData();
+        closeModal();
+        showToast('Nova caixinha criada!');
+        render();
+      };
+
+      // 4. GESTÃO COMPLETA DE COMPRAS PARCELADAS
+      window.openModalNovaParcela = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>💳</span>
+            <span>Nova Compra Parcelada</span>
+          </h3>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Nome da Compra (ex.: iPhone, Geladeira):</label>
+            <input type="text" id="m-parc-name" placeholder="Ex: Sofá Confort 3 Lugares" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
+            <input type="number" step="0.01" id="m-parc-val" placeholder="Ex: 250.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[10px] text-slate-500 font-bold block">Parcela Atual:</label>
+              <input type="number" min="1" id="m-parc-current" value="1" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-500 font-bold block">Total de Parcelas:</label>
+              <input type="number" min="1" id="m-parc-total" value="10" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Cartão Utilizado:</label>
+            <select id="m-parc-card" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+              ${state.data.creditCards.map(c => `<option value="${c.id}">💳 ${c.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaParcela()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Compra</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaParcela = function() {
+        const name = document.getElementById('m-parc-name').value.trim();
+        const val = parseFloat(document.getElementById('m-parc-val').value);
+        const currentP = parseInt(document.getElementById('m-parc-current').value, 10) || 1;
+        const totalP = parseInt(document.getElementById('m-parc-total').value, 10) || 1;
+        const cardId = document.getElementById('m-parc-card').value;
+        if (!name || isNaN(val) || val <= 0) return alert('Informe dados válidos.');
+        const remaining = Math.max(1, totalP - currentP + 1);
+
+        for (let i = 0; i < remaining; i++) {
+          const pNum = currentP + i;
+          let lancMes = state.currentMonth + i;
+          let lancAno = state.currentYear;
+          while (lancMes > 12) {
+            lancMes -= 12;
+            lancAno++;
+          }
+          state.data.transactions.unshift({
+            id: Date.now() + i,
+            desc: name + ' (' + pNum + '/' + totalP + ')',
+            value: val,
+            type: 'despesa',
+            boxId: '1',
+            category: 'Compras Parceladas',
+            payment: 'Cartão de Crédito',
+            cardId,
+            date: lancAno + '-' + String(lancMes).padStart(2, '0') + '-05',
+            year: lancAno,
+            month: lancMes
+          });
+        }
+
+        saveData();
+        closeModal();
+        showToast('Compra parcelada cadastrada! 💳');
+        render();
+      };
+
+      window.openModalEditarParcela = function(baseName, cardId, val) {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>✏️</span>
+            <span>Editar Compra: ${baseName}</span>
+          </h3>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Nome da Compra:</label>
+            <input type="text" id="m-edit-parc-name" value="${baseName}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
+            <input type="number" step="0.01" id="m-edit-parc-val" value="${val}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveEditarParcela('${baseName}')" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
+          </div>
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+            <button onclick="deleteParcelaGroup('${baseName}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+              🗑️ Excluir Compra e Parcelas
+            </button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveEditarParcela = function(origName) {
+        const newName = document.getElementById('m-edit-parc-name').value.trim();
+        const newVal = parseFloat(document.getElementById('m-edit-parc-val').value);
+        if (!newName || isNaN(newVal) || newVal <= 0) return alert('Informe dados válidos.');
+
+        state.data.transactions.forEach(t => {
+          if (t.payment === 'Cartão de Crédito' && t.desc.startsWith(origName)) {
+            const match = t.desc.match(/\\((\\d+\\/\\d+)\\)/);
+            const suffix = match ? ' (' + match[1] + ')' : '';
+            t.desc = newName + suffix;
+            t.value = newVal;
+          }
+        });
+
+        saveData();
+        closeModal();
+        showToast('Parcelas atualizadas!');
+        render();
+      };
+
+      window.deleteParcelaGroup = function(origName) {
+        if (confirm('Deseja excluir todas as parcelas de "' + origName + '"?')) {
+          state.data.transactions = state.data.transactions.filter(t => !(t.payment === 'Cartão de Crédito' && t.desc.startsWith(origName)));
+          saveData();
+          closeModal();
+          showToast('Compra parcelada excluída!');
+          render();
+        }
+      };
 
       window.quickLancar = function (desc, val, cat) {
         state.data.transactions.unshift({
@@ -691,30 +883,35 @@
 
         let html = '';
 
-        // 1. ABA PAINEL
+        // 1. ABA PAINEL (100% EDITÁVEL COM LÁPIS)
         if (state.currentTab === 'painel') {
           html = `
             <div class="space-y-4">
-              <!-- Cartões de Resumo -->
+              <!-- Cartões de Resumo com Lápis de Edição de Renda -->
               <div class="grid grid-cols-2 gap-2.5">
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md">
-                  <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Receitas</span>
-                  <span class="text-base font-black tracking-tight">${formatMoeda(totalReceitas)}</span>
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md relative">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Receitas</span>
+                    <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Editar Renda Mensal">
+                      ✏️
+                    </button>
+                  </div>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalReceitas)}</span>
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white shadow-md">
                   <span class="text-[10px] font-bold text-rose-100 uppercase tracking-wider block">Total Gasto</span>
-                  <span class="text-base font-black tracking-tight">${formatMoeda(totalDespesas)}</span>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalDespesas)}</span>
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-800 text-white shadow-md">
                   <span class="text-[10px] font-bold text-purple-100 uppercase tracking-wider block">Fatura Cartões</span>
-                  <span class="text-base font-black tracking-tight">${formatMoeda(totalCartao)}</span>
+                  <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalCartao)}</span>
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-md">
                   <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Sobra Líquida</span>
-                  <span class="text-base font-black tracking-tight">${formatMoeda(sobraLiquida)}</span>
+                  <span class="text-base font-black tracking-tight mt-1 block ${sobraLiquida < 0 ? 'text-rose-200' : ''}">${formatMoeda(sobraLiquida)}</span>
                 </div>
               </div>
 
@@ -734,30 +931,19 @@
                 </button>
               </div>
 
-              <!-- Saúde Financeira com Score Real -->
-              <div class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
-                <div>
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Saúde Financeira</span>
-                  <h3 class="text-lg font-black text-slate-900 dark:text-slate-100 mt-0.5">
-                    ${healthScore >= 750 ? '🌟 Excelente' : healthScore >= 500 ? '⚡ Equilibrada' : '⚠️ Atenção'}
-                  </h3>
-                  <p class="text-[11px] text-slate-500 mt-0.5">
-                    ${healthScore >= 750 ? 'Excelente taxa de poupança e controle de limites.' : 'Atenção aos limites para preservar o saldo.'}
-                  </p>
-                </div>
-                <div class="flex flex-col items-center">
-                  <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center font-black text-indigo-600 dark:text-indigo-400 text-sm">
-                    ${healthScore}
-                  </div>
-                  <span class="text-[9px] font-bold text-slate-400 mt-1">de 1000</span>
-                </div>
-              </div>
-
-              <!-- Caixinhas com Transbordo Automático -->
+              <!-- Caixinhas com Lápis e Botão '+ Nova Caixinha' -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
-                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
-                  <span class="text-[10px] text-indigo-500 font-bold">Transbordo Ativo</span>
+                  <div>
+                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
+                    <span class="text-[10px] text-indigo-500 font-bold">Transbordo Ativo</span>
+                  </div>
+                  <button
+                    onclick="openModalNovaCaixinha()"
+                    class="py-1.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 shadow-xs cursor-pointer active:scale-95 transition-all"
+                  >
+                    + Nova Caixinha
+                  </button>
                 </div>
 
                 <div class="space-y-2.5">
@@ -773,10 +959,21 @@
                           <span class="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
                             <span>${box.icon}</span>
                             <span>${box.name}</span>
+                            ${box.isMain ? '<span class="text-[9px] bg-indigo-500/20 text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
                           </span>
-                          <span class="font-extrabold text-slate-600 dark:text-slate-300">
-                            ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
-                          </span>
+                          <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-slate-600 dark:text-slate-300">
+                              ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
+                            </span>
+                            <button
+                              onclick="${box.isMain ? 'openModalEditarSalario()' : 'openModalEditarCaixinha(\'' + box.id + '\')'}"
+                              class="px-2 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer shadow-2xs border border-indigo-200/50 dark:border-indigo-800/50 active:scale-95"
+                              title="Editar Caixinha"
+                            >
+                              <span>✏️</span>
+                              <span>Editar</span>
+                            </button>
+                          </div>
                         </div>
 
                         <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
@@ -979,7 +1176,7 @@
           `;
         }
 
-        // 3. ABA CARTÕES
+        // 3. ABA CARTÕES COM COMPRAS PARCELADAS E LÁPIS
         else if (state.currentTab === 'cartoes') {
           const skinGradients = {
             titanium: 'from-slate-700 via-slate-800 to-zinc-950',
@@ -988,6 +1185,42 @@
             gold: 'from-amber-600 via-yellow-800 to-stone-950',
             midnight: 'from-blue-900 via-indigo-950 to-black'
           };
+
+          // Agrupamento de compras parceladas
+          const installmentMap = {};
+          (state.data.transactions || []).forEach(t => {
+            if (t.payment === 'Cartão de Crédito' && t.type === 'despesa') {
+              const match = t.desc.match(/^(.*?)\s*\((\d+)\/(\d+)\)$/);
+              if (match) {
+                const base = match[1].trim();
+                const pCur = parseInt(match[2], 10);
+                const pTot = parseInt(match[3], 10);
+                const card = state.data.creditCards.find(c => c.id === t.cardId) || state.data.creditCards[0];
+                const key = base + '__' + (t.cardId || 'c');
+                if (!installmentMap[key]) {
+                  installmentMap[key] = {
+                    baseName: base,
+                    cardId: t.cardId,
+                    cardName: card ? card.name : 'Cartão',
+                    parcelValue: t.value,
+                    minParcela: pCur,
+                    maxParcela: pCur,
+                    totalParcelas: pTot,
+                    transactions: [t]
+                  };
+                } else {
+                  installmentMap[key].transactions.push(t);
+                  if (pCur < installmentMap[key].minParcela) installmentMap[key].minParcela = pCur;
+                  if (pCur > installmentMap[key].maxParcela) installmentMap[key].maxParcela = pCur;
+                  if (pTot > installmentMap[key].totalParcelas) installmentMap[key].totalParcelas = pTot;
+                }
+                if (t.year === state.currentYear && t.month === state.currentMonth) {
+                  installmentMap[key].currentMonthParcela = pCur;
+                }
+              }
+            }
+          });
+          const installmentList = Object.values(installmentMap);
 
           html = `
             <div class="space-y-4">
@@ -1008,7 +1241,6 @@
 
                 return `
                   <div class="relative p-5 rounded-3xl bg-gradient-to-br ${skinGradients[card.skin || 'titanium']} text-white shadow-xl space-y-4 overflow-hidden border border-white/10">
-                    
                     ${card.isBlocked ? `
                       <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-4">
                         <span class="text-3xl mb-1">🔒</span>
@@ -1064,6 +1296,84 @@
                   </div>
                 `;
               }).join('')}
+
+              <!-- SEÇÃO DE COMPRAS PARCELADAS COM LÁPIS -->
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                      🛍️ Compras Parceladas no Cartão
+                    </h3>
+                    <span class="text-[10px] text-slate-400">Total liberdade para editar e gerenciar</span>
+                  </div>
+                  <button
+                    onclick="openModalNovaParcela()"
+                    class="py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 shadow-xs cursor-pointer active:scale-95"
+                  >
+                    + Nova Compra Parcelada
+                  </button>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                  ${installmentList.length === 0 ? `
+                    <div class="text-center py-6 text-xs text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                      Nenhuma compra parcelada ativa cadastrada. Clique no botão acima para adicionar.
+                    </div>
+                  ` : installmentList.map(item => {
+                    const currentP = item.currentMonthParcela || item.minParcela;
+                    const perc = Math.min(100, Math.round((currentP / item.totalParcelas) * 100));
+                    const remainingMonths = Math.max(1, item.totalParcelas - currentP + 1);
+                    const remainingTotal = remainingMonths * item.parcelValue;
+
+                    return `
+                      <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                          <div>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                              <span class="font-black text-xs text-slate-900 dark:text-slate-100">${item.baseName}</span>
+                              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/20">
+                                💳 ${item.cardName}
+                              </span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
+                              Parcela ${currentP} de ${item.totalParcelas} (${perc}%) • ${formatMoeda(item.parcelValue)}/mês
+                            </div>
+                          </div>
+
+                          <div class="flex items-center gap-1">
+                            <button
+                              onclick="openModalEditarParcela('${item.baseName}', '${item.cardId || ''}', ${item.parcelValue})"
+                              class="px-2 py-1 rounded-xl bg-slate-200/80 dark:bg-slate-700/80 hover:bg-indigo-100 text-slate-800 dark:text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
+                              title="Editar Compra Parcelada"
+                            >
+                              <span>✏️</span>
+                              <span>Editar</span>
+                            </button>
+                            <button
+                              onclick="deleteParcelaGroup('${item.baseName}', '${item.cardId || ''}')"
+                              class="p-1 rounded-xl text-slate-400 hover:text-rose-500 cursor-pointer"
+                              title="Excluir ou Quitar Parcelas"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                          <div class="h-full bg-gradient-to-r from-amber-400 to-indigo-500 rounded-full" style="width: ${perc}%;"></div>
+                        </div>
+
+                        <div class="flex justify-between items-center text-[10px] text-slate-400 font-bold">
+                          <span>${remainingMonths} parcelas restantes a pagar</span>
+                          <span class="text-slate-700 dark:text-slate-300 font-black">
+                            Saldo restante: ${formatMoeda(remainingTotal)}
+                          </span>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
             </div>
           `;
         }
@@ -1110,7 +1420,7 @@
           `;
         }
 
-        // 5. ABA MAIS (Metas, Assinaturas, Backup e Download)
+        // 5. ABA MAIS
         else if (state.currentTab === 'mais') {
           html = `
             <div class="space-y-4">
@@ -1172,7 +1482,7 @@
                   💾 Backup & Restauração
                 </h3>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">
-                  Baixe o site completo e autocontido ou copie os dados para restaurar quando quiser.
+                  Baixe o site completo e 100% editável ou copie os dados para restaurar quando quiser.
                 </p>
 
                 <!-- BOTÃO VERDE BEM VISÍVEL -->
@@ -1331,6 +1641,5 @@
       render();
     })();
   </script>
-
-
-</body></html>
+</body>
+</html>
