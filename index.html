@@ -2,11 +2,10 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanças Pro v1.2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Finanças Pro v2.0</title>
     
-    <!-- PWA & Manifesto -->
-    <link rel="manifest" href="./manifest.json">
+    <!-- PWA & Configurações de Tela Cheia -->
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -16,7 +15,7 @@
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
 
-    <!-- Bibliotecas -->
+    <!-- Bibliotecas externas via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,20 +23,19 @@
     <style>
         :root {
             --primary: #6366f1;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #db2777 100%);
-            --bg-color: #f1f5f9;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #f8fafc;
+            --input-bg: #f1f5f9;
             --card-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.08), 0 8px 10px -6px rgba(99, 102, 241, 0.04);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #3b82f6;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
-            --pink: #ec4899;
         }
 
         body.dark-mode {
@@ -55,7 +53,6 @@
             --blue: #60a5fa;
             --yellow: #fbbf24;
             --purple: #c084fc;
-            --pink: #f472b6;
         }
 
         * {
@@ -63,11 +60,11 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: #0b0f19;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -77,48 +74,50 @@
 
         .phone-container {
             width: 100%;
-            max-width: 430px;
+            max-width: 440px;
             height: 100vh;
-            max-height: 920px;
+            max-height: 930px;
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
         }
 
         @media (min-width: 450px) {
             .phone-container {
-                height: 94vh;
+                height: 95vh;
                 border-radius: 36px;
-                border: 8px solid var(--card-bg);
+                border: 6px solid #1e293b;
             }
         }
 
-        /* CAPA / TELA DE ENTRADA REFINADA */
+        /* TELA DE BLOQUEIO */
         .lock-screen {
             position: absolute;
             inset: 0;
-            background: #070a14;
+            background: radial-gradient(circle at top, #1e1b4b 0%, #070a14 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 36px 24px;
+            padding: 40px 24px;
             text-align: center;
             color: white;
-            overflow-y: auto;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .lock-screen.hidden {
-            display: none !important;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
         }
         .animate-pulse-slow {
             animation: pulse-slow 2.5s infinite ease-in-out;
@@ -131,7 +130,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
+            z-index: 10;
         }
 
         .header-brand {
@@ -141,16 +141,25 @@
         }
 
         .app-logo {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .app-logo svg {
+            width: 22px;
+            height: 22px;
+            stroke: #ffffff;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .brand-title-wrapper {
@@ -195,11 +204,11 @@
             background: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
             width: 100%;
+            z-index: 5;
         }
 
         .tab-button {
             flex: 1 1 0;
-            min-width: 0;
             padding: 10px 4px;
             border: none;
             background: none;
@@ -213,7 +222,7 @@
         }
 
         .tab-button .tab-icon {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
         }
 
         .tab-button .tab-label {
@@ -262,7 +271,7 @@
             align-items: center;
             background: var(--card-bg);
             padding: 10px 14px;
-            border-radius: 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             box-shadow: var(--card-shadow);
         }
@@ -271,8 +280,8 @@
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
@@ -282,7 +291,7 @@
         }
 
         .month-selector span {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--primary);
             text-transform: capitalize;
@@ -319,7 +328,7 @@
         }
 
         .card h2 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.4px;
         }
@@ -329,7 +338,7 @@
         }
 
         .card.editable h2:hover {
-            opacity: 0.8;
+            opacity: 0.85;
             text-decoration: underline dotted;
         }
 
@@ -338,18 +347,17 @@
         .card.blue h2 { color: var(--blue); }
         .card.purple h2 { color: var(--purple); }
         .card.yellow h2 { color: var(--yellow); }
-        .card.pink h2 { color: var(--pink); }
 
         .section-box {
             background: var(--card-bg);
             padding: 16px;
-            border-radius: 18px;
+            border-radius: 20px;
             border: 1px solid var(--border-color);
             box-shadow: var(--card-shadow);
         }
 
         .section-box h3 {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 800;
             margin-bottom: 12px;
             color: var(--text-main);
@@ -381,7 +389,7 @@
             color: var(--text-main);
             border-radius: 12px;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             outline: none;
             width: 100%;
         }
@@ -396,15 +404,15 @@
             color: white;
             border: none;
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         button.btn-secondary {
@@ -433,7 +441,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 240px;
+            max-height: 280px;
             overflow-y: auto;
         }
 
@@ -441,9 +449,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 11px 14px;
+            padding: 12px 14px;
             background: var(--input-bg);
-            border-radius: 12px;
+            border-radius: 14px;
             border-left: 4px solid #ccc;
         }
 
@@ -455,68 +463,70 @@
 
         .item-title {
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.86rem;
         }
 
         .item-meta {
             font-size: 0.72rem;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .item-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .val-expense { font-weight: 800; color: var(--red); font-size: 0.88rem; }
         .val-income { font-weight: 800; color: var(--green); font-size: 0.88rem; }
         .val-neutral { font-weight: 800; color: var(--blue); font-size: 0.88rem; }
 
-        .delete-btn {
+        .btn-icon {
             background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 0.95rem;
-            padding: 2px;
+            font-size: 0.85rem;
+            padding: 4px;
+            border-radius: 6px;
         }
-        .delete-btn:hover { color: var(--red); }
+        .btn-icon:hover { color: var(--primary); }
+        .btn-icon.del:hover { color: var(--red); }
 
         .progress-bar-bg {
             background: rgba(0, 0, 0, 0.08);
             border-radius: 10px;
-            height: 9px;
+            height: 8px;
             width: 100%;
             overflow: hidden;
             margin-top: 6px;
         }
 
         body.dark-mode .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .progress-bar-fill {
             height: 100%;
             border-radius: 10px;
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
         }
 
         .budget-item, .goal-item {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            padding: 10px 12px;
+            padding: 12px;
             background: var(--input-bg);
-            border-radius: 12px;
+            border-radius: 14px;
             border: 1px solid var(--border-color);
         }
 
         .budget-header, .goal-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
         }
 
@@ -551,54 +561,86 @@
             border-bottom: none;
             font-size: 0.82rem;
         }
+
+        /* MODAL CUSTOMIZADO */
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 20px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .modal-content h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
 
-        <!-- CAPA / TELA DE ENTRADA REFINADA -->
+        <!-- TELA DE ENTRADA / SEGURANÇA -->
         <div id="lock-screen" class="lock-screen">
-            <!-- Logo / Foto -->
-            <div class="w-full flex flex-col items-center pt-2 space-y-3">
+            <div class="w-full flex flex-col items-center pt-4 space-y-3">
                 <div class="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-2xl shadow-indigo-500/30">
                     <div class="w-full h-full bg-[#0f172a] rounded-[22px] flex items-center justify-center overflow-hidden">
-                        <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo do App" class="w-14 h-14 object-contain">
+                        <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-14 h-14 object-contain">
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black tracking-tight">Finanças Pro</h2>
-                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Controle Financeiro Pessoal</p>
+                    <h2 class="text-2xl font-black tracking-tight text-white">Finanças Pro</h2>
+                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Gestão Financeira Pessoal</p>
                 </div>
             </div>
 
-            <!-- Botão Biometria / Entrada -->
-            <div class="flex flex-col items-center space-y-3 my-auto">
+            <!-- Botão Biometria / Desbloqueio Rápido -->
+            <div class="flex flex-col items-center space-y-4 my-auto">
                 <div class="relative flex justify-center items-center">
-                    <div class="absolute w-24 h-24 bg-indigo-500/20 rounded-full animate-pulse-slow"></div>
-                    <button id="biometric-btn" onclick="desbloquearApp()" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-lg shadow-indigo-500/40 flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 border-none">
+                    <div class="absolute w-24 h-24 bg-indigo-500/25 rounded-full animate-pulse-slow"></div>
+                    <button id="biometric-btn" onclick="desbloquearApp(true)" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-xl shadow-indigo-500/40 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition duration-300 border-none">
                         <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white"></i>
                     </button>
                 </div>
-                <p id="bio-status" class="text-xs text-gray-400 font-medium">Toque na digital para entrar</p>
+                <p id="bio-status" class="text-xs text-gray-300 font-medium">Toque para desbloquear</p>
                 
-                <button onclick="desbloquearApp()" class="bg-white/10 hover:bg-white/15 text-xs font-bold py-2.5 px-6 rounded-xl border border-white/10 transition mt-1">
+                <button onclick="desbloquearApp(false)" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2.5 px-6 rounded-xl border border-white/15 transition text-white">
                     🔓 Entrar no Painel
                 </button>
             </div>
 
-            <!-- Botão de Instalação Real (PWA) -->
-            <div class="w-full max-w-xs pb-1 space-y-2">
-                <button id="btn-instalar-app" onclick="instalarAppPWA()" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95 py-3.5 px-4 rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/40 border border-indigo-400/30 transition">
-                    <i class="fa-solid fa-cloud-arrow-down text-sm"></i> Instalar Aplicativo no Telemóvel
+            <!-- Instalação PWA -->
+            <div class="w-full max-w-xs pb-2 space-y-2">
+                <button id="btn-instalar-app" onclick="instalarAppPWA()" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 py-3 px-4 rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 transition text-white">
+                    <i class="fa-solid fa-cloud-arrow-down text-sm"></i> Instalar no Telemóvel / PC
                 </button>
-                <p class="text-[10px] text-gray-500 text-center">
-                    Cria o atalho direto no teu ecrã inicial de forma independente.
+                <p class="text-[10px] text-gray-400 text-center">
+                    Funciona 100% offline e sem necessidade de conexão.
                 </p>
             </div>
         </div>
 
-        <!-- PAINEL PRINCIPAL DO APLICATIVO -->
+        <!-- CABEÇALHO PRINCIPAL -->
         <header>
             <div class="header-brand">
                 <div class="app-logo">
@@ -609,17 +651,17 @@
                 </div>
                 <div class="brand-title-wrapper">
                     <h1>Finanças Pro</h1>
-                    <span class="app-version">v1.2</span>
+                    <span class="app-version">v2.0 • Offline Ready</span>
                 </div>
             </div>
             
             <div class="header-actions">
-                <button class="header-btn" onclick="bloquearManualmente()" title="Bloquear App">🔒</button>
+                <button class="header-btn" onclick="bloquearManualmente()" title="Bloquear">🔒</button>
                 <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Escuro</button>
             </div>
         </header>
 
-        <!-- Navegação com Ícones -->
+        <!-- BARRA DE NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('gastos')">
                 <span class="tab-icon">💳</span>
@@ -652,19 +694,9 @@
 
                 <div class="summary-grid">
                     <div class="card blue full-width editable">
-                        <span>💵 Saldo Disponível (Caixa/Conta)</span>
-                        <h2 id="card-cash" onclick="editarValor('cash')" title="Clique para editar">R$ 0,00</h2>
+                        <span>💵 Saldo Disponível (Caixa / Conta)</span>
+                        <h2 id="card-cash" onclick="abrirModalSaldo()" title="Clique para ajustar o saldo">R$ 0,00</h2>
                     </div>
-                    
-                    <!-- QUADRADINHO DA PENSÃO DA SOFIA -->
-                    <div class="card pink full-width editable">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>👧 Pensão da Sofia</span>
-                            <a href="#" onclick="marcarPensaoRecebida()" style="font-size:0.68rem; color:var(--pink); text-decoration:none; font-weight:800;">[ATUALIZAR]</a>
-                        </div>
-                        <h2 id="card-pensao" onclick="editarValor('pensao')" title="Clique para editar">R$ 0,00</h2>
-                    </div>
-
                     <div class="card green">
                         <span>📈 Receitas do Mês</span>
                         <h2 id="card-income">R$ 0,00</h2>
@@ -680,12 +712,13 @@
                     <div class="card yellow editable">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span>💳 Fatura do Cartão</span>
-                            <a href="#" onclick="pagarFaturaCartao()" style="font-size:0.68rem; color:var(--yellow); text-decoration:none; font-weight:800;">[PAGAR]</a>
+                            <a href="#" onclick="abrirModalPagarFatura()" style="font-size:0.68rem; color:var(--yellow); text-decoration:none; font-weight:800;">[PAGAR]</a>
                         </div>
-                        <h2 id="card-credit" onclick="editarValor('credit')" title="Clique para editar">R$ 0,00</h2>
+                        <h2 id="card-credit">R$ 0,00</h2>
                     </div>
                 </div>
 
+                <!-- Formulário de Transação -->
                 <div class="section-box">
                     <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
@@ -696,13 +729,13 @@
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Salário, Aluguel, Supermercado)">
+                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Salário)">
                         <div class="form-row">
                             <select id="trans-category">
                                 <option value="">Selecione Categoria</option>
                             </select>
                             <select id="trans-payment">
-                                <option value="Dinheiro/Caixa">💵 Dinheiro / Saldo</option>
+                                <option value="Dinheiro/Caixa">💵 Dinheiro / Débito / Pix</option>
                                 <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
                             </select>
                         </div>
@@ -723,49 +756,53 @@
                     </div>
                 </div>
 
+                <!-- Lista de Transações com Busca -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
-                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.72rem;">
-                            <option value="all">Todos</option>
-                            <option value="expense">Despesas</option>
-                            <option value="income">Receitas</option>
-                        </select>
+                        <div style="display:flex; gap:6px;">
+                            <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.72rem;">
+                                <option value="all">Todos</option>
+                                <option value="expense">Despesas</option>
+                                <option value="income">Receitas</option>
+                            </select>
+                        </div>
                     </h3>
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 10px; font-size: 0.78rem; padding: 8px 12px;">
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
 
-            <!-- ABA 2: ORÇAMENTOS E METAS -->
+            <!-- ABA 2: METAS E CATEGORIAS -->
             <div id="tab-metas" class="tab-pane">
                 <div class="section-box">
-                    <h3>🏷️ Nova Categoria & Teto de Gastos</h3>
+                    <h3>🏷️ Nova Categoria & Teto</h3>
                     <div class="form-group">
                         <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
                         <div class="form-row">
                             <input type="number" id="cat-limit" step="10" min="0" placeholder="Teto Mensal R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 48px; height: 40px; padding: 0; cursor: pointer; border-radius: 10px;">
+                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 42px; padding: 0; cursor: pointer; border-radius: 10px;">
                         </div>
                         <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>📊 Orçamento do Mês (Consumo vs Limite)</h3>
+                    <h3>📊 Orçamento do Mês (Gasto vs Limite)</h3>
                     <div class="list-container" id="budget-progress-list"></div>
                 </div>
 
                 <div class="section-box">
                     <h3>🏦 Nova Caixinha / Objetivo</h3>
                     <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🛡️ Reserva, ✈️ Viagem)">
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🛡️ Reserva de Emergência)">
                         <input type="number" id="goal-target" min="1" step="10" placeholder="Meta Total (R$)">
                         <button class="btn-primary" onclick="adicionarMeta()">🎯 Criar Caixinha</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>🐷 Minhas Caixinhas Guardadas</h3>
+                    <h3>🐷 Minhas Caixinhas</h3>
                     <div class="list-container" id="goals-list"></div>
                 </div>
             </div>
@@ -774,7 +811,7 @@
             <div id="tab-investimentos" class="tab-pane">
                 <div class="summary-grid">
                     <div class="card purple full-width">
-                        <span>💼 Total Geral Investido</span>
+                        <span>💼 Total Geral Aportado</span>
                         <h2 id="card-total-invested">R$ 0,00</h2>
                     </div>
                     <div class="card yellow">
@@ -788,12 +825,13 @@
                 </div>
 
                 <div class="section-box">
-                    <h3>🚀 Novo Aporte / Ativo</h3>
+                    <h3>🚀 Registrar Aporte</h3>
                     <div class="form-group">
                         <div class="form-row">
                             <select id="invest-platform">
                                 <option value="XP Investimentos">XP Investimentos</option>
                                 <option value="Binance">Binance</option>
+                                <option value="Nubank/Outro">Outra Corretora</option>
                             </select>
                             <select id="invest-type">
                                 <option value="Renda Fixa">🏛️ Renda Fixa / CDB</option>
@@ -803,19 +841,19 @@
                                 <option value="Outros">📦 Outros</option>
                             </select>
                         </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: BTC, CDB 110%, PETR4)">
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: BTC, Tesouro Selic, PETR4)">
                         <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor Aportado (R$)">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">➕ Registrar Aporte</button>
+                        <button class="btn-primary" onclick="adicionarInvestimento()">➕ Adicionar Ativo</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>📁 Carteira de Ativos</h3>
+                    <h3>📁 Carteira de Aportes</h3>
                     <div class="list-container" id="investment-list"></div>
                 </div>
             </div>
 
-            <!-- ABA 4: RELATÓRIOS -->
+            <!-- ABA 4: RELATÓRIOS E BACKUP -->
             <div id="tab-relatorios" class="tab-pane">
                 
                 <div class="summary-grid">
@@ -838,14 +876,14 @@
                 </div>
 
                 <div class="section-box">
-                    <h3>📈 Evolução dos Meses (Entradas vs Saídas)</h3>
+                    <h3>📈 Evolução Mensal (Entradas vs Saídas)</h3>
                     <div class="chart-box">
                         <canvas id="monthlyComparisonChart"></canvas>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>📋 Relatório Mensal Detalhado</h3>
+                    <h3>📋 Histórico Detalhado dos Meses</h3>
                     <div style="overflow-x: auto;">
                         <table class="report-table">
                             <thead>
@@ -862,26 +900,42 @@
                 </div>
 
                 <div class="section-box">
-                    <h3>🥧 Despesas por Categoria (Mês Atual)</h3>
+                    <h3>🥧 Despesas por Categoria (Mês Ativo)</h3>
                     <div class="chart-box" style="height: 180px;">
                         <canvas id="expenseCategoryChart"></canvas>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>💾 Exportação e Backup</h3>
+                    <h3>💾 Backup e Segurança</h3>
                     <div class="form-group">
-                        <button class="btn-secondary" onclick="exportarCSV()" style="width: 100%;">📥 Baixar Planilha (CSV)</button>
-                        <button class="btn-danger" onclick="limparTodosDados()" style="width: 100%; margin-top: 6px;">🗑️ Zerar / Resetar Todos os Dados</button>
+                        <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Extrato em CSV (Excel)</button>
+                        <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
+                        <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
+                        <input type="file" id="import-file" style="display:none;" accept=".json" onchange="importarBackupJSON(event)">
+                        <button class="btn-danger" onclick="limparTodosDados()" style="margin-top: 6px;">🗑️ Reiniciar e Limpar Todos os Dados</button>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <!-- MODAL GENÉRICO PARA ENTRADAS RÁPIDAS -->
+        <div id="app-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h4 id="modal-title">Título do Modal</h4>
+                <div id="modal-body" class="form-group"></div>
+                <div class="form-row">
+                    <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+                    <button class="btn-primary" id="modal-confirm-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_limpo_v4";
+        const STORAGE_KEY = "meu_orcamento_limpo_v5";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -891,25 +945,35 @@
 
         const defaultData = {
             cash: 0.00,
-            pensao: 0.00,
-            credit: 0.00,
             categories: [
-                { name: "🍔 Alimentação", color: "#f59e0b", limit: 0 },
-                { name: "🏠 Moradia", color: "#6366f1", limit: 0 },
-                { name: "🚗 Transporte", color: "#ec4899", limit: 0 },
-                { name: "🎮 Lazer", color: "#06b6d4", limit: 0 }
+                { name: "🍔 Alimentação", color: "#f59e0b", limit: 800 },
+                { name: "🏠 Moradia", color: "#6366f1", limit: 1200 },
+                { name: "🚗 Transporte", color: "#ec4899", limit: 400 },
+                { name: "🎮 Lazer", color: "#06b6d4", limit: 300 }
             ],
             transactions: [],
             goals: [],
             investments: []
         };
 
+        // Carregamento resiliente (nunca quebra por propriedades ausentes)
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY);
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("meu_orcamento_limpo_v4");
             if (salvo) {
-                try { return JSON.parse(salvo); } catch (e) { }
+                try {
+                    const parsed = JSON.parse(salvo);
+                    return {
+                        cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
+                        categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
+                        transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+                        goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+                        investments: Array.isArray(parsed.investments) ? parsed.investments : []
+                    };
+                } catch (e) {
+                    console.error("Falha ao analisar dados:", e);
+                }
             }
-            return defaultData;
+            return JSON.parse(JSON.stringify(defaultData));
         }
 
         let financialData = carregarDados();
@@ -918,14 +982,42 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- MANTER SESSÃO ATIVA ---
+        // --- SISTEMA DE SESSÃO & DESBLOQUEIO ---
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
-                document.getElementById("lock-screen").classList.add("hidden");
+                const lock = document.getElementById("lock-screen");
+                if (lock) lock.classList.add("hidden");
             }
+            document.getElementById("trans-date").value = new Date().toISOString().slice(0, 10);
+            atualizarTela();
         });
 
-        // --- INSTALAÇÃO PWA REAL ---
+        function desbloquearApp(comFeedbackVisual = false) {
+            const icon = document.getElementById('bio-icon');
+            const status = document.getElementById('bio-status');
+            const btn = document.getElementById('biometric-btn');
+
+            if (comFeedbackVisual && icon && status) {
+                icon.className = "fa-solid fa-check text-3xl text-emerald-300";
+                btn.classList.add('bg-emerald-700');
+                status.textContent = "Acesso liberado!";
+                status.className = "text-xs text-emerald-400 font-bold";
+            }
+
+            sessionStorage.setItem('app_ja_desbloqueado', 'true');
+            setTimeout(() => {
+                const lock = document.getElementById("lock-screen");
+                if (lock) lock.classList.add("hidden");
+            }, comFeedbackVisual ? 250 : 50);
+        }
+
+        function bloquearManualmente() {
+            sessionStorage.removeItem('app_ja_desbloqueado');
+            const lock = document.getElementById("lock-screen");
+            if (lock) lock.classList.remove("hidden");
+        }
+
+        // --- PWA INSTALLATION PROMPT ---
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -935,71 +1027,28 @@
         function instalarAppPWA() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
             } else {
-                alert("Para instalar no teu telemóvel:\n\n• Android (Chrome): Toca nos 3 pontos (⋮) no canto superior direito e seleciona 'Adicionar à tela inicial' ou 'Instalar aplicativo'.\n• iPhone (Safari): Toca no botão de Partilhar (caixa com seta) e escolhe 'Adicionar à Tela de Início'.");
+                alert("Para instalar:\n• No Android/Chrome: Toque nos três pontos (⋮) e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n• No iPhone/Safari: Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'.");
             }
         }
 
-        // --- SISTEMA DE DESBLOQUEIO E BIOMETRIA ---
-        async function desbloquearApp() {
-            const icon = document.getElementById('bio-icon');
-            const status = document.getElementById('bio-status');
-            const btn = document.getElementById('biometric-btn');
+        // --- NAVEGAÇÃO ENTRE ABAS ---
+        let monthlyChartInstance = null;
+        let expenseChartInstance = null;
 
-            try {
-                status.textContent = "A verificar biometria...";
-                status.className = "text-xs text-amber-300 font-medium";
+        function trocarAba(aba) {
+            const tabs = ['gastos', 'metas', 'investimentos', 'relatorios'];
+            document.querySelectorAll('.tab-button').forEach((btn, idx) => {
+                btn.classList.toggle('active', tabs[idx] === aba);
+            });
+            tabs.forEach(t => {
+                const pane = document.getElementById(`tab-${t}`);
+                if (pane) pane.classList.toggle('active', t === aba);
+            });
 
-                if (window.PublicKeyCredential) {
-                    const challenge = new Uint8Array(32);
-                    window.crypto.getRandomValues(challenge);
-                    const userId = new Uint8Array(16);
-                    window.crypto.getRandomValues(userId);
-
-                    await navigator.credentials.create({
-                        publicKey: {
-                            challenge: challenge,
-                            rp: { name: "Finanças Pro" },
-                            user: { id: userId, name: "usuario@app.local", displayName: "Usuário" },
-                            pubKeyCredParams: [{ alg: -7, type: "public-key" }],
-                            authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
-                            timeout: 20000
-                        }
-                    });
-                }
-
-                icon.className = "fa-solid fa-check text-3xl text-emerald-300";
-                btn.classList.remove('from-indigo-600', 'to-purple-600');
-                btn.classList.add('bg-emerald-950', 'border', 'border-emerald-500');
-                status.textContent = "Acesso liberado!";
-                status.className = "text-xs text-emerald-400 font-bold";
-
-                sessionStorage.setItem('app_ja_desbloqueado', 'true');
-
-                setTimeout(() => {
-                    document.getElementById("lock-screen").classList.add("hidden");
-                }, 400);
-
-            } catch (error) {
-                sessionStorage.setItem('app_ja_desbloqueado', 'true');
-                document.getElementById("lock-screen").classList.add("hidden");
-            }
-        }
-
-        function bloquearManualmente() {
-            sessionStorage.removeItem('app_ja_desbloqueado');
-            document.getElementById("lock-screen").classList.remove("hidden");
-        }
-
-        function limparTodosDados() {
-            if (confirm("Tens a certeza que desejas apagar todos os lançamentos e reiniciar o app?")) {
-                financialData = JSON.parse(JSON.stringify(defaultData));
-                salvarDados();
-                atualizarTela();
-                alert("Aplicativo reiniciado com sucesso!");
+            if (aba === 'relatorios') {
+                renderizarRelatorios();
             }
         }
 
@@ -1025,52 +1074,47 @@
             }
         }
 
-        let monthlyChartInstance = null;
-        let expenseChartInstance = null;
-
-        function trocarAba(aba) {
-            const tabs = ['gastos', 'metas', 'investimentos', 'relatorios'];
-            document.querySelectorAll('.tab-button').forEach((btn, idx) => {
-                btn.classList.toggle('active', tabs[idx] === aba);
-            });
-            tabs.forEach(t => {
-                const pane = document.getElementById(`tab-${t}`);
-                if (pane) pane.classList.toggle('active', t === aba);
-            });
-
-            if (aba === 'relatorios') { renderizarRelatorios(); }
-        }
-
+        // --- ATUALIZAÇÃO DA INTERFACE ---
         function atualizarTela() {
             document.getElementById("current-month-display").innerText = `${mesesNomes[currentMonthNum - 1]} de ${currentYear}`;
-            const transDoMes = financialData.transactions.filter(t => t.monthKey === selectedMonthKey);
+            
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
             const despesasMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const receitasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            const faturaCartaoMes = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
             const liquidoMes = receitasMes - despesasMes;
 
             document.getElementById("card-cash").innerText = `R$ ${financialData.cash.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-pensao").innerText = `R$ ${(financialData.pensao || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-spent").innerText = `R$ ${despesasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-income").innerText = `R$ ${receitasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-net").innerText = `R$ ${liquidoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-credit").innerText = `R$ ${financialData.credit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-credit").innerText = `R$ ${faturaCartaoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
+            // Select de Categorias
             const select = document.getElementById("trans-category");
             select.innerHTML = '<option value="">Selecione Categoria</option>';
-            financialData.categories.forEach(cat => {
+            (financialData.categories || []).forEach(cat => {
                 const opt = document.createElement("option");
-                opt.value = cat.name; opt.textContent = cat.name;
+                opt.value = cat.name;
+                opt.textContent = cat.name;
                 select.appendChild(opt);
             });
 
+            // Lista de Transações com Busca
             const filter = document.getElementById("filter-type").value;
+            const searchVal = (document.getElementById("search-trans").value || "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
 
-            const filtrados = transDoMes.filter(t => filter === 'all' || t.type === filter);
+            const filtrados = transDoMes.filter(t => {
+                const bateTipo = (filter === 'all' || t.type === filter);
+                const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal) || (t.category && t.category.toLowerCase().includes(searchVal));
+                return bateTipo && bateTexto;
+            });
+
             if (filtrados.length === 0) {
-                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhuma movimentação neste mês.</span>';
+                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhuma movimentação encontrada.</span>';
             } else {
                 filtrados.forEach((trans) => {
                     const catObj = financialData.categories.find(c => c.name === trans.category);
@@ -1090,16 +1134,18 @@
                         </div>
                         <div class="item-right">
                             <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="delete-btn" onclick="removerTransacao(${trans.id})" title="Excluir">✕</button>
+                            <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                     listContainer.appendChild(item);
                 });
             }
 
+            // Progresso de Orçamento das Categorias
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
-            financialData.categories.forEach((cat) => {
+            (financialData.categories || []).forEach((cat) => {
                 const gastoCat = transDoMes.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
                 const limit = cat.limit || 0;
                 const perc = limit > 0 ? Math.min(Math.round((gastoCat / limit) * 100), 100) : 0;
@@ -1123,13 +1169,14 @@
                 budgetContainer.appendChild(bItem);
             });
 
+            // Metas / Caixinhas
             const goalsContainer = document.getElementById("goals-list");
             goalsContainer.innerHTML = '';
-            if (financialData.goals.length === 0) {
-                goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada.</span>';
+            if (!financialData.goals || financialData.goals.length === 0) {
+                goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada ainda.</span>';
             } else {
-                financialData.goals.forEach((goal, index) => {
-                    const perc = Math.min(Math.round((goal.current / goal.target) * 100), 100);
+                financialData.goals.forEach((goal) => {
+                    const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
                     const gItem = document.createElement("div");
                     gItem.className = "goal-item";
                     gItem.innerHTML = `
@@ -1141,28 +1188,30 @@
                             <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
                         </div>
                         <div style="display:flex; gap:6px; margin-top:6px;">
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'guardar')">📥 Guardar</button>
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="movimentarCaixinha(${index}, 'resgatar')">📤 Resgatar</button>
-                            <button class="delete-btn" onclick="removerMeta(${index})">✕</button>
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                            <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                     goalsContainer.appendChild(gItem);
                 });
             }
 
-            const totalXP = financialData.investments.filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
-            const totalBinance = financialData.investments.filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
+            // Investimentos
+            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
+            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
+            const totalOutros = (financialData.investments || []).filter(i => i.platform !== "XP Investimentos" && i.platform !== "Binance").reduce((acc, curr) => acc + curr.value, 0);
 
-            document.getElementById("card-total-invested").innerText = `R$ ${(totalXP + totalBinance).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-total-invested").innerText = `R$ ${(totalXP + totalBinance + totalOutros).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-xp-total").innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-binance-total").innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
             const investList = document.getElementById("investment-list");
             investList.innerHTML = '';
-            if (financialData.investments.length === 0) {
-                investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum investimento registrado.</span>';
+            if (!financialData.investments || financialData.investments.length === 0) {
+                investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum aporte registrado.</span>';
             } else {
-                financialData.investments.forEach((inv, index) => {
+                financialData.investments.forEach((inv) => {
                     const item = document.createElement("div");
                     item.className = "item-card";
                     item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
@@ -1173,7 +1222,7 @@
                         </div>
                         <div class="item-right">
                             <span class="val-neutral">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="delete-btn" onclick="removerInvestimento(${index})" title="Excluir">✕</button>
+                            <button class="btn-icon del" onclick="removerInvestimento(${inv.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                     investList.appendChild(item);
@@ -1181,18 +1230,7 @@
             }
         }
 
-        function marcarPensaoRecebida() {
-            const valorStr = prompt("Atualizar valor da Pensão da Sofia:", financialData.pensao || 0);
-            if (valorStr !== null) {
-                const val = parseFloat(valorStr.replace(',', '.'));
-                if (!isNaN(val)) {
-                    financialData.pensao = val;
-                    salvarDados();
-                    atualizarTela();
-                }
-            }
-        }
-
+        // --- LANÇAMENTOS & PARCELAMENTO ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1203,14 +1241,14 @@
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(value) || value <= 0) {
-                alert("Preenche a descrição e um valor válido.");
+                alert("Preencha a descrição e um valor numérico válido.");
                 return;
             }
 
-            if (type === 'expense') {
-                if (payment === "Dinheiro/Caixa") { financialData.cash -= value; }
-                else if (payment === "Cartão de Crédito") { financialData.credit += value; }
-            } else {
+            // Atualiza o saldo em dinheiro de imediato se não for cartão
+            if (type === 'expense' && payment !== "Cartão de Crédito") {
+                financialData.cash -= value;
+            } else if (type === 'income') {
                 financialData.cash += value;
             }
 
@@ -1218,16 +1256,22 @@
             const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
 
             for (let i = 0; i < installments; i++) {
-                let m = mesBase + i; let a = anoBase;
+                let m = mesBase + i;
+                let a = anoBase;
                 while (m > 12) { m -= 12; a += 1; }
                 const mKey = `${a}-${String(m).padStart(2, '0')}`;
                 const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaBase).padStart(2, '0')}`;
                 const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments})` : desc;
 
                 financialData.transactions.unshift({
-                    id: Date.now() + i, type, desc: descricaoFinal, value: valorParcela,
-                    category: category || "Geral", payment: type === 'expense' ? payment : "Dinheiro/Caixa",
-                    date: dataParcela, monthKey: mKey
+                    id: Date.now() + i,
+                    type,
+                    desc: descricaoFinal,
+                    value: valorParcela,
+                    category: category || "Geral",
+                    payment: type === 'expense' ? payment : "Dinheiro/Caixa",
+                    date: dataParcela,
+                    monthKey: mKey
                 });
             }
 
@@ -1241,10 +1285,9 @@
             const idx = financialData.transactions.findIndex(t => t.id === id);
             if (idx === -1) return;
             const t = financialData.transactions[idx];
-            if (t.type === 'expense') {
-                if (t.payment === "Dinheiro/Caixa") { financialData.cash += t.value; }
-                if (t.payment === "Cartão de Crédito") { financialData.credit = Math.max(0, financialData.credit - t.value); }
-            } else {
+            if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
+                financialData.cash += t.value;
+            } else if (t.type === 'income') {
                 financialData.cash -= t.value;
             }
             financialData.transactions.splice(idx, 1);
@@ -1252,44 +1295,137 @@
             atualizarTela();
         }
 
-        function pagarFaturaCartao() {
-            const fatura = financialData.credit;
-            if (fatura <= 0) { alert("Não há fatura pendente."); return; }
-            const valorStr = prompt(`Saldo em caixa: R$ ${financialData.cash.toFixed(2)}\nFatura atual: R$ ${fatura.toFixed(2)}\nQuanto desejas pagar?`, fatura);
-            if (valorStr !== null) {
-                const pago = parseFloat(valorStr.replace(',', '.'));
-                if (!isNaN(pago) && pago > 0) {
-                    financialData.cash -= pago;
-                    financialData.credit = Math.max(0, financialData.credit - pago);
+        // --- MODAL NATIVO (SUBSTITUI PROMPT) ---
+        function abrirModal(titulo, htmlBody, callbackConfirm) {
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-body").innerHTML = htmlBody;
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            confirmBtn.onclick = () => {
+                callbackConfirm();
+                fecharModal();
+            };
+            document.getElementById("app-modal").classList.add("active");
+        }
+
+        function fecharModal() {
+            document.getElementById("app-modal").classList.remove("active");
+        }
+
+        function abrirModalSaldo() {
+            abrirModal("Definir Saldo em Caixa", `
+                <label class="text-xs text-gray-500 font-bold">Novo Saldo Disponível (R$):</label>
+                <input type="number" id="input-modal-saldo" step="0.01" value="${financialData.cash}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-saldo").value);
+                if (!isNaN(val)) {
+                    financialData.cash = val;
                     salvarDados();
                     atualizarTela();
                 }
-            }
+            });
         }
 
-        function editarValor(tipo) {
-            const labels = { cash: "Saldo Disponível", pensao: "Pensão da Sofia", credit: "Fatura do Cartão" };
-            const valorAtual = financialData[tipo] || 0;
-            const novoValorStr = prompt(`Definir novo valor para ${labels[tipo]}:`, valorAtual);
-            if (novoValorStr !== null) {
-                const novo = parseFloat(novoValorStr.replace(',', '.'));
-                if (!isNaN(novo)) {
-                    financialData[tipo] = novo;
+        function abrirModalPagarFatura() {
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+            const faturaAtual = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
+
+            if (faturaAtual <= 0) {
+                alert("Não há despesas no cartão de crédito para este mês.");
+                return;
+            }
+
+            abrirModal("Pagar Fatura do Cartão", `
+                <p class="text-xs text-gray-500">Saldo em caixa atual: <b>R$ ${financialData.cash.toFixed(2)}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Fatura do mês: <b>R$ ${faturaAtual.toFixed(2)}</b></p>
+                <label class="text-xs text-gray-500 font-bold">Valor a deduzir do caixa:</label>
+                <input type="number" id="input-modal-fatura" step="0.01" value="${faturaAtual}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-fatura").value);
+                if (!isNaN(val) && val > 0) {
+                    financialData.cash -= val;
+                    financialData.transactions.unshift({
+                        id: Date.now(),
+                        type: 'expense',
+                        desc: `Pagamento Fatura (${mesesNomes[currentMonthNum - 1]})`,
+                        value: val,
+                        category: 'Pagamentos',
+                        payment: 'Dinheiro/Caixa',
+                        date: new Date().toISOString().slice(0, 10),
+                        monthKey: selectedMonthKey
+                    });
                     salvarDados();
                     atualizarTela();
                 }
-            }
+            });
         }
 
+        function abrirModalEditarTransacao(id) {
+            const t = financialData.transactions.find(x => x.id === id);
+            if (!t) return;
+
+            abrirModal("Editar Lançamento", `
+                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
+                <input type="text" id="edit-t-desc" value="${t.desc}">
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
+                <input type="number" id="edit-t-val" step="0.01" value="${t.value}">
+            `, () => {
+                const newDesc = document.getElementById("edit-t-desc").value.trim();
+                const newVal = parseFloat(document.getElementById("edit-t-val").value);
+                if (newDesc && !isNaN(newVal) && newVal > 0) {
+                    // Ajusta o caixa proporcionalmente
+                    if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
+                        financialData.cash += t.value - newVal;
+                    } else if (t.type === 'income') {
+                        financialData.cash -= t.value - newVal;
+                    }
+                    t.desc = newDesc;
+                    t.value = newVal;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalCaixinha(id, tipo) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
+                <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b> / R$ ${goal.target.toFixed(2)}</p>
+                <label class="text-xs text-gray-500 font-bold">Valor (R$):</label>
+                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Ex: 50.00">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
+                if (!isNaN(val) && val > 0) {
+                    if (tipo === 'guardar') {
+                        financialData.cash -= val;
+                        goal.current += val;
+                    } else {
+                        if (val > goal.current) { alert("Saldo insuficiente na caixinha."); return; }
+                        goal.current -= val;
+                        financialData.cash += val;
+                    }
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        // --- CATEGORIAS, METAS E INVESTIMENTOS ---
         function adicionarCategoria() {
             const name = document.getElementById("cat-name").value.trim();
             const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
             const color = document.getElementById("cat-color").value;
-            if (!name) { alert("Informa o nome da categoria."); return; }
+            if (!name) { alert("Informe o nome da categoria."); return; }
 
             const existente = financialData.categories.find(c => c.name.toLowerCase() === name.toLowerCase());
-            if (existente) { existente.limit = limit; existente.color = color; }
-            else { financialData.categories.push({ name, color, limit }); }
+            if (existente) {
+                existente.limit = limit;
+                existente.color = color;
+            } else {
+                financialData.categories.push({ name, color, limit });
+            }
 
             document.getElementById("cat-name").value = '';
             document.getElementById("cat-limit").value = '';
@@ -1300,7 +1436,8 @@
         function adicionarMeta() {
             const name = document.getElementById("goal-name").value.trim();
             const target = parseFloat(document.getElementById("goal-target").value);
-            if (!name || isNaN(target) || target <= 0) { alert("Preenche o nome do objetivo e o valor pretendido."); return; }
+            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e a meta pretendida."); return; }
+
             financialData.goals.push({ id: Date.now(), name, target, current: 0 });
             document.getElementById("goal-name").value = '';
             document.getElementById("goal-target").value = '';
@@ -1308,25 +1445,8 @@
             atualizarTela();
         }
 
-        function movimentarCaixinha(index, tipo) {
-            const meta = financialData.goals[index];
-            const valorStr = prompt(`Caixinha "${meta.name}"\nSaldo atual: R$ ${meta.current.toFixed(2)}\nDigite o valor para ${tipo}:`);
-            if (valorStr !== null) {
-                const valor = parseFloat(valorStr.replace(',', '.'));
-                if (!isNaN(valor) && valor > 0) {
-                    if (tipo === 'guardar') { financialData.cash -= valor; meta.current += valor; }
-                    else if (tipo === 'resgatar') {
-                        if (valor > meta.current) { alert("Saldo insuficiente na caixinha."); return; }
-                        meta.current -= valor; financialData.cash += valor;
-                    }
-                    salvarDados();
-                    atualizarTela();
-                }
-            }
-        }
-
-        function removerMeta(index) {
-            financialData.goals.splice(index, 1);
+        function removerMeta(id) {
+            financialData.goals = financialData.goals.filter(g => g.id !== id);
             salvarDados();
             atualizarTela();
         }
@@ -1336,7 +1456,7 @@
             const type = document.getElementById("invest-type").value;
             const asset = document.getElementById("invest-asset").value.trim();
             const value = parseFloat(document.getElementById("invest-value").value);
-            if (!asset || isNaN(value) || value <= 0) { alert("Preenche o ativo e um valor válido."); return; }
+            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
 
             const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
             financialData.investments.unshift({ id: Date.now(), platform, type, asset, value, date: dataAtual });
@@ -1347,15 +1467,16 @@
             atualizarTela();
         }
 
-        function removerInvestimento(index) {
-            financialData.investments.splice(index, 1);
+        function removerInvestimento(id) {
+            financialData.investments = financialData.investments.filter(i => i.id !== id);
             salvarDados();
             atualizarTela();
         }
 
+        // --- RELATÓRIOS E GRÁFICOS ---
         function renderizarRelatorios() {
             const anoAtual = currentYear;
-            const transAno = financialData.transactions.filter(t => t.monthKey && t.monthKey.startsWith(String(anoAtual)));
+            const transAno = (financialData.transactions || []).filter(t => t.monthKey && t.monthKey.startsWith(String(anoAtual)));
 
             const totalEntradasAno = transAno.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const totalSaidasAno = transAno.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
@@ -1367,18 +1488,20 @@
             document.getElementById("card-year-savings").innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-savings-rate").innerText = `${taxaPoupanca}%`;
 
-            const monthlyIncome = []; const monthlyExpense = [];
+            const monthlyIncome = [];
+            const monthlyExpense = [];
             const tableBody = document.getElementById("monthly-report-table-body");
             tableBody.innerHTML = '';
 
             for (let m = 1; m <= 12; m++) {
                 const mKey = `${anoAtual}-${String(m).padStart(2, '0')}`;
-                const mTrans = financialData.transactions.filter(t => t.monthKey === mKey);
+                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
                 const inc = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
                 const exp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
                 const net = inc - exp;
 
-                monthlyIncome.push(inc); monthlyExpense.push(exp);
+                monthlyIncome.push(inc);
+                monthlyExpense.push(exp);
 
                 const tr = document.createElement("tr");
                 const netColor = net >= 0 ? "var(--green)" : "var(--red)";
@@ -1402,56 +1525,114 @@
             `;
             tableBody.appendChild(totalRow);
 
-            const ctxMonthly = document.getElementById('monthlyComparisonChart').getContext('2d');
-            if (monthlyChartInstance) monthlyChartInstance.destroy();
-            monthlyChartInstance = new Chart(ctxMonthly, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                    datasets: [
-                        { label: 'Entradas (R$)', data: monthlyIncome, backgroundColor: '#10b981', borderRadius: 6 },
-                        { label: 'Saídas (R$)', data: monthlyExpense, backgroundColor: '#f43f5e', borderRadius: 6 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
-                    scales: { x: { grid: { display: false } }, y: { ticks: { font: { size: 9 } } } }
-                }
-            });
+            // Gráfico de Barras Mensal
+            const canvasMonthly = document.getElementById('monthlyComparisonChart');
+            if (canvasMonthly) {
+                const ctxMonthly = canvasMonthly.getContext('2d');
+                if (monthlyChartInstance) monthlyChartInstance.destroy();
+                monthlyChartInstance = new Chart(ctxMonthly, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                        datasets: [
+                            { label: 'Receitas', data: monthlyIncome, backgroundColor: '#10b981', borderRadius: 6 },
+                            { label: 'Despesas', data: monthlyExpense, backgroundColor: '#f43f5e', borderRadius: 6 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
+                        scales: { x: { grid: { display: false } }, y: { ticks: { font: { size: 9 } } } }
+                    }
+                });
+            }
 
-            const ctxCat = document.getElementById('expenseCategoryChart').getContext('2d');
-            const catLabels = financialData.categories.map(c => c.name);
-            const catColors = financialData.categories.map(c => c.color);
-            const transMesAtivo = financialData.transactions.filter(t => t.monthKey === selectedMonthKey);
-            const catTotals = financialData.categories.map(cat => {
-                return transMesAtivo.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
-            });
+            // Gráfico Donut de Despesas por Categoria
+            const canvasCat = document.getElementById('expenseCategoryChart');
+            if (canvasCat) {
+                const ctxCat = canvasCat.getContext('2d');
+                const catLabels = (financialData.categories || []).map(c => c.name);
+                const catColors = (financialData.categories || []).map(c => c.color);
+                const transMesAtivo = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+                const catTotals = (financialData.categories || []).map(cat => {
+                    return transMesAtivo.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
+                });
 
-            if (expenseChartInstance) expenseChartInstance.destroy();
-            expenseChartInstance = new Chart(ctxCat, {
-                type: 'doughnut',
-                data: {
-                    labels: catLabels,
-                    datasets: [{ data: catTotals, backgroundColor: catColors, borderWidth: 2, borderColor: '#0f172a' }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
-            });
+                if (expenseChartInstance) expenseChartInstance.destroy();
+                expenseChartInstance = new Chart(ctxCat, {
+                    type: 'doughnut',
+                    data: {
+                        labels: catLabels,
+                        datasets: [{ data: catTotals, backgroundColor: catColors, borderWidth: 2, borderColor: '#0f172a' }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+                    }
+                });
+            }
         }
 
+        // --- BACKUP, IMPORTAÇÃO & EXPORTAÇÃO ---
         function exportarCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Data;Mes;Tipo;Descricao;Valor;Categoria;Pagamento\n";
-            financialData.transactions.forEach(t => {
+            (financialData.transactions || []).forEach(t => {
                 csvContent += `${t.date};${t.monthKey};${t.type === 'expense' ? 'Despesa' : 'Receita'};${t.desc};${t.value};${t.category};${t.payment}\n`;
             });
-            const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
+            link.setAttribute("href", encodeURI(csvContent));
             link.setAttribute("download", `extrato_${selectedMonthKey}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        function exportarBackupJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(financialData, null, 2));
+            const link = document.createElement("a");
+            link.setAttribute("href", dataStr);
+            link.setAttribute("download", `financas_pro_backup_${new Date().toISOString().slice(0, 10)}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function importarBackupJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed && typeof parsed === 'object') {
+                        financialData = {
+                            cash: typeof parsed.cash === 'number' ? parsed.cash : 0,
+                            categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
+                            transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+                            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+                            investments: Array.isArray(parsed.investments) ? parsed.investments : []
+                        };
+                        salvarDados();
+                        atualizarTela();
+                        alert("Backup restaurado com sucesso!");
+                    }
+                } catch (err) {
+                    alert("Arquivo de backup inválido.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function limparTodosDados() {
+            if (confirm("Tem certeza que deseja apagar todos os lançamentos e restaurar o app para o padrão?")) {
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                alert("Aplicativo reiniciado com sucesso.");
+            }
         }
 
         function alternarTema() {
@@ -1459,11 +1640,10 @@
             const btn = document.querySelector(".theme-toggle");
             body.classList.toggle("dark-mode");
             btn.textContent = body.classList.contains("dark-mode") ? "☀️ Claro" : "🌙 Escuro";
-            if (document.getElementById('tab-relatorios').classList.contains('active')) { renderizarRelatorios(); }
+            if (document.getElementById('tab-relatorios').classList.contains('active')) {
+                renderizarRelatorios();
+            }
         }
-
-        document.getElementById("trans-date").value = new Date().toISOString().slice(0, 10);
-        atualizarTela();
     </script>
 </body>
 </html>
