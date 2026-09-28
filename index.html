@@ -618,7 +618,7 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR & EXTRATO COM EDIÇÃO -->
+            <!-- TELA 2: LANÇAR COM DATA SINCRONIZADA E PARCELAMENTO LIVRE -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="section-box">
                     <h3>✍️ Imputar Lançamento</h3>
@@ -640,15 +640,18 @@
                             </select>
                         </div>
 
-                        <div class="form-row">
-                            <select id="trans-category">
-                                <option value="">Selecione Categoria</option>
-                            </select>
-                            <input type="date" id="trans-date">
+                        <div class="form-row" style="align-items: center;">
+                            <div style="display: flex; gap: 4px; flex: 1;">
+                                <select id="trans-category" style="flex: 1;">
+                                    <option value="">Selecione Categoria</option>
+                                </select>
+                                <button type="button" onclick="trocarAba('metas')" title="Criar nova categoria" style="background:var(--input-bg); border:1px solid var(--border-color); padding:0 10px; border-radius:10px; font-weight:bold; cursor:pointer;">+</button>
+                            </div>
+                            <input type="date" id="trans-date" style="flex: 1;">
                         </div>
 
-                        <div class="form-row">
-                            <select id="trans-installments">
+                        <div class="form-row" style="align-items: center;">
+                            <select id="trans-installments" onchange="verificarParcelamentoCustom(this.value)">
                                 <option value="1">À vista (1x)</option>
                                 <option value="2">2x parcelas</option>
                                 <option value="3">3x parcelas</option>
@@ -661,7 +664,9 @@
                                 <option value="24">24x parcelas (2 anos)</option>
                                 <option value="36">36x parcelas (3 anos)</option>
                                 <option value="48">48x parcelas (4 anos)</option>
+                                <option value="custom">Outro número de parcelas...</option>
                             </select>
+                            <input type="number" id="trans-custom-installments" min="1" max="120" placeholder="Qtd parcelas" style="display:none; max-width: 120px;">
                         </div>
                         <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                     </div>
@@ -830,7 +835,6 @@
             investments: []
         };
 
-        // Carrega dados preservando todas as versões anteriores existentes
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
@@ -871,9 +875,33 @@
                 const lock = document.getElementById("lock-screen");
                 if (lock) lock.classList.add("hidden");
             }
-            document.getElementById("trans-date").value = new Date().toISOString().slice(0, 10);
+            sincronizarDataFormulario();
             atualizarTela();
         });
+
+        // Sincroniza a data do formulário com o mês/ano atualmente selecionado
+        function sincronizarDataFormulario() {
+            const dateInput = document.getElementById("trans-date");
+            if (!dateInput) return;
+
+            let dia = hoje.getDate();
+            const ultimoDiaDoMes = new Date(currentYear, currentMonthNum, 0).getDate();
+            if (dia > ultimoDiaDoMes) dia = ultimoDiaDoMes;
+
+            const mStr = String(currentMonthNum).padStart(2, '0');
+            const dStr = String(dia).padStart(2, '0');
+            dateInput.value = `${currentYear}-${mStr}-${dStr}`;
+        }
+
+        function verificarParcelamentoCustom(valor) {
+            const inputCustom = document.getElementById("trans-custom-installments");
+            if (valor === "custom") {
+                inputCustom.style.display = "block";
+                inputCustom.focus();
+            } else {
+                inputCustom.style.display = "none";
+            }
+        }
 
         function desbloquearApp() {
             sessionStorage.setItem('app_ja_desbloqueado', 'true');
@@ -901,12 +929,14 @@
         function mudarAno(delta) {
             currentYear += delta;
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            sincronizarDataFormulario();
             atualizarTela();
         }
 
         function alterarAnoDireto(novoAno) {
             currentYear = parseInt(novoAno, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            sincronizarDataFormulario();
             atualizarTela();
         }
 
@@ -915,12 +945,14 @@
             if (currentMonthNum > 12) { currentMonthNum = 1; currentYear += 1; }
             else if (currentMonthNum < 1) { currentMonthNum = 12; currentYear -= 1; }
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            sincronizarDataFormulario();
             atualizarTela();
         }
 
         function alterarMesDireto(novoMes) {
             currentMonthNum = parseInt(novoMes, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            sincronizarDataFormulario();
             atualizarTela();
         }
 
@@ -979,8 +1011,7 @@
             document.getElementById("hero-total-gasto-small").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // --- LÓGICA DE TRANSBORDAMENTO AUTOMÁTICO ENTRE CAIXINHAS ---
-            // 1. Identifica caixinha primária (a primeira cadastrada é a primária/salário)
+            // TRANSBORDO INTELIGENTE
             const boxStats = boxes.map((box, index) => {
                 const transBox = transDoMes.filter(t => t.type === 'expense' && t.boxId === box.id);
                 const rawSpent = transBox.reduce((acc, curr) => acc + curr.value, 0);
@@ -999,7 +1030,6 @@
                 };
             });
 
-            // 2. Transborda despesas das secundárias para a primária
             let totalExcedenteSecundarias = 0;
             boxStats.forEach(b => {
                 if (!b.isPrimary) {
@@ -1010,25 +1040,22 @@
                 }
             });
 
-            // Adiciona esse excedente na primária
             if (boxStats.length > 0) {
                 boxStats[0].spilloverReceived = totalExcedenteSecundarias;
             }
 
-            // Gastos sem caixinha também recaem na primária
             const semCaixinha = transDoMes.filter(t => t.type === 'expense' && !t.boxId).reduce((acc, c) => acc + c.value, 0);
             if (boxStats.length > 0) {
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // 3. Renderiza Caixinhas Vivas
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
             if (boxes.length === 0) {
                 boxesContainer.innerHTML = `
                     <div style="grid-column: span 2; text-align:center; padding:14px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color);">
-                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">Nenhuma caixinha de verba ativa.</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">Nenhuma caixinha ativa.</p>
                         <button onclick="abrirModalNovaCaixinhaVerba()" class="btn-primary" style="padding:6px 12px; font-size:0.75rem; margin:0 auto;">+ Criar Caixinha</button>
                     </div>
                 `;
@@ -1037,18 +1064,15 @@
                     const box = stat.box;
                     let displaySpent = stat.rawSpent;
                     let displayRemain = stat.amount - stat.rawSpent;
-
                     let msgTransbordo = '';
 
                     if (!stat.isPrimary) {
-                        // Secundária nunca fica com sobra negativa: absorve até o teto e o resto vira aviso de repasse
                         if (stat.rawSpent > stat.amount) {
                             displaySpent = stat.amount;
                             displayRemain = 0;
                             msgTransbordo = `<span style="font-size:0.6rem; color:var(--yellow); font-weight:800; display:block; margin-top:2px;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
                         }
                     } else {
-                        // Primária absorve seus próprios gastos + o transbordo recebido
                         displaySpent = stat.rawSpent + stat.spilloverReceived;
                         displayRemain = stat.amount - displaySpent;
                         if (stat.spilloverReceived > 0) {
@@ -1130,7 +1154,7 @@
                 }
             }
 
-            // MESES DO ANO
+            // TABELA MÊS A MÊS
             let anoEntradasReal = 0;
             let anoSaidasReal = 0;
             let mesesPreenchidosContador = 0;
@@ -1261,7 +1285,7 @@
                 }
             }
 
-            // ABA METAS: CATEGORIAS EDITÁVEIS
+            // ABA METAS: CATEGORIAS
             const budgetContainer = document.getElementById("budget-progress-list");
             if (budgetContainer) {
                 budgetContainer.innerHTML = '';
@@ -1295,7 +1319,7 @@
                 }
             }
 
-            // ABA METAS: RESERVAS EDITÁVEIS
+            // ABA METAS: OBJETIVOS
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
                 goalsContainer.innerHTML = '';
@@ -1444,7 +1468,7 @@
             }
         }
 
-        // --- LANÇAMENTOS COM PARCELAMENTO AMPLIADO E EDIÇÃO COMPLETA ---
+        // --- LANÇAMENTOS COM PARCELAMENTO LIVRE E EDIÇÃO TOTAL ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1452,7 +1476,15 @@
             const category = document.getElementById("trans-category").value;
             const boxId = document.getElementById("trans-box-id").value;
             const payment = document.getElementById("trans-payment").value;
-            const installments = parseInt(document.getElementById("trans-installments").value, 10) || 1;
+            
+            const selectInst = document.getElementById("trans-installments").value;
+            let installments = 1;
+            if (selectInst === "custom") {
+                installments = parseInt(document.getElementById("trans-custom-installments").value, 10) || 1;
+            } else {
+                installments = parseInt(selectInst, 10) || 1;
+            }
+
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(value) || value <= 0) {
@@ -1467,7 +1499,11 @@
                 let m = mesBase + i; let a = anoBase;
                 while (m > 12) { m -= 12; a += 1; }
                 const mKey = `${a}-${String(m).padStart(2, '0')}`;
-                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaBase).padStart(2, '0')}`;
+                
+                const ultimoDiaDesseMes = new Date(a, m, 0).getDate();
+                const diaAjustado = Math.min(diaBase, ultimoDiaDesseMes);
+                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaAjustado).padStart(2, '0')}`;
+                
                 const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parcela)` : desc;
 
                 financialData.transactions.unshift({
@@ -1485,6 +1521,9 @@
 
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
+            document.getElementById("trans-installments").value = '1';
+            document.getElementById("trans-custom-installments").style.display = 'none';
+            document.getElementById("trans-custom-installments").value = '';
             salvarDados();
             atualizarTela();
             alert("Lançamento salvo com sucesso!");
@@ -1802,6 +1841,7 @@
             }
         }
 
+        // --- MODAL ---
         function abrirModal(titulo, htmlBody, callbackConfirm) {
             document.getElementById("modal-title").innerText = titulo;
             document.getElementById("modal-body").innerHTML = htmlBody;
