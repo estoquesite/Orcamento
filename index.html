@@ -45,14 +45,14 @@
     /* ============================================================ */
 
     /* MODO DIA (PADRÃO - quando html NÃO tem a classe .dark) */
-    html:not(.dark) body {
-      background-color: #f1f5f9 !important;
-      color: #0f172a !important;
-    }
-    html:not(.dark) #phone-frame {
-      background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8) !important;
+  root {
+      --bg-body: #f1f5f9;       /* Cor de fundo principal da tela */
+      --bg-card: #ffffff;       /* 👈 Linha 50: Cor de fundo de TODOS os quadros/cards */
+      --bg-subtle: #f8fafc;     /* Cor de fundo secundária (pequenos blocos) */
+      --color-border: #e2e8f0;  /* Cor das bordas e linhas separadoras */
+      --text-main: #0f172a;     /* 👈 Linha 54: Cor principal da fonte/texto */
+      --text-secondary: #1e293b;/* Cor secundária do texto */
+      --text-muted: #64748b;    /* Cor dos textos mais apagados/cinzas */
     }
     html:not(.dark) header {
       background-color: rgba(255, 255, 255, 0.95) !important;
