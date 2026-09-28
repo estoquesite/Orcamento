@@ -717,13 +717,13 @@
           if (e.target === modalContainer) closeModal();
         });
       }
-      window.mudarCorQuadrados = function(cor) {
-        document.querySelectorAll('#phone-frame, header, #month-nav, #bottom-nav, .bg-slate-900, .bg-slate-800, #modal-box').forEach(el => {
+            window.mudarCorQuadrados = function(cor) {
+        // Altera o fundo de todos os cartões, blocos, caixinhas e áreas principais
+        document.querySelectorAll('.bg-slate-900, .bg-slate-800, #phone-frame, header, #month-nav, #bottom-nav, #modal-box, div[class*="bg-slate"]').forEach(el => {
           el.style.backgroundColor = cor;
         });
-        showToast('Cor dos quadrados alterada!');
+        showToast('Cor dos quadrados alterada com sucesso!');
       };
-
       window.mudarCorLetras = function(cor) {
         document.querySelectorAll('body, header, span, h3, div, p, label').forEach(el => {
           el.style.color = cor;
