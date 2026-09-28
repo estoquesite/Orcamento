@@ -133,7 +133,6 @@
       const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-      // DADOS INICIAIS
       const DEFAULT_DATA = {
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
@@ -279,7 +278,7 @@
         if (e.target === modalContainer) closeModal();
       });
 
-      // 1. EDIÇÃO DE SALÁRIO / RENDA MENSAL COM LÁPIS
+      // 1. EDIÇÃO DE SALÁRIO COM LÁPIS
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         const currentVal = mainBox ? mainBox.limit : 5000;
@@ -373,6 +372,11 @@
         modalContainer.classList.remove('hidden');
       };
 
+      window.handleEditBox = function(id, isMain) {
+        if (isMain) openModalEditarSalario();
+        else openModalEditarCaixinha(id);
+      };
+
       window.saveEditarCaixinha = function(id) {
         const name = document.getElementById('m-box-name').value.trim();
         const limit = parseFloat(document.getElementById('m-box-limit').value);
@@ -398,7 +402,7 @@
         }
       };
 
-      // 3. CRIAR NOVA CAIXINHA (+ Nova Caixinha)
+      // 3. CRIAR NOVA CAIXINHA
       window.openModalNovaCaixinha = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -433,7 +437,7 @@
         render();
       };
 
-      // 4. GESTÃO COMPLETA DE COMPRAS PARCELADAS
+      // 4. GESTÃO DE COMPRAS PARCELADAS COM LÁPIS
       window.openModalNovaParcela = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -442,7 +446,7 @@
           </h3>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Nome da Compra (ex.: iPhone, Geladeira):</label>
-            <input type="text" id="m-parc-name" placeholder="Ex: Sofá Confort 3 Lugares" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="m-parc-name" placeholder="Ex: Geladeira Frost Free" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
@@ -544,7 +548,7 @@
 
         state.data.transactions.forEach(t => {
           if (t.payment === 'Cartão de Crédito' && t.desc.startsWith(origName)) {
-            const match = t.desc.match(/\\((\\d+\\/\\d+)\\)/);
+            const match = t.desc.match(/\((\d+\/\d+)\)/);
             const suffix = match ? ' (' + match[1] + ')' : '';
             t.desc = newName + suffix;
             t.value = newVal;
@@ -796,7 +800,6 @@
         showToast('Planilha CSV baixada! 📊');
       };
 
-      // BAIXAR INDEX.HTML COMPLETO E AUTÔNOMO
       window.exportHtmlCompleto = function () {
         try {
           const fullHtml = document.documentElement.outerHTML;
@@ -883,11 +886,11 @@
 
         let html = '';
 
-        // 1. ABA PAINEL (100% EDITÁVEL COM LÁPIS)
+        // 1. ABA PAINEL
         if (state.currentTab === 'painel') {
           html = `
             <div class="space-y-4">
-              <!-- Cartões de Resumo com Lápis de Edição de Renda -->
+              <!-- Cartões de Resumo -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md relative">
                   <div class="flex justify-between items-center">
@@ -966,7 +969,7 @@
                               ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
                             </span>
                             <button
-                              onclick="${box.isMain ? 'openModalEditarSalario()' : 'openModalEditarCaixinha(\'' + box.id + '\')'}"
+                              onclick="handleEditBox('${box.id}', ${box.isMain})"
                               class="px-2 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer shadow-2xs border border-indigo-200/50 dark:border-indigo-800/50 active:scale-95"
                               title="Editar Caixinha"
                             >
@@ -1350,7 +1353,7 @@
                               <span>Editar</span>
                             </button>
                             <button
-                              onclick="deleteParcelaGroup('${item.baseName}', '${item.cardId || ''}')"
+                              onclick="deleteParcelaGroup('${item.baseName}')"
                               class="p-1 rounded-xl text-slate-400 hover:text-rose-500 cursor-pointer"
                               title="Excluir ou Quitar Parcelas"
                             >
