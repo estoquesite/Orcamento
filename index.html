@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Finanças Pro Mobile - v2.4.1</title>
-  <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para telemóvel." />
+  <title>Finanças Pro Mobile - v2.4.2</title>
+  <meta name="description" content="Gestão financeira pessoal completa para telemóvel." />
   <meta name="theme-color" content="#ffffff" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -60,7 +60,7 @@
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <div class="flex items-baseline gap-1.5">
           <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
-          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">v2.4.1</span>
+          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">v2.4.2</span>
         </div>
       </div>
 
@@ -91,21 +91,21 @@
         ◀
       </button>
       <div id="month-label" class="text-center font-black text-slate-800 dark:text-slate-100">
-        A carregar...
+        Setembro de 2026
       </div>
       <button id="btn-next-month" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
         ▶
       </button>
     </div>
 
-    <!-- ÁREA PRINCIPAL COM SCROLL E ESPAÇO SUFICIENTE -->
-    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-32">
-      <!-- Conteúdo injetado via JavaScript -->
+    <!-- ÁREA PRINCIPAL COM SCROLL E ESPAÇAMENTO INFERIOR SUFICIENTE (pb-40) -->
+    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-40">
+      <!-- Conteúdo inserido dinamicamente -->
     </main>
 
-    <!-- BARRA INFERIOR DE ABAS FLUTUANTE E ELEVADA -->
-    <div class="absolute bottom-4 left-0 right-0 px-3 z-30 pointer-events-none pb-[max(env(safe-area-inset-bottom),0.5rem)]">
-      <nav class="pointer-events-auto relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-1.5 shadow-xl shadow-slate-950/20">
+    <!-- BARRA INFERIOR BEM ELEVADA PARA NÃO FICAR ATRÁS DOS BOTÕES DO ANDROID -->
+    <div class="absolute bottom-8 left-0 right-0 px-4 z-30 pointer-events-none pb-[env(safe-area-inset-bottom)]">
+      <nav class="pointer-events-auto relative w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-2 shadow-2xl shadow-slate-950/25">
         <div id="nav-indicator" class="bg-indigo-600/15 dark:bg-indigo-400/20 border border-indigo-500/30"></div>
 
         <button data-tab="painel" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
@@ -132,7 +132,7 @@
     </div>
 
     <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
-    <div id="toast" class="hidden absolute bottom-28 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
+    <div id="toast" class="hidden absolute bottom-32 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
       Notificação
     </div>
 
@@ -147,10 +147,15 @@
 
   <script>
     (function () {
-      const APP_VERSION = 'v2.4.1';
+      const APP_VERSION = 'v2.4.2';
       const APP_BUILD = '2026.09.28';
-      const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
+      const STORAGE_KEY = 'FINANCAS_PRO_DATA_V242';
+      const OLD_STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
 
       const DEFAULT_DATA = {
         sophiaPension: {
@@ -158,8 +163,8 @@
           value: 1200,
           dueDay: 10,
           recipient: 'Sophia',
-          pixKey: 'Chave Pix Cadastrada',
-          notes: 'Pagamento prioritário mensal'
+          pixKey: 'Chave Pix da Sophia',
+          notes: 'Pagamento mensal prioritário'
         },
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
@@ -179,9 +184,9 @@
           { id: 'card-2', name: 'Inter Black Win', limit: 15000, color: '#0f172a', brand: 'Mastercard Platinum', skin: 'titanium', cvv: '312', isBlocked: false }
         ],
         transactions: [
-          { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 2, desc: 'Supermercado', value: 480, type: 'despesa', boxId: '2', category: 'Alimentação', payment: 'Cartão de Crédito', cardId: 'card-1', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
+          { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-01`, year: currentYear, month: currentMonth },
+          { id: 2, desc: 'Supermercado', value: 480, type: 'despesa', boxId: '2', category: 'Alimentação', payment: 'Cartão de Crédito', cardId: 'card-1', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-05`, year: currentYear, month: currentMonth },
+          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-08`, year: currentYear, month: currentMonth }
         ],
         savingsGoals: [
           { id: 1, name: 'Reserva de Emergência', targetValue: 15000, currentValue: 6500, color: '#10b981', icon: '🛡️' },
@@ -194,33 +199,78 @@
         ]
       };
 
-      // Recuperação segura e fusão automática com chaves novas
+      // Recuperação e higienização completa dos dados
+      function sanitizeData(raw) {
+        if (!raw || typeof raw !== 'object') return JSON.parse(JSON.stringify(DEFAULT_DATA));
+
+        const data = Object.assign({}, DEFAULT_DATA, raw);
+
+        if (!data.sophiaPension || typeof data.sophiaPension !== 'object') {
+          data.sophiaPension = DEFAULT_DATA.sophiaPension;
+        }
+        if (!Array.isArray(data.quickButtons) || data.quickButtons.length === 0) {
+          data.quickButtons = DEFAULT_DATA.quickButtons;
+        }
+        if (!Array.isArray(data.boxes) || data.boxes.length === 0) {
+          data.boxes = DEFAULT_DATA.boxes;
+        }
+        if (!Array.isArray(data.creditCards)) {
+          data.creditCards = DEFAULT_DATA.creditCards;
+        }
+        if (!Array.isArray(data.savingsGoals)) {
+          data.savingsGoals = DEFAULT_DATA.savingsGoals;
+        }
+        if (!Array.isArray(data.recurringBills)) {
+          data.recurringBills = DEFAULT_DATA.recurringBills;
+        }
+
+        // Reparar lançamentos antigos sem ano ou mês
+        if (Array.isArray(data.transactions)) {
+          data.transactions = data.transactions.map((t, idx) => {
+            const copy = Object.assign({}, t);
+            copy.id = copy.id || Date.now() + idx;
+            copy.value = Number(copy.value) || 0;
+            copy.desc = copy.desc || 'Lançamento';
+            copy.type = copy.type === 'receita' ? 'receita' : 'despesa';
+
+            if (!copy.year || !copy.month) {
+              if (copy.date && typeof copy.date === 'string' && copy.date.includes('-')) {
+                const parts = copy.date.split('-');
+                copy.year = parseInt(parts[0], 10) || currentYear;
+                copy.month = parseInt(parts[1], 10) || currentMonth;
+              } else {
+                copy.year = currentYear;
+                copy.month = currentMonth;
+                copy.date = `${currentYear}-${String(currentMonth).padStart(2, '0')}-01`;
+              }
+            }
+            return copy;
+          });
+        } else {
+          data.transactions = DEFAULT_DATA.transactions;
+        }
+
+        return data;
+      }
+
       function loadData() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
+          let raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            raw = localStorage.getItem(OLD_STORAGE_KEY);
+          }
           if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-          const parsed = JSON.parse(raw);
-          if (!parsed || typeof parsed !== 'object') return JSON.parse(JSON.stringify(DEFAULT_DATA));
-          
-          if (!parsed.sophiaPension) parsed.sophiaPension = DEFAULT_DATA.sophiaPension;
-          if (!Array.isArray(parsed.quickButtons)) parsed.quickButtons = DEFAULT_DATA.quickButtons;
-          if (!Array.isArray(parsed.boxes) || parsed.boxes.length === 0) parsed.boxes = DEFAULT_DATA.boxes;
-          if (!Array.isArray(parsed.creditCards)) parsed.creditCards = DEFAULT_DATA.creditCards;
-          if (!Array.isArray(parsed.transactions)) parsed.transactions = DEFAULT_DATA.transactions;
-          if (!Array.isArray(parsed.savingsGoals)) parsed.savingsGoals = DEFAULT_DATA.savingsGoals;
-          if (!Array.isArray(parsed.recurringBills)) parsed.recurringBills = DEFAULT_DATA.recurringBills;
-
-          return parsed;
+          return sanitizeData(JSON.parse(raw));
         } catch (e) {
-          console.error('Falha ao ler dados do armazenamento local:', e);
+          console.warn('Recuperando dados padrão devido a erro no JSON:', e);
           return JSON.parse(JSON.stringify(DEFAULT_DATA));
         }
       }
 
       const state = {
         data: loadData(),
-        currentYear: new Date().getFullYear(),
-        currentMonth: new Date().getMonth() + 1,
+        currentYear: currentYear,
+        currentMonth: currentMonth,
         currentTab: 'painel',
         privacyMode: false,
         darkMode: false,
@@ -253,7 +303,7 @@
         if (toastTimeout) clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => {
           toast.classList.add('hidden');
-        }, 3200);
+        }, 3000);
       }
 
       const phoneFrame = document.getElementById('phone-frame');
@@ -406,7 +456,7 @@
         const jaPago = state.data.transactions.find(t => 
           t.year === state.currentYear && 
           t.month === state.currentMonth && 
-          t.desc.includes('Pensão da Sophia') && 
+          t.desc && t.desc.includes('Pensão da Sophia') && 
           t.type === 'despesa'
         );
 
@@ -420,10 +470,10 @@
           return;
         }
 
-        const dataStr = state.currentYear + '-' + String(state.currentMonth).padStart(2, '0') + '-' + String(p.dueDay || 10).padStart(2, '0');
+        const dataStr = `${state.currentYear}-${String(state.currentMonth).padStart(2, '0')}-${String(p.dueDay || 10).padStart(2, '0')}`;
         state.data.transactions.unshift({
           id: Date.now(),
-          desc: 'Pensão da Sophia (' + MONTHS[state.currentMonth - 1] + ')',
+          desc: `Pensão da Sophia (${MONTHS[state.currentMonth - 1]})`,
           value: p.value || 1200,
           type: 'despesa',
           boxId: '1',
@@ -529,7 +579,7 @@
             boxId: mainBox ? mainBox.id : '1',
             category: 'Salário',
             payment: 'Pix',
-            date: new Date().toISOString().slice(0, 10),
+            date: `${state.currentYear}-${String(state.currentMonth).padStart(2, '0')}-01`,
             year: state.currentYear,
             month: state.currentMonth
           });
@@ -664,7 +714,7 @@
             <input type="text" id="m-parc-name" placeholder="Ex: Telemóvel" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Valor de Cada Parcela (R$):</label>
+            <label class="text-xs font-bold text-slate-500 block">Valor da Parcela (R$):</label>
             <input type="number" step="0.01" id="m-parc-val" placeholder="Ex: 150.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="grid grid-cols-2 gap-2">
@@ -710,14 +760,14 @@
           }
           state.data.transactions.unshift({
             id: Date.now() + i,
-            desc: name + ' (' + pNum + '/' + totalP + ')',
+            desc: `${name} (${pNum}/${totalP})`,
             value: val,
             type: 'despesa',
             boxId: '1',
             category: 'Compras Parceladas',
             payment: 'Cartão de Crédito',
             cardId,
-            date: lancAno + '-' + String(lancMes).padStart(2, '0') + '-05',
+            date: `${lancAno}-${String(lancMes).padStart(2, '0')}-05`,
             year: lancAno,
             month: lancMes
           });
@@ -762,9 +812,9 @@
         if (!newName || isNaN(newVal) || newVal <= 0) return alert('Por favor, informe valores válidos.');
 
         state.data.transactions.forEach(t => {
-          if (t.payment === 'Cartão de Crédito' && t.desc.startsWith(origName)) {
+          if (t.payment === 'Cartão de Crédito' && t.desc && t.desc.startsWith(origName)) {
             const match = t.desc.match(/\((\d+\/\d+)\)/);
-            const suffix = match ? ' (' + match[1] + ')' : '';
+            const suffix = match ? ` (${match[1]})` : '';
             t.desc = newName + suffix;
             t.value = newVal;
           }
@@ -777,8 +827,8 @@
       };
 
       window.deleteParcelaGroup = function(origName) {
-        if (confirm('Deseja eliminar todas as parcelas de "' + origName + '"?')) {
-          state.data.transactions = state.data.transactions.filter(t => !(t.payment === 'Cartão de Crédito' && t.desc.startsWith(origName)));
+        if (confirm(`Deseja eliminar todas as parcelas de "${origName}"?`)) {
+          state.data.transactions = state.data.transactions.filter(t => !(t.payment === 'Cartão de Crédito' && t.desc && t.desc.startsWith(origName)));
           saveData();
           closeModal();
           showToast('Parcelas eliminadas!');
@@ -1099,7 +1149,7 @@
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Data:</label>
-            <input type="date" id="m-edit-trans-date" value="${t.date || new Date().toISOString().slice(0, 10)}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="date" id="m-edit-trans-date" value="${t.date || `${state.currentYear}-${String(state.currentMonth).padStart(2, '0')}-01`}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="flex gap-2 pt-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
@@ -1136,12 +1186,12 @@
         state.data.transactions.unshift({
           id: Date.now(),
           desc,
-          value: val,
+          value: Number(val) || 0,
           type: 'despesa',
           boxId: '1',
           category: cat,
           payment: 'Pix',
-          date: new Date().toISOString().slice(0, 10),
+          date: `${state.currentYear}-${String(state.currentMonth).padStart(2, '0')}-01`,
           year: state.currentYear,
           month: state.currentMonth
         });
@@ -1206,9 +1256,9 @@
 
       window.shareWhatsApp = function () {
         const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
-        const rec = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (b.value || 0), 0);
-        const desp = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (b.value || 0), 0);
-        const cartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (b.value || 0), 0);
+        const rec = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
+        const desp = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
+        const cartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
         const sobra = rec - desp;
 
         const lines = [
@@ -1260,14 +1310,14 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'index.html';
+          a.download = 'financas_pro_' + APP_VERSION + '.html';
           document.body.appendChild(a);
           a.click();
           setTimeout(() => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
           }, 300);
-          showToast('Ficheiro index.html descarregado com sucesso! 🚀');
+          showToast('Ficheiro descarregado com sucesso! 🚀');
         } catch (e) {
           alert('Erro ao transferir HTML.');
         }
@@ -1295,7 +1345,7 @@
           try {
             const parsed = JSON.parse(text);
             if (parsed && typeof parsed === 'object') {
-              state.data = parsed.data || parsed;
+              state.data = sanitizeData(parsed.data || parsed);
               saveData();
               showToast('Backup restaurado com sucesso! 🎉');
               render();
@@ -1309,6 +1359,7 @@
       window.resetData = function () {
         if (confirm('Tem a certeza de que deseja repor todos os dados de fábrica?')) {
           localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(OLD_STORAGE_KEY);
           state.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
           saveData();
           showToast('Dados repostos de fábrica!');
@@ -1323,10 +1374,10 @@
 
       function render() {
         try {
-          monthLabel.textContent = MONTHS[state.currentMonth - 1] + ' de ' + state.currentYear;
+          monthLabel.textContent = `${MONTHS[state.currentMonth - 1]} de ${state.currentYear}`;
 
           const currentTrans = Array.isArray(state.data.transactions) ? state.data.transactions : [];
-          const monthTrans = currentTrans.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
+          const monthTrans = currentTrans.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
           const totalReceitas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
           const totalDespesas = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
           const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
@@ -1705,7 +1756,7 @@
                   const pCur = parseInt(match[2], 10);
                   const pTot = parseInt(match[3], 10);
                   const card = (state.data.creditCards || []).find(c => c.id === t.cardId) || (state.data.creditCards || [])[0];
-                  const key = base + '__' + (t.cardId || 'c');
+                  const key = `${base}__${t.cardId || 'c'}`;
                   if (!installmentMap[key]) {
                     installmentMap[key] = {
                       baseName: base,
@@ -1903,7 +1954,7 @@
                 <div class="grid grid-cols-2 gap-2">
                   ${MONTHS.map((nome, idx) => {
                     const mNum = idx + 1;
-                    const mTrans = (state.data.transactions || []).filter(t => t.year === state.currentYear && t.month === mNum);
+                    const mTrans = (state.data.transactions || []).filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(mNum));
                     const mRec = mTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
                     const mDesp = mTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
                     const mSobra = mRec - mDesp;
@@ -2165,21 +2216,21 @@
                   }
                   state.data.transactions.unshift({
                     id: Date.now() + i,
-                    desc: parcelas > 1 ? desc + ' (' + (i + 1) + '/' + parcelas + ')' : desc,
+                    desc: parcelas > 1 ? `${desc} (${i + 1}/${parcelas})` : desc,
                     value: valorPorParcela,
                     type: state.newTransType,
                     boxId,
                     category: 'Geral',
                     payment,
                     cardId: payment === 'Cartão de Crédito' ? cardId : undefined,
-                    date: new Date().toISOString().slice(0, 10),
+                    date: `${lancAno}-${String(lancMes).padStart(2, '0')}-01`,
                     year: lancAno,
                     month: lancMes
                   });
                 }
 
                 saveData();
-                showToast(parcelas > 1 ? parcelas + ' parcelas adicionadas!' : 'Lançamento guardado!');
+                showToast(parcelas > 1 ? `${parcelas} parcelas adicionadas!` : 'Lançamento guardado!');
                 render();
               });
             }
@@ -2189,7 +2240,7 @@
           viewContent.innerHTML = `
             <div class="p-6 text-center space-y-3">
               <div class="text-3xl">⚠️</div>
-              <div class="text-xs font-black text-rose-500">Ocorreu um erro ao carregar os dados.</div>
+              <div class="text-xs font-black text-rose-500">Erro ao processar dados antigos.</div>
               <button onclick="resetData()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold">
                 Repor Aplicação
               </button>
