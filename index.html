@@ -306,9 +306,6 @@
             align-items: center;
         }
 
-        /* ========================================================
-           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
-           ======================================================== */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -393,7 +390,6 @@
         }
         .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
-        /* DEMAIS COMPONENTES */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -812,17 +808,6 @@
             border: 1px solid rgba(255,255,255,0.08);
         }
 
-        .credit-card-widget::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
         .year-selector-header {
             display: flex;
             justify-content: space-between;
@@ -1008,7 +993,7 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL COM CAIXINHAS MODERNAS E CORES EQUILIBRADAS -->
+            <!-- TELA 1: PAINEL -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
@@ -1047,7 +1032,7 @@
 
                     <div>
                         <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total da família / mês</span>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total do mês</span>
                     </div>
 
                     <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
@@ -1088,7 +1073,6 @@
                     </button>
                 </div>
 
-                <!-- SOMA TOTAL DAS VERBAS E LISTA REFORMULADA -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner">
                         <div>
@@ -1118,7 +1102,7 @@
 
                 <div style="background:var(--input-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span> • <span id="txt-meses-preenchidos">0 meses</span></span>
+                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
                     </div>
                     <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:1px solid var(--border-color); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
@@ -1335,7 +1319,7 @@
                         <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
                     </div>
                     <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
-                        Não precisa procurar arquivos no celular. Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
+                        Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
                     </p>
                     
                     <div style="display:flex; gap:6px;">
@@ -1359,36 +1343,6 @@
                 <div class="section-box">
                     <h3>💼 Total Investido em Ativos</h3>
                     <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
-                        <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
-                        <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>🚀 Registrar Aporte / Ativo</h3>
-                    <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
-                        <div class="two-cols-clean">
-                            <select id="invest-platform" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                                <option value="XP Investimentos">XP Investimentos</option>
-                                <option value="Binance">Binance</option>
-                                <option value="Outros">Outra Corretora</option>
-                            </select>
-                            <select id="invest-type" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                                <option value="Renda Fixa">Renda Fixa / CDB</option>
-                                <option value="Criptomoeda">Criptomoeda</option>
-                                <option value="Ações">Ações / FIIs</option>
-                            </select>
-                        </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>📁 Carteira de Ativos</h3>
-                    <div class="list-container" id="investment-list"></div>
                 </div>
 
                 <div style="text-align:center; padding:10px;">
@@ -1414,7 +1368,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v29_box_elegance";
+        const STORAGE_KEY = "financas_pro_clean_v1";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1428,80 +1382,36 @@
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
 
+        // DADOS TOTALMENTE ZERADOS PARA VOCÊ PREENCHER DO ZERO
         const defaultData = {
             cash: 0.00,
-            budgetBoxes: [
-                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#10b981" },
-                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#3b82f6" },
-                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#ec4899" }
-            ],
-            creditCards: [
-                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
-                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" },
-                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" }
-            ],
+            budgetBoxes: [],
+            creditCards: [],
             categories: [
-                { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
-                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
-                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
+                { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 0 },
+                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 0 }
             ],
             transactions: [],
-            goals: [
-                { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
-            ],
+            goals: [],
             investments: []
         };
 
         function carregarDados() {
-            const chaves = [
-                STORAGE_KEY,
-                "financas_pro_v28_future_years",
-                "financas_pro_v27_boxes_redesign",
-                "financas_pro_v26_complete_dash",
-                "financas_pro_v25_lancar_totals",
-                "financas_pro_v24_stay_tab",
-                "financas_pro_v23_card_tags",
-                "financas_pro_v22_linked_cards",
-                "financas_pro_v21_samsung_card",
-                "financas_pro_v20_free_card_input",
-                "financas_pro_v19_card_skins",
-                "financas_pro_v18_cards_tab",
-                "financas_pro_v17_clean_statement",
-                "financas_pro_v16_mobile_native",
-                "financas_pro_v15_ultra",
-                "financas_pro_v14_clean_backup",
-                "financas_pro_v13_compact_form",
-                "financas_pro_v12_calculator",
-                "financas_pro_v11_spillover",
-                "financas_pro_v10_livre",
-                "financas_pro_v9_revitalizado",
-                "financas_pro_v8_custom_boxes"
-            ];
-
-            for (const k of chaves) {
-                const salvo = localStorage.getItem(k);
-                if (salvo) {
-                    try {
-                        const parsed = JSON.parse(salvo);
-                        let cartoes = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards;
-                        
-                        if (!cartoes.some(c => c.name.toLowerCase().includes("samsung"))) {
-                            cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" });
-                        }
-
-                        return {
-                            cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
-                            budgetBoxes: Array.isArray(parsed.budgetBoxes) && parsed.budgetBoxes.length > 0 ? parsed.budgetBoxes : defaultData.budgetBoxes,
-                            creditCards: cartoes,
-                            categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
-                            transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                            goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
-                            investments: Array.isArray(parsed.investments) ? parsed.investments : []
-                        };
-                    } catch (e) {
-                        console.error("Erro na leitura:", e);
-                    }
+            const salvo = localStorage.getItem(STORAGE_KEY);
+            if (salvo) {
+                try {
+                    const parsed = JSON.parse(salvo);
+                    return {
+                        cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
+                        budgetBoxes: Array.isArray(parsed.budgetBoxes) ? parsed.budgetBoxes : [],
+                        creditCards: Array.isArray(parsed.creditCards) ? parsed.creditCards : [],
+                        categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
+                        transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+                        goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+                        investments: Array.isArray(parsed.investments) ? parsed.investments : []
+                    };
+                } catch (e) {
+                    console.error("Erro na leitura:", e);
                 }
             }
             return JSON.parse(JSON.stringify(defaultData));
@@ -1748,7 +1658,6 @@
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // SOMA TOTAL DAS VERBAS NO PAINEL
             const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
             if (bannerSomaVerbas) {
                 bannerSomaVerbas.innerText = `R$ ${totalVerbaCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1759,7 +1668,6 @@
                 bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             }
 
-            // MINI PAINEL NA ABA LANÇAR
             const txtLancarMesAno = document.getElementById("txt-lancar-mes-ano");
             if (txtLancarMesAno) {
                 txtLancarMesAno.innerText = `${mesesNomes[currentMonthNum - 1]} ${currentYear}`;
@@ -1781,7 +1689,6 @@
                 txtLancarSobraLivre.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
             }
 
-            // HERO CARD PAINEL
             const heroSobra = document.getElementById("hero-sobra-livre");
             heroSobra.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             heroSobra.style.color = sobraTotalMes >= 0 ? '#ffffff' : '#fb7185';
@@ -1798,65 +1705,18 @@
             if (percConsumido >= 95) {
                 progressBar.style.background = '#f43f5e';
                 badge.innerText = '🔴 Orçamento no Limite';
-                badge.style.color = '#f43f5e';
-                badge.style.background = 'rgba(244,63,94,0.2)';
             } else if (percConsumido >= 70) {
                 progressBar.style.background = '#f59e0b';
                 badge.innerText = '🟡 Atenção aos Gastos';
-                badge.style.color = '#f59e0b';
-                badge.style.background = 'rgba(245,158,11,0.2)';
             } else {
                 progressBar.style.background = '#34d399';
                 badge.innerText = '🟢 Orçamento Seguro';
-                badge.style.color = '#34d399';
-                badge.style.background = 'rgba(16,185,129,0.2)';
             }
 
             document.getElementById("hero-verba-total-small").innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("hero-total-gasto-small").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // TRANSBORDO ENTRE CAIXINHAS
-            const boxStats = boxes.map((box, index) => {
-                const transBox = transDoMes.filter(t => t.type === 'expense' && t.boxId === box.id);
-                const rawSpent = transBox.reduce((acc, curr) => acc + curr.value, 0);
-                const spentCard = transBox.filter(t => t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-                const spentCash = rawSpent - spentCard;
-                return {
-                    box,
-                    index,
-                    isPrimary: index === 0,
-                    amount: box.amount || 0,
-                    rawSpent,
-                    spentCard,
-                    spentCash,
-                    spilloverReceived: 0,
-                    spilloverSent: 0
-                };
-            });
-
-            let totalExcedenteSecundarias = 0;
-            boxStats.forEach(b => {
-                if (!b.isPrimary) {
-                    if (b.rawSpent > b.amount) {
-                        b.spilloverSent = b.rawSpent - b.amount;
-                        totalExcedenteSecundarias += b.spilloverSent;
-                    }
-                }
-            });
-
-            if (boxStats.length > 0) {
-                boxStats[0].spilloverReceived = totalExcedenteSecundarias;
-            }
-
-            const semCaixinha = transDoMes.filter(t => t.type === 'expense' && !t.boxId).reduce((acc, c) => acc + c.value, 0);
-            if (boxStats.length > 0) {
-                boxStats[0].spilloverReceived += semCaixinha;
-            }
-
-            // ========================================================
-            // RENDERIZAÇÃO DAS CAIXINHAS (TIPOGRAFIA LIMPA E ALTO CONTRASTE)
-            // ========================================================
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -1868,27 +1728,11 @@
                     </div>
                 `;
             } else {
-                boxStats.forEach((stat) => {
-                    const box = stat.box;
-                    let displaySpent = stat.rawSpent;
-                    let displayRemain = stat.amount - stat.rawSpent;
-                    let msgTransbordo = '';
-
-                    if (!stat.isPrimary) {
-                        if (stat.rawSpent > stat.amount) {
-                            displaySpent = stat.amount;
-                            displayRemain = 0;
-                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--yellow); font-weight:800; display:block;">↳ Excedeu R$ ${stat.spilloverSent.toFixed(2)} (passou pro Salário)</span>`;
-                        }
-                    } else {
-                        displaySpent = stat.rawSpent + stat.spilloverReceived;
-                        displayRemain = stat.amount - displaySpent;
-                        if (stat.spilloverReceived > 0) {
-                            msgTransbordo = `<span style="font-size:0.62rem; color:var(--blue); font-weight:800; display:block;">↳ Absorveu R$ ${stat.spilloverReceived.toFixed(2)} de outras verbas</span>`;
-                        }
-                    }
-
-                    const percBox = stat.amount > 0 ? Math.min(Math.round((displaySpent / stat.amount) * 100), 100) : 0;
+                boxes.forEach((box) => {
+                    const transBox = transDoMes.filter(t => t.type === 'expense' && t.boxId === box.id);
+                    const rawSpent = transBox.reduce((acc, curr) => acc + curr.value, 0);
+                    const displayRemain = box.amount - rawSpent;
+                    const percBox = box.amount > 0 ? Math.min(Math.round((rawSpent / box.amount) * 100), 100) : 0;
                     
                     let corBarra = box.color || 'var(--primary)';
                     if (displayRemain < 0) corBarra = 'var(--red)';
@@ -1900,83 +1744,34 @@
                     
                     bElem.innerHTML = `
                         <div class="elegant-box-header">
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
-                                    ${box.name}
-                                </span>
-                            </div>
+                            <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                ${box.name}
+                            </span>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <b class="elegant-box-amount">
-                                    R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                </b>
+                                <b class="elegant-box-amount">R$ ${box.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>
                                 <div style="display:flex; gap:3px;">
                                     <button onclick="abrirModalEditarCaixinhaVerba('${box.id}')" class="btn-icon" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.7rem;"></i></button>
                                     <button onclick="removerCaixinhaVerba('${box.id}')" class="btn-icon del" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.7rem;"></i></button>
                                 </div>
                             </div>
                         </div>
-
                         <div class="elegant-progress-track">
-                            <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px; transition:width 0.3s;"></div>
+                            <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px;"></div>
                         </div>
-
-                        ${msgTransbordo}
-
                         <div class="elegant-box-footer">
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <span style="color:var(--text-muted);">
-                                    Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
-                                </span>
-                                <span style="color:var(--text-muted);">
-                                    Sobra: <b style="color:${displayRemain >= 0 ? 'var(--blue)' : 'var(--red)'};">R$ ${displayRemain.toFixed(2)}</b>
-                                </span>
-                            </div>
-                            <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="btn-box-action" title="Lançar gasto nesta verba">
-                                <i class="fa-solid fa-plus"></i> Gasto
-                            </button>
+                            <span style="color:var(--text-muted);">Gasto: <b style="color:var(--red);">R$ ${rawSpent.toFixed(0)}</b> (${percBox}%)</span>
+                            <button onclick="lancarDiretoNaCaixinha('${box.id}')" class="btn-box-action"><i class="fa-solid fa-plus"></i> Gasto</button>
                         </div>
                     `;
                     boxesContainer.appendChild(bElem);
                 });
             }
 
-            // ÚLTIMOS LANÇAMENTOS NO PAINEL
-            const recentContainer = document.getElementById("painel-recent-transactions");
-            if (recentContainer) {
-                recentContainer.innerHTML = '';
-                const ultimos = transDoMes.slice(0, 3);
-                if (ultimos.length === 0) {
-                    recentContainer.innerHTML = '<span style="font-size:0.72rem; color:var(--text-muted); text-align:center; padding:6px;">Nenhum gasto neste mês.</span>';
-                } else {
-                    ultimos.forEach(t => {
-                        const boxObj = boxes.find(b => b.id === t.boxId);
-                        const boxTag = boxObj ? `<span class="tag-person" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}30;">${boxObj.name}</span>` : '';
-                        const payTag = t.payment === "Cartão de Crédito" ? '💳' : '💵';
-                        
-                        const item = document.createElement("div");
-                        item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:6px 10px; border-radius:10px; font-size:0.75rem;";
-                        item.innerHTML = `
-                            <div style="display:flex; flex-direction:column; gap:1px;">
-                                <b style="font-size:0.78rem;">${t.desc}</b>
-                                <div style="display:flex; gap:4px; align-items:center; font-size:0.65rem; color:var(--text-muted);">
-                                    ${boxTag}
-                                    <span>${payTag} ${t.date ? t.date.split('-').slice(1).reverse().join('/') : ''}</span>
-                                </div>
-                            </div>
-                            <b style="color:var(--red); font-size:0.82rem;">- R$ ${t.value.toFixed(2)}</b>
-                        `;
-                        recentContainer.appendChild(item);
-                    });
-                }
-            }
-
-            // ABA CARTÕES
             const cards = financialData.creditCards || [];
-            document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
+            document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} cartões`;
 
             let totalGastoCartoesGeral = 0;
             let totalLimiteCartoesGeral = 0;
-
             const cardsContainer = document.getElementById("cards-container");
             if (cardsContainer) {
                 cardsContainer.innerHTML = '';
@@ -1984,81 +1779,29 @@
                     cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>';
                 } else {
                     cards.forEach(card => {
-                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id))).reduce((acc, curr) => acc + curr.value, 0);
-
+                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && t.cardId === card.id).reduce((acc, curr) => acc + curr.value, 0);
                         const totalUsado = (card.initialUsed || 0) + gastosDoCartao;
-                        const limite = card.limit || 0;
-                        const limiteDisponivel = limite - totalUsado;
-                        const percConsumo = limite > 0 ? Math.min(Math.round((totalUsado / limite) * 100), 100) : 0;
-
                         totalGastoCartoesGeral += totalUsado;
-                        totalLimiteCartoesGeral += limite;
-
-                        let corBarra = card.color || 'var(--primary)';
-                        if (percConsumo >= 90) corBarra = 'var(--red)';
-                        else if (percConsumo >= 70) corBarra = 'var(--yellow)';
+                        totalLimiteCartoesGeral += (card.limit || 0);
 
                         const cardElem = document.createElement("div");
                         cardElem.className = "credit-card-widget";
                         cardElem.style.background = `linear-gradient(135deg, ${card.color || '#1e293b'} 0%, #0f172a 100%)`;
-                        cardElem.style.borderLeft = `5px solid ${card.color || '#6366f1'}`;
                         cardElem.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:30px; height:20px; background:rgba(255,255,255,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center;">
-                                        <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fbbf24;"></i>
-                                    </div>
-                                    <span style="font-size:0.9rem; font-weight:900;">${card.name}</span>
-                                </div>
-                                <div style="display:flex; gap:8px;">
-                                    <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
-                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
-                                </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <b>${card.name}</b>
+                                <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
                             </div>
-
-                            <div style="margin: 4px 0;">
-                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ R$ ${gastosDoCartao.toFixed(2)} lançados neste mês` : 'Fatura atual'}</span>
-                            </div>
-
-                            <div style="display:flex; flex-direction:column; gap:4px;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.85); font-weight:700;">
-                                    <span>${percConsumo}% utilizado</span>
-                                    <span>Livre: R$ ${limiteDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                </div>
-                                <div style="background:rgba(255,255,255,0.15); height:6px; border-radius:6px; overflow:hidden;">
-                                    <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
-                                </div>
-                            </div>
-
-                            <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
-                                <span>Limite: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
-                            </div>
+                            <span style="font-size:1.4rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toFixed(2)}</span>
                         `;
                         cardsContainer.appendChild(cardElem);
                     });
                 }
             }
 
-            const heroTotalFaturas = document.getElementById("card-hero-total-faturas");
-            if (heroTotalFaturas) heroTotalFaturas.innerText = `R$ ${totalGastoCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
-            const heroLimiteTotal = document.getElementById("card-hero-limite-total");
-            if (heroLimiteTotal) heroLimiteTotal.innerText = `R$ ${totalLimiteCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
-            const heroLimiteLivre = document.getElementById("card-hero-limite-livre");
-            const limiteLivreGeral = totalLimiteCartoesGeral - totalGastoCartoesGeral;
-            if (heroLimiteLivre) heroLimiteLivre.innerText = `R$ ${limiteLivreGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
-            const heroQtdBadge = document.getElementById("card-hero-qtd-badge");
-            if (heroQtdBadge) heroQtdBadge.innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
-
-            const heroImpacto = document.getElementById("card-hero-impacto");
-            if (heroImpacto) {
-                const percImpacto = verbaTotalMes > 0 ? Math.round((totalGastoCartoesGeral / verbaTotalMes) * 100) : 0;
-                heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
-            }
+            document.getElementById("card-hero-total-faturas").innerText = `R$ ${totalGastoCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-hero-limite-total").innerText = `R$ ${totalLimiteCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-hero-limite-livre").innerText = `R$ ${(totalLimiteCartoesGeral - totalGastoCartoesGeral).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
             atualizarTagsCartoesVisual();
 
@@ -2071,13 +1814,9 @@
                     boxes.forEach(b => {
                         const opt = document.createElement("option");
                         opt.value = b.id;
-                        opt.textContent = `${b.name}`;
+                        opt.textContent = b.name;
                         selectBox.appendChild(opt);
                     });
-                    const optGeral = document.createElement("option");
-                    optGeral.value = "";
-                    optGeral.textContent = "Outro / Geral";
-                    selectBox.appendChild(optGeral);
                 }
             }
 
@@ -2091,230 +1830,30 @@
                 });
             }
 
-            // EXTRATO
-            const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
-            const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
-            
             if (listContainer) {
                 listContainer.innerHTML = '';
-                const filtrados = transDoMes.filter(t => {
-                    let bateTipo = true;
-                    if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
-                    const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
-                    return bateTipo && bateTexto;
-                });
-
-                if (filtrados.length === 0) {
-                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:16px;">Nenhum lançamento encontrado neste mês.</span>';
+                if (transDoMes.length === 0) {
+                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:16px;">Nenhum lançamento encontrado.</span>';
                 } else {
-                    filtrados.forEach((trans) => {
+                    transDoMes.forEach((trans) => {
                         const isExpense = trans.type === 'expense';
                         const prefix = isExpense ? '- R$' : '+ R$';
                         const valClass = isExpense ? 'expense' : 'income';
-                        const dataFormatada = trans.date ? trans.date.split('-').slice(1).reverse().join('/') : '';
-                        
-                        const boxObj = boxes.find(b => b.id === trans.boxId);
-                        const isCard = trans.payment === 'Cartão de Crédito';
-                        const iconBadge = isCard ? '💳' : '💵';
-
-                        const cardObj = cards.find(c => c.id === trans.cardId);
-                        const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:${cardObj.color || 'var(--yellow)'}; font-weight:800;">[${cardObj.name}]</span>` : '';
-
-                        const boxTagHtml = boxObj 
-                            ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}35;">${boxObj.name}</span>`
-                            : `<span class="box-pill-tag" style="background:rgba(0,0,0,0.05); color:var(--text-muted);">Geral</span>`;
-
                         const item = document.createElement("div");
                         item.className = "clean-statement-item";
-                        if (boxObj) {
-                            item.style.borderLeft = `3px solid ${boxObj.color}`;
-                        }
-
                         item.innerHTML = `
-                            <div class="statement-icon-badge" title="${trans.payment}">
-                                ${iconBadge}
-                            </div>
-
                             <div class="statement-content">
                                 <div class="statement-top-line">
-                                    <span class="statement-title" title="${trans.desc}">${trans.desc}</span>
-                                    <span class="statement-value ${valClass}">
-                                        ${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                    </span>
-                                </div>
-
-                                <div class="statement-bottom-line">
-                                    <div class="statement-meta-tags">
-                                        <span>${dataFormatada}</span>
-                                        <span>•</span>
-                                        <span>${trans.category || 'Geral'}</span>
-                                        ${cardTag ? '<span>•</span>' + cardTag : ''}
-                                        <span>•</span>
-                                        ${boxTagHtml}
-                                    </div>
-                                    <div class="statement-action-btns">
-                                        <button class="btn-mini-action" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                                        <button class="btn-mini-action del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                                    </div>
+                                    <span class="statement-title">${trans.desc}</span>
+                                    <span class="statement-value ${valClass}">${prefix} ${trans.value.toFixed(2)}</span>
                                 </div>
                             </div>
+                            <button class="btn-mini-action del" onclick="removerTransacao(${trans.id})"><i class="fa-solid fa-trash"></i></button>
                         `;
                         listContainer.appendChild(item);
                     });
                 }
-            }
-
-            // ABA MESES
-            let anoEntradasTotal = 0;
-            let anoGastosTotal = 0;
-
-            const monthsContainer = document.getElementById("months-cards-container");
-            if (monthsContainer) {
-                monthsContainer.innerHTML = '';
-
-                for (let m = 1; m <= 12; m++) {
-                    const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
-                    const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                    const temDados = mTrans.length > 0;
-
-                    let mInc = 0;
-                    let mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
-
-                    if (temDados || selectedYearTabela >= currentYear) {
-                        const mExt = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
-                        mInc = totalVerbaCaixinhas + mExt;
-                    }
-
-                    const mNet = mInc - mExp;
-
-                    if (temDados || mInc > 0) {
-                        anoEntradasTotal += mInc;
-                        anoGastosTotal += mExp;
-                    }
-
-                    const isMesAtual = (selectedYearTabela === currentYear && m === currentMonthNum);
-
-                    const cardMes = document.createElement("div");
-                    cardMes.className = "month-card-item";
-                    if (isMesAtual) {
-                        cardMes.style.borderColor = "var(--primary)";
-                        cardMes.style.boxShadow = "0 0 0 1px var(--primary)";
-                    }
-
-                    let statusBadge = '';
-                    if (temDados) {
-                        statusBadge = mNet >= 0 
-                            ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(16,185,129,0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>`
-                            : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(244,63,94,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`;
-                    } else {
-                        statusBadge = `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Projetado</span>`;
-                    }
-
-                    cardMes.innerHTML = `
-                        <div class="month-name-badge">
-                            <b style="font-size:0.9rem; color:var(--text-main);">${mesesNomes[m - 1]}</b>
-                            ${statusBadge}
-                        </div>
-
-                        <div class="month-values-group">
-                            <div style="text-align:right;">
-                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Gastos</span>
-                                <b style="color:${mExp > 0 ? 'var(--red)' : 'var(--text-muted)'};">
-                                    ${mExp > 0 ? '- R$ ' + mExp.toFixed(0) : 'R$ 0'}
-                                </b>
-                            </div>
-                            <div style="text-align:right; min-width:75px;">
-                                <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra Líquida</span>
-                                <b style="color:${mNet >= 0 ? 'var(--blue)' : 'var(--red)'}; font-size:0.85rem;">
-                                    R$ ${mNet.toFixed(0)}
-                                </b>
-                            </div>
-                            <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:4px 8px;">
-                                Abrir →
-                            </button>
-                        </div>
-                    `;
-                    monthsContainer.appendChild(cardMes);
-                }
-            }
-
-            const anoSaldoAcumulado = anoEntradasTotal - anoGastosTotal;
-            const elemSaldoAcum = document.getElementById("txt-ano-saldo-acumulado");
-            if (elemSaldoAcum) {
-                elemSaldoAcum.innerText = `R$ ${anoSaldoAcumulado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                elemSaldoAcum.style.color = anoSaldoAcumulado >= 0 ? "#34d399" : "#fb7185";
-            }
-
-            const elemEntradasTotal = document.getElementById("txt-ano-entradas-total");
-            if (elemEntradasTotal) elemEntradasTotal.innerText = `R$ ${anoEntradasTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
-
-            const elemGastosTotal = document.getElementById("txt-ano-gastos-total");
-            if (elemGastosTotal) elemGastosTotal.innerText = `R$ ${anoGastosTotal.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
-
-            // RESERVAS
-            const goalsContainer = document.getElementById("goals-list");
-            if (goalsContainer) {
-                goalsContainer.innerHTML = '';
-                if ((financialData.goals || []).length === 0) {
-                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma caixinha de reserva criada.</span>';
-                } else {
-                    (financialData.goals || []).forEach((goal) => {
-                        const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
-                        const gItem = document.createElement("div");
-                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
-                        gItem.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700;">
-                                <span>${goal.name}</span>
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                                    <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
-                                    <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
-                                </div>
-                            </div>
-                            <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
-                                <div style="width:${perc}%; height:100%; background:var(--primary);"></div>
-                            </div>
-                            <div style="display:flex; gap:6px; margin-top:4px;">
-                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
-                                <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
-                            </div>
-                        `;
-                        goalsContainer.appendChild(gItem);
-                    });
-                }
-            }
-
-            // INVESTIMENTOS
-            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
-            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
-            const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
-
-            const cardTotInv = document.getElementById("card-total-invested");
-            if (cardTotInv) cardTotInv.innerText = `R$ ${totalGeralInvest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const cardXp = document.getElementById("card-xp-total");
-            if (cardXp) cardXp.innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            const cardBin = document.getElementById("card-binance-total");
-            if (cardBin) cardBin.innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
-            const investList = document.getElementById("investment-list");
-            if (investList) {
-                investList.innerHTML = '';
-                (financialData.investments || []).forEach((inv) => {
-                    const item = document.createElement("div");
-                    item.className = "item-card";
-                    item.innerHTML = `
-                        <div class="item-info">
-                            <span class="item-title">${inv.asset}</span>
-                            <span class="item-meta">${inv.platform} • ${inv.type}</span>
-                        </div>
-                        <div class="item-right">
-                            <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    investList.appendChild(item);
-                });
             }
         }
 
@@ -2330,85 +1869,20 @@
 
         function lancarDiretoNaCaixinha(boxId) {
             trocarAba('lancar');
-            const select = document.getElementById("trans-box-id");
-            if (select) select.value = boxId;
+            document.getElementById("trans-box-id").value = boxId;
         }
 
-        function lancarDiretoNoCartao(cardId) {
-            trocarAba('lancar');
-            document.getElementById("trans-payment").value = "Cartão de Crédito";
-            verificarExibicaoCartao("Cartão de Crédito");
-            selecionarTagCartao(cardId);
-        }
-
-        // --- CARTÕES DE CRÉDITO ---
         function abrirModalNovoCartao() {
             abrirModal("Adicionar Novo Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Itaú, Bradesco, Amazon, Samsung...):</label>
-                <input type="text" id="new-card-name" placeholder="Nome do Cartão">
-
+                <label class="text-xs text-gray-500 font-bold">Nome do Cartão:</label>
+                <input type="text" id="new-card-name" placeholder="Ex: Nubank, Itaú">
                 <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
-                <input type="number" id="new-card-limit" step="100" placeholder="Ex: 5000">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
-                <input type="number" id="new-card-initial" step="50" value="0" placeholder="Ex: 0 se fatura zerada">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
-                <input type="color" id="new-card-color" value="#334155" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="number" id="new-card-limit" placeholder="5000">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
-                const initialUsed = parseFloat(document.getElementById("new-card-initial").value) || 0;
-                const color = document.getElementById("new-card-color").value;
-
-                if (!name || isNaN(limit) || limit <= 0) {
-                    alert("Informe o nome e um limite válido.");
-                    return;
-                }
-
-                if (!financialData.creditCards) financialData.creditCards = [];
-                const novoCartao = {
-                    id: "card_" + Date.now(),
-                    name,
-                    limit,
-                    initialUsed,
-                    color
-                };
-                financialData.creditCards.push(novoCartao);
-                selectedCardIdSelected = novoCartao.id;
-
-                salvarDados();
-                atualizarTela();
-            });
-        }
-
-        function abrirModalEditarCartao(cardId) {
-            const card = (financialData.creditCards || []).find(c => c.id === cardId);
-            if (!card) return;
-
-            abrirModal("Editar Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Cartão:</label>
-                <input type="text" id="edit-card-name" value="${card.name}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
-                <input type="number" id="edit-card-limit" step="100" value="${card.limit}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
-                <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#334155'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
-            `, () => {
-                const name = document.getElementById("edit-card-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-card-limit").value);
-                const initialUsed = parseFloat(document.getElementById("edit-card-initial").value) || 0;
-                const color = document.getElementById("edit-card-color").value;
-
                 if (name && !isNaN(limit)) {
-                    card.name = name;
-                    card.limit = limit;
-                    card.initialUsed = initialUsed;
-                    card.color = color;
+                    financialData.creditCards.push({ id: "card_" + Date.now(), name, limit, initialUsed: 0, color: "#334155" });
                     salvarDados();
                     atualizarTela();
                 }
@@ -2416,469 +1890,129 @@
         }
 
         function removerCartao(cardId) {
-            const card = (financialData.creditCards || []).find(c => c.id === cardId);
-            if (!card) return;
-            if (confirm(`Tem certeza que deseja excluir o cartão "${card.name}"?`)) {
+            if (confirm("Excluir este cartão?")) {
                 financialData.creditCards = financialData.creditCards.filter(c => c.id !== cardId);
-                if (selectedCardIdSelected === cardId) {
-                    selectedCardIdSelected = null;
-                }
                 salvarDados();
                 atualizarTela();
             }
         }
 
-        // --- CAIXINHAS DE VERBA ---
         function abrirModalNovaCaixinhaVerba() {
-            abrirModal("Criar Nova Caixinha de Verba", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
-                <input type="text" id="new-box-name" placeholder="Ex: Renda Extra, Outros">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
-                <input type="color" id="new-box-color" value="#3b82f6" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            abrirModal("Criar Nova Caixinha", `
+                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <input type="text" id="new-box-name" placeholder="Ex: Salário, Alimentação">
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
+                <input type="number" id="new-box-amount" placeholder="2000">
             `, () => {
                 const name = document.getElementById("new-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("new-box-amount").value);
-                const color = document.getElementById("new-box-color").value;
-
-                if (!name || isNaN(amount) || amount < 0) {
-                    alert("Informe um nome e um valor válido.");
-                    return;
+                if (name && !isNaN(amount)) {
+                    financialData.budgetBoxes.push({ id: "box_" + Date.now(), name, amount, color: "#10b981" });
+                    salvarDados();
+                    atualizarTela();
                 }
-
-                if (!financialData.budgetBoxes) financialData.budgetBoxes = [];
-                financialData.budgetBoxes.push({
-                    id: "box_" + Date.now(),
-                    name,
-                    amount,
-                    color
-                });
-
-                salvarDados();
-                atualizarTela();
             });
         }
 
         function abrirModalEditarCaixinhaVerba(boxId) {
             const box = financialData.budgetBoxes.find(b => b.id === boxId);
             if (!box) return;
-
-            abrirModal("Editar Caixinha de Verba", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
+            abrirModal("Editar Caixinha", `
                 <input type="text" id="edit-box-name" value="${box.name}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#3b82f6'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="number" id="edit-box-amount" value="${box.amount}">
             `, () => {
-                const name = document.getElementById("edit-box-name").value.trim();
-                const amount = parseFloat(document.getElementById("edit-box-amount").value);
-                const color = document.getElementById("edit-box-color").value;
-
-                if (name && !isNaN(amount)) {
-                    box.name = name;
-                    box.amount = amount;
-                    box.color = color;
-                    salvarDados();
-                    atualizarTela();
-                }
+                box.name = document.getElementById("edit-box-name").value;
+                box.amount = parseFloat(document.getElementById("edit-box-amount").value);
+                salvarDados();
+                atualizarTela();
             });
         }
 
         function removerCaixinhaVerba(boxId) {
-            const box = financialData.budgetBoxes.find(b => b.id === boxId);
-            if (!box) return;
-            if (confirm(`Tem certeza que deseja excluir a caixinha "${box.name}"?`)) {
+            if (confirm("Excluir caixinha?")) {
                 financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
                 salvarDados();
                 atualizarTela();
             }
         }
 
-        // --- LANÇAMENTOS ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
             const inputVal = parseFloat(document.getElementById("trans-value").value);
-            const modo = selectedCalcMode;
             const category = document.getElementById("trans-category").value;
             const boxId = document.getElementById("trans-box-id").value;
             const payment = document.getElementById("trans-payment").value;
             const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
-            const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(inputVal) || inputVal <= 0) {
-                alert("Preencha a descrição e um valor numérico válido.");
+                alert("Preencha os campos corretamente.");
                 return;
             }
 
-            let valorParcela = 0;
-            if (modo === "parcela") {
-                valorParcela = inputVal;
-            } else {
-                valorParcela = inputVal / installments;
-            }
-
-            const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
-
-            for (let i = 0; i < installments; i++) {
-                let m = mesBase + i; let a = anoBase;
-                while (m > 12) { m -= 12; a += 1; }
-                const mKey = `${a}-${String(m).padStart(2, '0')}`;
-                
-                const ultimoDiaDesseMes = new Date(a, m, 0).getDate();
-                const diaAjustado = Math.min(diaBase, ultimoDiaDesseMes);
-                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaAjustado).padStart(2, '0')}`;
-                
-                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parcela)` : desc;
-
-                financialData.transactions.unshift({
-                    id: Date.now() + i,
-                    type,
-                    desc: descricaoFinal,
-                    value: valorParcela,
-                    category: category || "Geral",
-                    boxId: boxId || null,
-                    cardId: cardId || null,
-                    payment,
-                    date: dataParcela,
-                    monthKey: mKey
-                });
-            }
+            const [a, m] = inputDate.split('-');
+            financialData.transactions.unshift({
+                id: Date.now(),
+                type,
+                desc,
+                value: inputVal,
+                category: category || "Geral",
+                boxId: boxId || null,
+                cardId: cardId || null,
+                payment,
+                date: inputDate,
+                monthKey: `${a}-${m}`
+            });
 
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
-            document.getElementById("trans-installments-num").value = '1';
-            calcularResumoParcelas();
             salvarDados();
-            
             atualizarTela();
-            alert("Lançamento salvo com sucesso!");
-        }
-
-        function abrirModalEditarTransacao(id) {
-            const t = financialData.transactions.find(x => x.id === id);
-            if (!t) return;
-
-            let optionsCaixinhas = '<option value="">Sem caixinha (Geral)</option>';
-            (financialData.budgetBoxes || []).forEach(b => {
-                optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
-            });
-
-            let optionsCartoes = '<option value="">Sem cartão específico</option>';
-            (financialData.creditCards || []).forEach(c => {
-                optionsCartoes += `<option value="${c.id}" ${t.cardId === c.id ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            let optionsCategorias = '<option value="">Sem categoria</option>';
-            (financialData.categories || []).forEach(c => {
-                optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
-                <input type="text" id="edit-trans-desc" value="${t.desc}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor da Parcela/Mês (R$):</label>
-                <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Tipo:</label>
-                <select id="edit-trans-type">
-                    <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
-                    <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
-                </select>
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Data:</label>
-                <input type="date" id="edit-trans-date" value="${t.date || ''}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Pagamento:</label>
-                <select id="edit-trans-payment">
-                    <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
-                    <option value="Dinheiro/Caixa" ${t.payment === 'Dinheiro/Caixa' ? 'selected' : ''}>💵 Dinheiro / Débito / Pix</option>
-                </select>
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cartão Vinculado:</label>
-                <select id="edit-trans-card">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
-                <select id="edit-trans-box">${optionsCaixinhas}</select>
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Categoria:</label>
-                <select id="edit-trans-cat">${optionsCategorias}</select>
-            `, () => {
-                const desc = document.getElementById("edit-trans-desc").value.trim();
-                const val = parseFloat(document.getElementById("edit-trans-val").value);
-                const type = document.getElementById("edit-trans-type").value;
-                const date = document.getElementById("edit-trans-date").value;
-                const payment = document.getElementById("edit-trans-payment").value;
-                const cardId = document.getElementById("edit-trans-card").value;
-                const boxId = document.getElementById("edit-trans-box").value;
-                const cat = document.getElementById("edit-trans-cat").value;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                    alert("Dados inválidos.");
-                    return;
-                }
-
-                t.desc = desc;
-                t.value = val;
-                t.type = type;
-                t.date = date;
-                if (date) {
-                    const parts = date.split('-');
-                    t.monthKey = `${parts[0]}-${parts[1]}`;
-                }
-                t.payment = payment;
-                t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
-                t.boxId = boxId || null;
-                t.category = cat || "Geral";
-
-                salvarDados();
-                atualizarTela();
-            });
+            alert("Salvo com sucesso!");
         }
 
         function removerTransacao(id) {
-            if (confirm("Deseja realmente excluir este lançamento?")) {
-                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
-                salvarDados();
-                atualizarTela();
-            }
+            financialData.transactions = financialData.transactions.filter(t => t.id !== id);
+            salvarDados();
+            atualizarTela();
         }
 
-        function abrirModalPagarFatura() {
-            const cards = financialData.creditCards || [];
-            let optionsCartoes = '<option value="all">Todos os Cartões</option>';
-            cards.forEach(c => {
-                optionsCartoes += `<option value="${c.id}">${c.name}</option>`;
-            });
-
-            abrirModal("Abater ou Pagar Fatura", `
-                <p class="text-xs text-gray-500 mb-2">Informe o valor que você quer pagar da fatura para liberar seu limite:</p>
-                <label class="text-xs text-gray-500 font-bold">Escolha o Cartão:</label>
-                <select id="modal-pay-card-id">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Pago / Abatido (R$):</label>
-                <input type="number" id="input-modal-fatura" step="0.01" placeholder="Ex: 500.00">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-fatura").value);
-                const cardId = document.getElementById("modal-pay-card-id").value;
-
-                if (!isNaN(val) && val > 0) {
-                    if (cardId === "all") {
-                        cards.forEach(c => {
-                            if (c.initialUsed > 0) {
-                                const abat = Math.min(c.initialUsed, val);
-                                c.initialUsed -= abat;
-                            }
-                        });
-                    } else {
-                        const targetCard = cards.find(c => c.id === cardId);
-                        if (targetCard) {
-                            targetCard.initialUsed = Math.max(0, (targetCard.initialUsed || 0) - val);
-                        }
-                    }
-                    financialData.cash -= val;
-                    salvarDados();
-                    atualizarTela();
-                    alert("Fatura abatida com sucesso!");
-                }
-            });
-        }
-
-        // --- BACKUP EM TEXTO ---
         function copiarBackupTexto() {
-            const texto = JSON.stringify(financialData);
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(texto).then(() => {
-                    alert("✅ Backup copiado! Agora você pode abrir o WhatsApp ou Bloco de Notas e colar lá para guardar.");
-                }).catch(() => fallbackCopiar(texto));
-            } else {
-                fallbackCopiar(texto);
-            }
-        }
-
-        function fallbackCopiar(texto) {
-            abrirModal("Seu Código de Backup", `
-                <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo e guarde no seu WhatsApp:</p>
-                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;" readonly>${texto}</textarea>
-            `, () => {});
+            navigator.clipboard.writeText(JSON.stringify(financialData)).then(() => alert("Backup copiado!"));
         }
 
         function abrirModalRestaurarTexto() {
-            abrirModal("Restaurar Dados em Texto", `
-                <p class="text-xs text-gray-500 mb-2">Cole aqui o código que você salvou no WhatsApp ou Bloco de Notas:</p>
-                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;"></textarea>
-            `, () => {
-                const input = document.getElementById("txt-restore-input").value.trim();
-                if (!input) return;
+            abrirModal("Restaurar", `<textarea id="txt-restore-input" style="width:100%;height:100px;"></textarea>`, () => {
                 try {
-                    const parsed = JSON.parse(input);
-                    if (parsed && typeof parsed === 'object') {
-                        financialData = parsed;
-                        salvarDados();
-                        atualizarTela();
-                        alert("🎉 Dados restaurados com sucesso!");
-                    } else {
-                        alert("Código inválido.");
-                    }
-                } catch (e) {
-                    alert("O texto colado não é um backup válido.");
-                }
-            });
-        }
-
-        // --- RESERVAS ---
-        function abrirModalNovaMeta() {
-            abrirModal("Nova Caixinha de Reserva", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
-                <input type="text" id="new-goal-name" placeholder="Ex: Reserva Emergência, Carro...">
-                
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Total Pretendido (R$):</label>
-                <input type="number" id="new-goal-target" placeholder="Ex: 5000">
-            `, () => {
-                const name = document.getElementById("new-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("new-goal-target").value);
-                if (name && !isNaN(target) && target > 0) {
-                    if (!financialData.goals) financialData.goals = [];
-                    financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+                    financialData = JSON.parse(document.getElementById("txt-restore-input").value);
                     salvarDados();
                     atualizarTela();
-                }
+                    alert("Restaurado com sucesso!");
+                } catch(e) { alert("Código inválido."); }
             });
         }
 
-        function abrirModalEditarMeta(id) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal("Editar Reserva", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
-                <input type="text" id="edit-goal-name" value="${goal.name}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="edit-goal-target" value="${goal.target}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Já Guardado (R$):</label>
-                <input type="number" id="edit-goal-current" value="${goal.current}">
-            `, () => {
-                const name = document.getElementById("edit-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("edit-goal-target").value);
-                const current = parseFloat(document.getElementById("edit-goal-current").value);
-
-                if (name && !isNaN(target) && !isNaN(current)) {
-                    goal.name = name;
-                    goal.target = target;
-                    goal.current = current;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function removerMeta(id) {
-            if (confirm("Deseja realmente remover esta reserva?")) {
-                financialData.goals = financialData.goals.filter(g => g.id !== id);
-                salvarDados();
-                atualizarTela();
-            }
-        }
-
-        function abrirModalCaixinha(id, tipo) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
-                <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
-                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
-                if (!isNaN(val) && val > 0) {
-                    if (tipo === 'guardar') {
-                        financialData.cash -= val;
-                        goal.current += val;
-                    } else {
-                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
-                        goal.current -= val;
-                        financialData.cash += val;
-                    }
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        // --- CATEGORIAS ---
-        function abrirModalNovaCategoria() {
-            abrirModal("Criar Nova Categoria", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Categoria:</label>
-                <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer...">
-            `, () => {
-                const name = document.getElementById("modal-cat-name").value.trim();
-                if (name) {
-                    if (!financialData.categories) financialData.categories = [];
-                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit: 0 });
-                    salvarDados();
-                    atualizarTela();
-                    const sel = document.getElementById("trans-category");
-                    if (sel) sel.value = name;
-                }
-            });
-        }
-
-        // --- INVESTIMENTOS ---
-        function adicionarInvestimento() {
-            const platform = document.getElementById("invest-platform").value;
-            const type = document.getElementById("invest-type").value;
-            const asset = document.getElementById("invest-asset").value.trim();
-            const value = parseFloat(document.getElementById("invest-value").value);
-            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
-
-            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
-            document.getElementById("invest-asset").value = '';
-            document.getElementById("invest-value").value = '';
-            salvarDados();
-            atualizarTela();
-        }
-
-        function removerInvestimento(id) {
-            financialData.investments = financialData.investments.filter(i => i.id !== id);
-            salvarDados();
-            atualizarTela();
-        }
+        function abrirModalNovaMeta() {}
 
         function limparTodosDados() {
-            if (confirm("Tem certeza que deseja zerar todos os lançamentos e restaurar o app limpo?")) {
+            if (confirm("Zerar todos os dados do aplicativo?")) {
+                localStorage.removeItem(STORAGE_KEY);
                 financialData = JSON.parse(JSON.stringify(defaultData));
                 salvarDados();
                 atualizarTela();
-                alert("Aplicativo reiniciado com sucesso.");
+                alert("Aplicativo limpo com sucesso!");
             }
         }
 
-        // --- MODAL ---
         function abrirModal(titulo, htmlBody, callbackConfirm) {
             document.getElementById("modal-title").innerText = titulo;
             document.getElementById("modal-body").innerHTML = htmlBody;
-            const confirmBtn = document.getElementById("modal-confirm-btn");
-            confirmBtn.onclick = () => {
-                callbackConfirm();
-                fecharModal();
-            };
+            document.getElementById("modal-confirm-btn").onclick = () => { callbackConfirm(); fecharModal(); };
             document.getElementById("app-modal").classList.add("active");
         }
 
-        function fecharModal() {
-            document.getElementById("app-modal").classList.remove("active");
-        }
-
+        function fecharModal() { document.getElementById("app-modal").classList.remove("active"); }
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
