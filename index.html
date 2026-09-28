@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
@@ -20,13 +20,13 @@
         :root {
             --primary: #6366f1;
             --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            --bg-color: #f1f5f9;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --input-bg: #f8fafc;
-            --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #3b82f6;
@@ -62,7 +62,7 @@
         }
 
         body {
-            background-color: #cbd5e1;
+            background-color: #0b0f19;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -78,7 +78,7 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
         }
@@ -87,14 +87,14 @@
             .phone-container {
                 height: 95vh;
                 border-radius: 36px;
-                border: 6px solid #cbd5e1;
+                border: 6px solid #1e293b;
             }
         }
 
         .lock-screen {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top, #312e81 0%, #0f172a 100%);
+            background: radial-gradient(circle at top, #1e1b4b 0%, #070a14 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -306,6 +306,9 @@
             align-items: center;
         }
 
+        /* ========================================================
+           NOVO DESIGN PREMIUM DAS CAIXINHAS NO PAINEL
+           ======================================================== */
         .budget-summary-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -323,43 +326,40 @@
             gap: 10px;
         }
 
-        .box-clean-card {
+        .elegant-box-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 18px;
-            padding: 14px 16px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
             position: relative;
         }
 
-        .box-clean-header {
+        .elegant-box-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .box-clean-tag {
-            font-size: 0.68rem;
+        .box-badge-tag {
+            font-size: 0.65rem;
             font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 10px;
-            letter-spacing: 0.2px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            padding: 2px 8px;
+            border-radius: 8px;
+            letter-spacing: 0.3px;
         }
 
-        .box-clean-amount {
+        .elegant-box-amount {
             font-size: 1.25rem;
             font-weight: 900;
             color: var(--text-main);
-            letter-spacing: -0.4px;
+            letter-spacing: -0.3px;
         }
 
-        .box-clean-track {
+        .elegant-progress-track {
             background: rgba(0, 0, 0, 0.05);
             height: 6px;
             border-radius: 6px;
@@ -367,21 +367,15 @@
             width: 100%;
         }
 
-        body.dark-mode .box-clean-track { background: rgba(255, 255, 255, 0.08); }
+        body.dark-mode .elegant-progress-track { background: rgba(255, 255, 255, 0.08); }
 
-        .box-clean-footer {
+        .elegant-box-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.72rem;
             font-weight: 700;
             padding-top: 2px;
-        }
-
-        .box-clean-footer-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         .btn-box-action {
@@ -399,27 +393,7 @@
         }
         .btn-box-action:hover { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
 
-        .extra-income-card {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(59, 130, 246, 0.03) 100%);
-            border: 1px dashed rgba(16, 185, 129, 0.35);
-            border-radius: 16px;
-            padding: 12px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .extra-item-pill {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 7px 10px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-        }
-
+        /* DEMAIS COMPONENTES */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -904,40 +878,6 @@
             font-weight: 800;
         }
 
-        .modern-profile-banner {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
-            color: white;
-            padding: 16px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 10px 25px rgba(49, 46, 129, 0.25);
-        }
-
-        .modern-action-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .category-chip-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 800;
-        }
-
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
@@ -963,6 +903,16 @@
             font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        .backup-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .modal-overlay {
@@ -1029,7 +979,7 @@
             </div>
             <div class="header-actions">
                 <button class="header-btn" onclick="bloquearManualmente()">🔒</button>
-                <button class="header-btn theme-toggle" id="theme-btn-toggle" onclick="alternarTema()">🌙</button>
+                <button class="header-btn theme-toggle" onclick="alternarTema()">🌙</button>
             </div>
         </header>
 
@@ -1058,7 +1008,7 @@
         
         <div class="content">
 
-            <!-- TELA 1: PAINEL -->
+            <!-- TELA 1: PAINEL COM CAIXINHAS MODERNAS E CORES EQUILIBRADAS -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar">
                     <div style="display:flex; align-items:center; gap:3px;">
@@ -1138,6 +1088,7 @@
                     </button>
                 </div>
 
+                <!-- SOMA TOTAL DAS VERBAS E LISTA REFORMULADA -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner">
                         <div>
@@ -1157,22 +1108,6 @@
                     <div class="budget-list-elegant" id="budget-boxes-container"></div>
                 </div>
 
-                <div class="extra-income-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <b style="font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:5px;">
-                                <i class="fa-solid fa-money-bill-trend-up"></i> Verbas Extras deste Mês
-                            </b>
-                            <span style="font-size:0.62rem; color:var(--text-muted);">13º, vendas, bônus ou rendas extras</span>
-                        </div>
-                        <button onclick="abrirModalNovaVerbaExtra()" class="btn-box-action" style="color:var(--green); border-color:rgba(16,185,129,0.3);">
-                            <i class="fa-solid fa-plus"></i> Extra
-                        </button>
-                    </div>
-
-                    <div id="extra-income-list" style="display:flex; flex-direction:column; gap:6px;"></div>
-                </div>
-
                 <div class="section-box" style="padding:12px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">🕒 ÚLTIMOS LANÇAMENTOS</span>
@@ -1181,7 +1116,7 @@
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center; box-shadow: var(--card-shadow);">
+                <div style="background:var(--input-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span> • <span id="txt-meses-preenchidos">0 meses</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
@@ -1380,7 +1315,7 @@
 
                 <div class="year-summary-card">
                     <div>
-                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; block;">Saldo Real Acumulado</span>
+                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); text-transform:uppercase; font-weight:800; display:block;">Saldo Anual Acumulado</span>
                         <b id="txt-ano-saldo-acumulado" style="font-size:1.35rem; font-weight:900;">R$ 0,00</b>
                     </div>
                     <div style="text-align:right; font-size:0.72rem;">
@@ -1394,88 +1329,72 @@
 
             <!-- TELA 5: MAIS -->
             <div id="tab-mais" class="tab-pane">
-                <div class="modern-profile-banner">
-                    <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle</h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Configurações, backup e ativos</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
-                            🟢 Seguro e Local
-                        </span>
-                    </div>
-                </div>
-
-                <div class="modern-action-card">
+                <div class="backup-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> Salvar e Restaurar Dados
-                        </b>
+                        <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
+                        <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
                     </div>
-                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.3;">
-                        Copie todo o seu aplicativo em formato de texto para salvar no seu WhatsApp ou bloco de notas sem procurar arquivos.
+                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
+                        Não precisa procurar arquivos no celular. Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
                     </p>
-                    <div style="display:flex; gap:8px;">
-                        <button class="btn-primary" style="flex:1; padding:9px; font-size:0.75rem;" onclick="copiarBackupTexto()">
-                            <i class="fa-solid fa-copy"></i> Copiar Backup
+                    
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-primary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="copiarBackupTexto()">
+                            📋 Copiar Backup
                         </button>
-                        <button class="btn-secondary" style="flex:1; padding:9px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
-                            <i class="fa-solid fa-paste"></i> Restaurar
+                        <button class="btn-secondary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
+                            📥 Restaurar Dados
                         </button>
                     </div>
                 </div>
 
-                <div class="modern-action-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-tags text-pink-500"></i> Suas Categorias
-                        </b>
-                        <button onclick="abrirModalNovaCategoria()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Nova
-                        </button>
-                    </div>
-                    <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
+                <div class="section-box">
+                    <h3>
+                        <span>🐷 Caixinhas de Reserva</span>
+                        <button class="btn-icon" onclick="abrirModalNovaMeta()" style="font-size:0.8rem; color:var(--primary); font-weight:bold;">+ Nova</button>
+                    </h3>
+                    <div class="list-container" id="goals-list"></div>
                 </div>
 
-                <div class="modern-action-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-piggy-bank text-amber-500"></i> Caixinhas de Reserva
-                        </b>
-                        <button onclick="abrirModalNovaMeta()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Nova
-                        </button>
-                    </div>
-                    <div class="list-container" id="goals-list" style="max-height:220px;"></div>
-                </div>
-
-                <div class="modern-action-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Patrimônio Investido:</span>
-                            <h2 id="card-total-invested" style="font-size:1.25rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
-                        </div>
-                        <button onclick="abrirModalNovoInvestimento()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Aporte
-                        </button>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); border-top:1px solid var(--border-color); padding-top:6px;">
+                <div class="section-box">
+                    <h3>💼 Total Investido em Ativos</h3>
+                    <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
                         <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
                         <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
                     </div>
-                    <div class="list-container" id="investment-list" style="max-height:160px; margin-top:4px;"></div>
                 </div>
 
-                <div class="modern-action-card" style="border-color:rgba(244,63,94,0.25);">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <b style="font-size:0.82rem; color:var(--red);">Zona de Manutenção</b>
-                            <span style="font-size:0.65rem; color:var(--text-muted); display:block;">Reiniciar dados e limpar aplicativo</span>
+                <div class="section-box">
+                    <h3>🚀 Registrar Aporte / Ativo</h3>
+                    <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
+                        <div class="two-cols-clean">
+                            <select id="invest-platform" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                                <option value="XP Investimentos">XP Investimentos</option>
+                                <option value="Binance">Binance</option>
+                                <option value="Outros">Outra Corretora</option>
+                            </select>
+                            <select id="invest-type" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                                <option value="Renda Fixa">Renda Fixa / CDB</option>
+                                <option value="Criptomoeda">Criptomoeda</option>
+                                <option value="Ações">Ações / FIIs</option>
+                            </select>
                         </div>
-                        <button onclick="limparTodosDados()" class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3); font-size:0.7rem; padding:4px 8px;">
-                            🗑️ Limpar Tudo
-                        </button>
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
                     </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>📁 Carteira de Ativos</h3>
+                    <div class="list-container" id="investment-list"></div>
+                </div>
+
+                <div style="text-align:center; padding:10px;">
+                    <button onclick="limparTodosDados()" style="background:none; border:none; color:var(--red); font-size:0.75rem; font-weight:800; cursor:pointer;">
+                        🗑️ Zerar Todos os Dados
+                    </button>
                 </div>
             </div>
 
@@ -1495,9 +1414,8 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v35_light_default";
+        const STORAGE_KEY = "financas_pro_v29_box_elegance";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
-        const THEME_KEY = "financas_pro_theme_preference";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1529,8 +1447,6 @@
                 { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
             ],
             transactions: [],
-            monthIncomes: {},
-            extraIncomes: [],
             goals: [
                 { id: 1, name: "🛡️ Reserva de Emergência", target: 10000, current: 0 }
             ],
@@ -1540,10 +1456,6 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
-                "financas_pro_v32_modern_panel",
-                "financas_pro_v31_extra_income",
-                "financas_pro_v30_clean_real",
-                "financas_pro_v29_box_elegance",
                 "financas_pro_v28_future_years",
                 "financas_pro_v27_boxes_redesign",
                 "financas_pro_v26_complete_dash",
@@ -1584,8 +1496,6 @@
                             creditCards: cartoes,
                             categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
                             transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                            monthIncomes: (parsed.monthIncomes && typeof parsed.monthIncomes === 'object') ? parsed.monthIncomes : {},
-                            extraIncomes: Array.isArray(parsed.extraIncomes) ? parsed.extraIncomes : [],
                             goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                             investments: Array.isArray(parsed.investments) ? parsed.investments : []
                         };
@@ -1603,30 +1513,7 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        function aplicarTemaInicial() {
-            const temaSalvo = localStorage.getItem(THEME_KEY);
-            const btnTheme = document.getElementById("theme-btn-toggle");
-
-            if (temaSalvo === 'dark') {
-                document.body.classList.add("dark-mode");
-                if (btnTheme) btnTheme.innerText = "☀️";
-            } else {
-                document.body.classList.remove("dark-mode");
-                if (btnTheme) btnTheme.innerText = "🌙";
-            }
-        }
-
-        function alternarTema() {
-            document.body.classList.toggle("dark-mode");
-            const isDark = document.body.classList.contains("dark-mode");
-            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
-            const btnTheme = document.getElementById("theme-btn-toggle");
-            if (btnTheme) btnTheme.innerText = isDark ? "☀️" : "🌙";
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
-            aplicarTemaInicial();
-
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
                 const lock = document.getElementById("lock-screen");
                 if (lock) lock.classList.add("hidden");
@@ -1849,94 +1736,19 @@
             atualizarTela();
         }
 
-        function obterVerbaDoMes(mKey, totalBaseCaixinhas) {
-            if (financialData.monthIncomes && typeof financialData.monthIncomes[mKey] === 'number') {
-                return financialData.monthIncomes[mKey];
-            }
-            return totalBaseCaixinhas;
-        }
-
-        function abrirModalNovaVerbaExtra() {
-            abrirModal("Adicionar Verba Extra no Mês", `
-                <label class="text-xs text-gray-500 font-bold">Descrição da Verba (ex: 13º Salário, Venda...):</label>
-                <input type="text" id="new-extra-desc" placeholder="Ex: Bônus, Freelance">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Extra (R$):</label>
-                <input type="number" id="new-extra-val" step="50" placeholder="Ex: 1200.00">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Data do Recebimento:</label>
-                <input type="date" id="new-extra-date" value="${new Date().toISOString().slice(0, 10)}">
-            `, () => {
-                const desc = document.getElementById("new-extra-desc").value.trim();
-                const val = parseFloat(document.getElementById("new-extra-val").value);
-                const date = document.getElementById("new-extra-date").value;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                    alert("Informe uma descrição e um valor válido.");
-                    return;
-                }
-
-                if (!financialData.extraIncomes) financialData.extraIncomes = [];
-                const mKey = date ? date.slice(0, 7) : selectedMonthKey;
-
-                financialData.extraIncomes.push({
-                    id: Date.now(),
-                    desc,
-                    value: val,
-                    date,
-                    monthKey: mKey
-                });
-
-                salvarDados();
-                atualizarTela();
-            });
-        }
-
-        function removerVerbaExtra(id) {
-            if (confirm("Remover esta verba extra?")) {
-                financialData.extraIncomes = (financialData.extraIncomes || []).filter(e => e.id !== id);
-                salvarDados();
-                atualizarTela();
-            }
-        }
-
-        function abrirModalEditarVerbaMes(mKey, mesNome, ano) {
-            const boxes = financialData.budgetBoxes || [];
-            const totalBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
-            const atual = obterVerbaDoMes(mKey, totalBase);
-
-            abrirModal(`Editar Verba de ${mesNome} / ${ano}`, `
-                <p class="text-xs text-gray-500 mb-2">Defina quanto você recebeu ou planeja receber neste mês específico (sem alterar os outros meses):</p>
-                <label class="text-xs text-gray-500 font-bold">Verba Total do Mês (R$):</label>
-                <input type="number" id="input-edit-verba-mes" step="50" value="${atual}">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-edit-verba-mes").value);
-                if (!isNaN(val) && val >= 0) {
-                    if (!financialData.monthIncomes) financialData.monthIncomes = {};
-                    financialData.monthIncomes[mKey] = val;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
         function atualizarTela() {
             const boxes = financialData.budgetBoxes || [];
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
-            const extrasDoMes = (financialData.extraIncomes || []).filter(e => e.monthKey === selectedMonthKey);
 
-            const totalVerbaCaixinhasBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
-            const verbaCadastradaMes = obterVerbaDoMes(selectedMonthKey, totalVerbaCaixinhasBase);
-            const totalExtrasValor = extrasDoMes.reduce((acc, curr) => acc + curr.value, 0);
-            const receitasLançadasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            
-            const verbaTotalMes = verbaCadastradaMes + totalExtrasValor + receitasLançadasMes;
+            const totalVerbaCaixinhas = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+            const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            const verbaTotalMes = totalVerbaCaixinhas + receitasExtrasMes;
 
             const despesasTotalMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // BANNER NO PAINEL
+            // SOMA TOTAL DAS VERBAS NO PAINEL
             const bannerSomaVerbas = document.getElementById("txt-soma-total-verbas");
             if (bannerSomaVerbas) {
                 bannerSomaVerbas.innerText = `R$ ${totalVerbaCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1945,31 +1757,6 @@
             const bannerConsumoVerbas = document.getElementById("txt-consumo-total-verbas");
             if (bannerConsumoVerbas) {
                 bannerConsumoVerbas.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            }
-
-            // LISTA DE VERBAS EXTRAS
-            const extraListContainer = document.getElementById("extra-income-list");
-            if (extraListContainer) {
-                extraListContainer.innerHTML = '';
-                if (extrasDoMes.length === 0) {
-                    extraListContainer.innerHTML = '<span style="font-size:0.7rem; color:var(--text-muted); text-align:center; padding:4px;">Nenhuma verba extra adicionada para este mês.</span>';
-                } else {
-                    extrasDoMes.forEach(extra => {
-                        const item = document.createElement("div");
-                        item.className = "extra-item-pill";
-                        item.innerHTML = `
-                            <div style="display:flex; flex-direction:column; gap:1px;">
-                                <b style="color:var(--text-main); font-size:0.78rem;">${extra.desc}</b>
-                                <span style="font-size:0.62rem; color:var(--text-muted);">${extra.date ? extra.date.split('-').slice(1).reverse().join('/') : ''}</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <b style="color:var(--green); font-size:0.85rem;">+ R$ ${extra.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>
-                                <button onclick="removerVerbaExtra(${extra.id})" class="btn-mini-action del" title="Remover"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        `;
-                        extraListContainer.appendChild(item);
-                    });
-                }
             }
 
             // MINI PAINEL NA ABA LANÇAR
@@ -2067,7 +1854,9 @@
                 boxStats[0].spilloverReceived += semCaixinha;
             }
 
-            // RENDERIZAÇÃO DAS CAIXINHAS NO PAINEL
+            // ========================================================
+            // RENDERIZAÇÃO DAS CAIXINHAS (TIPOGRAFIA LIMPA E ALTO CONTRASTE)
+            // ========================================================
             const boxesContainer = document.getElementById("budget-boxes-container");
             boxesContainer.innerHTML = '';
 
@@ -2106,16 +1895,18 @@
                     else if (percBox >= 85) corBarra = 'var(--yellow)';
 
                     const bElem = document.createElement("div");
-                    bElem.className = "box-clean-card";
+                    bElem.className = "elegant-box-card";
                     bElem.style.borderLeft = `4px solid ${box.color || 'var(--primary)'}`;
                     
                     bElem.innerHTML = `
-                        <div class="box-clean-header">
-                            <span class="box-clean-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
-                                <i class="fa-solid fa-wallet" style="font-size:0.65rem;"></i> ${box.name}
-                            </span>
+                        <div class="elegant-box-header">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span class="box-badge-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                    ${box.name}
+                                </span>
+                            </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <b class="box-clean-amount">
+                                <b class="elegant-box-amount">
                                     R$ ${stat.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </b>
                                 <div style="display:flex; gap:3px;">
@@ -2125,14 +1916,14 @@
                             </div>
                         </div>
 
-                        <div class="box-clean-track">
+                        <div class="elegant-progress-track">
                             <div style="width:${percBox}%; height:100%; background:${corBarra}; border-radius:6px; transition:width 0.3s;"></div>
                         </div>
 
                         ${msgTransbordo}
 
-                        <div class="box-clean-footer">
-                            <div class="box-clean-footer-info">
+                        <div class="elegant-box-footer">
+                            <div style="display:flex; align-items:center; gap:10px;">
                                 <span style="color:var(--text-muted);">
                                     Gasto: <b style="color:var(--red);">R$ ${displaySpent.toFixed(0)}</b> (${percBox}%)
                                 </span>
@@ -2682,8 +2473,8 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
                 <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Caixinha:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#3b82f6'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("edit-box-amount").value);
@@ -3087,6 +2878,8 @@
         function fecharModal() {
             document.getElementById("app-modal").classList.remove("active");
         }
+
+        function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
 </html>
