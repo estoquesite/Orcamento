@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V13</title>
+    <title>Finanças Pro V14</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -30,22 +30,12 @@
             --text-muted: #9ca3af;
             --border-color: #1f1f2e;
             --input-bg: #13131f;
-            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #06b6d4;
             --yellow: #f59e0b;
             --purple: #c084fc;
-        }
-
-        @keyframes neonPulse {
-            0% { box-shadow: 0 0 10px var(--custom-border), inset 0 0 5px rgba(255,255,255,0.1); }
-            50% { box-shadow: 0 0 25px var(--custom-border), inset 0 0 15px rgba(255,255,255,0.25); }
-            100% { box-shadow: 0 0 10px var(--custom-border), inset 0 0 5px rgba(255,255,255,0.1); }
-        }
-
-        .pulsing-card {
-            animation: neonPulse 3.5s infinite ease-in-out;
         }
 
         * {
@@ -203,13 +193,13 @@
 
         .top-nav-item i { font-size: 1rem; }
         .top-nav-item span { font-size: 0.6rem; font-weight: 800; }
-        .top-nav-item.active { color: var(--custom-border); background: rgba(168, 85, 247, 0.15); }
+        .top-nav-item.active { color: var(--primary); background: rgba(168, 85, 247, 0.15); }
 
         .content {
             padding: 12px 16px 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             flex: 1;
             overflow-y: auto;
         }
@@ -217,7 +207,7 @@
         .tab-pane {
             display: none;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
         .tab-pane.active { display: flex; }
 
@@ -227,7 +217,7 @@
             align-items: center;
             background: var(--custom-card);
             padding: 8px 14px;
-            border-radius: 16px;
+            border-radius: 14px;
             border: 1.5px solid var(--custom-border);
             box-shadow: var(--card-shadow);
         }
@@ -250,15 +240,13 @@
         .hero-wallet-card {
             background: var(--primary-gradient);
             color: white;
-            padding: 18px;
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.35);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-            border: 1.5px solid var(--custom-border);
+            gap: 10px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
         }
 
         .quick-actions-bar {
@@ -269,7 +257,7 @@
         .quick-btn {
             flex: 1;
             padding: 10px;
-            border-radius: 14px;
+            border-radius: 12px;
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
             color: var(--custom-text);
@@ -286,8 +274,8 @@
 
         .section-box {
             background: var(--custom-card);
-            padding: 16px;
-            border-radius: 18px;
+            padding: 14px;
+            border-radius: 16px;
             border: 1.5px solid var(--custom-border);
             box-shadow: var(--card-shadow);
         }
@@ -295,8 +283,8 @@
         .budget-summary-banner {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 16px;
-            padding: 14px 16px;
+            border-radius: 14px;
+            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -306,17 +294,17 @@
         .budget-list-elegant {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .box-clean-card {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             box-shadow: var(--card-shadow);
         }
 
@@ -329,42 +317,42 @@
         .box-clean-tag {
             font-size: 0.7rem;
             font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 10px;
+            padding: 3px 8px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .box-clean-amount {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 900;
             color: var(--custom-text);
         }
 
         .box-clean-track {
             background: var(--input-bg);
-            height: 8px;
+            height: 7px;
             border-radius: 6px;
             overflow: hidden;
             width: 100%;
-            border: 1.5px solid var(--custom-border);
+            border: 1px solid var(--custom-border);
         }
 
         .box-clean-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
         }
 
         .btn-box-action {
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 800;
             color: var(--custom-text);
             cursor: pointer;
@@ -377,11 +365,11 @@
         .extra-income-card {
             background: var(--custom-card);
             border: 1.5px dashed var(--custom-border);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             box-shadow: var(--card-shadow);
         }
 
@@ -391,30 +379,37 @@
             align-items: center;
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            padding: 8px 12px;
-            border-radius: 12px;
+            padding: 7px 10px;
+            border-radius: 10px;
             font-size: 0.75rem;
         }
 
-        .mobile-entry-card {
+        /* LANÇAR EM BLOCOS SEPARADOS E LIMPOS */
+        .entry-block-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .entry-isolated-box {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 18px;
-            padding: 16px;
+            border-radius: 14px;
+            padding: 12px;
             box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .lancar-header-dashboard {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 16px;
-            padding: 12px 14px;
+            border-radius: 14px;
+            padding: 10px 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             box-shadow: var(--card-shadow);
         }
 
@@ -423,7 +418,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
         .lancar-metrics-row {
@@ -433,14 +428,14 @@
         }
 
         .lancar-metric-item span {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             color: var(--text-muted);
             font-weight: 800;
             text-transform: uppercase;
         }
 
         .lancar-metric-item b {
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             font-weight: 900;
         }
 
@@ -448,8 +443,8 @@
             display: flex;
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            padding: 4px;
-            border-radius: 12px;
+            padding: 3px;
+            border-radius: 10px;
             gap: 4px;
         }
 
@@ -457,10 +452,10 @@
             flex: 1;
             border: none;
             background: transparent;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            padding: 8px 0;
-            border-radius: 9px;
+            padding: 7px 0;
+            border-radius: 8px;
             color: var(--text-muted);
             cursor: pointer;
             display: flex;
@@ -472,25 +467,23 @@
         .top-btn.active.expense {
             background: var(--custom-card);
             color: var(--red);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             border: 1px solid rgba(244, 63, 94, 0.4);
         }
 
         .top-btn.active.income {
             background: var(--custom-card);
             color: var(--green);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             border: 1px solid rgba(16, 185, 129, 0.4);
         }
 
         .amount-hero-box {
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px 14px;
+            border-radius: 12px;
+            padding: 10px 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .mode-row {
@@ -510,9 +503,9 @@
         .mode-chip {
             border: none;
             background: transparent;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 800;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 6px;
             color: var(--text-muted);
             cursor: pointer;
@@ -520,8 +513,7 @@
 
         .mode-chip.active {
             background: var(--custom-card);
-            color: var(--custom-border);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            color: var(--primary);
         }
 
         .val-controls-line {
@@ -539,7 +531,7 @@
         }
 
         .val-input-group span {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 900;
             color: var(--text-muted);
         }
@@ -548,7 +540,7 @@
             width: 100%;
             border: none !important;
             background: transparent !important;
-            font-size: 1.6rem !important;
+            font-size: 1.5rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
             color: var(--custom-text) !important;
@@ -567,9 +559,9 @@
         .step-btn {
             border: none;
             background: transparent;
-            width: 28px;
-            height: 32px;
-            font-size: 0.9rem;
+            width: 26px;
+            height: 30px;
+            font-size: 0.85rem;
             font-weight: 900;
             color: var(--text-muted);
             cursor: pointer;
@@ -579,22 +571,22 @@
         }
 
         .step-input {
-            width: 34px !important;
+            width: 32px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
-            font-size: 0.85rem !important;
+            font-size: 0.8rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
-            color: var(--custom-border) !important;
+            color: var(--primary) !important;
         }
 
         .calc-preview-bar {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 800;
-            color: var(--custom-border);
+            color: var(--primary);
             background: rgba(168, 85, 247, 0.1);
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -608,12 +600,12 @@
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
             border-radius: 12px;
-            padding: 2px 12px;
-            gap: 10px;
+            padding: 2px 10px;
+            gap: 8px;
         }
 
         .detail-row i {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             width: 16px;
             text-align: center;
@@ -622,8 +614,8 @@
         .detail-row select, .detail-row input {
             border: none !important;
             background: transparent !important;
-            padding: 10px 0 !important;
-            font-size: 0.82rem !important;
+            padding: 8px 0 !important;
+            font-size: 0.8rem !important;
             font-weight: 700 !important;
             color: var(--custom-text) !important;
             outline: none !important;
@@ -642,13 +634,13 @@
             gap: 6px;
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            padding: 10px;
+            padding: 8px 10px;
             border-radius: 12px;
         }
 
         .card-tags-scroll {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
             padding-bottom: 2px;
             scrollbar-width: none;
@@ -658,12 +650,12 @@
         .card-pill-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 10px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             color: var(--custom-text);
             cursor: pointer;
@@ -672,9 +664,9 @@
         }
 
         .card-pill-btn.active {
-            border-color: var(--custom-border);
+            border-color: var(--primary);
             background: rgba(168, 85, 247, 0.15);
-            box-shadow: 0 0 10px var(--custom-border);
+            box-shadow: 0 0 8px var(--custom-border);
         }
 
         .card-pill-btn .color-dot {
@@ -694,31 +686,31 @@
         .clean-statement-item {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px 14px;
+            border-radius: 12px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             box-shadow: var(--card-shadow);
         }
 
         .statement-icon-badge {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             flex-shrink: 0;
         }
 
         .statement-content {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
             min-width: 0;
         }
@@ -731,7 +723,7 @@
         }
 
         .statement-title {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: var(--custom-text);
             white-space: nowrap;
@@ -740,7 +732,7 @@
         }
 
         .statement-value {
-            font-size: 0.9rem;
+            font-size: 0.86rem;
             font-weight: 900;
             white-space: nowrap;
         }
@@ -752,7 +744,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
             font-weight: 600;
         }
@@ -760,15 +752,15 @@
         .statement-meta-tags {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             overflow: hidden;
             white-space: nowrap;
         }
 
         .box-pill-tag {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 800;
-            padding: 2px 6px;
+            padding: 1px 6px;
             border-radius: 6px;
         }
 
@@ -783,9 +775,9 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 4px 6px;
+            padding: 3px 5px;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
         }
 
         .btn-mini-action:hover { color: var(--custom-border); background: var(--input-bg); }
@@ -793,12 +785,12 @@
 
         .credit-card-widget {
             color: white;
-            padding: 16px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            padding: 14px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
             border: 1.5px solid var(--custom-border);
@@ -810,20 +802,20 @@
             align-items: center;
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 16px;
-            padding: 10px 14px;
+            border-radius: 14px;
+            padding: 8px 12px;
             box-shadow: var(--card-shadow);
         }
 
         .year-summary-card {
             background: var(--primary-gradient);
             color: white;
-            padding: 16px;
-            border-radius: 18px;
+            padding: 14px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
             border: 1.5px solid var(--custom-border);
         }
 
@@ -836,8 +828,8 @@
         .month-card-item {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px 16px;
+            border-radius: 12px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -848,37 +840,37 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            min-width: 80px;
+            min-width: 75px;
         }
 
         .month-values-group {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.75rem;
+            gap: 10px;
+            font-size: 0.72rem;
             font-weight: 800;
         }
 
         .modern-profile-banner {
             background: var(--primary-gradient);
             color: white;
-            padding: 18px;
-            border-radius: 20px;
+            padding: 16px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
             border: 1.5px solid var(--custom-border);
         }
 
         .modern-action-card {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 18px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             box-shadow: var(--card-shadow);
         }
 
@@ -888,9 +880,9 @@
             align-items: center;
             background: var(--input-bg);
             border: 1.5px solid var(--custom-border);
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
             font-weight: 800;
         }
 
@@ -898,12 +890,12 @@
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 14px;
-            font-size: 0.85rem;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 0.82rem;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -914,9 +906,9 @@
             background: var(--input-bg);
             color: var(--custom-text);
             border: 1.5px solid var(--custom-border);
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
         }
@@ -924,27 +916,27 @@
         .color-control-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 6px;
+            gap: 8px;
+            margin-top: 4px;
         }
         .color-picker-box {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             background: var(--input-bg);
-            padding: 8px;
-            border-radius: 10px;
+            padding: 6px;
+            border-radius: 8px;
             border: 1.5px solid var(--custom-border);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 800;
         }
         .color-picker-box input[type="color"] {
             width: 100%;
-            height: 34px;
+            height: 30px;
             border: none;
             background: transparent;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 4px;
         }
 
         .modal-overlay {
@@ -962,21 +954,21 @@
         .modal-content {
             background: var(--custom-card);
             border: 1.5px solid var(--custom-border);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 18px;
             width: 100%;
             max-width: 360px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6), var(--neon-glow);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
         #toast-container {
             position: absolute;
-            top: 60px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 99999;
@@ -990,14 +982,14 @@
         .toast-msg {
             background: var(--custom-card);
             color: var(--custom-text);
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.78rem;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), var(--neon-glow);
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             border: 1.5px solid var(--custom-border);
             animation: slideDown 0.3s ease forwards;
         }
@@ -1020,7 +1012,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V13</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V14</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1041,7 +1033,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V13</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V14</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1107,7 +1099,7 @@
                     </div>
                 </div>
 
-                <div class="hero-wallet-card pulsing-card">
+                <div class="hero-wallet-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
                     </div>
@@ -1209,7 +1201,7 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR -->
+            <!-- TELA 2: LANÇAR (SEPARADO EM BLOCOS LIMPOS) -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="lancar-header-dashboard">
                     <div class="lancar-date-row">
@@ -1239,88 +1231,106 @@
                     </div>
                 </div>
 
-                <div class="mobile-entry-card">
-                    <div class="entry-top-switch">
-                        <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
-                            <i class="fa-solid fa-arrow-down"></i> Despesa
-                        </button>
-                        <button type="button" id="btn-type-income" class="top-btn" onclick="alternarTipoTransacao('income')">
-                            <i class="fa-solid fa-arrow-up"></i> Receita
-                        </button>
+                <div class="entry-block-wrapper">
+                    <div class="entry-isolated-box">
+                        <div class="entry-top-switch">
+                            <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
+                                <i class="fa-solid fa-arrow-down"></i> Despesa
+                            </button>
+                            <button type="button" id="btn-type-income" class="top-btn" onclick="alternarTipoTransacao('income')">
+                                <i class="fa-solid fa-arrow-up"></i> Receita
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="amount-hero-box">
-                        <div class="mode-row">
-                            <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
-                            <div class="mode-chip-group">
-                                <button type="button" id="btn-mode-total" class="mode-chip active" onclick="alternarModoCalculo('total')">Total Compra</button>
-                                <button type="button" id="btn-mode-parcela" class="mode-chip" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
+                    <div class="entry-isolated-box">
+                        <div class="amount-hero-box">
+                            <div class="mode-row">
+                                <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
+                                <div class="mode-chip-group">
+                                    <button type="button" id="btn-mode-total" class="mode-chip active" onclick="alternarModoCalculo('total')">Total Compra</button>
+                                    <button type="button" id="btn-mode-parcela" class="mode-chip" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
+                                </div>
+                            </div>
+
+                            <div class="val-controls-line">
+                                <div class="val-input-group">
+                                    <span>R$</span>
+                                    <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="clean-val-input" oninput="calcularResumoParcelas()">
+                                </div>
+                                
+                                <div class="stepper-times" title="Quantidade de parcelas">
+                                    <button type="button" class="step-btn" onclick="mudarParcelasRapido(-1)">-</button>
+                                    <input type="number" id="trans-installments-num" min="1" max="120" value="1" class="step-input" oninput="calcularResumoParcelas()">
+                                    <button type="button" class="step-btn" onclick="mudarParcelasRapido(1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="calc-preview-bar">
+                                <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
+                                <span id="calc-preview-pill-sub">1x</span>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="val-controls-line">
-                            <div class="val-input-group">
-                                <span>R$</span>
-                                <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="clean-val-input" oninput="calcularResumoParcelas()">
+                    <div class="entry-isolated-box">
+                        <div class="detail-row">
+                            <i class="fa-solid fa-pen"></i>
+                            <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
+                        </div>
+                    </div>
+
+                    <div class="entry-isolated-box">
+                        <div class="two-cols-clean">
+                            <div class="detail-row">
+                                <i class="fa-solid fa-box"></i>
+                                <select id="trans-box-id"></select>
                             </div>
-                            
-                            <div class="stepper-times" title="Quantidade de parcelas">
-                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(-1)">-</button>
-                                <input type="number" id="trans-installments-num" min="1" max="120" value="1" class="step-input" oninput="calcularResumoParcelas()">
-                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(1)">+</button>
+                            <div class="detail-row">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
+                                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                    <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="calc-preview-bar">
-                            <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
-                            <span id="calc-preview-pill-sub">1x</span>
+                    <div id="row-select-card" class="entry-isolated-box">
+                        <div class="card-tags-scroll-wrap" style="border:none; padding:0; background:transparent;">
+                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block;">
+                                Selecione o Cartão Utilizado:
+                            </span>
+                            <div id="card-tags-container" class="card-tags-scroll"></div>
                         </div>
                     </div>
 
-                    <div class="detail-row">
-                        <i class="fa-solid fa-pen"></i>
-                        <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
-                    </div>
-
-                    <div class="two-cols-clean">
-                        <div class="detail-row">
-                            <i class="fa-solid fa-box"></i>
-                            <select id="trans-box-id"></select>
-                        </div>
-                        <div class="detail-row">
-                            <i class="fa-solid fa-credit-card"></i>
-                            <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
-                                <option value="Cartão de Crédito">Cartão de Crédito</option>
-                                <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
-                            </select>
+                    <div class="entry-isolated-box">
+                        <div class="two-cols-clean">
+                            <div class="detail-row" style="position:relative;">
+                                <i class="fa-solid fa-tag"></i>
+                                <select id="trans-category"></select>
+                                <button type="button" onclick="abrirModalNovaCategoria()" title="Nova Categoria" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer;">+</button>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                <input type="date" id="trans-date">
+                            </div>
                         </div>
                     </div>
 
-                    <div id="row-select-card" class="card-tags-scroll-wrap">
-                        <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
-                            Selecione o Cartão Utilizado:
-                        </span>
-                        <div id="card-tags-container" class="card-tags-scroll"></div>
+                    <!-- NOVO: BOTÃO DE MARCAR COMO DESPESA FIXA -->
+                    <div class="entry-isolated-box" style="flex-direction:row; justify-content:space-between; align-items:center; padding:10px 14px;">
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">📌 Marcar como Despesa Fixa (Recorrente)</span>
+                        <input type="checkbox" id="trans-is-fixed" style="width:18px; height:18px; cursor:pointer; accent-color:var(--primary);">
                     </div>
 
-                    <div class="two-cols-clean">
-                        <div class="detail-row" style="position:relative;">
-                            <i class="fa-solid fa-tag"></i>
-                            <select id="trans-category"></select>
-                            <button type="button" onclick="abrirModalNovaCategoria()" title="Nova Categoria" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer;">+</button>
-                        </div>
-                        <div class="detail-row">
-                            <i class="fa-solid fa-calendar-day"></i>
-                            <input type="date" id="trans-date">
-                        </div>
-                    </div>
-
-                    <button class="btn-primary" onclick="adicionarTransacao()">
+                    <button class="btn-primary" onclick="adicionarTransacao()" style="margin-top:4px;">
                         💾 Salvar Lançamento
                     </button>
                 </div>
 
-                <div class="section-box">
+                <div class="section-box" style="margin-top:6px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <h3><span style="font-size:0.85rem; font-weight:800;">📑 Extrato do Mês</span></h3>
                         <button onclick="exportarCSV()" class="btn-box-action" title="Exportar Extrato em Planilha Excel">
@@ -1416,12 +1426,12 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE LIBERDADE DE CORES 100%) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES 100% LIVRE) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V13</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Liberdade total de paleta de cores</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V14</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Controle total do visual do aplicativo</span>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
@@ -1555,7 +1565,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v43";
+        const STORAGE_KEY = "financas_pro_neon_v44";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         
@@ -1967,10 +1977,10 @@
                 return;
             }
 
-            let csv = "ID;Data;Descrição;Tipo;Valor;Categoria;Pagamento;Caixinha\n";
+            let csv = "ID;Data;Descrição;Tipo;Valor;Categoria;Pagamento;Caixinha;Fixa\n";
             trans.forEach(t => {
                 const val = t.value.toFixed(2).replace('.', ',');
-                csv += `${t.id};${t.date || ''};"${t.desc}";${t.type === 'expense' ? 'Despesa' : 'Receita'};${val};"${t.category || ''}";"${t.payment || ''}";"${t.boxId || ''}"\n`;
+                csv += `${t.id};${t.date || ''};"${t.desc}";${t.type === 'expense' ? 'Despesa' : 'Receita'};${val};"${t.category || ''}";"${t.payment || ''}";"${t.boxId || ''}";${t.isFixed ? 'Sim' : 'Não'}\n`;
             });
 
             const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -2249,12 +2259,13 @@
                         const boxObj = boxes.find(b => b.id === t.boxId);
                         const boxTag = boxObj ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}30;">${boxObj.name}</span>` : '';
                         const payTag = t.payment === "Cartão de Crédito" ? '💳' : '💵';
+                        const fixTag = t.isFixed ? '📌' : '';
                         
                         const item = document.createElement("div");
                         item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:8px 10px; border-radius:10px; font-size:0.75rem; border: 1.5px solid var(--custom-border);";
                         item.innerHTML = `
                             <div style="display:flex; flex-direction:column; gap:1px;">
-                                <b style="font-size:0.78rem; color:var(--custom-text);">${t.desc}</b>
+                                <b style="font-size:0.78rem; color:var(--custom-text);">${fixTag} ${t.desc}</b>
                                 <div style="display:flex; gap:4px; align-items:center; font-size:0.65rem; color:var(--text-muted);">
                                     ${boxTag}
                                     <span>${payTag} ${t.date ? t.date.split('-').slice(1).reverse().join('/') : ''}</span>
@@ -2406,6 +2417,7 @@
                         const boxObj = boxes.find(b => b.id === trans.boxId);
                         const isCard = trans.payment === 'Cartão de Crédito';
                         const iconBadge = isCard ? '💳' : '💵';
+                        const fixTag = trans.isFixed ? '📌' : '';
 
                         const cardObj = cards.find(c => c.id === trans.cardId);
                         const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:${cardObj.color || 'var(--yellow)'}; font-weight:800;">[${cardObj.name}]</span>` : '';
@@ -2422,7 +2434,7 @@
                             <div class="statement-icon-badge" title="${trans.payment}">${iconBadge}</div>
                             <div class="statement-content">
                                 <div class="statement-top-line">
-                                    <span class="statement-title" title="${trans.desc}">${trans.desc}</span>
+                                    <span class="statement-title" title="${trans.desc}">${fixTag} ${trans.desc}</span>
                                     <span class="statement-value ${valClass}">${prefix} ${formatarMoeda(trans.value)}</span>
                                 </div>
                                 <div class="statement-bottom-line">
@@ -2824,6 +2836,7 @@
             const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
             const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
+            const isFixed = document.getElementById("trans-is-fixed").checked;
 
             if (!desc || isNaN(inputVal) || inputVal <= 0) {
                 showToast("Preencha descrição e valor válido.", "fa-circle-exclamation");
@@ -2853,13 +2866,15 @@
                     cardId: cardId || null,
                     payment,
                     date: dataParcela,
-                    monthKey: mKey
+                    monthKey: mKey,
+                    isFixed
                 });
             }
 
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
             document.getElementById("trans-installments-num").value = '1';
+            document.getElementById("trans-is-fixed").checked = false;
             calcularResumoParcelas();
             salvarDados();
             atualizarTela();
@@ -2915,6 +2930,11 @@
 
                 <label class="text-xs text-gray-400 font-bold mt-2">Categoria:</label>
                 <select id="edit-trans-cat">${optionsCategorias}</select>
+
+                <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                    <input type="checkbox" id="edit-trans-fixed" ${t.isFixed ? 'checked' : ''} style="width:16px; height:16px; accent-color:var(--primary);">
+                    <label class="text-xs text-gray-300 font-bold">Despesa Fixa (Recorrente)</label>
+                </div>
             `, () => {
                 const desc = document.getElementById("edit-trans-desc").value.trim();
                 const val = parseFloat(document.getElementById("edit-trans-val").value);
@@ -2924,6 +2944,7 @@
                 const cardId = document.getElementById("edit-trans-card").value;
                 const boxId = document.getElementById("edit-trans-box").value;
                 const cat = document.getElementById("edit-trans-cat").value;
+                const isFixed = document.getElementById("edit-trans-fixed").checked;
 
                 if (!desc || isNaN(val) || val <= 0) {
                     showToast("Dados inválidos.", "fa-circle-exclamation");
@@ -2939,6 +2960,7 @@
                 t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
                 t.boxId = boxId || null;
                 t.category = cat || "Geral";
+                t.isFixed = isFixed;
 
                 salvarDados();
                 atualizarTela();
@@ -3236,4 +3258,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
