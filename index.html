@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V06</title>
+    <title>Finanças Pro V07</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -20,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* TEMA PADRÃO: ROXO CYBERPUNK (NEON) */
         :root {
             --primary: #a855f7;
             --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
@@ -36,6 +37,39 @@
             --blue: #06b6d4;
             --yellow: #f59e0b;
             --purple: #c084fc;
+        }
+
+        /* TEMAS EXTRAS PERSONALIZADOS */
+        body.theme-ciano {
+            --primary: #06b6d4;
+            --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+            --neon-glow: 0 0 20px rgba(6, 182, 212, 0.35);
+            --bg-color: #030712;
+            --card-bg: #0b1120;
+        }
+
+        body.theme-verde {
+            --primary: #10b981;
+            --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
+            --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
+            --bg-color: #020c08;
+            --card-bg: #061a12;
+        }
+
+        body.theme-rosa {
+            --primary: #ec4899;
+            --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
+            --neon-glow: 0 0 20px rgba(236, 72, 153, 0.35);
+            --bg-color: #0f050a;
+            --card-bg: #1c0c15;
+        }
+
+        body.theme-ouro {
+            --primary: #f59e0b;
+            --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
+            --neon-glow: 0 0 20px rgba(245, 158, 11, 0.35);
+            --bg-color: #0d0a02;
+            --card-bg: #1c1605;
         }
 
         body.light-mode {
@@ -256,29 +290,17 @@
         }
 
         .hero-wallet-card {
-            background: linear-gradient(135deg, #18082e 0%, #29104b 60%, #3b0764 100%);
+            background: var(--primary-gradient);
             color: white;
             padding: 18px;
             border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.25), inset 0 0 15px rgba(217, 70, 239, 0.15);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(217, 70, 239, 0.25);
-        }
-
-        .status-badge-modern {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .quick-actions-bar {
@@ -837,7 +859,7 @@
         }
 
         .year-summary-card {
-            background: linear-gradient(135deg, #18082e 0%, #29104b 100%);
+            background: var(--primary-gradient);
             color: white;
             padding: 16px;
             border-radius: 18px;
@@ -845,7 +867,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: 1px solid rgba(217, 70, 239, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .months-elegant-grid {
@@ -881,7 +903,7 @@
         }
 
         .modern-profile-banner {
-            background: linear-gradient(135deg, #18082e 0%, #29104b 60%, #3b0764 100%);
+            background: var(--primary-gradient);
             color: white;
             padding: 18px;
             border-radius: 20px;
@@ -889,7 +911,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: 1px solid rgba(217, 70, 239, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .modern-action-card {
@@ -940,6 +962,36 @@
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        /* PALETA DE CORES DO PAINEL DE TEMAS */
+        .color-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .color-theme-card {
+            padding: 10px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--input-bg);
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .color-theme-card:hover { border-color: var(--primary); }
+        .color-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
         }
 
         .modal-overlay {
@@ -1015,7 +1067,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V06</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V07</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1036,7 +1088,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V06</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V07</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1044,7 +1096,6 @@
                     <i id="btn-eye-icon" class="fa-solid fa-eye"></i>
                 </button>
                 <button class="header-btn" onclick="bloquearManualmente()" title="Bloquear">🔒</button>
-                <button class="header-btn theme-toggle" onclick="alternarTema()" title="Alternar Tema Neon/Claro">⚡</button>
             </div>
         </header>
 
@@ -1106,9 +1157,6 @@
                 <div class="hero-wallet-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
-                        <div id="hero-badge-status" class="status-badge-modern" style="background:rgba(16,185,129,0.2); color:#34d399; border-color:rgba(52,211,153,0.3);">
-                            <i class="fa-solid fa-shield-halved"></i> Orçamento Seguro
-                        </div>
                     </div>
 
                     <div>
@@ -1425,17 +1473,50 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES E CONFIGURAÇÕES) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V06</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Configurações, backup e ativos</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V07</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Personalize o visual do aplicativo</span>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
-                            🟢 Seguro e Local
+                            🎨 Custom
                         </span>
+                    </div>
+                </div>
+
+                <!-- PAINEL DE ESCOLHA DE CORES NEON -->
+                <div class="modern-action-card">
+                    <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha a Cor do Aplicativo:
+                    </b>
+                    <div class="color-palette-grid">
+                        <div class="color-theme-card" onclick="mudarTemaCor('neon')">
+                            <div class="color-circle" style="background: linear-gradient(135deg, #a855f7, #d946ef);"></div>
+                            <span>Roxo Cyber</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('ciano')">
+                            <div class="color-circle" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></div>
+                            <span>Ciano Elétrico</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('verde')">
+                            <div class="color-circle" style="background: linear-gradient(135deg, #10b981, #06b6d4);"></div>
+                            <span>Verde Matrix</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('rosa')">
+                            <div class="color-circle" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></div>
+                            <span>Rosa Choque</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('ouro')">
+                            <div class="color-circle" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
+                            <span>Ouro Luxo</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('light')">
+                            <div class="color-circle" style="background: #ffffff;"></div>
+                            <span>Modo Claro</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1528,13 +1609,12 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v36";
+        const STORAGE_KEY = "financas_pro_neon_v37";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
-        const THEME_KEY = "financas_pro_theme_mode";
+        const THEME_KEY = "financas_pro_custom_theme";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        // RECONHECIMENTO DA DATA REAL DE HOJE
         const hojeReal = new Date();
         let currentYear = hojeReal.getFullYear();
         let currentMonthNum = hojeReal.getMonth() + 1;
@@ -1642,10 +1722,9 @@
                 if (lock) lock.classList.add("hidden");
             }
             
-            const savedTheme = localStorage.getItem(THEME_KEY);
-            if (savedTheme === 'light') {
-                document.body.classList.add("light-mode");
-            }
+            // CARREGAR TEMA DE COR SALVO
+            const savedTheme = localStorage.getItem(THEME_KEY) || 'neon';
+            aplicarTemaCor(savedTheme, false);
 
             const icon = document.getElementById("btn-eye-icon");
             if (icon && privacyMode) icon.className = "fa-solid fa-eye-slash";
@@ -1653,7 +1732,6 @@
             popularSeletoresDeAno();
             sincronizarDataFormulario();
             
-            // SINCRONIZAR SELECTS DO PAINEL COM O MÊS ATUAL REAL
             const selYear = document.getElementById("select-year");
             const selMonth = document.getElementById("select-month");
             if (selYear) selYear.value = currentYear;
@@ -1664,6 +1742,23 @@
             
             atualizarTela();
         });
+
+        function mudarTemaCor(tema) {
+            aplicarTemaCor(tema, true);
+        }
+
+        function aplicarTemaCor(tema, salvar = true) {
+            document.body.classList.remove('theme-ciano', 'theme-verde', 'theme-rosa', 'theme-ouro', 'light-mode');
+            if (tema !== 'neon') {
+                if (tema === 'light') document.body.classList.add('light-mode');
+                else document.body.classList.add(`theme-${tema}`);
+            }
+            if (salvar) {
+                localStorage.setItem(THEME_KEY, tema);
+                showToast(`Tema alterado com sucesso!`, "fa-palette");
+                renderizarGrafico();
+            }
+        }
 
         function popularSeletoresDeAno() {
             const anos = [];
@@ -1904,12 +1999,14 @@
 
             if (categoryChartInstance) categoryChartInstance.destroy();
 
+            const isLight = document.body.classList.contains('light-mode');
+
             if (data.length === 0) {
                 categoryChartInstance = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
                         labels: ['Sem Gastos'],
-                        datasets: [{ data: [1], backgroundColor: ['#1f1f2e'] }]
+                        datasets: [{ data: [1], backgroundColor: [isLight ? '#e2e8f0' : '#1f1f2e'] }]
                     },
                     options: {
                         cutout: '72%',
@@ -1929,7 +2026,7 @@
                         data: data,
                         backgroundColor: cores.slice(0, labels.length),
                         borderWidth: 2,
-                        borderColor: document.body.classList.contains('light-mode') ? '#ffffff' : '#0c0c14'
+                        borderColor: isLight ? '#ffffff' : '#0c0c14'
                     }]
                 },
                 options: {
@@ -1937,7 +2034,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: document.body.classList.contains('light-mode') ? '#0f172a' : '#f3f4f6' } }
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: isLight ? '#0f172a' : '#f3f4f6' } }
                     }
                 }
             });
@@ -2104,29 +2201,11 @@
             document.getElementById("hero-verba-txt").innerText = privacyMode ? "••••••" : verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
             const progressBar = document.getElementById("hero-progress-bar");
-            if (progressBar) progressBar.style.width = `${percConsumido}%`;
-            
-            const badge = document.getElementById("hero-badge-status");
-            if (badge) {
-                if (percConsumido >= 95) {
-                    progressBar.style.background = '#f43f5e';
-                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Orçamento no Limite';
-                    badge.style.color = '#f43f5e';
-                    badge.style.background = 'rgba(244,63,94,0.2)';
-                    badge.style.borderColor = 'rgba(244,63,94,0.4)';
-                } else if (percConsumido >= 70) {
-                    progressBar.style.background = '#f59e0b';
-                    badge.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Atenção aos Gastos';
-                    badge.style.color = '#f59e0b';
-                    badge.style.background = 'rgba(245,158,11,0.2)';
-                    badge.style.borderColor = 'rgba(245,158,11,0.4)';
-                } else {
-                    progressBar.style.background = '#10b981';
-                    badge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Orçamento Seguro';
-                    badge.style.color = '#34d399';
-                    badge.style.background = 'rgba(16,185,129,0.2)';
-                    badge.style.borderColor = 'rgba(52,211,153,0.3)';
-                }
+            if (progressBar) {
+                progressBar.style.width = `${percConsumido}%`;
+                if (percConsumido >= 95) progressBar.style.background = '#f43f5e';
+                else if (percConsumido >= 70) progressBar.style.background = '#f59e0b';
+                else progressBar.style.background = '#34d399';
             }
 
             document.getElementById("hero-verba-total-small").innerText = formatarMoeda(verbaTotalMes);
@@ -3237,14 +3316,6 @@
         function fecharModal() {
             document.getElementById("app-modal").classList.remove("active");
         }
-
-        function alternarTema() { 
-            document.body.classList.toggle("light-mode"); 
-            const isLight = document.body.classList.contains("light-mode");
-            localStorage.setItem(THEME_KEY, isLight ? 'light' : 'neon');
-            renderizarGrafico();
-            showToast(isLight ? "Modo Claro ativado" : "Modo Neon ativado", "fa-bolt");
-        }
     </script>
 </body>
-</html>
+    </html>
