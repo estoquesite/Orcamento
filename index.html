@@ -28,7 +28,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
         }
-        /* Skins Holográficas Exatas das Telas */
+        /* Skins Holográficas Exatas */
         .skin-titanium { background: linear-gradient(135deg, #1f242d 0%, #11141a 100%); border: 1px solid rgba(255,255,255,0.15); color: #fff; }
         .skin-ultraviolet { background: linear-gradient(135deg, #2e1a47 0%, #12091f 100%); border: 1px solid rgba(168,85,247,0.3); color: #fff; }
         .skin-midnight { background: linear-gradient(135deg, #172554 0%, #030712 100%); border: 1px solid rgba(59,130,246,0.3); color: #fff; }
@@ -62,11 +62,90 @@
             <button class="text-gray-500 hover:text-indigo-600 px-2">&gt;</button>
         </div>
 
-        <!-- ================= ABA 1: PAINEL ================= -->
-        <div id="tab-painel" class="tab-content space-y-4">
-            <div class="card-custom p-4 rounded-2xl">
-                <h2 class="text-xs font-bold mb-2">📊 PAINEL PRINCIPAL</h2>
-                <p class="text-xs text-gray-500">Resumo geral das caixinhas e saldos.</p>
+        <!-- ================= ABA 1: PAINEL PRINCIPAL ================= -->
+        <div id="tab-painel" class="tab-content active space-y-4">
+            
+            <!-- Cards de Resumo (Editáveis) -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="card-custom p-4 rounded-2xl relative shadow-lg bg-gradient-to-br from-indigo-950/40 to-gray-900/40">
+                    <span id="card-t1" class="text-[10px] text-indigo-400 font-bold tracking-wider">VERBA / RECEITAS</span>
+                    <p id="card-v1" class="text-lg font-bold mt-2 valor-monetario">R$ 0,00</p>
+                    <span onclick="editarCard('card-t1', 'card-v1')" class="absolute top-3 right-3 text-xs cursor-pointer bg-indigo-500/20 text-indigo-300 p-1 rounded">✏️</span>
+                </div>
+                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-rose-950/40 to-gray-900/40 relative">
+                    <span id="card-t2" class="text-[10px] text-rose-400 font-bold tracking-wider">TOTAL GASTO</span>
+                    <p id="card-v2" class="text-lg font-bold mt-2 text-rose-400 valor-monetario">R$ 1.324,40</p>
+                    <span onclick="editarCard('card-t2', 'card-v2')" class="absolute top-3 right-3 text-xs cursor-pointer bg-rose-500/20 text-rose-300 p-1 rounded">✏️</span>
+                </div>
+                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-purple-950/40 to-gray-900/40 relative">
+                    <span id="card-t3" class="text-[10px] text-purple-400 font-bold tracking-wider">FATURA CARTÕES</span>
+                    <p id="card-v3" class="text-lg font-bold mt-2 valor-monetario">R$ 944,40</p>
+                    <span onclick="editarCard('card-t3', 'card-v3')" class="absolute top-3 right-3 text-xs cursor-pointer bg-purple-500/20 text-purple-300 p-1 rounded">✏️</span>
+                </div>
+                <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-950/40 to-gray-900/40 relative">
+                    <span id="card-t4" class="text-[10px] text-emerald-400 font-bold tracking-wider">SOBRA LÍQUIDA</span>
+                    <p id="card-v4" class="text-lg font-bold mt-2 text-emerald-400 valor-monetario">-R$ 1.324,40</p>
+                    <span onclick="editarCard('card-t4', 'card-v4')" class="absolute top-3 right-3 text-xs cursor-pointer bg-emerald-500/20 text-emerald-300 p-1 rounded">✏️</span>
+                </div>
+            </div>
+
+            <!-- Atalhos Rápidos -->
+            <div class="flex space-x-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+                <button class="card-custom px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-sm">🛒 Mercado R$ 80</button>
+                <button class="card-custom px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-sm">⛽ Posto R$ 100</button>
+                <button class="card-custom px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-sm">🍕 Lanche R$ 45</button>
+            </div>
+
+            <!-- Caixinhas de Verba -->
+            <div class="card-custom p-4 rounded-2xl space-y-4 shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xs font-bold tracking-wider flex items-center gap-1.5">📦 CAIXINHAS DE VERBA</h2>
+                        <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Transbordo Automático</p>
+                    </div>
+                    <button onclick="alert('Criar nova caixinha')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-xl font-medium shadow-md">+ Nova Caixinha</button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="font-medium flex items-center gap-1">Meu Salário <span class="bg-indigo-950 text-indigo-300 text-[9px] px-1.5 py-0.2 rounded border border-indigo-800/40">Principal</span></span>
+                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 799,40 / R$ 5.000,00</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full w-[16%]"></div>
+                            </div>
+                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        </div>
+                    </div>
+
+                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="font-medium">Glória</span>
+                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 145,00 / R$ 600,00</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
+                                <div class="bg-blue-500 h-full w-[24%]"></div>
+                            </div>
+                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        </div>
+                    </div>
+
+                    <div class="card-custom p-3 rounded-xl border border-gray-800/60 bg-opacity-50">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="font-medium">Pensão Sophia</span>
+                            <span class="text-gray-500 dark:text-gray-400 valor-monetario">R$ 380,00 / R$ 1.500,00</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <div class="w-[75%] bg-gray-700/40 h-2 rounded-full overflow-hidden">
+                                <div class="bg-pink-500 h-full w-[25%]"></div>
+                            </div>
+                            <button onclick="alert('Editar caixinha')" class="text-xs text-amber-500 font-medium bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">✏️ Editar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -79,27 +158,53 @@
                     <button class="card-custom text-gray-500 py-2.5 rounded-xl text-xs font-medium">Receita (+)</button>
                 </div>
                 <div class="space-y-3 text-xs">
-                    <input type="text" placeholder="Descrição da compra" class="w-full card-custom rounded-xl p-3 focus:outline-none">
-                    <button onclick="alert('Lançamento salvo!')" class="w-full bg-indigo-600 text-white font-medium py-3 rounded-xl">Salvar Lançamento</button>
+                    <div>
+                        <label class="text-gray-500 dark:text-gray-400 block mb-1">Descrição da compra</label>
+                        <input type="text" placeholder="ex: Supermercado, Almoço" class="w-full card-custom rounded-xl p-3 focus:outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-gray-500 dark:text-gray-400 block mb-1">Valor Total R$</label>
+                            <input type="number" placeholder="0,00" class="w-full card-custom rounded-xl p-3 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-gray-500 dark:text-gray-400 block mb-1">Parcelas</label>
+                            <select class="w-full card-custom rounded-xl p-3 focus:outline-none">
+                                <option>À vista (1x)</option>
+                                <option>2x Parcelado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="alert('Lançamento salvo com sucesso!')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-xl transition shadow-lg">Salvar Lançamento</button>
+                </div>
+            </div>
+
+            <div class="card-custom p-4 rounded-2xl space-y-3 shadow-lg">
+                <span class="font-bold text-xs tracking-wider">EXTRATO RECENTE</span>
+                <div class="card-custom p-3 rounded-xl flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <p class="font-bold">Supermercado Pão de Açúcar</p>
+                        <p class="text-[10px] text-gray-500">28-09-2026 • Alimentação</p>
+                    </div>
+                    <span class="text-rose-500 font-bold">-R$ 589,40</span>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ABA 3: CARTÕES (Tela Atual Exata) ================= -->
-        <div id="tab-cartoes" class="tab-content active space-y-4">
+        <!-- ================= ABA 3: CARTÕES ================= -->
+        <div id="tab-cartoes" class="tab-content space-y-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-xs font-bold tracking-wider flex items-center gap-1.5">💳 SEUS CARTÕES HOLOGRÁFICOS</h2>
-                <button onclick="alert('Adicionar novo cartão')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-xl font-medium shadow-md">+ Novo Cartão</button>
+                <button onclick="alert('Adicionar novo cartão')" class="bg-indigo-600 text-white text-xs px-3 py-1.5 rounded-xl font-medium shadow-md">+ Novo Cartão</button>
             </div>
 
-            <!-- Cartão 1: Itaú Mastercard Black -->
             <div class="skin-titanium p-4 rounded-2xl space-y-3 shadow-xl">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-bold text-sm flex items-center gap-1">Itaú Mastercard Black <span class="bg-white/10 p-0.5 rounded text-amber-400 text-[10px]">✏️</span></h3>
+                        <h3 class="font-bold text-sm">Itaú Mastercard Black</h3>
                         <p class="text-[10px] text-gray-300">Mastercard</p>
                     </div>
-                    <span class="text-[10px] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">Skin: titanium</span>
+                    <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/20">Skin: titanium</span>
                 </div>
                 <div class="flex justify-between text-xs pt-1">
                     <span class="text-gray-300">Fatura Atual:</span>
@@ -109,19 +214,18 @@
                     <div class="bg-cyan-400 h-full w-[15%]"></div>
                 </div>
                 <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-                    <span class="text-gray-300">Limite: R$ 4.000,00 | CVV: •••</span>
-                    <button onclick="alert('Cartão bloqueado com segurança!')" class="bg-gray-800/90 hover:bg-gray-700 px-3 py-1 rounded-lg text-[11px] border border-white/20 text-gray-200">🔒 Bloquear</button>
+                    <span class="text-gray-300">Limite: R$ 4.000,00</span>
+                    <button onclick="alert('Bloqueado!')" class="bg-gray-800 px-3 py-1 rounded-lg text-[11px] text-gray-200">🔒 Bloquear</button>
                 </div>
             </div>
 
-            <!-- Cartão 2: Bradesco Visa Infinite -->
             <div class="skin-ultraviolet p-4 rounded-2xl space-y-3 shadow-xl">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-bold text-sm flex items-center gap-1">Bradesco Visa Infinite <span class="bg-white/10 p-0.5 rounded text-amber-400 text-[10px]">✏️</span></h3>
+                        <h3 class="font-bold text-sm">Bradesco Visa Infinite</h3>
                         <p class="text-[10px] text-purple-200">Visa</p>
                     </div>
-                    <span class="text-[10px] bg-purple-500/20 px-2.5 py-0.5 rounded-full border border-purple-500/40 text-purple-200">Skin: ultraviolet</span>
+                    <span class="text-[10px] bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/40 text-purple-200">Skin: ultraviolet</span>
                 </div>
                 <div class="flex justify-between text-xs pt-1">
                     <span class="text-gray-300">Fatura Atual:</span>
@@ -131,79 +235,49 @@
                     <div class="bg-indigo-400 h-full w-[5%]"></div>
                 </div>
                 <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-                    <span class="text-gray-300">Limite: R$ 3.000,00 | CVV: •••</span>
-                    <button onclick="alert('Cartão bloqueado!')" class="bg-gray-800/90 hover:bg-gray-700 px-3 py-1 rounded-lg text-[11px] border border-white/20 text-gray-200">🔒 Bloquear</button>
-                </div>
-            </div>
-
-            <!-- Cartão 3: Amazon Prime Card -->
-            <div class="skin-midnight p-4 rounded-2xl space-y-3 shadow-xl">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-bold text-sm flex items-center gap-1">Amazon Prime Card <span class="bg-white/10 p-0.5 rounded text-amber-400 text-[10px]">✏️</span></h3>
-                        <p class="text-[10px] text-blue-200">Mastercard</p>
-                    </div>
-                    <span class="text-[10px] bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-500/40 text-blue-200">Skin: midnight</span>
-                </div>
-                <div class="flex justify-between text-xs pt-1">
-                    <span class="text-gray-300">Fatura Atual:</span>
-                    <span class="font-bold text-white">R$ 0,00</span>
-                </div>
-                <div class="w-full bg-black/40 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-blue-500 h-full w-[0%]"></div>
-                </div>
-                <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-                    <span class="text-gray-300">Limite: R$ 2.500,00 | CVV: •••</span>
-                    <button onclick="alert('Cartão bloqueado!')" class="bg-gray-800/90 hover:bg-gray-700 px-3 py-1 rounded-lg text-[11px] border border-white/20 text-gray-200">🔒 Bloquear</button>
-                </div>
-            </div>
-
-            <!-- Cartão 4: Samsung Itaú Platinum -->
-            <div class="skin-emerald p-4 rounded-2xl space-y-3 shadow-xl">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-bold text-sm flex items-center gap-1">Samsung Itaú Platinum <span class="bg-white/10 p-0.5 rounded text-amber-400 text-[10px]">✏️</span></h3>
-                        <p class="text-[10px] text-emerald-200">Visa</p>
-                    </div>
-                    <span class="text-[10px] bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/40 text-emerald-200">Skin: emerald</span>
-                </div>
-                <div class="flex justify-between text-xs pt-1">
-                    <span class="text-gray-300">Fatura Atual:</span>
-                    <span class="font-bold text-white">R$ 210,00</span>
-                </div>
-                <div class="w-full bg-black/40 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-emerald-400 h-full w-[8%]"></div>
-                </div>
-                <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-                    <span class="text-gray-300">Limite: R$ 3.500,00 | CVV: •••</span>
-                    <button onclick="alert('Cartão bloqueado!')" class="bg-gray-800/90 hover:bg-gray-700 px-3 py-1 rounded-lg text-[11px] border border-white/20 text-gray-200">🔒 Bloquear</button>
-                </div>
-            </div>
-
-            <!-- Seção de Compras Parceladas no Cartão -->
-            <div class="card-custom p-4 rounded-2xl space-y-3 shadow-lg">
-                <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold tracking-wider">🛍️ COMPRAS PARCELADAS NO CARTÃO</span>
-                    <button onclick="alert('Adicionar nova compra parcelada')" class="bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold px-3 py-1.5 rounded-xl shadow-md">+ Nova Compra Parcelada</button>
-                </div>
-                <p class="text-[11px] text-gray-500 dark:text-gray-400">Total liberdade para editar e gerenciar</p>
-                <div class="card-custom p-4 rounded-xl text-center text-xs text-gray-500 dark:text-gray-400 border border-dashed border-gray-700">
-                    Nenhuma compra parcelada ativa cadastrada. Clique no botão acima para adicionar.
+                    <span class="text-gray-300">Limite: R$ 3.000,00</span>
+                    <button onclick="alert('Bloqueado!')" class="bg-gray-800 px-3 py-1 rounded-lg text-[11px] text-gray-200">🔒 Bloquear</button>
                 </div>
             </div>
         </div>
 
         <!-- ================= ABA 4: MESES ================= -->
-        <div id="tab-meses" class="tab-content card-custom p-4 rounded-2xl text-xs">Tela de Panorama Mensal...</div>
+        <div id="tab-meses" class="tab-content space-y-3">
+            <h2 class="text-xs font-bold tracking-wider mb-2">📅 PANORAMA ANUAL (2026)</h2>
+            <div class="grid grid-cols-2 gap-2.5">
+                <div class="card-custom p-3 rounded-xl text-xs">
+                    <p class="font-bold">Janeiro</p>
+                    <p class="text-[11px] text-gray-500 mt-1">Gasto: R$ 0,00</p>
+                </div>
+                <div class="card-custom p-3 rounded-xl text-xs bg-indigo-950/20 border-indigo-500/40">
+                    <p class="font-bold text-indigo-400">Setembro (Atual)</p>
+                    <p class="text-[11px] text-gray-500 mt-1">Gasto: R$ 1.324,40</p>
+                </div>
+            </div>
+        </div>
 
         <!-- ================= ABA 5: MAIS ================= -->
-        <div id="tab-mais" class="tab-content card-custom p-4 rounded-2xl text-xs">Tela de Configurações e Assinaturas...</div>
+        <div id="tab-mais" class="tab-content space-y-4">
+            <div class="card-custom p-4 rounded-2xl space-y-3">
+                <h2 class="text-xs font-bold tracking-wider">⚙️ ASSINATURAS & CONTAS FIXAS</h2>
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between items-center card-custom p-2.5 rounded-xl">
+                        <span>Netflix 4K (Dia 10)</span>
+                        <span class="font-bold text-rose-500">R$ 55,90</span>
+                    </div>
+                    <div class="flex justify-between items-center card-custom p-2.5 rounded-xl">
+                        <span>Spotify Duo (Dia 15)</span>
+                        <span class="font-bold text-rose-500">R$ 27,90</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 
     <!-- Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 card-custom border-t flex justify-around py-3 text-[10px] z-50 shadow-2xl">
-        <button onclick="switchTab('painel', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
+        <button onclick="switchTab('painel', this)" class="nav-btn flex flex-col items-center text-indigo-600 font-bold">
             <span class="text-lg">📊</span>
             <span>Painel</span>
         </button>
@@ -211,7 +285,7 @@
             <span class="text-lg">➕</span>
             <span>Lançar</span>
         </button>
-        <button onclick="switchTab('cartoes', this)" class="nav-btn flex flex-col items-center text-indigo-600 font-bold">
+        <button onclick="switchTab('cartoes', this)" class="nav-btn flex flex-col items-center text-gray-500 hover:text-indigo-600">
             <span class="text-lg">💳</span>
             <span>Cartões</span>
         </button>
@@ -231,6 +305,26 @@
             html.classList.toggle('dark-theme');
             const btnTheme = document.getElementById('btn-theme');
             btnTheme.innerText = html.classList.contains('dark-theme') ? '☀️' : '🌙';
+        }
+
+        let valoresVisiveis = true;
+        function toggleValores() {
+            valoresVisiveis = !valoresVisiveis;
+            document.querySelectorAll('.valor-monetario').forEach(el => {
+                el.innerText = valoresVisiveis ? el.getAttribute('data-valor') || el.innerText : "R$ •••••";
+            });
+        }
+        document.querySelectorAll('.valor-monetario').forEach(el => el.setAttribute('data-valor', el.innerText));
+
+        function editarCard(tituloId, valorId) {
+            const novoTitulo = prompt("Digite o novo nome para o card:", document.getElementById(tituloId).innerText);
+            if (novoTitulo) document.getElementById(tituloId).innerText = novoTitulo;
+
+            const novoValor = prompt("Digite o novo valor:", document.getElementById(valorId).innerText);
+            if (novoValor) {
+                document.getElementById(valorId).innerText = novoValor;
+                document.getElementById(valorId).setAttribute('data-valor', novoValor);
+            }
         }
 
         function switchTab(tabId, element) {
