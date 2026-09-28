@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V08</title>
+    <title>Finanças Pro V09</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -20,12 +20,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* TEMA PADRÃO: ROXO CYBERPUNK (NEON) */
+        /* TEMA 1: ROXO CYBER (FUNDO NEON ESCURO) */
         :root {
             --primary: #a855f7;
             --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
             --neon-glow: 0 0 20px rgba(168, 85, 247, 0.35);
-            --border-neon: 1px solid rgba(168, 85, 247, 0.4);
+            --border-neon: 1.5px solid rgba(168, 85, 247, 0.45);
             --bg-color: #05050a;
             --card-bg: #0c0c14;
             --text-main: #f3f4f6;
@@ -40,60 +40,109 @@
             --purple: #c084fc;
         }
 
-        /* TEMAS EXTRAS PERSONALIZADOS (COM CONTROLE DE BORDAS NEON) */
-        body.theme-ciano {
-            --primary: #06b6d4;
-            --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
-            --neon-glow: 0 0 20px rgba(6, 182, 212, 0.35);
-            --border-neon: 1px solid rgba(6, 182, 212, 0.4);
-            --bg-color: #030712;
-            --card-bg: #0b1120;
-        }
-
-        body.theme-verde {
-            --primary: #10b981;
-            --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
-            --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
-            --border-neon: 1px solid rgba(16, 185, 129, 0.4);
-            --bg-color: #020c08;
-            --card-bg: #061a12;
-        }
-
-        body.theme-rosa {
-            --primary: #ec4899;
-            --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
-            --neon-glow: 0 0 20px rgba(236, 72, 153, 0.35);
-            --border-neon: 1px solid rgba(236, 72, 153, 0.4);
-            --bg-color: #0f050a;
-            --card-bg: #1c0c15;
-        }
-
-        body.theme-ouro {
-            --primary: #f59e0b;
-            --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
-            --neon-glow: 0 0 20px rgba(245, 158, 11, 0.35);
-            --border-neon: 1px solid rgba(245, 158, 11, 0.4);
-            --bg-color: #0d0a02;
-            --card-bg: #1c1605;
-        }
-
-        body.light-mode {
+        /* TEMA 2: ROXO NEON COM FUNDO BRANCO */
+        body.theme-roxo-branco {
             --primary: #9333ea;
-            --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #0284c7 100%);
-            --neon-glow: 0 0 15px rgba(147, 51, 234, 0.2);
-            --border-neon: 1px solid rgba(147, 51, 234, 0.25);
-            --bg-color: #f8fafc;
+            --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #3b82f6 100%);
+            --neon-glow: 0 0 20px rgba(147, 51, 234, 0.25);
+            --border-neon: 1.5px solid rgba(147, 51, 234, 0.4);
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --input-bg: #f1f5f9;
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --green: #059669;
-            --red: #e11d48;
-            --blue: #0284c7;
-            --yellow: #d97706;
-            --purple: #9333ea;
+            --border-color: #cbd5e1;
+            --input-bg: #f8fafc;
+            --card-shadow: 0 4px 20px rgba(147, 51, 234, 0.1);
+        }
+
+        /* TEMA 3: CIANO ELÉTRICO (FUNDO NEON ESCURO) */
+        body.theme-ciano-escuro {
+            --primary: #06b6d4;
+            --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+            --neon-glow: 0 0 20px rgba(6, 182, 212, 0.35);
+            --border-neon: 1.5px solid rgba(6, 182, 212, 0.45);
+            --bg-color: #030712;
+            --card-bg: #0b1120;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --input-bg: #0f172a;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        /* TEMA 4: CIANO NEON COM FUNDO BRANCO */
+        body.theme-ciano-branco {
+            --primary: #0891b2;
+            --primary-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #2563eb 100%);
+            --neon-glow: 0 0 20px rgba(8, 145, 178, 0.25);
+            --border-neon: 1.5px solid rgba(8, 145, 178, 0.4);
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #082f49;
+            --text-muted: #475569;
+            --border-color: #bae6fd;
+            --input-bg: #f0f9ff;
+            --card-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
+        }
+
+        /* TEMA 5: VERDE MATRIX (FUNDO NEON ESCURO) */
+        body.theme-verde-escuro {
+            --primary: #10b981;
+            --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
+            --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
+            --border-neon: 1.5px solid rgba(16, 185, 129, 0.45);
+            --bg-color: #020c08;
+            --card-bg: #061a12;
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --border-color: #065f46;
+            --input-bg: #042f2e;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        /* TEMA 6: VERDE NEON COM FUNDO BRANCO */
+        body.theme-verde-branco {
+            --primary: #059669;
+            --primary-gradient: linear-gradient(135deg, #059669 0%, #10b981 50%, #0d9488 100%);
+            --neon-glow: 0 0 20px rgba(5, 150, 105, 0.25);
+            --border-neon: 1.5px solid rgba(5, 150, 105, 0.4);
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --text-muted: #047857;
+            --border-color: #a7f3d0;
+            --input-bg: #f7fee7;
+            --card-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        /* TEMA 7: ROSA CHOQUE (FUNDO NEON ESCURO) */
+        body.theme-rosa-escuro {
+            --primary: #ec4899;
+            --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
+            --neon-glow: 0 0 20px rgba(236, 72, 153, 0.35);
+            --border-neon: 1.5px solid rgba(236, 72, 153, 0.45);
+            --bg-color: #0f050a;
+            --card-bg: #1c0c15;
+            --text-main: #fdf2f8;
+            --text-muted: #f472b6;
+            --border-color: #831843;
+            --input-bg: #320822;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        /* TEMA 8: OURO LUXO (FUNDO ESCURO) */
+        body.theme-ouro-luxo {
+            --primary: #f59e0b;
+            --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
+            --neon-glow: 0 0 20px rgba(245, 158, 11, 0.35);
+            --border-neon: 1.5px solid rgba(245, 158, 11, 0.45);
+            --bg-color: #0d0a02;
+            --card-bg: #1c1605;
+            --text-main: #fffbeb;
+            --text-muted: #fbbf24;
+            --border-color: #78350f;
+            --input-bg: #292108;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -131,7 +180,7 @@
             .phone-container {
                 height: 95vh;
                 border-radius: 36px;
-                border: 2px solid rgba(168, 85, 247, 0.3);
+                border: 2px solid var(--primary);
             }
         }
 
@@ -972,7 +1021,7 @@
 
         .color-palette-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             margin-top: 6px;
         }
@@ -1072,7 +1121,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V08</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V09</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1093,7 +1142,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V08</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V09</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1478,12 +1527,12 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES & TEMAS) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES COM FUNDOS CLAROS/ESCUROS E BORDAS NEON) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V08</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Personalize o visual e as bordas neon</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V09</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Neon com fundo escuro ou fundo branco</span>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
@@ -1494,32 +1543,40 @@
 
                 <div class="modern-action-card">
                     <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha a Cor & Borda Neon:
+                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha o Estilo (Bordas & Fundos):
                     </b>
                     <div class="color-palette-grid">
                         <div class="color-theme-card" onclick="mudarTemaCor('neon')">
-                            <div class="color-circle" style="background: linear-gradient(135deg, #a855f7, #d946ef);"></div>
-                            <span>Roxo Cyber</span>
+                            <div class="color-circle" style="background: #05050a; border-color: #a855f7;"></div>
+                            <span>Roxo Cyber (Escuro)</span>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('ciano')">
-                            <div class="color-circle" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></div>
-                            <span>Ciano Elétrico</span>
+                        <div class="color-theme-card" onclick="mudarTemaCor('roxo-branco')">
+                            <div class="color-circle" style="background: #ffffff; border-color: #9333ea;"></div>
+                            <span>Roxo Neon (Fundo Branco)</span>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('verde')">
-                            <div class="color-circle" style="background: linear-gradient(135deg, #10b981, #06b6d4);"></div>
-                            <span>Verde Matrix</span>
+                        <div class="color-theme-card" onclick="mudarTemaCor('ciano-escuro')">
+                            <div class="color-circle" style="background: #030712; border-color: #06b6d4;"></div>
+                            <span>Ciano (Escuro)</span>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('rosa')">
-                            <div class="color-circle" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></div>
-                            <span>Rosa Choque</span>
+                        <div class="color-theme-card" onclick="mudarTemaCor('ciano-branco')">
+                            <div class="color-circle" style="background: #ffffff; border-color: #0891b2;"></div>
+                            <span>Ciano Neon (Fundo Branco)</span>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('ouro')">
-                            <div class="color-circle" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
-                            <span>Ouro Luxo</span>
+                        <div class="color-theme-card" onclick="mudarTemaCor('verde-escuro')">
+                            <div class="color-circle" style="background: #020c08; border-color: #10b981;"></div>
+                            <span>Verde Matrix (Escuro)</span>
                         </div>
-                        <div class="color-theme-card" onclick="mudarTemaCor('light')">
-                            <div class="color-circle" style="background: #ffffff;"></div>
-                            <span>Modo Claro</span>
+                        <div class="color-theme-card" onclick="mudarTemaCor('verde-branco')">
+                            <div class="color-circle" style="background: #ffffff; border-color: #059669;"></div>
+                            <span>Verde Neon (Fundo Branco)</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('rosa-escuro')">
+                            <div class="color-circle" style="background: #0f050a; border-color: #ec4899;"></div>
+                            <span>Rosa Choque (Escuro)</span>
+                        </div>
+                        <div class="color-theme-card" onclick="mudarTemaCor('ouro-luxo')">
+                            <div class="color-circle" style="background: #0d0a02; border-color: #f59e0b;"></div>
+                            <span>Ouro Luxo (Escuro)</span>
                         </div>
                     </div>
                 </div>
@@ -1613,7 +1670,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v38";
+        const STORAGE_KEY = "financas_pro_neon_v39";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_custom_theme";
@@ -1751,14 +1808,13 @@
         }
 
         function aplicarTemaCor(tema, salvar = true) {
-            document.body.classList.remove('theme-ciano', 'theme-verde', 'theme-rosa', 'theme-ouro', 'light-mode');
+            document.body.classList.remove('theme-roxo-branco', 'theme-ciano-escuro', 'theme-ciano-branco', 'theme-verde-escuro', 'theme-verde-branco', 'theme-rosa-escuro', 'theme-ouro-luxo');
             if (tema !== 'neon') {
-                if (tema === 'light') document.body.classList.add('light-mode');
-                else document.body.classList.add(`theme-${tema}`);
+                document.body.classList.add(`theme-${tema}`);
             }
             if (salvar) {
                 localStorage.setItem(THEME_KEY, tema);
-                showToast(`Bordas e Tema Neon atualizados!`, "fa-palette");
+                showToast("Estilo visual atualizado!", "fa-palette");
                 renderizarGrafico();
             }
         }
@@ -2002,14 +2058,14 @@
 
             if (categoryChartInstance) categoryChartInstance.destroy();
 
-            const isLight = document.body.classList.contains('light-mode');
+            const isLightBg = document.body.classList.contains('theme-roxo-branco') || document.body.classList.contains('theme-ciano-branco') || document.body.classList.contains('theme-verde-branco');
 
             if (data.length === 0) {
                 categoryChartInstance = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
                         labels: ['Sem Gastos'],
-                        datasets: [{ data: [1], backgroundColor: [isLight ? '#e2e8f0' : '#1f1f2e'] }]
+                        datasets: [{ data: [1], backgroundColor: [isLightBg ? '#e2e8f0' : '#1f1f2e'] }]
                     },
                     options: {
                         cutout: '72%',
@@ -2029,7 +2085,7 @@
                         data: data,
                         backgroundColor: cores.slice(0, labels.length),
                         borderWidth: 2,
-                        borderColor: isLight ? '#ffffff' : '#0c0c14'
+                        borderColor: isLightBg ? '#ffffff' : '#0c0c14'
                     }]
                 },
                 options: {
@@ -2037,7 +2093,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: isLight ? '#0f172a' : '#f3f4f6' } }
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: isLightBg ? '#0f172a' : '#f3f4f6' } }
                     }
                 }
             });
@@ -3321,4 +3377,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
