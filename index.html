@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V18</title>
+    <title>Finanças Pro V18 - Com Alertas</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -75,6 +75,37 @@
                 border-radius: 36px;
                 border: 4px solid #cbd5e1;
             }
+        }
+
+        /* Estilo das bolinhas de status com animação de piscar */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .status-dot.green {
+            background-color: #059669;
+            box-shadow: 0 0 6px rgba(5, 150, 105, 0.5);
+        }
+
+        .status-dot.yellow {
+            background-color: #d97706;
+            box-shadow: 0 0 6px rgba(217, 119, 6, 0.5);
+        }
+
+        .status-dot.red {
+            background-color: #e11d48;
+            box-shadow: 0 0 8px rgba(225, 29, 72, 0.8);
+            animation: piscar 1.2s infinite ease-in-out;
+        }
+
+        @keyframes piscar {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         .lock-screen {
@@ -1095,7 +1126,10 @@
                 <div class="hero-wallet-card" id="bloco_saldo" data-bloco-id="saldo">
                     <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.8); text-transform:uppercase;">Disponível no Mês</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span id="hero-status-dot" class="status-dot green" title="Status Geral OK"></span>
+                            <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.8); text-transform:uppercase;">Disponível no Mês</span>
+                        </div>
                     </div>
 
                     <div>
@@ -2173,6 +2207,14 @@
             }
 
             const percConsumido = verbaTotalMes > 0 ? Math.min(Math.round((despesasTotalMes / verbaTotalMes) * 100), 100) : 0;
+            
+            // Definir cor da bolinha do painel geral principal
+            const heroStatusDot = document.getElementById("hero-status-dot");
+            if (heroStatusDot) {
+                heroStatusDot.className = "status-dot " + (percConsumido >= 90 ? "red" : (percConsumido >= 75 ? "yellow" : "green"));
+                heroStatusDot.title = `Consumo Geral: ${percConsumido}%`;
+            }
+
             document.getElementById("hero-percent-txt").innerText = `${percConsumido}% consumido`;
             document.getElementById("hero-spent-txt").innerText = privacyMode ? "••••••" : despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
             document.getElementById("hero-verba-txt").innerText = privacyMode ? "••••••" : verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
@@ -2180,8 +2222,8 @@
             const progressBar = document.getElementById("hero-progress-bar");
             if (progressBar) {
                 progressBar.style.width = `${percConsumido}%`;
-                if (percConsumido >= 95) progressBar.style.background = '#f43f5e';
-                else if (percConsumido >= 70) progressBar.style.background = '#f59e0b';
+                if (percConsumido >= 90) progressBar.style.background = '#f43f5e';
+                else if (percConsumido >= 75) progressBar.style.background = '#f59e0b';
                 else progressBar.style.background = '#ffffff';
             }
 
@@ -2252,9 +2294,18 @@
                         }
 
                         const percBox = stat.amount > 0 ? Math.min(Math.round((displaySpent / stat.amount) * 100), 100) : 0;
+                        
+                        // Lógica de status para a caixinha (Bolinha piscando se >= 90% ou estourado)
+                        let statusColorClass = 'green';
+                        if (displayRemain < 0 || percBox >= 90) {
+                            statusColorClass = 'red';
+                        } else if (percBox >= 75) {
+                            statusColorClass = 'yellow';
+                        }
+
                         let corBarra = box.color || 'var(--primary)';
                         if (displayRemain < 0) corBarra = 'var(--red)';
-                        else if (percBox >= 85) corBarra = 'var(--yellow)';
+                        else if (percBox >= 75) corBarra = 'var(--yellow)';
 
                         const bElem = document.createElement("div");
                         bElem.className = "box-clean-card";
@@ -2263,6 +2314,7 @@
                         bElem.innerHTML = `
                             <div class="box-clean-header">
                                 <span class="box-clean-tag" style="background:${box.color || 'var(--primary)'}15; color:${box.color || 'var(--primary)'}; border:1px solid ${box.color || 'var(--primary)'}30;">
+                                    <span class="status-dot ${statusColorClass}" title="Status: ${percBox}% usado"></span>
                                     <i class="fa-solid fa-wallet" style="font-size:0.65rem;"></i> ${box.name}
                                 </span>
                                 <div style="display:flex; align-items:center; gap:8px;">
@@ -2652,34 +2704,6 @@
                     });
                 }
             }
-
-            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
-            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
-            const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
-
-            document.getElementById("card-total-invested").innerText = formatarMoeda(totalGeralInvest);
-            document.getElementById("card-xp-total").innerText = formatarMoeda(totalXP);
-            document.getElementById("card-binance-total").innerText = formatarMoeda(totalBinance);
-
-            const investList = document.getElementById("investment-list");
-            if (investList) {
-                investList.innerHTML = '';
-                (financialData.investments || []).forEach((inv) => {
-                    const item = document.createElement("div");
-                    item.className = "clean-statement-item";
-                    item.innerHTML = `
-                        <div class="statement-content">
-                            <span class="statement-title">${inv.asset}</span>
-                            <span class="statement-bottom-line">${inv.platform} • ${inv.type}</span>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-weight:900; color:var(--blue); font-size:0.85rem;">${formatarMoeda(inv.value)}</span>
-                            <button class="btn-mini-action del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    investList.appendChild(item);
-                });
-            }
         }
 
         function selecionarMesEAbrirAno(ano, mes) {
@@ -2705,6 +2729,151 @@
             document.getElementById("trans-payment").value = "Cartão de Crédito";
             verificarExibicaoCartao("Cartão de Crédito");
             selecionarTagCartao(cardId);
+        }
+
+        function adicionarTransacao() {
+            const desc = document.getElementById("trans-desc").value.trim();
+            const valInput = parseFloat(document.getElementById("trans-value").value);
+            const parcelas = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
+            const payment = document.getElementById("trans-payment").value;
+            const boxId = document.getElementById("trans-box-id").value;
+            const category = document.getElementById("trans-category").value;
+            const date = document.getElementById("trans-date").value;
+            const isFixed = document.getElementById("trans-is-fixed").checked;
+
+            if (!desc || isNaN(valInput) || valInput <= 0) {
+                showToast("Preencha a descrição e um valor válido.", "fa-circle-exclamation");
+                return;
+            }
+
+            if (!financialData.transactions) financialData.transactions = [];
+
+            let valorFinalPorParcela = valInput;
+            if (selectedCalcMode === 'total' && parcelas > 1) {
+                valorFinalPorParcela = valInput / parcelas;
+            }
+
+            const [anoStr, mesStr, diaStr] = date.split('-');
+            let baseYear = parseInt(anoStr, 10);
+            let baseMonth = parseInt(mesStr, 10);
+            let baseDay = parseInt(diaStr, 10);
+
+            for (let i = 0; i < parcelas; i++) {
+                let m = baseMonth + i;
+                let y = baseYear;
+                while (m > 12) {
+                    m -= 12;
+                    y += 1;
+                }
+                const mKey = `${y}-${String(m).padStart(2, '0')}`;
+                const dKey = `${y}-${String(m).padStart(2, '0')}-${String(baseDay).padStart(2, '0')}`;
+
+                let tituloParcela = desc;
+                if (parcelas > 1) {
+                    tituloParcela = `${desc} (${i + 1}/${parcelas})`;
+                }
+
+                financialData.transactions.unshift({
+                    id: Date.now() + i,
+                    desc: tituloParcela,
+                    value: valorFinalPorParcela,
+                    type: selectedTransactionType,
+                    payment: payment,
+                    cardId: payment === "Cartão de Crédito" ? selectedCardIdSelected : null,
+                    boxId: boxId,
+                    category: category || "Geral",
+                    date: dKey,
+                    monthKey: mKey,
+                    isFixed: isFixed
+                });
+            }
+
+            salvarDados();
+            atualizarTela();
+            showToast("Lançamento salvo com sucesso!");
+
+            document.getElementById("trans-desc").value = "";
+            document.getElementById("trans-value").value = "";
+            document.getElementById("trans-installments-num").value = "1";
+            calcularResumoParcelas();
+        }
+
+        function removerTransacao(id) {
+            if (confirm("Deseja realmente excluir este lançamento?")) {
+                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
+                salvarDados();
+                atualizarTela();
+                showToast("Lançamento excluído.");
+            }
+        }
+
+        function abrirModalNovaCaixinhaVerba() {
+            abrirModal("Criar Nova Caixinha de Verba", `
+                <label class="text-xs text-gray-700 font-bold">Nome da Caixinha:</label>
+                <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer">
+
+                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
+                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
+
+                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
+                <input type="color" id="new-box-color" value="#059669" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("new-box-name").value.trim();
+                const amount = parseFloat(document.getElementById("new-box-amount").value);
+                const color = document.getElementById("new-box-color").value;
+
+                if (!name || isNaN(amount) || amount < 0) {
+                    showToast("Informe nome e valor válido.", "fa-circle-exclamation");
+                    return;
+                }
+
+                if (!financialData.budgetBoxes) financialData.budgetBoxes = [];
+                financialData.budgetBoxes.push({ id: "box_" + Date.now(), name, amount, color });
+
+                salvarDados();
+                atualizarTela();
+                showToast("Caixinha criada!");
+            });
+        }
+
+        function abrirModalEditarCaixinhaVerba(boxId) {
+            const box = financialData.budgetBoxes.find(b => b.id === boxId);
+            if (!box) return;
+
+            abrirModal("Editar Caixinha de Verba", `
+                <label class="text-xs text-gray-700 font-bold">Nome:</label>
+                <input type="text" id="edit-box-name" value="${box.name}">
+
+                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
+                <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
+
+                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#059669'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+            `, () => {
+                const name = document.getElementById("edit-box-name").value.trim();
+                const amount = parseFloat(document.getElementById("edit-box-amount").value);
+                const color = document.getElementById("edit-box-color").value;
+
+                if (name && !isNaN(amount)) {
+                    box.name = name;
+                    box.amount = amount;
+                    box.color = color;
+                    salvarDados();
+                    atualizarTela();
+                    showToast("Caixinha atualizada!");
+                }
+            });
+        }
+
+        function removerCaixinhaVerba(boxId) {
+            const box = financialData.budgetBoxes.find(b => b.id === boxId);
+            if (!box) return;
+            if (confirm(`Excluir caixinha "${box.name}"?`)) {
+                financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
+                salvarDados();
+                atualizarTela();
+                showToast("Caixinha removida.");
+            }
         }
 
         function abrirModalNovoCartao() {
@@ -2816,88 +2985,180 @@
             }
         }
 
-        function abrirModalNovaCaixinhaVerba() {
-            abrirModal("Criar Nova Caixinha de Verba", `
-                <label class="text-xs text-gray-700 font-bold">Nome da Caixinha:</label>
-                <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
-                <input type="color" id="new-box-color" value="#059669" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+        function abrirModalNovaCategoria() {
+            abrirModal("Adicionar Nova Categoria", `
+                <label class="text-xs text-gray-700 font-bold">Nome da Categoria (com emoji):</label>
+                <input type="text" id="new-cat-name" placeholder="Ex: 🍿 Lazer">
+                <label class="text-xs text-gray-700 font-bold mt-2">Teto de Gasto Mensal (R$) [Opcional]:</label>
+                <input type="number" id="new-cat-limit" step="50" placeholder="Ex: 500">
             `, () => {
-                const name = document.getElementById("new-box-name").value.trim();
-                const amount = parseFloat(document.getElementById("new-box-amount").value);
-                const color = document.getElementById("new-box-color").value;
-
-                if (!name || isNaN(amount) || amount < 0) {
-                    showToast("Informe nome e valor válido.", "fa-circle-exclamation");
-                    return;
-                }
-
-                if (!financialData.budgetBoxes) financialData.budgetBoxes = [];
-                financialData.budgetBoxes.push({ id: "box_" + Date.now(), name, amount, color });
-
+                const name = document.getElementById("new-cat-name").value.trim();
+                const limit = parseFloat(document.getElementById("new-cat-limit").value) || 0;
+                if (!name) return;
+                if (!financialData.categories) financialData.categories = [];
+                financialData.categories.push({ id: "cat_" + Date.now(), name, limit });
                 salvarDados();
                 atualizarTela();
-                showToast("Caixinha criada!");
+                showToast("Categoria adicionada!");
             });
         }
 
-        function abrirModalEditarCaixinhaVerba(boxId) {
-            const box = financialData.budgetBoxes.find(b => b.id === boxId);
-            if (!box) return;
-
-            abrirModal("Editar Caixinha de Verba", `
+        function abrirModalEditarCategoria(idx) {
+            const cat = financialData.categories[idx];
+            if (!cat) return;
+            abrirModal("Editar Categoria", `
                 <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-box-name" value="${box.name}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#059669'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="text" id="edit-cat-name" value="${cat.name}">
+                <label class="text-xs text-gray-700 font-bold mt-2">Teto (R$):</label>
+                <input type="number" id="edit-cat-limit" step="50" value="${cat.limit || 0}">
             `, () => {
-                const name = document.getElementById("edit-box-name").value.trim();
-                const amount = parseFloat(document.getElementById("edit-box-amount").value);
-                const color = document.getElementById("edit-box-color").value;
-
-                if (name && !isNaN(amount)) {
-                    box.name = name;
-                    box.amount = amount;
-                    box.color = color;
+                const name = document.getElementById("edit-cat-name").value.trim();
+                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
+                if (name) {
+                    cat.name = name;
+                    cat.limit = limit;
                     salvarDados();
                     atualizarTela();
-                    showToast("Caixinha atualizada!");
+                    showToast("Categoria atualizada!");
                 }
             });
         }
 
-        function removerCaixinhaVerba(boxId) {
-            const box = financialData.budgetBoxes.find(b => b.id === boxId);
-            if (!box) return;
-            if (confirm(`Excluir caixinha "${box.name}"?`)) {
-                financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
+        function removerCategoria(idx) {
+            if (confirm("Excluir esta categoria?")) {
+                financialData.categories.splice(idx, 1);
                 salvarDados();
                 atualizarTela();
-                showToast("Caixinha removida.");
+                showToast("Categoria removida.");
             }
         }
 
-        function abrirModal(titulo, htmlBody, callbackConfirm) {
-            document.getElementById("modal-title").innerText = titulo;
-            document.getElementById("modal-body").innerHTML = htmlBody;
-            const confirmBtn = document.getElementById("modal-confirm-btn");
-            confirmBtn.onclick = () => {
-                callbackConfirm();
-                fecharModal();
-            };
-            document.getElementById("app-modal").classList.add("active");
+        function abrirModalNovaMeta() {
+            abrirModal("Criar Nova Caixinha de Reserva", `
+                <label class="text-xs text-gray-700 font-bold">Nome da Reserva:</label>
+                <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro Novo">
+                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
+                <input type="number" id="new-goal-target" step="500" placeholder="Ex: 5000">
+            `, () => {
+                const name = document.getElementById("new-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("new-goal-target").value);
+                if (!name || isNaN(target) || target <= 0) return;
+                if (!financialData.goals) financialData.goals = [];
+                financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+                salvarDados();
+                atualizarTela();
+                showToast("Caixinha de reserva criada!");
+            });
         }
 
-        function fecharModal() {
-            document.getElementById("app-modal").classList.remove("active");
+        function abrirModalEditarMeta(goalId) {
+            const goal = (financialData.goals || []).find(g => g.id === goalId);
+            if (!goal) return;
+            abrirModal("Editar Reserva", `
+                <label class="text-xs text-gray-700 font-bold">Nome:</label>
+                <input type="text" id="edit-goal-name" value="${goal.name}">
+                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
+                <input type="number" id="edit-goal-target" step="500" value="${goal.target}">
+            `, () => {
+                const name = document.getElementById("edit-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("edit-goal-target").value);
+                if (name && !isNaN(target)) {
+                    goal.name = name;
+                    goal.target = target;
+                    salvarDados();
+                    atualizarTela();
+                    showToast("Reserva atualizada!");
+                }
+            });
+        }
+
+        function removerMeta(goalId) {
+            if (confirm("Excluir esta reserva?")) {
+                financialData.goals = financialData.goals.filter(g => g.id !== goalId);
+                salvarDados();
+                atualizarTela();
+                showToast("Reserva excluída.");
+            }
+        }
+
+        function abrirModalCaixinha(goalId, tipo) {
+            const goal = (financialData.goals || []).find(g => g.id === goalId);
+            if (!goal) return;
+            const title = tipo === 'guardar' ? `Guardar em ${goal.name}` : `Resgatar de ${goal.name}`;
+            abrirModal(title, `
+                <label class="text-xs text-gray-700 font-bold">Valor (R$):</label>
+                <input type="number" id="goal-action-val" step="50" placeholder="0.00">
+            `, () => {
+                const val = parseFloat(document.getElementById("goal-action-val").value);
+                if (isNaN(val) || val <= 0) return;
+                if (tipo === 'guardar') {
+                    goal.current += val;
+                } else {
+                    goal.current = Math.max(0, goal.current - val);
+                }
+                salvarDados();
+                atualizarTela();
+                showToast("Reserva atualizada com sucesso!");
+            });
+        }
+
+        function abrirModalEditarTransacao(id) {
+            const trans = (financialData.transactions || []).find(t => t.id === id);
+            if (!trans) return;
+            abrirModal("Editar Lançamento", `
+                <label class="text-xs text-gray-700 font-bold">Descrição:</label>
+                <input type="text" id="edit-trans-desc" value="${trans.desc}">
+                <label class="text-xs text-gray-700 font-bold mt-2">Valor (R$):</label>
+                <input type="number" id="edit-trans-val" step="0.01" value="${trans.value}">
+            `, () => {
+                const desc = document.getElementById("edit-trans-desc").value.trim();
+                const val = parseFloat(document.getElementById("edit-trans-val").value);
+                if (desc && !isNaN(val) && val > 0) {
+                    trans.desc = desc;
+                    trans.value = val;
+                    salvarDados();
+                    atualizarTela();
+                    showToast("Lançamento atualizado!");
+                }
+            });
+        }
+
+        function copiarBackupTexto() {
+            const str = JSON.stringify(financialData, null, 2);
+            navigator.clipboard.writeText(str).then(() => {
+                showToast("Backup copiado para a área de transferência!");
+            }).catch(() => {
+                showToast("Erro ao copiar backup.", "fa-circle-exclamation");
+            });
+        }
+
+        function abrirModalRestaurarTexto() {
+            abrirModal("Restaurar Dados por Texto", `
+                <p class="text-xs text-gray-500 mb-1">Cole o código do backup aqui:</p>
+                <textarea id="restore-textarea" rows="6" style="width:100%; font-size:0.7rem; padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--custom-text);"></textarea>
+            `, () => {
+                const txt = document.getElementById("restore-textarea").value.trim();
+                if (!txt) return;
+                try {
+                    const parsed = JSON.parse(txt);
+                    financialData = parsed;
+                    salvarDados();
+                    atualizarTela();
+                    showToast("Dados restaurados com sucesso!");
+                } catch (e) {
+                    showToast("Código de backup inválido!", "fa-circle-exclamation");
+                }
+            });
+        }
+
+        function limparTodosDados() {
+            if (confirm("ATENÇÃO: Deseja apagar todos os dados e reiniciar o aplicativo?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                showToast("Aplicativo limpo e reiniciado!");
+            }
         }
     </script>
 </body>
