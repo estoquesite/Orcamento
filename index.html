@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro Mobile</title>
+    <title>Finanças Pro Neon</title>
     
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
-    <meta name="theme-color" content="#6366f1">
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+    <meta name="theme-color" content="#a855f7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,42 +16,44 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js para gráficos financeiros de ponta -->
+    <!-- Chart.js para gráficos financeiros -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #7c3aed 50%, #db2777 100%);
-            --bg-color: #f1f5f9;
+            --primary: #a855f7;
+            --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
+            --neon-glow: 0 0 20px rgba(168, 85, 247, 0.35);
+            --bg-color: #05050a;
+            --card-bg: #0c0c14;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #1f1f2e;
+            --input-bg: #13131f;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --green: #10b981;
+            --red: #f43f5e;
+            --blue: #06b6d4;
+            --yellow: #f59e0b;
+            --purple: #c084fc;
+        }
+
+        body.light-mode {
+            --primary: #9333ea;
+            --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #0284c7 100%);
+            --neon-glow: 0 0 15px rgba(147, 51, 234, 0.2);
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #f8fafc;
+            --input-bg: #f1f5f9;
             --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             --green: #059669;
             --red: #e11d48;
-            --blue: #2563eb;
+            --blue: #0284c7;
             --yellow: #d97706;
-            --purple: #7c3aed;
-        }
-
-        body.dark-mode {
-            --primary: #818cf8;
-            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
-            --bg-color: #030712;
-            --card-bg: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #1e293b;
-            --input-bg: #090d16;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --green: #34d399;
-            --red: #fb7185;
-            --blue: #60a5fa;
-            --yellow: #fbbf24;
-            --purple: #c084fc;
+            --purple: #9333ea;
         }
 
         * {
@@ -64,7 +66,7 @@
         }
 
         body {
-            background-color: #030712;
+            background-color: #020205;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -80,7 +82,7 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -89,14 +91,14 @@
             .phone-container {
                 height: 95vh;
                 border-radius: 36px;
-                border: 6px solid #1e293b;
+                border: 2px solid rgba(168, 85, 247, 0.3);
             }
         }
 
         .lock-screen {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top, #1e1b4b 0%, #030712 100%);
+            background: radial-gradient(circle at top, #1a0b2e 0%, #05050a 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -121,7 +123,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: var(--neon-glow);
             z-index: 10;
         }
 
@@ -132,31 +134,33 @@
         }
 
         .app-logo {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .app-logo svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             stroke: #ffffff;
-            stroke-width: 2.2;
+            stroke-width: 2.5;
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
         header h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
+            font-size: 1.15rem;
+            font-weight: 900;
             letter-spacing: -0.3px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .header-actions {
@@ -166,22 +170,22 @@
         }
 
         .header-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .header-btn:active { transform: scale(0.95); }
+        .header-btn:active { transform: scale(0.92); }
 
         .content {
-            padding: 14px 16px 80px 16px;
+            padding: 14px 16px 90px 16px;
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -196,20 +200,23 @@
         }
         .tab-pane.active { display: flex; }
 
+        /* BARRA INFERIOR SUPER FLUTUANTE ESTILO NEON */
         .bottom-nav {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 68px;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            height: 66px;
             background: var(--card-bg);
-            border-top: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 0 8px;
+            padding: 0 10px;
             z-index: 50;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--neon-glow);
+            backdrop-filter: blur(12px);
         }
 
         .bottom-nav-item {
@@ -222,41 +229,41 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            gap: 4px;
+            gap: 3px;
             padding: 6px 0;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
         }
 
         .bottom-nav-item i { font-size: 1.15rem; }
-        .bottom-nav-item span { font-size: 0.65rem; font-weight: 700; }
-        .bottom-nav-item.active { color: var(--primary); }
-        .bottom-nav-item.active i { transform: translateY(-2px); }
+        .bottom-nav-item span { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.2px; }
+        .bottom-nav-item.active { color: var(--primary); text-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+        .bottom-nav-item.active i { transform: translateY(-3px) scale(1.1); }
 
         .bottom-nav-center {
             position: relative;
-            top: -14px;
-            width: 52px;
-            height: 52px;
+            top: -18px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             background: var(--primary-gradient);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6);
             border: 4px solid var(--bg-color);
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.25s ease;
         }
-        .bottom-nav-center:active { transform: scale(0.92); }
+        .bottom-nav-center:active { transform: scale(0.9); }
 
         .date-control-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: var(--card-bg);
-            padding: 8px 14px;
-            border-radius: 14px;
+            padding: 10px 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             box-shadow: var(--card-shadow);
         }
@@ -277,16 +284,17 @@
         }
 
         .hero-wallet-card {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+            background: linear-gradient(135deg, #18082e 0%, #29104b 60%, #3b0764 100%);
             color: white;
-            padding: 18px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(49, 46, 129, 0.25);
+            padding: 20px;
+            border-radius: 22px;
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.25), inset 0 0 15px rgba(217, 70, 239, 0.15);
             display: flex;
             flex-direction: column;
             gap: 12px;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(217, 70, 239, 0.25);
         }
 
         .quick-actions-bar {
@@ -302,7 +310,7 @@
             border: 1px solid var(--border-color);
             color: var(--text-main);
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -310,7 +318,7 @@
             cursor: pointer;
             box-shadow: var(--card-shadow);
         }
-        .quick-btn:hover { background: var(--input-bg); }
+        .quick-btn:hover { background: var(--input-bg); border-color: var(--primary); }
 
         .section-box {
             background: var(--card-bg);
@@ -390,7 +398,7 @@
         .btn-box-action {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
-            padding: 5px 10px;
+            padding: 6px 10px;
             border-radius: 8px;
             font-size: 0.7rem;
             font-weight: 800;
@@ -400,7 +408,7 @@
             align-items: center;
             gap: 4px;
         }
-        .btn-box-action:hover { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        .btn-box-action:hover { background: rgba(168, 85, 247, 0.15); color: var(--primary); border-color: var(--primary); }
 
         .extra-income-card {
             background: var(--card-bg);
@@ -500,13 +508,15 @@
         .top-btn.active.expense {
             background: var(--card-bg);
             color: var(--red);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid rgba(244, 63, 94, 0.3);
         }
 
         .top-btn.active.income {
             background: var(--card-bg);
             color: var(--green);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .amount-hero-box {
@@ -547,7 +557,7 @@
         .mode-chip.active {
             background: var(--card-bg);
             color: var(--primary);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         }
 
         .val-controls-line {
@@ -619,12 +629,13 @@
             font-size: 0.7rem;
             font-weight: 800;
             color: var(--primary);
-            background: rgba(99, 102, 241, 0.08);
+            background: rgba(168, 85, 247, 0.1);
             padding: 6px 10px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .detail-row {
@@ -698,8 +709,9 @@
 
         .card-pill-btn.active {
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(168, 85, 247, 0.15);
             color: var(--primary);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
         }
 
         .card-pill-btn .color-dot {
@@ -724,7 +736,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: var(--card-shadow);
         }
 
         .statement-icon-badge {
@@ -817,17 +829,17 @@
         .btn-mini-action.del:hover { color: var(--red); }
 
         .credit-card-widget {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #18082e 0%, #0c0c14 100%);
             color: white;
             padding: 16px;
             border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(168, 85, 247, 0.25);
         }
 
         .year-selector-header {
@@ -842,14 +854,15 @@
         }
 
         .year-summary-card {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            background: linear-gradient(135deg, #18082e 0%, #29104b 100%);
             color: white;
             padding: 16px;
             border-radius: 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(49, 46, 129, 0.2);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+            border: 1px solid rgba(217, 70, 239, 0.2);
         }
 
         .months-elegant-grid {
@@ -885,14 +898,15 @@
         }
 
         .modern-profile-banner {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+            background: linear-gradient(135deg, #18082e 0%, #29104b 60%, #3b0764 100%);
             color: white;
             padding: 18px;
             border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(49, 46, 129, 0.25);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+            border: 1px solid rgba(217, 70, 239, 0.2);
         }
 
         .modern-action-card {
@@ -927,7 +941,7 @@
             font-size: 0.85rem;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -948,8 +962,8 @@
         .modal-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
             z-index: 1000;
             display: none;
             justify-content: center;
@@ -959,7 +973,7 @@
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 20px;
             padding: 20px;
             width: 100%;
@@ -969,7 +983,7 @@
             gap: 12px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 20px rgba(168, 85, 247, 0.2);
         }
 
         #toast-container {
@@ -995,8 +1009,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 15px rgba(168, 85, 247, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.4);
             animation: slideDown 0.3s ease forwards;
         }
         @keyframes slideDown {
@@ -1013,20 +1027,20 @@
 
         <div id="lock-screen" class="lock-screen">
             <div class="w-full flex flex-col items-center pt-2 space-y-2">
-                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-indigo-500 to-pink-500 p-1 shadow-xl">
-                    <div class="w-full h-full bg-[#0f172a] rounded-[14px] flex items-center justify-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 p-1 shadow-xl shadow-purple-500/30">
+                    <div class="w-full h-full bg-[#0c0c14] rounded-[14px] flex items-center justify-center">
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro</h2>
-                <p class="text-xs text-indigo-300 font-semibold">Controle Pessoal Inteligente</p>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon</h2>
+                <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
             <div class="flex flex-col items-center space-y-3 my-auto">
-                <button id="biometric-btn" onclick="desbloquearApp()" class="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-lg flex items-center justify-center cursor-pointer border-none text-white text-2xl">
+                <button id="biometric-btn" onclick="desbloquearApp()" class="w-16 h-16 bg-gradient-to-tr from-purple-600 to-pink-600 rounded-2xl shadow-lg shadow-purple-500/40 flex items-center justify-center cursor-pointer border-none text-white text-2xl">
                     <i id="bio-icon" class="fa-solid fa-fingerprint"></i>
                 </button>
-                <button onclick="desbloquearApp()" class="bg-white/15 hover:bg-white/25 text-xs font-bold py-2 px-5 rounded-xl border border-white/20 text-white">
+                <button onclick="desbloquearApp()" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2 px-5 rounded-xl border border-white/20 text-white">
                     🔓 Entrar no Painel
                 </button>
             </div>
@@ -1039,7 +1053,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro</h1>
+                    <h1>Finanças Neon</h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1047,7 +1061,7 @@
                     <i id="btn-eye-icon" class="fa-solid fa-eye"></i>
                 </button>
                 <button class="header-btn" onclick="bloquearManualmente()" title="Bloquear">🔒</button>
-                <button class="header-btn theme-toggle" onclick="alternarTema()" title="Tema Escuro">🌙</button>
+                <button class="header-btn theme-toggle" onclick="alternarTema()" title="Alternar Tema Neon/Claro">⚡</button>
             </div>
         </header>
 
@@ -1091,7 +1105,7 @@
                     </div>
 
                     <div>
-                        <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
+                        <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1; text-shadow: 0 0 15px rgba(255,255,255,0.3);">R$ 0,00</h2>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total da família / mês</span>
                     </div>
 
@@ -1123,19 +1137,19 @@
 
                 <div class="quick-actions-bar">
                     <button class="quick-btn" onclick="trocarAba('lancar')">
-                        <i class="fa-solid fa-plus text-indigo-500"></i> Lançar Despesa
+                        <i class="fa-solid fa-plus text-purple-400"></i> Lançar Despesa
                     </button>
                     <button class="quick-btn" onclick="trocarAba('cartoes')">
-                        <i class="fa-solid fa-credit-card text-amber-500"></i> Ver Cartões
+                        <i class="fa-solid fa-credit-card text-amber-400"></i> Ver Cartões
                     </button>
                     <button class="quick-btn" onclick="abrirModalNovaCaixinhaVerba()">
-                        <i class="fa-solid fa-box-open text-pink-500"></i> Nova Caixinha
+                        <i class="fa-solid fa-box-open text-pink-400"></i> Nova Caixinha
                     </button>
                 </div>
 
                 <div class="section-box" style="padding:12px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);"><i class="fa-solid fa-chart-pie text-indigo-500"></i> DISTRIBUIÇÃO DAS DESPESAS</span>
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);"><i class="fa-solid fa-chart-pie text-purple-400"></i> DISTRIBUIÇÃO DAS DESPESAS</span>
                         <span id="chart-total-label" style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">Mês atual</span>
                     </div>
                     <div style="position:relative; width:100%; height:160px; display:flex; justify-content:center; align-items:center;">
@@ -1331,7 +1345,7 @@
 
             <!-- TELA 3: CARTÕES -->
             <div id="tab-cartoes" class="tab-pane">
-                <div class="hero-wallet-card" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);">
+                <div class="hero-wallet-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Fatura Total dos Cartões</span>
                         <span style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(251,191,36,0.25); color:#fbbf24; border:1px solid rgba(251,191,36,0.3);">
@@ -1362,10 +1376,10 @@
 
                 <div class="quick-actions-bar">
                     <button class="quick-btn" onclick="abrirModalNovoCartao()">
-                        <i class="fa-solid fa-plus text-indigo-500"></i> Adicionar Cartão
+                        <i class="fa-solid fa-plus text-purple-400"></i> Adicionar Cartão
                     </button>
                     <button class="quick-btn" onclick="abrirModalPagarFatura()">
-                        <i class="fa-solid fa-check text-green-500"></i> Abater/Pagar Fatura
+                        <i class="fa-solid fa-check text-green-400"></i> Abater/Pagar Fatura
                     </button>
                 </div>
 
@@ -1383,7 +1397,7 @@
                 <div class="year-selector-header">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
                     <div style="display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-calendar-days text-indigo-500"></i>
+                        <i class="fa-solid fa-calendar-days text-purple-400"></i>
                         <select id="select-year-tabela" onchange="alterarAnoTabela(this.value)" style="width:auto; border:none; background:transparent; font-size:1.05rem; font-weight:900; color:var(--primary); outline:none; cursor:pointer;">
                         </select>
                     </div>
@@ -1421,7 +1435,7 @@
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-cloud-arrow-up text-indigo-500"></i> Salvar e Restaurar Dados
+                            <i class="fa-solid fa-cloud-arrow-up text-purple-400"></i> Salvar e Restaurar Dados
                         </b>
                     </div>
                     <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.3;">
@@ -1440,7 +1454,7 @@
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-tags text-pink-500"></i> Suas Categorias
+                            <i class="fa-solid fa-tags text-pink-400"></i> Suas Categorias
                         </b>
                         <button onclick="abrirModalNovaCategoria()" class="btn-box-action">
                             <i class="fa-solid fa-plus"></i> Nova
@@ -1452,7 +1466,7 @@
                 <div class="modern-action-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-piggy-bank text-amber-500"></i> Caixinhas de Reserva
+                            <i class="fa-solid fa-piggy-bank text-amber-400"></i> Caixinhas de Reserva
                         </b>
                         <button onclick="abrirModalNovaMeta()" class="btn-box-action">
                             <i class="fa-solid fa-plus"></i> Nova
@@ -1519,7 +1533,7 @@
 
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
-                <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
+                <h4 id="modal-title" style="font-weight:800; font-size:1rem; color:var(--text-main);">Título</h4>
                 <div id="modal-body" class="form-group" style="display:flex; flex-direction:column; gap:8px;"></div>
                 <div class="form-row" style="margin-top:6px; display:flex; gap:8px;">
                     <button class="btn-secondary" style="flex:1;" onclick="fecharModal()">Cancelar</button>
@@ -1531,7 +1545,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v32_modern_panel";
+        const STORAGE_KEY = "financas_pro_neon_v33";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -1552,19 +1566,19 @@
             cash: 0.00,
             budgetBoxes: [
                 { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#10b981" },
-                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#3b82f6" },
+                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#06b6d4" },
                 { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#ec4899" }
             ],
             creditCards: [
                 { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316", closingDay: 25, dueDay: 5 },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444", closingDay: 20, dueDay: 28 },
-                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9", closingDay: 15, dueDay: 22 },
-                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155", closingDay: 10, dueDay: 17 }
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#f43f5e", closingDay: 20, dueDay: 28 },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#06b6d4", closingDay: 15, dueDay: 22 },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#a855f7", closingDay: 10, dueDay: 17 }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
-                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
-                { id: "cat_3", name: "🚗 Transporte", color: "#3b82f6", limit: 500 },
+                { id: "cat_2", name: "🏠 Moradia / Contas", color: "#a855f7", limit: 1800 },
+                { id: "cat_3", name: "🚗 Transporte", color: "#06b6d4", limit: 500 },
                 { id: "cat_4", name: "💊 Saúde & Farmácia", color: "#10b981", limit: 400 }
             ],
             transactions: [],
@@ -1581,7 +1595,7 @@
             if (!container) return;
             const toast = document.createElement("div");
             toast.className = "toast-msg";
-            toast.innerHTML = `<i class="fa-solid ${icon} text-indigo-400"></i> <span>${msg}</span>`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-purple-400"></i> <span>${msg}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
@@ -1786,7 +1800,7 @@
             btnAdd.type = "button";
             btnAdd.className = "card-pill-btn";
             btnAdd.style.borderStyle = "dashed";
-            btnAdd.innerHTML = `<i class="fa-solid fa-plus text-primary"></i><span>Novo</span>`;
+            btnAdd.innerHTML = `<i class="fa-solid fa-plus text-purple-400"></i><span>Novo</span>`;
             btnAdd.onclick = abrirModalNovoCartao;
             container.appendChild(btnAdd);
         }
@@ -1887,7 +1901,7 @@
 
             const labels = Object.keys(catMap);
             const data = Object.values(catMap);
-            const cores = ["#6366f1", "#e11d48", "#059669", "#d97706", "#2563eb", "#7c3aed", "#db2777", "#64748b"];
+            const cores = ["#a855f7", "#ec4899", "#06b6d4", "#10b981", "#f59e0b", "#8b5cf6", "#f43f5e", "#64748b"];
 
             if (categoryChartInstance) categoryChartInstance.destroy();
 
@@ -1896,7 +1910,7 @@
                     type: 'doughnut',
                     data: {
                         labels: ['Sem Gastos'],
-                        datasets: [{ data: [1], backgroundColor: ['#e2e8f0'] }]
+                        datasets: [{ data: [1], backgroundColor: ['#1f1f2e'] }]
                     },
                     options: {
                         cutout: '72%',
@@ -1916,7 +1930,7 @@
                         data: data,
                         backgroundColor: cores.slice(0, labels.length),
                         borderWidth: 2,
-                        borderColor: document.body.classList.contains('dark-mode') ? '#0f172a' : '#ffffff'
+                        borderColor: document.body.classList.contains('light-mode') ? '#ffffff' : '#0c0c14'
                     }]
                 },
                 options: {
@@ -1924,7 +1938,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: document.body.classList.contains('dark-mode') ? '#f8fafc' : '#0f172a' } }
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: document.body.classList.contains('light-mode') ? '#0f172a' : '#f3f4f6' } }
                     }
                 }
             });
@@ -1953,13 +1967,13 @@
 
         function abrirModalNovaVerbaExtra() {
             abrirModal("Adicionar Verba Extra no Mês", `
-                <label class="text-xs text-gray-500 font-bold">Descrição da Verba:</label>
+                <label class="text-xs text-gray-400 font-bold">Descrição da Verba:</label>
                 <input type="text" id="new-extra-desc" placeholder="Ex: Bônus, 13º Salário">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Extra (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor Extra (R$):</label>
                 <input type="number" id="new-extra-val" step="50" placeholder="Ex: 1200.00">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Data:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Data:</label>
                 <input type="date" id="new-extra-date" value="${new Date().toISOString().slice(0, 10)}">
             `, () => {
                 const desc = document.getElementById("new-extra-desc").value.trim();
@@ -2003,8 +2017,8 @@
             const atual = obterVerbaDoMes(mKey, totalBase);
 
             abrirModal(`Editar Verba de ${mesNome} / ${ano}`, `
-                <p class="text-xs text-gray-500 mb-2">Defina quanto você recebeu neste mês específico:</p>
-                <label class="text-xs text-gray-500 font-bold">Verba Total (R$):</label>
+                <p class="text-xs text-gray-400 mb-2">Defina quanto você recebeu neste mês específico:</p>
+                <label class="text-xs text-gray-400 font-bold">Verba Total (R$):</label>
                 <input type="number" id="input-edit-verba-mes" step="50" value="${atual}">
             `, () => {
                 const val = parseFloat(document.getElementById("input-edit-verba-mes").value);
@@ -2096,20 +2110,20 @@
             const badge = document.getElementById("hero-badge-status");
             if (badge) {
                 if (percConsumido >= 95) {
-                    progressBar.style.background = '#e11d48';
+                    progressBar.style.background = '#f43f5e';
                     badge.innerText = '🔴 Orçamento no Limite';
-                    badge.style.color = '#e11d48';
-                    badge.style.background = 'rgba(225,29,72,0.15)';
+                    badge.style.color = '#f43f5e';
+                    badge.style.background = 'rgba(244,63,94,0.2)';
                 } else if (percConsumido >= 70) {
-                    progressBar.style.background = '#d97706';
+                    progressBar.style.background = '#f59e0b';
                     badge.innerText = '🟡 Atenção aos Gastos';
-                    badge.style.color = '#d97706';
-                    badge.style.background = 'rgba(217,119,6,0.15)';
+                    badge.style.color = '#f59e0b';
+                    badge.style.background = 'rgba(245,158,11,0.2)';
                 } else {
-                    progressBar.style.background = '#059669';
+                    progressBar.style.background = '#10b981';
                     badge.innerText = '🟢 Orçamento Seguro';
-                    badge.style.color = '#059669';
-                    badge.style.background = 'rgba(5,150,105,0.15)';
+                    badge.style.color = '#10b981';
+                    badge.style.background = 'rgba(16,185,129,0.2)';
                 }
             }
 
@@ -2283,8 +2297,8 @@
 
                         const cardElem = document.createElement("div");
                         cardElem.className = "credit-card-widget";
-                        cardElem.style.background = `linear-gradient(135deg, ${card.color || '#1e293b'} 0%, #030712 100%)`;
-                        cardElem.style.borderLeft = `5px solid ${card.color || '#6366f1'}`;
+                        cardElem.style.background = `linear-gradient(135deg, ${card.color || '#18082e'} 0%, #0c0c14 100%)`;
+                        cardElem.style.borderLeft = `5px solid ${card.color || '#a855f7'}`;
                         cardElem.innerHTML = `
                             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                                 <div style="display:flex; align-items:center; gap:8px;">
@@ -2468,11 +2482,11 @@
                     cardMes.className = "month-card-item";
                     if (isMesAtual) {
                         cardMes.style.borderColor = "var(--primary)";
-                        cardMes.style.boxShadow = "0 0 0 1px var(--primary)";
+                        cardMes.style.boxShadow = "0 0 10px rgba(168, 85, 247, 0.3)";
                     }
 
                     let statusBadge = (mInc > 0 || mExp > 0) 
-                        ? (mNet >= 0 ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(5,150,105,0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>` : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(225,29,72,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`)
+                        ? (mNet >= 0 ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(16,185,129,0.15); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>` : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(244,63,94,0.15); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`)
                         : `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Sem dados</span>`;
 
                     cardMes.innerHTML = `
@@ -2621,28 +2635,28 @@
 
         function abrirModalNovoCartao() {
             abrirModal("Adicionar Novo Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Cartão:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome do Cartão:</label>
                 <input type="text" id="new-card-name" placeholder="Ex: Nubank, Inter">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Limite Total (R$):</label>
                 <input type="number" id="new-card-limit" step="100" placeholder="Ex: 5000">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
                 <input type="number" id="new-card-initial" step="50" value="0">
 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
                     <div>
-                        <label class="text-xs text-gray-500 font-bold">Dia Fechamento:</label>
+                        <label class="text-xs text-gray-400 font-bold">Dia Fechamento:</label>
                         <input type="number" id="new-card-closing" min="1" max="31" value="25">
                     </div>
                     <div>
-                        <label class="text-xs text-gray-500 font-bold">Dia Vencimento:</label>
+                        <label class="text-xs text-gray-400 font-bold">Dia Vencimento:</label>
                         <input type="number" id="new-card-due" min="1" max="31" value="5">
                     </div>
                 </div>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="new-card-color" value="#334155" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
+                <input type="color" id="new-card-color" value="#a855f7" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
@@ -2672,28 +2686,28 @@
             if (!card) return;
 
             abrirModal("Editar Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome:</label>
                 <input type="text" id="edit-card-name" value="${card.name}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Limite Total (R$):</label>
                 <input type="number" id="edit-card-limit" step="100" value="${card.limit}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
                 <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
                     <div>
-                        <label class="text-xs text-gray-500 font-bold">Dia Fechamento:</label>
+                        <label class="text-xs text-gray-400 font-bold">Dia Fechamento:</label>
                         <input type="number" id="edit-card-closing" min="1" max="31" value="${card.closingDay || 25}">
                     </div>
                     <div>
-                        <label class="text-xs text-gray-500 font-bold">Dia Vencimento:</label>
+                        <label class="text-xs text-gray-400 font-bold">Dia Vencimento:</label>
                         <input type="number" id="edit-card-due" min="1" max="31" value="${card.dueDay || 5}">
                     </div>
                 </div>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#334155'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-card-color" value="${card.color || '#a855f7'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-card-limit").value);
@@ -2730,14 +2744,14 @@
 
         function abrirModalNovaCaixinhaVerba() {
             abrirModal("Criar Nova Caixinha de Verba", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Caixinha:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome da Caixinha:</label>
                 <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor Mensal (R$):</label>
                 <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="new-box-color" value="#2563eb" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
+                <input type="color" id="new-box-color" value="#06b6d4" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("new-box-amount").value);
@@ -2762,14 +2776,14 @@
             if (!box) return;
 
             abrirModal("Editar Caixinha de Verba", `
-                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome:</label>
                 <input type="text" id="edit-box-name" value="${box.name}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Mensal (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor Mensal (R$):</label>
                 <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#a855f7'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("edit-box-amount").value);
@@ -2870,34 +2884,34 @@
             });
 
             abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
+                <label class="text-xs text-gray-400 font-bold">Descrição:</label>
                 <input type="text" id="edit-trans-desc" value="${t.desc}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor (R$):</label>
                 <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Tipo:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Tipo:</label>
                 <select id="edit-trans-type">
                     <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
                     <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Data:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Data:</label>
                 <input type="date" id="edit-trans-date" value="${t.date || ''}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Pagamento:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Pagamento:</label>
                 <select id="edit-trans-payment">
                     <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
                     <option value="Dinheiro/Caixa" ${t.payment !== 'Cartão de Crédito' ? 'selected' : ''}>💵 Dinheiro / Pix</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cartão:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Cartão:</label>
                 <select id="edit-trans-card">${optionsCartoes}</select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Caixinha:</label>
                 <select id="edit-trans-box">${optionsCaixinhas}</select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Categoria:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Categoria:</label>
                 <select id="edit-trans-cat">${optionsCategorias}</select>
             `, () => {
                 const desc = document.getElementById("edit-trans-desc").value.trim();
@@ -2945,11 +2959,11 @@
             cards.forEach(c => { optionsCartoes += `<option value="${c.id}">${c.name}</option>`; });
 
             abrirModal("Abater ou Pagar Fatura", `
-                <p class="text-xs text-gray-500 mb-2">Informe o valor pago para liberar seu limite:</p>
-                <label class="text-xs text-gray-500 font-bold">Cartão:</label>
+                <p class="text-xs text-gray-400 mb-2">Informe o valor pago para liberar seu limite:</p>
+                <label class="text-xs text-gray-400 font-bold">Cartão:</label>
                 <select id="modal-pay-card-id">${optionsCartoes}</select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Pago (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor Pago (R$):</label>
                 <input type="number" id="input-modal-fatura" step="0.01" placeholder="Ex: 500.00">
             `, () => {
                 const val = parseFloat(document.getElementById("input-modal-fatura").value);
@@ -2983,14 +2997,14 @@
 
         function fallbackCopiar(texto) {
             abrirModal("Seu Código de Backup", `
-                <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo:</p>
+                <p class="text-xs text-gray-400 mb-2">Copie todo o texto abaixo:</p>
                 <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--text-main);" readonly>${texto}</textarea>
             `, () => {});
         }
 
         function abrirModalRestaurarTexto() {
             abrirModal("Restaurar Dados em Texto", `
-                <p class="text-xs text-gray-500 mb-2">Cole aqui o código de backup:</p>
+                <p class="text-xs text-gray-400 mb-2">Cole aqui o código de backup:</p>
                 <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--text-main);"></textarea>
             `, () => {
                 const input = document.getElementById("txt-restore-input").value.trim();
@@ -3013,10 +3027,10 @@
 
         function abrirModalNovaMeta() {
             abrirModal("Nova Caixinha de Reserva", `
-                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome da Reserva:</label>
                 <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro">
                 
-                <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Meta Total (R$):</label>
                 <input type="number" id="new-goal-target" placeholder="Ex: 5000">
             `, () => {
                 const name = document.getElementById("new-goal-name").value.trim();
@@ -3036,13 +3050,13 @@
             if (!goal) return;
 
             abrirModal("Editar Reserva", `
-                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome:</label>
                 <input type="text" id="edit-goal-name" value="${goal.name}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Meta Total (R$):</label>
                 <input type="number" id="edit-goal-target" value="${goal.target}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Já Guardado (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Já Guardado (R$):</label>
                 <input type="number" id="edit-goal-current" value="${goal.current}">
             `, () => {
                 const name = document.getElementById("edit-goal-name").value.trim();
@@ -3074,8 +3088,8 @@
             if (!goal) return;
 
             abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
-                <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>${formatarMoeda(goal.current)}</b></p>
+                <p class="text-xs text-gray-400">Objetivo: <b>${goal.name}</b></p>
+                <p class="text-xs text-gray-400 mb-2">Acumulado: <b>${formatarMoeda(goal.current)}</b></p>
                 <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
             `, () => {
                 const val = parseFloat(document.getElementById("input-modal-goal-val").value);
@@ -3096,16 +3110,16 @@
 
         function abrirModalNovaCategoria() {
             abrirModal("Criar Nova Categoria", `
-                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome:</label>
                 <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer">
-                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal R$ (opcional):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Teto Mensal R$ (opcional):</label>
                 <input type="number" id="modal-cat-limit" placeholder="Ex: 500">
             `, () => {
                 const name = document.getElementById("modal-cat-name").value.trim();
                 const limit = parseFloat(document.getElementById("modal-cat-limit").value) || 0;
                 if (name) {
                     if (!financialData.categories) financialData.categories = [];
-                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit });
+                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#a855f7", limit });
                     salvarDados();
                     atualizarTela();
                     const sel = document.getElementById("trans-category");
@@ -3120,12 +3134,12 @@
             if (!cat) return;
 
             abrirModal("Editar Categoria", `
-                <label class="text-xs text-gray-500 font-bold">Nome:</label>
+                <label class="text-xs text-gray-400 font-bold">Nome:</label>
                 <input type="text" id="edit-cat-name" value="${cat.name}">
-                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal R$:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Teto Mensal R$:</label>
                 <input type="number" id="edit-cat-limit" value="${cat.limit || 0}">
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-cat-color" value="${cat.color || '#6366f1'}" style="width:50px; height:36px; padding:0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
+                <input type="color" id="edit-cat-color" value="${cat.color || '#a855f7'}" style="width:50px; height:36px; padding:0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-cat-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
@@ -3155,24 +3169,24 @@
 
         function abrirModalNovoInvestimento() {
             abrirModal("Registrar Aporte / Ativo", `
-                <label class="text-xs text-gray-500 font-bold">Corretora / Banco:</label>
+                <label class="text-xs text-gray-400 font-bold">Corretora / Banco:</label>
                 <select id="invest-platform">
                     <option value="XP Investimentos">XP Investimentos</option>
                     <option value="Binance">Binance</option>
                     <option value="Outros">Outra Corretora</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Tipo de Ativo:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Tipo de Ativo:</label>
                 <select id="invest-type">
                     <option value="Renda Fixa">Renda Fixa / CDB</option>
                     <option value="Criptomoeda">Criptomoeda</option>
                     <option value="Ações">Ações / FIIs</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Nome do Ativo:</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Nome do Ativo:</label>
                 <input type="text" id="invest-asset" placeholder="Ex: CDB 120%, BTC">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor Aplicado (R$):</label>
+                <label class="text-xs text-gray-400 font-bold mt-2">Valor Aplicado (R$):</label>
                 <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
             `, () => {
                 const platform = document.getElementById("invest-platform").value;
@@ -3220,9 +3234,10 @@
         }
 
         function alternarTema() { 
-            document.body.classList.toggle("dark-mode"); 
+            document.body.classList.toggle("light-mode"); 
             renderizarGrafico();
+            showToast(document.body.classList.contains("light-mode") ? "Modo Claro ativado" : "Modo Neon ativado", "fa-bolt");
         }
     </script>
 </body>
-    </html>
+</html>
