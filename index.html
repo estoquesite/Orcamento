@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Finanças Pro</title>
     
-    <!-- Manifesto PWA Embutido (Ícone, Nome e Modo Aplicativo Standalone) -->
+    <!-- Manifesto PWA Embutido -->
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
 
-    <!-- Configurações de Aplicativo Mobile -->
+    <!-- Configurações Mobile -->
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Finanças Pro">
 
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
@@ -464,7 +463,6 @@
             font-weight: 800;
         }
         .tag-sofia { background: rgba(236, 72, 153, 0.15); color: var(--pink); border: 1px solid rgba(236, 72, 153, 0.3); }
-        .tag-diego { background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
 
         .item-right {
             display: flex;
@@ -561,7 +559,7 @@
                 </div>
                 <div>
                     <h2 class="text-2xl font-black tracking-tight text-white">Finanças Pro</h2>
-                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Gestão de Verbas & Família</p>
+                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Meu Orçamento & Pensão Sofia</p>
                 </div>
             </div>
 
@@ -575,14 +573,10 @@
                 </button>
             </div>
 
-            <!-- BOTÃO DE INSTALAÇÃO NATIVO (SÓ APARECE SE AINDA NÃO FOI INSTALADO) -->
             <div id="pwa-install-area" class="w-full max-w-xs pb-2 space-y-2">
                 <button id="btn-instalar-app" onclick="acionarInstalacaoDireta()" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95 py-3 px-4 rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 transition text-white">
                     <i class="fa-solid fa-download text-sm"></i> Instalar Aplicativo no Telemóvel
                 </button>
-                <p id="install-subtext" class="text-[10px] text-gray-400 text-center">
-                    Cria o ícone no seu ecrã inicial e abre direto como app independente.
-                </p>
             </div>
         </div>
 
@@ -597,7 +591,7 @@
                 </div>
                 <div class="brand-title-wrapper">
                     <h1>Finanças Pro</h1>
-                    <span class="app-version">v2.2 • Aplicativo Instalável</span>
+                    <span class="app-version">v2.3 • Orçamento e Verba Sofia</span>
                 </div>
             </div>
             
@@ -640,7 +634,7 @@
 
                 <div class="summary-grid">
                     
-                    <!-- VERBA TOTAL CONSOLIDADA -->
+                    <!-- 1. QUADRADO COM A VERBA TOTAL DISPONÍVEL (CONSOLIDADO) -->
                     <div class="card purple full-width" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(236, 72, 153, 0.12) 100%); border: 2px solid var(--primary);">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL ACUMULADA</span>
@@ -648,37 +642,33 @@
                         </div>
                         <h2 id="card-total-wealth" style="font-size:1.6rem; color:var(--primary);">R$ 0,00</h2>
                         <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); border-top:1px dashed var(--border-color); padding-top:6px; margin-top:2px;">
-                            <span>Conta: <b id="sub-cash" style="color:var(--text-main);">R$ 0</b></span>
+                            <span>Conta/Caixa: <b id="sub-cash" style="color:var(--text-main);">R$ 0</b></span>
                             <span>Caixinhas: <b id="sub-goals" style="color:var(--text-main);">R$ 0</b></span>
                             <span>Investido: <b id="sub-invest" style="color:var(--text-main);">R$ 0</b></span>
                         </div>
                     </div>
 
-                    <!-- COMPOSIÇÃO DA VERBA DO MÊS (DIEGO + SOFIA + PRÓPRIO) -->
+                    <!-- 2. CARD DO ORÇAMENTO DO MÊS (MEU SALÁRIO + PENSÃO SOFIA = VERBA TOTAL DO MÊS) -->
                     <div class="card full-width" style="border-left: 4px solid var(--pink);">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:800; color:var(--pink); font-size:0.75rem;">👨‍👩‍👧 COMPOSIÇÃO DAS VERBAS DO MÊS</span>
-                            <a href="#" onclick="abrirModalFontesVerba()" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">[AJUSTAR VERBAS]</a>
+                            <span style="font-weight:800; color:var(--pink); font-size:0.75rem;">📊 ORÇAMENTO & VERBA DO MÊS</span>
+                            <a href="#" onclick="abrirModalFontesVerba()" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">[DEFINIR ORÇAMENTO]</a>
                         </div>
                         
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:4px;">
-                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
-                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">👨 Diego</span>
-                                <b id="verba-diego-val" style="font-size:0.82rem; color:var(--blue);">R$ 0</b>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:4px;">
+                            <div style="background:var(--input-bg); padding:9px 8px; border-radius:12px; text-align:center;">
+                                <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">💼 Meu Salário / Renda</span>
+                                <b id="verba-propria-val" style="font-size:0.88rem; color:var(--green);">R$ 0,00</b>
                             </div>
-                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
-                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">👧 Pensão Sofia</span>
-                                <b id="verba-sofia-val" style="font-size:0.82rem; color:var(--pink);">R$ 0</b>
-                            </div>
-                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
-                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">💼 Minha Renda</span>
-                                <b id="verba-propria-val" style="font-size:0.82rem; color:var(--green);">R$ 0</b>
+                            <div style="background:var(--input-bg); padding:9px 8px; border-radius:12px; text-align:center;">
+                                <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">👧 Pensão da Sofia</span>
+                                <b id="verba-sofia-val" style="font-size:0.88rem; color:var(--pink);">R$ 0,00</b>
                             </div>
                         </div>
 
-                        <!-- BALANÇO DA SOFIA -->
-                        <div style="margin-top:6px; padding-top:6px; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; font-size:0.72rem;">
-                            <span>👧 <b>Gastos Sofia:</b> <span id="sofia-spent" style="color:var(--red); font-weight:700;">R$ 0</span></span>
+                        <!-- BALANÇO / COMPENSAÇÃO DA SOFIA -->
+                        <div style="margin-top:8px; padding-top:6px; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+                            <span>👧 <b>Gastos da Sofia:</b> <span id="sofia-spent" style="color:var(--red); font-weight:700;">R$ 0</span></span>
                             <span>Restante da Pensão: <b id="sofia-remain" style="color:var(--green);">R$ 0</b></span>
                         </div>
                     </div>
@@ -696,16 +686,16 @@
                         <h2 id="card-credit">R$ 0,00</h2>
                     </div>
                     <div class="card green">
-                        <span>📈 Receitas Totais</span>
+                        <span>📈 Receitas do Mês</span>
                         <h2 id="card-income">R$ 0,00</h2>
                     </div>
                     <div class="card red">
-                        <span>📉 Despesas Totais</span>
+                        <span>📉 Despesas do Mês</span>
                         <h2 id="card-spent">R$ 0,00</h2>
                     </div>
                 </div>
 
-                <!-- FORMULÁRIO COM PARTES / SOFIA / DIEGO -->
+                <!-- FORMULÁRIO DE LANÇAMENTO (GERAL OU SOFIA) -->
                 <div class="section-box">
                     <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
@@ -716,13 +706,13 @@
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Escola, Roupas, Farmácia)">
+                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Escola Sofia)">
                         
                         <div class="form-row">
+                            <!-- Destino do gasto -->
                             <select id="trans-beneficiary">
-                                <option value="Geral">👤 Conta Geral</option>
-                                <option value="Sofia">👧 Para Sofia (Pensão / Partes)</option>
-                                <option value="Diego">👨 Diego</option>
+                                <option value="Geral">👤 Geral / Pessoal</option>
+                                <option value="Sofia">👧 Para a Sofia (Usa a Pensão)</option>
                             </select>
                             <select id="trans-category">
                                 <option value="">Selecione Categoria</option>
@@ -753,7 +743,7 @@
                     </div>
                 </div>
 
-                <!-- EXTRATO COM BUSCA -->
+                <!-- EXTRATO COM BUSCA E FILTROS -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
@@ -761,11 +751,10 @@
                             <option value="all">Todos</option>
                             <option value="expense">Despesas</option>
                             <option value="income">Receitas</option>
-                            <option value="sofia">👧 Só Sofia</option>
-                            <option value="diego">👨 Só Diego</option>
+                            <option value="sofia">👧 Só Gastos da Sofia</option>
                         </select>
                     </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar despesas ou partes..." style="margin-bottom: 10px; font-size: 0.78rem; padding: 8px 12px;">
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar despesa, cartão ou partes..." style="margin-bottom: 10px; font-size: 0.78rem; padding: 8px 12px;">
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
@@ -895,7 +884,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v2_data";
+        const STORAGE_KEY = "financas_pro_v3_data";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -905,7 +894,10 @@
 
         const defaultData = {
             cash: 0.00,
-            sources: { diego: 0.00, sofiaPension: 0.00, personal: 0.00 },
+            sources: {
+                personal: 0.00,       // Meu Salário / Renda
+                sofiaPension: 0.00    // Pensão da Sofia
+            },
             categories: [
                 { name: "👧 Sofia (Pensão / Partes)", color: "#ec4899", limit: 1500 },
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 800 },
@@ -918,13 +910,16 @@
         };
 
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("meu_orcamento_limpo_v5") || localStorage.getItem("meu_orcamento_limpo_v4");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v2_data") || localStorage.getItem("meu_orcamento_limpo_v5");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
                     return {
                         cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
-                        sources: parsed.sources || { diego: 0.00, sofiaPension: 0.00, personal: 0.00 },
+                        sources: {
+                            personal: (parsed.sources && typeof parsed.sources.personal === 'number') ? parsed.sources.personal : 0.00,
+                            sofiaPension: (parsed.sources && typeof parsed.sources.sofiaPension === 'number') ? parsed.sources.sofiaPension : 0.00
+                        },
                         categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                         goals: Array.isArray(parsed.goals) ? parsed.goals : [],
@@ -943,16 +938,13 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- SISTEMA DE INSTALAÇÃO PWA REAL ---
+        // PWA
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            const btn = document.getElementById("btn-instalar-app");
-            if (btn) btn.classList.add("animate-pulse");
         });
 
-        // Se o aplicativo já estiver instalado e aberto na tela do celular, esconde o botão
         if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
             window.addEventListener('DOMContentLoaded', () => {
                 const installArea = document.getElementById("pwa-install-area");
@@ -963,16 +955,12 @@
         function acionarInstalacaoDireta() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    deferredPrompt = null;
-                });
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
             } else {
-                // Sem alert! Se o arquivo estiver sendo aberto localmente, informa de forma elegante
                 abrirModal("Instalar Aplicativo", `
                     <div style="font-size:0.8rem; color:var(--text-muted); line-height: 1.5;">
-                        <p class="mb-2 text-indigo-400 font-bold">Para instalar com 1 toque no celular:</p>
-                        <p class="mb-2">O Google Chrome só libera a instalação automática se o arquivo estiver em um endereço HTTPS seguro (como <b>Netlify</b> ou <b>Vercel</b>).</p>
-                        <p class="text-xs">Assim que colocado no ar, este botão abrirá a caixa oficial do Android instantaneamente para colocar o ícone na sua tela inicial!</p>
+                        <p class="mb-2 text-indigo-400 font-bold">Instalação Direta:</p>
+                        <p>Ao abrir a página hospedada com link seguro (HTTPS, ex: Netlify), este botão coloca o ícone direto na sua tela inicial com 1 clique.</p>
                     </div>
                 `, () => {});
             }
@@ -1051,11 +1039,10 @@
             document.getElementById("sub-goals").innerText = `R$ ${totalCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
             document.getElementById("sub-invest").innerText = `R$ ${totalInvestimentos.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
 
-            // COMPOSIÇÃO DAS VERBAS
-            const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
-            document.getElementById("verba-diego-val").innerText = `R$ ${(src.diego || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("verba-sofia-val").innerText = `R$ ${(src.sofiaPension || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            // ORÇAMENTO: MEU SALÁRIO + PENSÃO SOFIA
+            const src = financialData.sources || { personal: 0, sofiaPension: 0 };
             document.getElementById("verba-propria-val").innerText = `R$ ${(src.personal || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("verba-sofia-val").innerText = `R$ ${(src.sofiaPension || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
             // GASTOS E RESTANTE DA SOFIA
             const gastosSofia = transDoMes.filter(t => t.type === 'expense' && t.beneficiary === 'Sofia').reduce((acc, curr) => acc + curr.value, 0);
@@ -1091,7 +1078,6 @@
                 if (filter === 'expense') bateTipo = (t.type === 'expense');
                 else if (filter === 'income') bateTipo = (t.type === 'income');
                 else if (filter === 'sofia') bateTipo = (t.beneficiary === 'Sofia');
-                else if (filter === 'diego') bateTipo = (t.beneficiary === 'Diego');
 
                 const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal) || (t.category && t.category.toLowerCase().includes(searchVal));
                 return bateTipo && bateTexto;
@@ -1111,8 +1097,6 @@
                     let tagHtml = '';
                     if (trans.beneficiary === 'Sofia') {
                         tagHtml = '<span class="tag-person tag-sofia">👧 Sofia</span>';
-                    } else if (trans.beneficiary === 'Diego') {
-                        tagHtml = '<span class="tag-person tag-diego">👨 Diego</span>';
                     }
 
                     const item = document.createElement("div");
@@ -1253,30 +1237,27 @@
             atualizarTela();
         }
 
+        // MODAL PARA DEFINIR ORÇAMENTO / SALÁRIO E PENSÃO
         function abrirModalFontesVerba() {
-            const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
-            abrirModal("Ajustar Fontes de Verba do Mês", `
-                <label class="text-xs text-gray-500 font-bold">👨 Contribuição Diego (R$):</label>
-                <input type="number" id="input-src-diego" step="10" value="${src.diego || 0}">
+            const src = financialData.sources || { personal: 0, sofiaPension: 0 };
+            abrirModal("Definir Orçamento & Verbas", `
+                <label class="text-xs text-gray-500 font-bold">💼 Meu Salário / Renda Mensal (R$):</label>
+                <input type="number" id="input-src-personal" step="50" value="${src.personal || 0}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão Sofia (R$):</label>
-                <input type="number" id="input-src-sofia" step="10" value="${src.sofiaPension || 0}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">💼 Minha Renda / Outros (R$):</label>
-                <input type="number" id="input-src-personal" step="10" value="${src.personal || 0}">
+                <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão da Sofia (R$):</label>
+                <input type="number" id="input-src-sofia" step="50" value="${src.sofiaPension || 0}">
             `, () => {
-                const diego = parseFloat(document.getElementById("input-src-diego").value) || 0;
-                const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
                 const personal = parseFloat(document.getElementById("input-src-personal").value) || 0;
+                const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
 
-                financialData.sources = { diego, sofiaPension: sofia, personal };
+                financialData.sources = { personal, sofiaPension: sofia };
                 salvarDados();
                 atualizarTela();
             });
         }
 
         function abrirModalSaldo() {
-            abrirModal("Definir Saldo em Caixa", `
+            abrirModal("Definir Saldo em Caixa / Conta", `
                 <label class="text-xs text-gray-500 font-bold">Novo Saldo Disponível (R$):</label>
                 <input type="number" id="input-modal-saldo" step="0.01" value="${financialData.cash}">
             `, () => {
