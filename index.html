@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V14</title>
+    <title>Finanças Pro V15</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -20,22 +20,21 @@
 
     <style>
         :root {
-            --primary: #a855f7;
-            --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
-            --neon-glow: 0 0 15px rgba(168, 85, 247, 0.35);
-            --custom-border: #a855f7;
-            --custom-bg: #05050a;
-            --custom-card: #0c0c14;
-            --custom-text: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border-color: #1f1f2e;
-            --input-bg: #13131f;
-            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --global-bg: #05050a;
             --green: #10b981;
             --red: #f43f5e;
             --blue: #06b6d4;
             --yellow: #f59e0b;
-            --purple: #c084fc;
+        }
+
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 10px var(--pulse-color, #a855f7); }
+            50% { box-shadow: 0 0 25px var(--pulse-color, #a855f7); }
+            100% { box-shadow: 0 0 10px var(--pulse-color, #a855f7); }
+        }
+
+        .pulsing-card {
+            animation: neonPulse 3s infinite ease-in-out;
         }
 
         * {
@@ -49,7 +48,7 @@
 
         body {
             background-color: #020205;
-            color: var(--custom-text);
+            color: #f3f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -61,11 +60,10 @@
             max-width: 440px;
             height: 100vh;
             max-height: 930px;
-            background-color: var(--custom-bg);
-            color: var(--custom-text);
+            background-color: var(--global-bg);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
         }
@@ -74,7 +72,7 @@
             .phone-container {
                 height: 95vh;
                 border-radius: 36px;
-                border: 2px solid var(--custom-border);
+                border: 2px solid #a855f7;
             }
         }
 
@@ -100,13 +98,13 @@
         }
 
         header {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
             color: white;
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--neon-glow);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
             z-index: 10;
         }
 
@@ -166,14 +164,13 @@
         .header-btn:active { transform: scale(0.92); }
 
         .top-nav {
-            background: var(--custom-card);
-            border-bottom: 1.5px solid var(--custom-border);
+            background: #0c0c14;
+            border-bottom: 1.5px solid #1f1f2e;
             display: flex;
             align-items: center;
             justify-content: space-around;
             padding: 6px 8px;
             z-index: 40;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .top-nav-item {
@@ -183,7 +180,7 @@
             justify-content: center;
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: #9ca3af;
             cursor: pointer;
             gap: 2px;
             padding: 4px 10px;
@@ -193,7 +190,7 @@
 
         .top-nav-item i { font-size: 1rem; }
         .top-nav-item span { font-size: 0.6rem; font-weight: 800; }
-        .top-nav-item.active { color: var(--primary); background: rgba(168, 85, 247, 0.15); }
+        .top-nav-item.active { color: #a855f7; background: rgba(168, 85, 247, 0.15); }
 
         .content {
             padding: 12px 16px 20px 16px;
@@ -211,21 +208,48 @@
         }
         .tab-pane.active { display: flex; }
 
+        /* CLASSE MODULAR PARA CADA CARD COM SUA PRÓPRIA COR CUSTOMIZADA */
+        .custom-card-box {
+            background-color: var(--card-bg, #0c0c14);
+            color: var(--card-text, #f3f4f6);
+            border: 1.5px solid var(--card-border, #a855f7);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .btn-config-bloco {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: inherit;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        .btn-config-bloco:hover { opacity: 1; background: rgba(255,255,255,0.25); }
+
         .date-control-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--custom-card);
             padding: 8px 14px;
             border-radius: 14px;
-            border: 1.5px solid var(--custom-border);
-            box-shadow: var(--card-shadow);
         }
 
         .date-nav-btn {
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
-            color: var(--custom-text);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid currentColor;
+            color: inherit;
             width: 28px;
             height: 26px;
             border-radius: 8px;
@@ -237,18 +261,6 @@
             font-size: 0.78rem;
         }
 
-        .hero-wallet-card {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-        }
-
         .quick-actions-bar {
             display: flex;
             gap: 8px;
@@ -258,9 +270,6 @@
             flex: 1;
             padding: 10px;
             border-radius: 12px;
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            color: var(--custom-text);
             font-size: 0.72rem;
             font-weight: 800;
             display: flex;
@@ -268,27 +277,12 @@
             justify-content: center;
             gap: 6px;
             cursor: pointer;
-            box-shadow: var(--card-shadow);
-        }
-        .quick-btn:hover { background: var(--input-bg); }
-
-        .section-box {
-            background: var(--custom-card);
-            padding: 14px;
-            border-radius: 16px;
-            border: 1.5px solid var(--custom-border);
-            box-shadow: var(--card-shadow);
         }
 
         .budget-summary-banner {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--card-shadow);
         }
 
         .budget-list-elegant {
@@ -297,46 +291,23 @@
             gap: 8px;
         }
 
-        .box-clean-card {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            box-shadow: var(--card-shadow);
-        }
-
         .box-clean-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .box-clean-tag {
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
         .box-clean-amount {
             font-size: 1.15rem;
             font-weight: 900;
-            color: var(--custom-text);
         }
 
         .box-clean-track {
-            background: var(--input-bg);
+            background: rgba(255,255,255,0.1);
             height: 7px;
             border-radius: 6px;
             overflow: hidden;
             width: 100%;
-            border: 1px solid var(--custom-border);
         }
 
         .box-clean-footer {
@@ -348,76 +319,51 @@
         }
 
         .btn-box-action {
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid currentColor;
             padding: 5px 8px;
             border-radius: 8px;
             font-size: 0.68rem;
             font-weight: 800;
-            color: var(--custom-text);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 4px;
         }
-        .btn-box-action:hover { background: rgba(168, 85, 247, 0.15); }
 
         .extra-income-card {
-            background: var(--custom-card);
-            border: 1.5px dashed var(--custom-border);
-            border-radius: 14px;
-            padding: 12px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            box-shadow: var(--card-shadow);
         }
 
         .extra-item-pill {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             padding: 7px 10px;
             border-radius: 10px;
             font-size: 0.75rem;
         }
 
-        /* LANÇAR EM BLOCOS SEPARADOS E LIMPOS */
         .entry-block-wrapper {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        .entry-isolated-box {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 12px;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
         .lancar-header-dashboard {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
-            padding: 10px 12px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            box-shadow: var(--card-shadow);
         }
 
         .lancar-date-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             padding-bottom: 6px;
         }
 
@@ -429,7 +375,7 @@
 
         .lancar-metric-item span {
             font-size: 0.62rem;
-            color: var(--text-muted);
+            opacity: 0.7;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -441,8 +387,7 @@
 
         .entry-top-switch {
             display: flex;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             padding: 3px;
             border-radius: 10px;
             gap: 4px;
@@ -456,29 +401,18 @@
             font-weight: 800;
             padding: 7px 0;
             border-radius: 8px;
-            color: var(--text-muted);
+            color: inherit;
+            opacity: 0.7;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
         }
-
-        .top-btn.active.expense {
-            background: var(--custom-card);
-            color: var(--red);
-            border: 1px solid rgba(244, 63, 94, 0.4);
-        }
-
-        .top-btn.active.income {
-            background: var(--custom-card);
-            color: var(--green);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-        }
+        .top-btn.active { opacity: 1; background: rgba(255,255,255,0.15); }
 
         .amount-hero-box {
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 10px 12px;
             display: flex;
@@ -495,7 +429,7 @@
         .mode-chip-group {
             display: flex;
             gap: 4px;
-            background: var(--border-color);
+            background: rgba(255,255,255,0.1);
             padding: 2px;
             border-radius: 8px;
         }
@@ -507,14 +441,11 @@
             font-weight: 800;
             padding: 3px 8px;
             border-radius: 6px;
-            color: var(--text-muted);
+            color: inherit;
+            opacity: 0.7;
             cursor: pointer;
         }
-
-        .mode-chip.active {
-            background: var(--custom-card);
-            color: var(--primary);
-        }
+        .mode-chip.active { opacity: 1; background: rgba(255,255,255,0.2); }
 
         .val-controls-line {
             display: flex;
@@ -530,12 +461,6 @@
             flex: 1;
         }
 
-        .val-input-group span {
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: var(--text-muted);
-        }
-
         .clean-val-input {
             width: 100%;
             border: none !important;
@@ -543,15 +468,14 @@
             font-size: 1.5rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
-            color: var(--custom-text) !important;
+            color: inherit !important;
             outline: none !important;
         }
 
         .stepper-times {
             display: flex;
             align-items: center;
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -563,7 +487,7 @@
             height: 30px;
             font-size: 0.85rem;
             font-weight: 900;
-            color: var(--text-muted);
+            color: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -578,37 +502,27 @@
             font-size: 0.8rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
-            color: var(--primary) !important;
+            color: inherit !important;
         }
 
         .calc-preview-bar {
             font-size: 0.68rem;
             font-weight: 800;
-            color: var(--primary);
-            background: rgba(168, 85, 247, 0.1);
+            background: rgba(255,255,255,0.08);
             padding: 5px 8px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1.5px solid var(--custom-border);
         }
 
         .detail-row {
             display: flex;
             align-items: center;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 2px 10px;
             gap: 8px;
-        }
-
-        .detail-row i {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            width: 16px;
-            text-align: center;
         }
 
         .detail-row select, .detail-row input {
@@ -617,7 +531,7 @@
             padding: 8px 0 !important;
             font-size: 0.8rem !important;
             font-weight: 700 !important;
-            color: var(--custom-text) !important;
+            color: inherit !important;
             outline: none !important;
             width: 100% !important;
         }
@@ -632,10 +546,6 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
-            padding: 8px 10px;
-            border-radius: 12px;
         }
 
         .card-tags-scroll {
@@ -651,29 +561,17 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.08);
             padding: 5px 10px;
             border-radius: 10px;
             font-size: 0.72rem;
             font-weight: 800;
-            color: var(--custom-text);
+            color: inherit;
             cursor: pointer;
             white-space: nowrap;
             flex-shrink: 0;
         }
-
-        .card-pill-btn.active {
-            border-color: var(--primary);
-            background: rgba(168, 85, 247, 0.15);
-            box-shadow: 0 0 8px var(--custom-border);
-        }
-
-        .card-pill-btn .color-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
+        .card-pill-btn.active { background: rgba(255,255,255,0.25); box-shadow: 0 0 8px currentColor; }
 
         .list-container {
             display: flex;
@@ -684,22 +582,19 @@
         }
 
         .clean-statement-item {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 10px 12px;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: var(--card-shadow);
         }
 
         .statement-icon-badge {
             width: 36px;
             height: 36px;
             border-radius: 10px;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -725,7 +620,7 @@
         .statement-title {
             font-size: 0.82rem;
             font-weight: 800;
-            color: var(--custom-text);
+            color: inherit;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -736,7 +631,6 @@
             font-weight: 900;
             white-space: nowrap;
         }
-
         .statement-value.expense { color: var(--red); }
         .statement-value.income { color: var(--green); }
 
@@ -745,43 +639,21 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.68rem;
-            color: var(--text-muted);
+            opacity: 0.7;
             font-weight: 600;
-        }
-
-        .statement-meta-tags {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .box-pill-tag {
-            font-size: 0.6rem;
-            font-weight: 800;
-            padding: 1px 6px;
-            border-radius: 6px;
-        }
-
-        .statement-action-btns {
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .btn-mini-action {
             background: transparent;
             border: none;
-            color: var(--text-muted);
+            color: inherit;
+            opacity: 0.7;
             cursor: pointer;
             padding: 3px 5px;
             border-radius: 6px;
             font-size: 0.72rem;
         }
-
-        .btn-mini-action:hover { color: var(--custom-border); background: var(--input-bg); }
-        .btn-mini-action.del:hover { color: var(--red); }
+        .btn-mini-action:hover { opacity: 1; background: rgba(255,255,255,0.15); }
 
         .credit-card-widget {
             color: white;
@@ -793,30 +665,24 @@
             gap: 10px;
             position: relative;
             overflow: hidden;
-            border: 1.5px solid var(--custom-border);
         }
 
         .year-selector-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 14px;
             padding: 8px 12px;
-            box-shadow: var(--card-shadow);
+            border-radius: 14px;
         }
 
         .year-summary-card {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%);
             color: white;
             padding: 14px;
             border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
-            border: 1.5px solid var(--custom-border);
         }
 
         .months-elegant-grid {
@@ -826,14 +692,11 @@
         }
 
         .month-card-item {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 12px;
             padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--card-shadow);
+            border-radius: 12px;
         }
 
         .month-name-badge {
@@ -852,34 +715,28 @@
         }
 
         .modern-profile-banner {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%);
             color: white;
             padding: 16px;
             border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
-            border: 1.5px solid var(--custom-border);
         }
 
         .modern-action-card {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
-            border-radius: 16px;
             padding: 14px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            box-shadow: var(--card-shadow);
         }
 
         .category-chip-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--input-bg);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.05);
             padding: 8px 12px;
             border-radius: 10px;
             font-size: 0.78rem;
@@ -887,7 +744,7 @@
         }
 
         button.btn-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #a855f7 0%, #d946ef 50%);
             color: white;
             border: none;
             padding: 11px;
@@ -903,40 +760,15 @@
         }
 
         button.btn-secondary {
-            background: var(--input-bg);
-            color: var(--custom-text);
-            border: 1.5px solid var(--custom-border);
+            background: rgba(255,255,255,0.08);
+            color: inherit;
+            border: 1px solid currentColor;
+            opacity: 0.9;
             padding: 8px 12px;
             border-radius: 10px;
             font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
-        }
-
-        .color-control-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 4px;
-        }
-        .color-picker-box {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            background: var(--input-bg);
-            padding: 6px;
-            border-radius: 8px;
-            border: 1.5px solid var(--custom-border);
-            font-size: 0.68rem;
-            font-weight: 800;
-        }
-        .color-picker-box input[type="color"] {
-            width: 100%;
-            height: 30px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            border-radius: 4px;
         }
 
         .modal-overlay {
@@ -952,8 +784,9 @@
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
-            background: var(--custom-card);
-            border: 1.5px solid var(--custom-border);
+            background: #0c0c14;
+            color: #f3f4f6;
+            border: 1.5px solid #a855f7;
             border-radius: 18px;
             padding: 18px;
             width: 100%;
@@ -980,8 +813,8 @@
             max-width: 380px;
         }
         .toast-msg {
-            background: var(--custom-card);
-            color: var(--custom-text);
+            background: #0c0c14;
+            color: #fff;
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 0.75rem;
@@ -990,7 +823,7 @@
             align-items: center;
             gap: 8px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            border: 1.5px solid var(--custom-border);
+            border: 1px solid #a855f7;
             animation: slideDown 0.3s ease forwards;
         }
         @keyframes slideDown {
@@ -1001,7 +834,7 @@
 </head>
 <body>
 
-    <div class="phone-container">
+    <div class="phone-container" id="app-main-container">
         
         <div id="toast-container"></div>
 
@@ -1012,7 +845,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V14</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V15</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1033,7 +866,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V14</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V15</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1072,16 +905,17 @@
 
             <!-- TELA 1: PAINEL -->
             <div id="tab-painel" class="tab-pane">
-                <div class="date-control-bar">
+                <div class="date-control-bar custom-card-box" id="bloco_data" data-bloco-id="data">
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('data')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
-                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;"></select>
+                        <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:inherit; background:transparent; border:none;"></select>
                         <button class="date-nav-btn" onclick="mudarAno(1)">»</button>
                     </div>
 
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarMes(-1)">◀</button>
-                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:800; font-size:0.82rem; color:var(--custom-text); background:transparent; border:none;">
+                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:800; font-size:0.82rem; color:inherit; background:transparent; border:none;">
                             <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
                             <option value="3">Março</option>
@@ -1099,7 +933,8 @@
                     </div>
                 </div>
 
-                <div class="hero-wallet-card">
+                <div class="hero-wallet-card pulsing-card" id="bloco_saldo" data-bloco-id="saldo">
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
                     </div>
@@ -1136,29 +971,30 @@
                 </div>
 
                 <div class="quick-actions-bar">
-                    <button class="quick-btn" onclick="trocarAba('lancar')">
+                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="trocarAba('lancar')">
                         <i class="fa-solid fa-plus text-purple-400"></i> Lançar Despesa
                     </button>
-                    <button class="quick-btn" onclick="trocarAba('cartoes')">
+                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="trocarAba('cartoes')">
                         <i class="fa-solid fa-credit-card text-amber-400"></i> Ver Cartões
                     </button>
-                    <button class="quick-btn" onclick="abrirModalNovaCaixinhaVerba()">
+                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="abrirModalNovaCaixinhaVerba()">
                         <i class="fa-solid fa-box-open text-pink-400"></i> Nova Caixinha
                     </button>
                 </div>
 
                 <div style="display:flex; flex-direction:column; gap:8px;">
-                    <div class="budget-summary-banner">
+                    <div class="budget-summary-banner custom-card-box" id="bloco_soma" data-bloco-id="soma">
+                        <button class="btn-config-bloco" onclick="abrirConfigBloco('soma')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                         <div>
-                            <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; display:block;">
+                            <span style="font-size:0.65rem; font-weight:800; opacity:0.7; text-transform:uppercase; display:block;">
                                 📦 Soma Total das Verbas
                             </span>
-                            <b id="txt-soma-total-verbas" style="font-size:1.25rem; font-weight:900; color:var(--custom-text);">
+                            <b id="txt-soma-total-verbas" style="font-size:1.25rem; font-weight:900;">
                                 R$ 0,00
                             </b>
                         </div>
                         <div style="text-align:right;">
-                            <span style="font-size:0.62rem; font-weight:700; color:var(--text-muted); display:block;">Consumo Geral:</span>
+                            <span style="font-size:0.62rem; font-weight:700; opacity:0.7; display:block;">Consumo Geral:</span>
                             <b id="txt-consumo-total-verbas" style="font-size:0.9rem; font-weight:900; color:var(--red);">- R$ 0,00</b>
                         </div>
                     </div>
@@ -1166,15 +1002,16 @@
                     <div class="budget-list-elegant" id="budget-boxes-container"></div>
                 </div>
 
-                <div class="extra-income-card">
+                <div class="extra-income-card custom-card-box" id="bloco_extra" data-bloco-id="extra">
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('extra')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <b style="font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:5px;">
                                 <i class="fa-solid fa-money-bill-trend-up"></i> Verbas Extras deste Mês
                             </b>
-                            <span style="font-size:0.62rem; color:var(--text-muted);">13º, vendas, bônus ou rendas extras</span>
+                            <span style="font-size:0.62rem; opacity:0.7;">13º, vendas, bônus ou rendas extras</span>
                         </div>
-                        <button onclick="abrirModalNovaVerbaExtra()" class="btn-box-action" style="color:var(--green); border-color:var(--border-color);">
+                        <button onclick="abrirModalNovaVerbaExtra()" class="btn-box-action" style="color:var(--green);">
                             <i class="fa-solid fa-plus"></i> Extra
                         </button>
                     </div>
@@ -1182,35 +1019,37 @@
                     <div id="extra-income-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div class="section-box" style="padding:12px;">
+                <div class="section-box custom-card-box" id="bloco_ultimos" data-bloco-id="ultimos">
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('ultimos')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">🕒 ÚLTIMOS LANÇAMENTOS</span>
+                        <span style="font-size:0.75rem; font-weight:800; opacity:0.8;">🕒 ÚLTIMOS LANÇAMENTOS</span>
                         <a href="#" onclick="trocarAba('lancar')" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">Ver extrato →</a>
                     </div>
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div style="background:var(--input-bg); border:1.5px solid var(--custom-border); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
+                <div class="custom-card-box" id="bloco_footer" data-bloco-id="footer" style="padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('footer')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
                     <div>
-                        <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
+                        <span style="font-size:0.65rem; opacity:0.7; display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
                     </div>
-                    <button onclick="trocarAba('meses')" style="background:var(--custom-card); border:1.5px solid var(--custom-border); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
+                    <button onclick="trocarAba('meses')" class="btn-box-action">
                         Ver Meses
                     </button>
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR (SEPARADO EM BLOCOS LIMPOS) -->
+            <!-- TELA 2: LANÇAR -->
             <div id="tab-lancar" class="tab-pane">
-                <div class="lancar-header-dashboard">
+                <div class="lancar-header-dashboard custom-card-box">
                     <div class="lancar-date-row">
                         <div style="display:flex; align-items:center; gap:4px;">
                             <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(-1)">◀</button>
                             <span id="txt-lancar-mes-ano" style="font-size:0.82rem; font-weight:900; color:var(--primary);">Setembro 2026</span>
                             <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(1)">▶</button>
                         </div>
-                        <button onclick="trocarAba('painel')" style="background:none; border:none; color:var(--text-muted); font-size:0.68rem; font-weight:800; cursor:pointer;">
+                        <button onclick="trocarAba('painel')" style="background:none; border:none; color:inherit; opacity:0.7; font-size:0.68rem; font-weight:800; cursor:pointer;">
                             Ver Painel →
                         </button>
                     </div>
@@ -1232,7 +1071,7 @@
                 </div>
 
                 <div class="entry-block-wrapper">
-                    <div class="entry-isolated-box">
+                    <div class="entry-isolated-box custom-card-box">
                         <div class="entry-top-switch">
                             <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
                                 <i class="fa-solid fa-arrow-down"></i> Despesa
@@ -1243,10 +1082,10 @@
                         </div>
                     </div>
 
-                    <div class="entry-isolated-box">
+                    <div class="entry-isolated-box custom-card-box">
                         <div class="amount-hero-box">
                             <div class="mode-row">
-                                <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
+                                <span style="font-size:0.65rem; font-weight:800; opacity:0.7; text-transform:uppercase;">Valor:</span>
                                 <div class="mode-chip-group">
                                     <button type="button" id="btn-mode-total" class="mode-chip active" onclick="alternarModoCalculo('total')">Total Compra</button>
                                     <button type="button" id="btn-mode-parcela" class="mode-chip" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
@@ -1273,14 +1112,14 @@
                         </div>
                     </div>
 
-                    <div class="entry-isolated-box">
+                    <div class="entry-isolated-box custom-card-box">
                         <div class="detail-row">
                             <i class="fa-solid fa-pen"></i>
                             <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
                         </div>
                     </div>
 
-                    <div class="entry-isolated-box">
+                    <div class="entry-isolated-box custom-card-box">
                         <div class="two-cols-clean">
                             <div class="detail-row">
                                 <i class="fa-solid fa-box"></i>
@@ -1296,16 +1135,16 @@
                         </div>
                     </div>
 
-                    <div id="row-select-card" class="entry-isolated-box">
-                        <div class="card-tags-scroll-wrap" style="border:none; padding:0; background:transparent;">
-                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block;">
+                    <div id="row-select-card" class="entry-isolated-box custom-card-box">
+                        <div class="card-tags-scroll-wrap">
+                            <span style="font-size:0.62rem; font-weight:800; opacity:0.7; text-transform:uppercase; margin-bottom:4px; display:block;">
                                 Selecione o Cartão Utilizado:
                             </span>
                             <div id="card-tags-container" class="card-tags-scroll"></div>
                         </div>
                     </div>
 
-                    <div class="entry-isolated-box">
+                    <div class="entry-isolated-box custom-card-box">
                         <div class="two-cols-clean">
                             <div class="detail-row" style="position:relative;">
                                 <i class="fa-solid fa-tag"></i>
@@ -1319,9 +1158,8 @@
                         </div>
                     </div>
 
-                    <!-- NOVO: BOTÃO DE MARCAR COMO DESPESA FIXA -->
-                    <div class="entry-isolated-box" style="flex-direction:row; justify-content:space-between; align-items:center; padding:10px 14px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">📌 Marcar como Despesa Fixa (Recorrente)</span>
+                    <div class="entry-isolated-box custom-card-box" style="flex-direction:row; justify-content:space-between; align-items:center; padding:10px 14px;">
+                        <span style="font-size:0.75rem; font-weight:800; opacity:0.8;">📌 Marcar como Despesa Fixa (Recorrente)</span>
                         <input type="checkbox" id="trans-is-fixed" style="width:18px; height:18px; cursor:pointer; accent-color:var(--primary);">
                     </div>
 
@@ -1330,7 +1168,7 @@
                     </button>
                 </div>
 
-                <div class="section-box" style="margin-top:6px;">
+                <div class="section-box custom-card-box" style="margin-top:6px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <h3><span style="font-size:0.85rem; font-weight:800;">📑 Extrato do Mês</span></h3>
                         <button onclick="exportarCSV()" class="btn-box-action" title="Exportar Extrato em Planilha Excel">
@@ -1383,10 +1221,10 @@
                 </div>
 
                 <div class="quick-actions-bar">
-                    <button class="quick-btn" onclick="abrirModalNovoCartao()">
+                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="abrirModalNovoCartao()">
                         <i class="fa-solid fa-plus text-purple-400"></i> Adicionar Cartão
                     </button>
-                    <button class="quick-btn" onclick="abrirModalPagarFatura()">
+                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="abrirModalPagarFatura()">
                         <i class="fa-solid fa-check text-green-400"></i> Abater/Pagar Fatura
                     </button>
                 </div>
@@ -1402,7 +1240,7 @@
 
             <!-- TELA 4: MESES -->
             <div id="tab-meses" class="tab-pane">
-                <div class="year-selector-header">
+                <div class="year-selector-header custom-card-box" style="padding:8px 12px;">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
                     <div style="display:flex; align-items:center; gap:6px;">
                         <i class="fa-solid fa-calendar-days text-purple-400"></i>
@@ -1426,64 +1264,35 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES 100% LIVRE) -->
+            <!-- TELA 5: MAIS (SUGESTÕES PRONTAS + CUSTOMIZAÇÃO) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V14</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Controle total do visual do aplicativo</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
-                            🎨 100% Livre
-                        </span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Estilos <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V15</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Sugestões prontas ou alteração por bloco</span>
                     </div>
                 </div>
 
-                <!-- PAINEL RECOLHIDINHO DE CORES CUSTOM -->
-                <div class="modern-action-card">
-                    <div onclick="togglePainelCores()" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                        <b style="font-size:0.85rem; color:var(--custom-text); display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-palette text-purple-400"></i> Escolher Cores Livres (Fundo, Quadrados e Bordas)
-                        </b>
-                        <i id="icone-seta-cores" class="fa-solid fa-chevron-down" style="font-size:0.75rem; color:var(--text-muted);"></i>
-                    </div>
-
-                    <div id="conteudo-painel-cores" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border-color); padding-top:10px;">
-                        
-                        <div class="color-control-grid">
-                            <div class="color-picker-box">
-                                <span>Fundo do App</span>
-                                <input type="color" id="picker-bg" value="#05050a" onchange="mudarCorCustomizada('bg', this.value)">
-                            </div>
-                            <div class="color-picker-box">
-                                <span>Fundo dos Quadrados</span>
-                                <input type="color" id="picker-card" value="#0c0c14" onchange="mudarCorCustomizada('card', this.value)">
-                            </div>
-                            <div class="color-picker-box">
-                                <span>Cor da Borda/Neon</span>
-                                <input type="color" id="picker-border" value="#a855f7" onchange="mudarCorCustomizada('border', this.value)">
-                            </div>
-                            <div class="color-picker-box">
-                                <span>Cor dos Textos</span>
-                                <input type="color" id="picker-text" value="#f3f4f6" onchange="mudarCorCustomizada('text', this.value)">
-                            </div>
-                        </div>
-
-                        <div style="display:flex; gap:6px; margin-top:6px;">
-                            <button onclick="resetarCoresPadrao()" class="btn-secondary" style="flex:1; font-size:0.7rem; color:var(--red);">🔄 Restaurar Cores Originais</button>
-                        </div>
+                <div class="modern-action-card custom-card-box">
+                    <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> Sugestões de Montagem (Presets Prontos):
+                    </b>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+                        <button onclick="aplicarPreset('cyber')" class="btn-secondary" style="font-size:0.7rem;">💜 Cyber Neon</button>
+                        <button onclick="aplicarPreset('matrix')" class="btn-secondary" style="font-size:0.7rem;">💚 Matrix Green</button>
+                        <button onclick="aplicarPreset('minimal')" class="btn-secondary" style="font-size:0.7rem;">🤍 Minimal Clean</button>
+                        <button onclick="aplicarPreset('sunset')" class="btn-secondary" style="font-size:0.7rem;">🧡 Sunset Gold</button>
                     </div>
                 </div>
 
-                <div class="modern-action-card">
+                <div class="modern-action-card custom-card-box">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--custom-text); display:flex; align-items:center; gap:6px;">
+                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
                             <i class="fa-solid fa-cloud-arrow-up text-purple-400"></i> Salvar e Restaurar Dados
                         </b>
                     </div>
-                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.3;">
-                        Copie todo o seu aplicativo em formato de texto para salvar no seu WhatsApp ou bloco de notas sem procurar arquivos.
+                    <p style="font-size:0.7rem; opacity:0.7; line-height:1.3;">
+                        Copie todo o seu aplicativo em formato de texto para salvar no seu WhatsApp ou bloco de notas.
                     </p>
                     <div style="display:flex; gap:8px;">
                         <button class="btn-primary" style="flex:1; padding:9px; font-size:0.75rem;" onclick="copiarBackupTexto()">
@@ -1495,9 +1304,9 @@
                     </div>
                 </div>
 
-                <div class="modern-action-card">
+                <div class="modern-action-card custom-card-box">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--custom-text); display:flex; align-items:center; gap:6px;">
+                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
                             <i class="fa-solid fa-tags text-pink-400"></i> Suas Categorias
                         </b>
                         <button onclick="abrirModalNovaCategoria()" class="btn-box-action">
@@ -1507,9 +1316,9 @@
                     <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div class="modern-action-card">
+                <div class="modern-action-card custom-card-box">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; color:var(--custom-text); display:flex; align-items:center; gap:6px;">
+                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
                             <i class="fa-solid fa-piggy-bank text-amber-400"></i> Caixinhas de Reserva
                         </b>
                         <button onclick="abrirModalNovaMeta()" class="btn-box-action">
@@ -1519,30 +1328,13 @@
                     <div class="list-container" id="goals-list" style="max-height:220px;"></div>
                 </div>
 
-                <div class="modern-action-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Patrimônio Investido:</span>
-                            <h2 id="card-total-invested" style="font-size:1.25rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
-                        </div>
-                        <button onclick="abrirModalNovoInvestimento()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Aporte
-                        </button>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); border-top:1px solid var(--border-color); padding-top:6px;">
-                        <span>XP: <b id="card-xp-total" style="color:var(--yellow);">R$ 0</b></span>
-                        <span>Binance: <b id="card-binance-total" style="color:#eab308;">R$ 0</b></span>
-                    </div>
-                    <div class="list-container" id="investment-list" style="max-height:160px; margin-top:4px;"></div>
-                </div>
-
-                <div class="modern-action-card" style="border-color:rgba(244,63,94,0.25);">
+                <div class="modern-action-card custom-card-box" style="border-color:rgba(244,63,94,0.4);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <b style="font-size:0.82rem; color:var(--red);">Zona de Manutenção</b>
-                            <span style="font-size:0.65rem; color:var(--text-muted); display:block;">Reiniciar dados e limpar aplicativo</span>
+                            <span style="font-size:0.65rem; opacity:0.7; display:block;">Reiniciar dados e limpar aplicativo</span>
                         </div>
-                        <button onclick="limparTodosDados()" class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3); font-size:0.7rem; padding:4px 8px;">
+                        <button onclick="limparTodosDados()" class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.4); font-size:0.7rem; padding:4px 8px;">
                             🗑️ Limpar Tudo
                         </button>
                     </div>
@@ -1551,9 +1343,38 @@
 
         </div>
 
+        <!-- MODAL DE CONFIGURAÇÃO DE COR DE CADA BLOCO -->
+        <div id="modal-config-bloco" class="modal-overlay">
+            <div class="modal-content">
+                <h4 style="font-weight:900; font-size:0.95rem;">🎨 Configurar Bloco</h4>
+                <p class="text-xs text-gray-400" id="modal-bloco-info">Altere as cores específicas deste quadrado:</p>
+                
+                <input type="hidden" id="config-bloco-id">
+
+                <label class="text-xs font-bold mt-1">Cor do Fundo do Quadrado:</label>
+                <input type="color" id="cfg-card-bg" value="#0c0c14" style="width:100%; height:34px; border:none; border-radius:8px; cursor:pointer; background:transparent;">
+
+                <label class="text-xs font-bold mt-1">Cor da Borda (Neon):</label>
+                <input type="color" id="cfg-card-border" value="#a855f7" style="width:100%; height:34px; border:none; border-radius:8px; cursor:pointer; background:transparent;">
+
+                <label class="text-xs font-bold mt-1">Cor do Texto:</label>
+                <input type="color" id="cfg-card-text" value="#f3f4f6" style="width:100%; height:34px; border:none; border-radius:8px; cursor:pointer; background:transparent;">
+
+                <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                    <input type="checkbox" id="cfg-card-pulse" style="width:16px; height:16px; accent-color:var(--primary); cursor:pointer;">
+                    <label class="text-xs font-bold">✨ Efeito Pulsante (Neon Pulse)</label>
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:8px;">
+                    <button class="btn-secondary" style="flex:1;" onclick="fecharConfigBloco()">Cancelar</button>
+                    <button class="btn-primary" style="flex:1;" onclick="salvarConfigBloco()">Salvar Bloco</button>
+                </div>
+            </div>
+        </div>
+
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
-                <h4 id="modal-title" style="font-weight:800; font-size:1rem; color:var(--custom-text);">Título</h4>
+                <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
                 <div id="modal-body" class="form-group" style="display:flex; flex-direction:column; gap:8px;"></div>
                 <div class="form-row" style="margin-top:6px; display:flex; gap:8px;">
                     <button class="btn-secondary" style="flex:1;" onclick="fecharModal()">Cancelar</button>
@@ -1565,14 +1386,10 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v44";
+        const STORAGE_KEY = "financas_pro_neon_v45";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
-        
-        const COLOR_BG_KEY = "financas_color_bg";
-        const COLOR_CARD_KEY = "financas_color_card";
-        const COLOR_BORDER_KEY = "financas_color_border";
-        const COLOR_TEXT_KEY = "financas_color_text";
+        const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v15";
 
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1586,6 +1403,8 @@
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
         let privacyMode = localStorage.getItem(PRIVACY_KEY) === 'true';
+
+        let blocksConfig = JSON.parse(localStorage.getItem(BLOCKS_CONFIG_KEY)) || {};
 
         const defaultData = {
             cash: 0.00,
@@ -1639,9 +1458,7 @@
             privacyMode = !privacyMode;
             localStorage.setItem(PRIVACY_KEY, privacyMode);
             const icon = document.getElementById("btn-eye-icon");
-            if (icon) {
-                icon.className = privacyMode ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
-            }
+            if (icon) icon.className = privacyMode ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
             atualizarTela();
             showToast(privacyMode ? "Valores ocultados" : "Valores visíveis", privacyMode ? "fa-eye-slash" : "fa-eye");
         }
@@ -1663,9 +1480,7 @@
                         goals: Array.isArray(parsed.goals) ? parsed.goals : defaultData.goals,
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
-                } catch (e) {
-                    console.error("Erro na leitura:", e);
-                }
+                } catch (e) { console.error(e); }
             }
             return JSON.parse(JSON.stringify(defaultData));
         }
@@ -1682,7 +1497,7 @@
                 if (lock) lock.classList.add("hidden");
             }
             
-            carregarCoresCustomizadasSalvas();
+            aplicarTodasConfiguracoesBlocos();
 
             const icon = document.getElementById("btn-eye-icon");
             if (icon && privacyMode) icon.className = "fa-solid fa-eye-slash";
@@ -1701,55 +1516,84 @@
             atualizarTela();
         });
 
-        function togglePainelCores() {
-            const conteudo = document.getElementById("conteudo-painel-cores");
-            const seta = document.getElementById("icone-seta-cores");
-            if (conteudo.style.display === "flex") {
-                conteudo.style.display = "none";
-                seta.className = "fa-solid fa-chevron-down";
+        // GERENCIAMENTO DE ESTILO POR BLOCO INDIVIDUAL
+        function abrirConfigBloco(blocoId) {
+            document.getElementById("config-bloco-id").value = blocoId;
+            const config = blocksConfig[blocoId] || { bg: '#0c0c14', border: '#a855f7', text: '#f3f4f6', pulse: false };
+            
+            document.getElementById("cfg-card-bg").value = config.bg;
+            document.getElementById("cfg-card-border").value = config.border;
+            document.getElementById("cfg-card-text").value = config.text;
+            document.getElementById("cfg-card-pulse").checked = config.pulse;
+
+            document.getElementById("modal-config-bloco").classList.add("active");
+        }
+
+        function fecharConfigBloco() {
+            document.getElementById("modal-config-bloco").classList.remove("active");
+        }
+
+        function salvarConfigBloco() {
+            const blocoId = document.getElementById("config-bloco-id").value;
+            const bg = document.getElementById("cfg-card-bg").value;
+            const border = document.getElementById("cfg-card-border").value;
+            const text = document.getElementById("cfg-card-text").value;
+            const pulse = document.getElementById("cfg-card-pulse").checked;
+
+            blocksConfig[blocoId] = { bg, border, text, pulse };
+            localStorage.setItem(BLOCKS_CONFIG_KEY, JSON.stringify(blocksConfig));
+
+            aplicarConfiguracaoUnicaBloco(blocoId);
+            fecharConfigBloco();
+            showToast("Estilo do bloco atualizado!");
+        }
+
+        function aplicarConfiguracaoUnicaBloco(blocoId) {
+            const el = document.querySelector(`[data-bloco-id="${blocoId}"]`);
+            if (!el) return;
+            const cfg = blocksConfig[blocoId];
+            if (!cfg) return;
+
+            el.style.backgroundColor = cfg.bg;
+            el.style.borderColor = cfg.border;
+            el.style.color = cfg.text;
+            if (cfg.pulse) {
+                el.classList.add("pulsing-card");
+                el.style.setProperty('--pulse-color', cfg.border);
             } else {
-                conteudo.style.display = "flex";
-                seta.className = "fa-solid fa-chevron-up";
+                el.classList.remove("pulsing-card");
             }
         }
 
-        function mudarCorCustomizada(tipo, corHex) {
-            if (tipo === 'bg') {
-                document.documentElement.style.setProperty('--custom-bg', corHex);
-                localStorage.setItem(COLOR_BG_KEY, corHex);
-            } else if (tipo === 'card') {
-                document.documentElement.style.setProperty('--custom-card', corHex);
-                document.documentElement.style.setProperty('--input-bg', corHex);
-                localStorage.setItem(COLOR_CARD_KEY, corHex);
-            } else if (tipo === 'border') {
-                document.documentElement.style.setProperty('--custom-border', corHex);
-                document.documentElement.style.setProperty('--primary', corHex);
-                localStorage.setItem(COLOR_BORDER_KEY, corHex);
-            } else if (tipo === 'text') {
-                document.documentElement.style.setProperty('--custom-text', corHex);
-                localStorage.setItem(COLOR_TEXT_KEY, corHex);
+        function aplicarTodasConfiguracoesBlocos() {
+            document.querySelectorAll('[data-bloco-id]').forEach(el => {
+                const id = el.getAttribute('data-bloco-id');
+                if (blocksConfig[id]) {
+                    aplicarConfiguracaoUnicaBloco(id);
+                }
+            });
+        }
+
+        function aplicarPreset(tipo) {
+            let preset = {};
+            if (tipo === 'cyber') {
+                preset = { bg: '#0c0c14', border: '#a855f7', text: '#f3f4f6', pulse: true };
+            } else if (tipo === 'matrix') {
+                preset = { bg: '#061a12', border: '#10b981', text: '#ecfdf5', pulse: false };
+            } else if (tipo === 'minimal') {
+                preset = { bg: '#ffffff', border: '#cbd5e1', text: '#0f172a', pulse: false };
+            } else if (tipo === 'sunset') {
+                preset = { bg: '#1c1605', border: '#f59e0b', text: '#fffbeb', pulse: true };
             }
-            showToast("Cor aplicada com sucesso!");
-        }
 
-        function carregarCoresCustomizadasSalvas() {
-            const bg = localStorage.getItem(COLOR_BG_KEY);
-            const card = localStorage.getItem(COLOR_CARD_KEY);
-            const border = localStorage.getItem(COLOR_BORDER_KEY);
-            const text = localStorage.getItem(COLOR_TEXT_KEY);
+            document.querySelectorAll('[data-bloco-id]').forEach(el => {
+                const id = el.getAttribute('data-bloco-id');
+                blocksConfig[id] = { ...preset };
+            });
 
-            if (bg) { document.documentElement.style.setProperty('--custom-bg', bg); document.getElementById("picker-bg").value = bg; }
-            if (card) { document.documentElement.style.setProperty('--custom-card', card); document.documentElement.style.setProperty('--input-bg', card); document.getElementById("picker-card").value = card; }
-            if (border) { document.documentElement.style.setProperty('--custom-border', border); document.documentElement.style.setProperty('--primary', border); document.getElementById("picker-border").value = border; }
-            if (text) { document.documentElement.style.setProperty('--custom-text', text); document.getElementById("picker-text").value = text; }
-        }
-
-        function resetarCoresPadrao() {
-            localStorage.removeItem(COLOR_BG_KEY);
-            localStorage.removeItem(COLOR_CARD_KEY);
-            localStorage.removeItem(COLOR_BORDER_KEY);
-            localStorage.removeItem(COLOR_TEXT_KEY);
-            location.reload();
+            localStorage.setItem(BLOCKS_CONFIG_KEY, JSON.stringify(blocksConfig));
+            aplicarTodasConfiguracoesBlocos();
+            showToast("Preset aplicado com sucesso!");
         }
 
         function popularSeletoresDeAno() {
@@ -1910,6 +1754,7 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
+            setTimeout(aplicarTodasConfiguracoesBlocos, 10);
         }
 
         function mudarAno(delta) {
@@ -1968,94 +1813,6 @@
                 return financialData.monthIncomes[mKey];
             }
             return totalBaseCaixinhas;
-        }
-
-        function exportarCSV() {
-            const trans = financialData.transactions || [];
-            if (trans.length === 0) {
-                showToast("Não há transações para exportar!", "fa-circle-exclamation");
-                return;
-            }
-
-            let csv = "ID;Data;Descrição;Tipo;Valor;Categoria;Pagamento;Caixinha;Fixa\n";
-            trans.forEach(t => {
-                const val = t.value.toFixed(2).replace('.', ',');
-                csv += `${t.id};${t.date || ''};"${t.desc}";${t.type === 'expense' ? 'Despesa' : 'Receita'};${val};"${t.category || ''}";"${t.payment || ''}";"${t.boxId || ''}";${t.isFixed ? 'Sim' : 'Não'}\n`;
-            });
-
-            const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `extrato_financas_${new Date().toISOString().slice(0,10)}.csv`;
-            link.click();
-            showToast("Planilha CSV baixada com sucesso!");
-        }
-
-        function abrirModalNovaVerbaExtra() {
-            abrirModal("Adicionar Verba Extra no Mês", `
-                <label class="text-xs text-gray-400 font-bold">Descrição da Verba:</label>
-                <input type="text" id="new-extra-desc" placeholder="Ex: Bônus, 13º Salário">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Valor Extra (R$):</label>
-                <input type="number" id="new-extra-val" step="50" placeholder="Ex: 1200.00">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Data:</label>
-                <input type="date" id="new-extra-date" value="${new Date().toISOString().slice(0, 10)}">
-            `, () => {
-                const desc = document.getElementById("new-extra-desc").value.trim();
-                const val = parseFloat(document.getElementById("new-extra-val").value);
-                const date = document.getElementById("new-extra-date").value;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                    showToast("Informe descrição e valor válido.", "fa-circle-exclamation");
-                    return;
-                }
-
-                if (!financialData.extraIncomes) financialData.extraIncomes = [];
-                const mKey = date ? date.slice(0, 7) : selectedMonthKey;
-
-                financialData.extraIncomes.push({
-                    id: Date.now(),
-                    desc,
-                    value: val,
-                    date,
-                    monthKey: mKey
-                });
-
-                salvarDados();
-                atualizarTela();
-                showToast("Verba extra adicionada!");
-            });
-        }
-
-        function removerVerbaExtra(id) {
-            if (confirm("Remover esta verba extra?")) {
-                financialData.extraIncomes = (financialData.extraIncomes || []).filter(e => e.id !== id);
-                salvarDados();
-                atualizarTela();
-                showToast("Verba extra removida.");
-            }
-        }
-
-        function abrirModalEditarVerbaMes(mKey, mesNome, ano) {
-            const boxes = financialData.budgetBoxes || [];
-            const totalBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
-            const atual = obterVerbaDoMes(mKey, totalBase);
-
-            abrirModal(`Editar Verba de ${mesNome} / ${ano}`, `
-                <p class="text-xs text-gray-400 mb-2">Defina quanto você recebeu neste mês específico:</p>
-                <label class="text-xs text-gray-400 font-bold">Verba Total (R$):</label>
-                <input type="number" id="input-edit-verba-mes" step="50" value="${atual}">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-edit-verba-mes").value);
-                if (!isNaN(val) && val >= 0) {
-                    if (!financialData.monthIncomes) financialData.monthIncomes = {};
-                    financialData.monthIncomes[mKey] = val;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Verba do mês atualizada!");
-                }
-            });
         }
 
         function atualizarTela() {
@@ -2822,423 +2579,6 @@
                 salvarDados();
                 atualizarTela();
                 showToast("Caixinha removida.");
-            }
-        }
-
-        function adicionarTransacao() {
-            const type = selectedTransactionType;
-            const desc = document.getElementById("trans-desc").value.trim();
-            const inputVal = parseFloat(document.getElementById("trans-value").value);
-            const modo = selectedCalcMode;
-            const category = document.getElementById("trans-category").value;
-            const boxId = document.getElementById("trans-box-id").value;
-            const payment = document.getElementById("trans-payment").value;
-            const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
-            const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
-            const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
-            const isFixed = document.getElementById("trans-is-fixed").checked;
-
-            if (!desc || isNaN(inputVal) || inputVal <= 0) {
-                showToast("Preencha descrição e valor válido.", "fa-circle-exclamation");
-                return;
-            }
-
-            let valorParcela = modo === "parcela" ? inputVal : (inputVal / installments);
-            const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
-
-            for (let i = 0; i < installments; i++) {
-                let m = mesBase + i; let a = anoBase;
-                while (m > 12) { m -= 12; a += 1; }
-                const mKey = `${a}-${String(m).padStart(2, '0')}`;
-                
-                const ultimoDiaDesseMes = new Date(a, m, 0).getDate();
-                const diaAjustado = Math.min(diaBase, ultimoDiaDesseMes);
-                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaAjustado).padStart(2, '0')}`;
-                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª)` : desc;
-
-                financialData.transactions.unshift({
-                    id: Date.now() + i,
-                    type,
-                    desc: descricaoFinal,
-                    value: valorParcela,
-                    category: category || "Geral",
-                    boxId: boxId || null,
-                    cardId: cardId || null,
-                    payment,
-                    date: dataParcela,
-                    monthKey: mKey,
-                    isFixed
-                });
-            }
-
-            document.getElementById("trans-desc").value = '';
-            document.getElementById("trans-value").value = '';
-            document.getElementById("trans-installments-num").value = '1';
-            document.getElementById("trans-is-fixed").checked = false;
-            calcularResumoParcelas();
-            salvarDados();
-            atualizarTela();
-            showToast("Lançamento salvo com sucesso!");
-        }
-
-        function abrirModalEditarTransacao(id) {
-            const t = financialData.transactions.find(x => x.id === id);
-            if (!t) return;
-
-            let optionsCaixinhas = '<option value="">Sem caixinha (Geral)</option>';
-            (financialData.budgetBoxes || []).forEach(b => {
-                optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
-            });
-
-            let optionsCartoes = '<option value="">Sem cartão específico</option>';
-            (financialData.creditCards || []).forEach(c => {
-                optionsCartoes += `<option value="${c.id}" ${t.cardId === c.id ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            let optionsCategorias = '<option value="">Sem categoria</option>';
-            (financialData.categories || []).forEach(c => {
-                optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-400 font-bold">Descrição:</label>
-                <input type="text" id="edit-trans-desc" value="${t.desc}">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Valor (R$):</label>
-                <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Tipo:</label>
-                <select id="edit-trans-type">
-                    <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
-                    <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
-                </select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Data:</label>
-                <input type="date" id="edit-trans-date" value="${t.date || ''}">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Pagamento:</label>
-                <select id="edit-trans-payment">
-                    <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
-                    <option value="Dinheiro/Caixa" ${t.payment !== 'Cartão de Crédito' ? 'selected' : ''}>💵 Dinheiro / Pix</option>
-                </select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Cartão:</label>
-                <select id="edit-trans-card">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Caixinha:</label>
-                <select id="edit-trans-box">${optionsCaixinhas}</select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Categoria:</label>
-                <select id="edit-trans-cat">${optionsCategorias}</select>
-
-                <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-                    <input type="checkbox" id="edit-trans-fixed" ${t.isFixed ? 'checked' : ''} style="width:16px; height:16px; accent-color:var(--primary);">
-                    <label class="text-xs text-gray-300 font-bold">Despesa Fixa (Recorrente)</label>
-                </div>
-            `, () => {
-                const desc = document.getElementById("edit-trans-desc").value.trim();
-                const val = parseFloat(document.getElementById("edit-trans-val").value);
-                const type = document.getElementById("edit-trans-type").value;
-                const date = document.getElementById("edit-trans-date").value;
-                const payment = document.getElementById("edit-trans-payment").value;
-                const cardId = document.getElementById("edit-trans-card").value;
-                const boxId = document.getElementById("edit-trans-box").value;
-                const cat = document.getElementById("edit-trans-cat").value;
-                const isFixed = document.getElementById("edit-trans-fixed").checked;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                    showToast("Dados inválidos.", "fa-circle-exclamation");
-                    return;
-                }
-
-                t.desc = desc;
-                t.value = val;
-                t.type = type;
-                t.date = date;
-                if (date) t.monthKey = date.slice(0, 7);
-                t.payment = payment;
-                t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
-                t.boxId = boxId || null;
-                t.category = cat || "Geral";
-                t.isFixed = isFixed;
-
-                salvarDados();
-                atualizarTela();
-                showToast("Lançamento alterado!");
-            });
-        }
-
-        function removerTransacao(id) {
-            if (confirm("Excluir este lançamento?")) {
-                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
-                salvarDados();
-                atualizarTela();
-                showToast("Lançamento excluído.");
-            }
-        }
-
-        function abrirModalPagarFatura() {
-            const cards = financialData.creditCards || [];
-            let optionsCartoes = '<option value="all">Todos os Cartões</option>';
-            cards.forEach(c => { optionsCartoes += `<option value="${c.id}">${c.name}</option>`; });
-
-            abrirModal("Abater ou Pagar Fatura", `
-                <p class="text-xs text-gray-400 mb-2">Informe o valor pago para liberar seu limite:</p>
-                <label class="text-xs text-gray-400 font-bold">Cartão:</label>
-                <select id="modal-pay-card-id">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Valor Pago (R$):</label>
-                <input type="number" id="input-modal-fatura" step="0.01" placeholder="Ex: 500.00">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-fatura").value);
-                const cardId = document.getElementById("modal-pay-card-id").value;
-
-                if (!isNaN(val) && val > 0) {
-                    if (cardId === "all") {
-                        cards.forEach(c => { if (c.initialUsed > 0) c.initialUsed = Math.max(0, c.initialUsed - val); });
-                    } else {
-                        const targetCard = cards.find(c => c.id === cardId);
-                        if (targetCard) targetCard.initialUsed = Math.max(0, (targetCard.initialUsed || 0) - val);
-                    }
-                    financialData.cash -= val;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Fatura abatida com sucesso!");
-                }
-            });
-        }
-
-        function copiarBackupTexto() {
-            const texto = JSON.stringify(financialData);
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(texto).then(() => {
-                    showToast("Backup copiado para a Área de Transferência!");
-                }).catch(() => fallbackCopiar(texto));
-            } else {
-                fallbackCopiar(texto);
-            }
-        }
-
-        function fallbackCopiar(texto) {
-            abrirModal("Seu Código de Backup", `
-                <p class="text-xs text-gray-400 mb-2">Copie todo o texto abaixo:</p>
-                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1.5px solid var(--custom-border); border-radius:8px; background:var(--input-bg); color:var(--custom-text);" readonly>${texto}</textarea>
-            `, () => {});
-        }
-
-        function abrirModalRestaurarTexto() {
-            abrirModal("Restaurar Dados em Texto", `
-                <p class="text-xs text-gray-400 mb-2">Cole aqui o código de backup:</p>
-                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1.5px solid var(--custom-border); border-radius:8px; background:var(--input-bg); color:var(--custom-text);"></textarea>
-            `, () => {
-                const input = document.getElementById("txt-restore-input").value.trim();
-                if (!input) return;
-                try {
-                    const parsed = JSON.parse(input);
-                    if (parsed && typeof parsed === 'object') {
-                        financialData = parsed;
-                        salvarDados();
-                        atualizarTela();
-                        showToast("Dados restaurados com sucesso!");
-                    } else {
-                        showToast("Código inválido.", "fa-circle-exclamation");
-                    }
-                } catch (e) {
-                    showToast("Backup corrompido ou inválido.", "fa-circle-exclamation");
-                }
-            });
-        }
-
-        function abrirModalNovaMeta() {
-            abrirModal("Nova Caixinha de Reserva", `
-                <label class="text-xs text-gray-400 font-bold">Nome da Reserva:</label>
-                <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro">
-                
-                <label class="text-xs text-gray-400 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="new-goal-target" placeholder="Ex: 5000">
-            `, () => {
-                const name = document.getElementById("new-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("new-goal-target").value);
-                if (name && !isNaN(target) && target > 0) {
-                    if (!financialData.goals) financialData.goals = [];
-                    financialData.goals.push({ id: Date.now(), name, target, current: 0 });
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Reserva criada!");
-                }
-            });
-        }
-
-        function abrirModalEditarMeta(id) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal("Editar Reserva", `
-                <label class="text-xs text-gray-400 font-bold">Nome:</label>
-                <input type="text" id="edit-goal-name" value="${goal.name}">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="edit-goal-target" value="${goal.target}">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Já Guardado (R$):</label>
-                <input type="number" id="edit-goal-current" value="${goal.current}">
-            `, () => {
-                const name = document.getElementById("edit-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("edit-goal-target").value);
-                const current = parseFloat(document.getElementById("edit-goal-current").value);
-
-                if (name && !isNaN(target) && !isNaN(current)) {
-                    goal.name = name;
-                    goal.target = target;
-                    goal.current = current;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Reserva atualizada!");
-                }
-            });
-        }
-
-        function removerMeta(id) {
-            if (confirm("Remover esta reserva?")) {
-                financialData.goals = financialData.goals.filter(g => g.id !== id);
-                salvarDados();
-                atualizarTela();
-                showToast("Reserva removida.");
-            }
-        }
-
-        function abrirModalCaixinha(id, tipo) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
-                <p class="text-xs text-gray-400">Objetivo: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-400 mb-2">Acumulado: <b>${formatarMoeda(goal.current)}</b></p>
-                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
-                if (!isNaN(val) && val > 0) {
-                    if (tipo === 'guardar') {
-                        goal.current += val;
-                        showToast(`Guardado ${formatarMoeda(val)}!`);
-                    } else {
-                        if (val > goal.current) { showToast("Saldo insuficiente.", "fa-circle-exclamation"); return; }
-                        goal.current -= val;
-                        showToast(`Resgatado ${formatarMoeda(val)}!`);
-                    }
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalNovaCategoria() {
-            abrirModal("Criar Nova Categoria", `
-                <label class="text-xs text-gray-400 font-bold">Nome:</label>
-                <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer">
-                <label class="text-xs text-gray-400 font-bold mt-2">Teto Mensal R$ (opcional):</label>
-                <input type="number" id="modal-cat-limit" placeholder="Ex: 500">
-            `, () => {
-                const name = document.getElementById("modal-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("modal-cat-limit").value) || 0;
-                if (name) {
-                    if (!financialData.categories) financialData.categories = [];
-                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#a855f7", limit });
-                    salvarDados();
-                    atualizarTela();
-                    const sel = document.getElementById("trans-category");
-                    if (sel) sel.value = name;
-                    showToast("Categoria adicionada!");
-                }
-            });
-        }
-
-        function abrirModalEditarCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-
-            abrirModal("Editar Categoria", `
-                <label class="text-xs text-gray-400 font-bold">Nome:</label>
-                <input type="text" id="edit-cat-name" value="${cat.name}">
-                <label class="text-xs text-gray-400 font-bold mt-2">Teto Mensal R$:</label>
-                <input type="number" id="edit-cat-limit" value="${cat.limit || 0}">
-                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-cat-color" value="${cat.color || '#a855f7'}" style="width:50px; height:36px; padding:0; cursor:pointer;">
-            `, () => {
-                const name = document.getElementById("edit-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
-                const color = document.getElementById("edit-cat-color").value;
-
-                if (name) {
-                    cat.name = name;
-                    cat.limit = limit;
-                    cat.color = color;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Categoria atualizada!");
-                }
-            });
-        }
-
-        function removerCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-            if (confirm(`Excluir categoria "${cat.name}"?`)) {
-                financialData.categories.splice(index, 1);
-                salvarDados();
-                atualizarTela();
-                showToast("Categoria removida.");
-            }
-        }
-
-        function abrirModalNovoInvestimento() {
-            abrirModal("Registrar Aporte / Ativo", `
-                <label class="text-xs text-gray-400 font-bold">Corretora / Banco:</label>
-                <select id="invest-platform">
-                    <option value="XP Investimentos">XP Investimentos</option>
-                    <option value="Binance">Binance</option>
-                    <option value="Outros">Outra Corretora</option>
-                </select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Tipo de Ativo:</label>
-                <select id="invest-type">
-                    <option value="Renda Fixa">Renda Fixa / CDB</option>
-                    <option value="Criptomoeda">Criptomoeda</option>
-                    <option value="Ações">Ações / FIIs</option>
-                </select>
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Nome do Ativo:</label>
-                <input type="text" id="invest-asset" placeholder="Ex: CDB 120%, BTC">
-
-                <label class="text-xs text-gray-400 font-bold mt-2">Valor Aplicado (R$):</label>
-                <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
-            `, () => {
-                const platform = document.getElementById("invest-platform").value;
-                const type = document.getElementById("invest-type").value;
-                const asset = document.getElementById("invest-asset").value.trim();
-                const value = parseFloat(document.getElementById("invest-value").value);
-                if (!asset || isNaN(value) || value <= 0) { showToast("Preencha ativo e valor válido.", "fa-circle-exclamation"); return; }
-
-                financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
-                salvarDados();
-                atualizarTela();
-                showToast("Investimento registrado!");
-            });
-        }
-
-        function removerInvestimento(id) {
-            financialData.investments = financialData.investments.filter(i => i.id !== id);
-            salvarDados();
-            atualizarTela();
-            showToast("Investimento excluído.");
-        }
-
-        function limparTodosDados() {
-            if (confirm("Tem certeza que deseja zerar todos os dados e restaurar o app limpo?")) {
-                financialData = JSON.parse(JSON.stringify(defaultData));
-                salvarDados();
-                atualizarTela();
-                showToast("Aplicativo reiniciado.");
             }
         }
 
