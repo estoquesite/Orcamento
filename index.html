@@ -143,46 +143,17 @@
       border-color: #334155 !important;
     }
 
-    /* MODO NOITE (COM CLASSE .dark NO HTML) - Caixas e blocos em cinza chumbo escuro refinado */
+    /* MODO NOITE (COM CLASSE .dark NO HTML) */
     html.dark body {
-      background-color: #050811;
+      background-color: #090d16;
       color: #f8fafc;
     }
     html.dark #phone-frame {
-      background-color: #0b1120;
+      background-color: #0f172a;
       border-color: #1e293b;
-    }
-    html.dark .bg-slate-900,
-    html.dark .bg-slate-900/90,
-    html.dark .bg-slate-900/95 {
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-    }
-    html.dark .bg-slate-800,
-    html.dark .bg-slate-800/50,
-    html.dark .bg-slate-800/80 {
-      background-color: #131c31 !important;
-      border-color: #1f293d !important;
-    }
-    html.dark .border-slate-800,
-    html.dark .border-slate-700,
-    html.dark .border-slate-700/50,
-    html.dark .border-slate-700/60 {
-      border-color: #1f293d !important;
-    }
-    html.dark input,
-    html.dark select,
-    html.dark textarea {
-      background-color: #0b1120 !important;
-      border-color: #1f293d !important;
-      color: #f8fafc !important;
     }
     html.dark .modal-backdrop {
       background-color: rgba(15, 23, 42, 0.85);
-    }
-    html.dark #modal-box {
-      background-color: #0f172a !important;
-      border-color: #1f293d !important;
     }
 
     /* MODO COMPUTADOR (RESPONSIVO E EXPANDIDO) */
@@ -497,6 +468,7 @@
       }
 
       const savedTheme = localStorage.getItem('financas_pro_theme');
+      // Padrão: DIA (false), como solicitado pelo usuário: "abrisse de dia, não de noite"
       const initialDarkMode = savedTheme ? savedTheme === 'dark' : false;
 
       const savedScreenMode = localStorage.getItem('financas_pro_screen_mode');
@@ -669,6 +641,7 @@
       const modalContainer = document.getElementById('modal-container');
       const modalBox = document.getElementById('modal-box');
 
+      // Aplica tema e modo de tela iniciais
       updateThemeUI();
       updateScreenMode(state.screenMode);
 
@@ -1656,7 +1629,7 @@
 
           let html = '';
 
-          // 1. ABA PAINEL
+          // 1. ABA PAINEL (100% EDITÁVEL)
           if (state.currentTab === 'painel') {
             html = `
               <div class="space-y-4">
@@ -1770,7 +1743,7 @@
             `;
           }
 
-          // 2. ABA LANÇAR
+          // 2. ABA LANÇAR (100% EDITÁVEL)
           else if (state.currentTab === 'lancar') {
             html = `
               <div class="space-y-4">
@@ -1952,7 +1925,7 @@
             `;
           }
 
-          // 3. ABA CARTÕES (Mantendo as cores/skins originais dos cartões)
+          // 3. ABA CARTÕES COM BOTÃO + NOVO CARTÃO, + NOVA COMPRA PARCELADA E EDIÇÃO EM CADA ITEM
           else if (state.currentTab === 'cartoes') {
             const skinGradients = {
               titanium: 'from-slate-700 via-slate-800 to-zinc-950',
@@ -2077,7 +2050,7 @@
                   `;
                 }).join('')}
 
-                <!-- SEÇÃO DE COMPRAS PARCELADAS -->
+                <!-- SEÇÃO DE COMPRAS PARCELADAS COM LÁPIS -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
                   <div class="flex justify-between items-center">
                     <div>
@@ -2116,13 +2089,13 @@
                                 </span>
                               </div>
                               <div class="text-[11px] text-slate-400 font-semibold mt-0.5">
-                                Parcela ${currentP} de${item.totalParcelas} (${perc}\%) •${formatMoeda(item.parcelValue)}/mês
+                                Parcela ${currentP} de ${item.totalParcelas} (${perc}%) • ${formatMoeda(item.parcelValue)}/mês
                               </div>
                             </div>
 
                             <div class="flex items-center gap-1">
                               <button
-                                onclick="openModalEditarParcela('${item.baseName}', '${item.cardId \vert{}\vert{} ''}',${item.parcelValue})"
+                                onclick="openModalEditarParcela('${item.baseName}', '${item.cardId || ''}', ${item.parcelValue})"
                                 class="px-2 py-1 rounded-xl bg-slate-700/80 hover:bg-indigo-900/40 text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
                                 title="Editar Compra Parcelada"
                               >
@@ -2158,7 +2131,7 @@
             `;
           }
 
-          // 4. ABA MESES
+          // 4. ABA MESES (100% EDITÁVEL)
           else if (state.currentTab === 'meses') {
             html = `
               <div class="space-y-3">
@@ -2208,7 +2181,7 @@
             `;
           }
 
-          // 5. ABA MAIS
+          // 5. ABA MAIS (100% EDITÁVEL)
           else if (state.currentTab === 'mais') {
             html = `
               <div class="space-y-4">
@@ -2232,7 +2205,7 @@
                             <span>${goal.name}</span>
                             <button onclick="openModalEditarMeta(${goal.id})" class="p-1 text-[10px] text-slate-400 hover:text-white cursor-pointer" title="Editar Meta">✏️</button>
                           </span>
-                          <span>${formatMoeda(goal.currentValue)} /${formatMoeda(goal.targetValue)}</span>
+                          <span>${formatMoeda(goal.currentValue)} / ${formatMoeda(goal.targetValue)}</span>
                         </div>
                         <div class="w-full h-2 rounded-full bg-slate-700 overflow-hidden">
                           <div class="h-full bg-emerald-500 rounded-full" style="width: ${percent}%;"></div>
@@ -2264,7 +2237,7 @@
                     <div class="p-3 rounded-2xl bg-slate-800/50 flex justify-between items-center text-xs">
                       <span class="font-bold text-slate-200 flex items-center gap-1.5">
                         <span>${bill.icon}</span>
-                        <span>${bill.name} (Dia${bill.dueDay})</span>
+                        <span>${bill.name} (Dia ${bill.dueDay})</span>
                         <button onclick="openModalEditarAssinatura('${bill.id}')" class="p-1 text-[10px] text-slate-400 hover:text-white cursor-pointer" title="Editar Conta">✏️</button>
                       </span>
                       <span class="font-black text-rose-400">${formatMoeda(bill.value)}</span>
@@ -2272,7 +2245,7 @@
                   `).join('')}
                 </div>
 
-                <!-- Configuração de Exibição -->
+                <!-- Configuração de Exibição (Computador / Celular) -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide flex items-center gap-1.5">
@@ -2308,7 +2281,7 @@
                   </button>
                 </div>
 
-                <!-- Backup & Restauração -->
+                <!-- Backup & Restauração com Botão Verde -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
                     💾 Backup & Restauração
