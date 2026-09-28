@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V09</title>
+    <title>Finanças Pro V10</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -15,9 +15,6 @@
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js para gráficos financeiros -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* TEMA 1: ROXO CYBER (FUNDO NEON ESCURO) */
@@ -40,7 +37,7 @@
             --purple: #c084fc;
         }
 
-        /* TEMA 2: ROXO NEON COM FUNDO BRANCO */
+        /* TEMAS EXTRAS PERSONALIZADOS */
         body.theme-roxo-branco {
             --primary: #9333ea;
             --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #3b82f6 100%);
@@ -55,7 +52,6 @@
             --card-shadow: 0 4px 20px rgba(147, 51, 234, 0.1);
         }
 
-        /* TEMA 3: CIANO ELÉTRICO (FUNDO NEON ESCURO) */
         body.theme-ciano-escuro {
             --primary: #06b6d4;
             --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
@@ -70,7 +66,6 @@
             --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
-        /* TEMA 4: CIANO NEON COM FUNDO BRANCO */
         body.theme-ciano-branco {
             --primary: #0891b2;
             --primary-gradient: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #2563eb 100%);
@@ -85,7 +80,6 @@
             --card-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
         }
 
-        /* TEMA 5: VERDE MATRIX (FUNDO NEON ESCURO) */
         body.theme-verde-escuro {
             --primary: #10b981;
             --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
@@ -100,7 +94,6 @@
             --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
-        /* TEMA 6: VERDE NEON COM FUNDO BRANCO */
         body.theme-verde-branco {
             --primary: #059669;
             --primary-gradient: linear-gradient(135deg, #059669 0%, #10b981 50%, #0d9488 100%);
@@ -115,7 +108,6 @@
             --card-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
         }
 
-        /* TEMA 7: ROSA CHOQUE (FUNDO NEON ESCURO) */
         body.theme-rosa-escuro {
             --primary: #ec4899;
             --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
@@ -130,7 +122,6 @@
             --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
-        /* TEMA 8: OURO LUXO (FUNDO ESCURO) */
         body.theme-ouro-luxo {
             --primary: #f59e0b;
             --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
@@ -1121,7 +1112,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V09</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V10</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1142,7 +1133,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V09</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V10</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1254,16 +1245,6 @@
                     <button class="quick-btn" onclick="abrirModalNovaCaixinhaVerba()">
                         <i class="fa-solid fa-box-open text-pink-400"></i> Nova Caixinha
                     </button>
-                </div>
-
-                <div class="section-box" style="padding:12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);"><i class="fa-solid fa-chart-pie text-purple-400"></i> DISTRIBUIÇÃO DAS DESPESAS</span>
-                        <span id="chart-total-label" style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">Mês atual</span>
-                    </div>
-                    <div style="position:relative; width:100%; height:160px; display:flex; justify-content:center; align-items:center;">
-                        <canvas id="categoryChart"></canvas>
-                    </div>
                 </div>
 
                 <div style="display:flex; flex-direction:column; gap:8px;">
@@ -1527,11 +1508,11 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES COM FUNDOS CLAROS/ESCUROS E BORDAS NEON) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES & TEMAS) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V09</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V10</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Neon com fundo escuro ou fundo branco</span>
                     </div>
                     <div style="text-align:right;">
@@ -1670,7 +1651,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v39";
+        const STORAGE_KEY = "financas_pro_neon_v40";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_custom_theme";
@@ -1815,7 +1796,6 @@
             if (salvar) {
                 localStorage.setItem(THEME_KEY, tema);
                 showToast("Estilo visual atualizado!", "fa-palette");
-                renderizarGrafico();
             }
         }
 
@@ -1977,10 +1957,6 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
-
-            if (aba === 'painel') {
-                setTimeout(renderizarGrafico, 50);
-            }
         }
 
         function mudarAno(delta) {
@@ -2042,61 +2018,7 @@
         }
 
         function renderizarGrafico() {
-            const ctx = document.getElementById('categoryChart');
-            if (!ctx) return;
-
-            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey && t.type === 'expense');
-            const catMap = {};
-            transDoMes.forEach(t => {
-                const cat = t.category || "Geral";
-                catMap[cat] = (catMap[cat] || 0) + t.value;
-            });
-
-            const labels = Object.keys(catMap);
-            const data = Object.values(catMap);
-            const cores = ["#a855f7", "#ec4899", "#06b6d4", "#10b981", "#f59e0b", "#8b5cf6", "#f43f5e", "#64748b"];
-
-            if (categoryChartInstance) categoryChartInstance.destroy();
-
-            const isLightBg = document.body.classList.contains('theme-roxo-branco') || document.body.classList.contains('theme-ciano-branco') || document.body.classList.contains('theme-verde-branco');
-
-            if (data.length === 0) {
-                categoryChartInstance = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Sem Gastos'],
-                        datasets: [{ data: [1], backgroundColor: [isLightBg ? '#e2e8f0' : '#1f1f2e'] }]
-                    },
-                    options: {
-                        cutout: '72%',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false }, tooltip: { enabled: false } }
-                    }
-                });
-                return;
-            }
-
-            categoryChartInstance = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: cores.slice(0, labels.length),
-                        borderWidth: 2,
-                        borderColor: isLightBg ? '#ffffff' : '#0c0c14'
-                    }]
-                },
-                options: {
-                    cutout: '70%',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10, weight: '700' }, color: isLightBg ? '#0f172a' : '#f3f4f6' } }
-                    }
-                }
-            });
+            // Removido o gráfico do painel principal conforme solicitado
         }
 
         function exportarCSV() {
@@ -2747,8 +2669,6 @@
                     investList.appendChild(item);
                 });
             }
-
-            renderizarGrafico();
         }
 
         function selecionarMesEAbrirAno(ano, mes) {
@@ -3377,4 +3297,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
