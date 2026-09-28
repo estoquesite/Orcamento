@@ -7,12 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --bg-main: #f3f4f6;
-            --text-main: #1f2937;
-            --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(243, 244, 246, 0.95));
-            --border-color: rgba(0, 0, 0, 0.08);
-        }
-        .dark-theme {
             --bg-main: #0b0f19;
             --text-main: #f0f6fc;
             --card-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.8), rgba(11, 15, 25, 0.9));
@@ -34,7 +28,6 @@
         .skin-midnight { background: linear-gradient(135deg, #172554 0%, #030712 100%); border: 1px solid rgba(59,130,246,0.3); color: #fff; }
         .skin-emerald { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); border: 1px solid rgba(16,185,129,0.3); color: #fff; }
 
-        /* Animação da Luzinha Piscante */
         @keyframes piscar {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(0.85); }
@@ -75,10 +68,9 @@
         <!-- ================= ABA 1: PAINEL PRINCIPAL ================= -->
         <div id="tab-painel" class="tab-content active space-y-4">
             
-            <!-- Cards de Resumo Estilo Segunda Tela -->
+            <!-- Cards de Resumo -->
             <div class="grid grid-cols-2 gap-3">
                 
-                <!-- Card 1: Verba / Receitas -->
                 <div class="p-4 rounded-3xl relative shadow-lg bg-gradient-to-br from-blue-600 to-indigo-700 text-white border border-blue-400/30">
                     <div class="flex justify-between items-start">
                         <span id="card-t1" class="text-[10px] text-blue-100 font-bold tracking-wider">VERBA / RECEITAS</span>
@@ -87,7 +79,6 @@
                     <p id="card-v1" class="text-xl font-extrabold mt-3 valor-monetario">R$ 0,00</p>
                 </div>
 
-                <!-- Card 2: Total Gasto -->
                 <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-rose-500 to-pink-700 text-white relative border border-rose-400/30">
                     <div class="flex justify-between items-start">
                         <span id="card-t2" class="text-[10px] text-rose-100 font-bold tracking-wider">TOTAL GASTO</span>
@@ -96,7 +87,6 @@
                     <p id="card-v2" class="text-xl font-extrabold mt-3 valor-monetario">R$ 1.324,40</p>
                 </div>
 
-                <!-- Card 3: Fatura Cartões -->
                 <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-purple-600 to-indigo-900 text-white relative border border-purple-400/30">
                     <div class="flex justify-between items-start">
                         <span id="card-t3" class="text-[10px] text-purple-100 font-bold tracking-wider">FATURA CARTÕES</span>
@@ -105,7 +95,6 @@
                     <p id="card-v3" class="text-xl font-extrabold mt-3 valor-monetario">R$ 944,40</p>
                 </div>
 
-                <!-- Card 4: Sobra Líquida -->
                 <div class="p-4 rounded-3xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-700 text-white relative border border-emerald-400/30">
                     <div class="flex justify-between items-start">
                         <span id="card-t4" class="text-[10px] text-emerald-100 font-bold tracking-wider">SOBRA LÍQUIDA</span>
@@ -264,8 +253,30 @@
             </div>
         </div>
 
-        <!-- ================= ABA 5: MAIS ================= -->
+        <!-- ================= ABA 5: MAIS (CONTROLE DE CORES) ================= -->
         <div id="tab-mais" class="tab-content space-y-4">
+            <div class="card-custom p-4 rounded-3xl space-y-3">
+                <h2 class="text-xs font-bold tracking-wider">🎨 PERSONALIZAÇÃO DE CORES</h2>
+                <p class="text-[10px] text-gray-400">Mude as cores do aplicativo em tempo real:</p>
+                
+                <div class="space-y-3 text-xs pt-2">
+                    <div class="flex justify-between items-center card-custom p-3 rounded-2xl">
+                        <span>Cor do Fundo Geral</span>
+                        <input type="color" id="picker-bg" value="#0b0f19" onchange="mudarCorFundo(this.value)" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    </div>
+
+                    <div class="flex justify-between items-center card-custom p-3 rounded-2xl">
+                        <span>Cor de Fundo dos Cards</span>
+                        <input type="color" id="picker-card" value="#111827" onchange="mudarCorCard(this.value)" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    </div>
+
+                    <div class="flex justify-between items-center card-custom p-3 rounded-2xl">
+                        <span>Cor das Letras (Texto)</span>
+                        <input type="color" id="picker-text" value="#f0f6fc" onchange="mudarCorTexto(this.value)" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                    </div>
+                </div>
+            </div>
+
             <div class="card-custom p-4 rounded-3xl space-y-3">
                 <h2 class="text-xs font-bold tracking-wider">⚙️ ASSINATURAS & CONTAS FIXAS</h2>
                 <div class="space-y-2 text-xs">
@@ -341,6 +352,19 @@
             });
             element.classList.remove('text-gray-400');
             element.classList.add('text-indigo-500', 'font-bold');
+        }
+
+        // Funções para manipulação dinâmica das cores
+        function mudarCorFundo(cor) {
+            document.documentElement.style.setProperty('--bg-main', cor);
+        }
+
+        function mudarCorCard(cor) {
+            document.documentElement.style.setProperty('--card-bg', cor);
+        }
+
+        function mudarCorTexto(cor) {
+            document.documentElement.style.setProperty('--text-main', cor);
         }
     </script>
 </body>
