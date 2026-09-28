@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Finanças Pro Mobile</title>
-  <meta name="description" content="Aplicativo inteligente de controle financeiro pessoal 100% editável para celular." />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Aplicativo inteligente de controle financeiro pessoal 100% editável para celular e computador." />
+  <meta name="theme-color" content="#6366f1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     if (typeof tailwind !== 'undefined') {
@@ -34,31 +34,171 @@
     body {
       user-select: none;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #090d16;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
     .modal-backdrop {
-      background-color: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(6px);
+    }
+
+    /* ============================================================ */
+    /* SISTEMA DE TEMAS: DIA (CLARO - PADRÃO) & NOITE (ESCURO)     */
+    /* ============================================================ */
+
+    /* MODO DIA (PADRÃO - quando html NÃO tem a classe .dark) */
+    html:not(.dark) body {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+    html:not(.dark) #phone-frame {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8) !important;
+    }
+    html:not(.dark) header {
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) header span.text-slate-100 {
+      color: #0f172a !important;
+    }
+    html:not(.dark) #month-nav {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) #month-label {
+      color: #0f172a !important;
+    }
+    html:not(.dark) nav,
+    html:not(.dark) #bottom-nav {
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .bg-slate-950 {
+      background-color: #f8fafc !important;
+    }
+    html:not(.dark) .bg-slate-900,
+    html:not(.dark) .bg-slate-900/90,
+    html:not(.dark) .bg-slate-900/95 {
+      background-color: #ffffff !important;
+    }
+    html:not(.dark) .bg-slate-800 {
+      background-color: #f1f5f9 !important;
+    }
+    html:not(.dark) .bg-slate-800/50,
+    html:not(.dark) .bg-slate-800/80 {
+      background-color: #f8fafc !important;
+    }
+    html:not(.dark) .bg-slate-700 {
+      background-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .border-slate-800,
+    html:not(.dark) .border-slate-700,
+    html:not(.dark) .border-slate-700/50,
+    html:not(.dark) .border-slate-700/60 {
+      border-color: #e2e8f0 !important;
+    }
+    html:not(.dark) .text-slate-100 {
+      color: #0f172a !important;
+    }
+    html:not(.dark) .text-slate-200 {
+      color: #1e293b !important;
+    }
+    html:not(.dark) .text-slate-300 {
+      color: #334155 !important;
+    }
+    html:not(.dark) .text-slate-400 {
+      color: #64748b !important;
+    }
+    html:not(.dark) input,
+    html:not(.dark) select,
+    html:not(.dark) textarea {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+    html:not(.dark) input:focus,
+    html:not(.dark) select:focus,
+    html:not(.dark) textarea:focus {
+      background-color: #ffffff !important;
+      border-color: #6366f1 !important;
+    }
+    html:not(.dark) .modal-backdrop {
+      background-color: rgba(15, 23, 42, 0.5) !important;
+    }
+    html:not(.dark) #modal-box {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    }
+    html:not(.dark) .tab-btn.text-slate-400 {
+      color: #64748b !important;
+    }
+    html:not(.dark) .tab-btn.text-indigo-400 {
+      color: #4f46e5 !important;
+    }
+    html:not(.dark) #toast {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+      border-color: #334155 !important;
+    }
+
+    /* MODO NOITE (COM CLASSE .dark NO HTML) */
+    html.dark body {
+      background-color: #090d16;
+      color: #f8fafc;
+    }
+    html.dark #phone-frame {
+      background-color: #0f172a;
+      border-color: #1e293b;
+    }
+    html.dark .modal-backdrop {
+      background-color: rgba(15, 23, 42, 0.85);
+    }
+
+    /* MODO COMPUTADOR (RESPONSIVO E EXPANDIDO) */
+    #phone-frame.desktop-mode {
+      max-width: 1040px !important;
+      border-radius: 28px !important;
+      border-width: 2px !important;
+    }
+    #phone-frame.desktop-mode #bottom-nav {
+      max-width: 1040px !important;
+      border-radius: 0 0 28px 28px !important;
     }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- FRAME DO SMARTPHONE -->
-  <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[94vh] flex flex-col relative overflow-hidden bg-slate-900 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300 dark">
+  <!-- FRAME DO SMARTPHONE / COMPUTADOR -->
+  <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[94vh] flex flex-col relative overflow-hidden bg-slate-900 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-all duration-300">
     
     <!-- HEADER -->
     <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shrink-0 z-20">
       <div class="flex items-center gap-2">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <span class="text-xs font-black tracking-wider text-slate-100 uppercase">Finanças Pro</span>
+        <span id="screen-badge" class="hidden sm:inline-block text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          📱 Celular
+        </span>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5">
+        <!-- BOTÃO MODO COMPUTADOR / CELULAR -->
+        <button
+          id="btn-screen-mode"
+          type="button"
+          class="p-1.5 px-2 rounded-xl bg-slate-800 text-slate-200 hover:scale-105 transition-all cursor-pointer flex items-center gap-1 border border-slate-700/60 shadow-xs"
+          title="Alternar entre Visualização Computador e Celular"
+        >
+          <span id="screen-icon" class="text-sm">💻</span>
+          <span id="screen-text" class="text-[10px] font-bold hidden sm:inline">PC</span>
+        </button>
+
         <button
           id="btn-privacy"
           type="button"
-          class="p-1.5 rounded-full bg-slate-800 text-slate-300 hover:scale-105 transition-transform cursor-pointer"
+          class="p-1.5 rounded-xl bg-slate-800 text-slate-300 hover:scale-105 transition-transform cursor-pointer border border-slate-700/60"
           title="Ocultar / Mostrar Valores"
         >
           👁️
@@ -67,16 +207,16 @@
         <button
           id="btn-theme"
           type="button"
-          class="p-1.5 rounded-full bg-slate-800 text-slate-300 hover:scale-105 transition-transform cursor-pointer"
-          title="Alternar Tema Claro / Escuro"
+          class="p-1.5 rounded-xl bg-slate-800 text-slate-300 hover:scale-105 transition-transform cursor-pointer border border-slate-700/60"
+          title="Alternar Modo Dia / Noite"
         >
-          ☀️
+          🌙
         </button>
       </div>
     </header>
 
     <!-- NAVEGAÇÃO DE MÊS/ANO -->
-    <div class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
+    <div id="month-nav" class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
       <button id="btn-prev-month" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer active:scale-95">
         ◀
       </button>
@@ -94,7 +234,7 @@
     </main>
 
     <!-- BARRA INFERIOR DE ABAS FIXA NO FUNDO -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto w-full bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex justify-around items-center px-2 py-1.5 z-50 shadow-2xl pb-[max(env(safe-area-inset-bottom),0.5rem)]">
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto w-full bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex justify-around items-center px-2 py-1.5 z-50 shadow-2xl pb-[max(env(safe-area-inset-bottom),0.5rem)]">
       <button data-tab="painel" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-indigo-400 font-black">
         <span class="text-lg leading-none">📊</span>
         <span class="text-[10px] mt-0.5">Painel</span>
@@ -135,7 +275,7 @@
     (function () {
       const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-      const INITIAL_DATA = {"cash":0,"privacyMode":false,"budgetBoxes":[{"id":"box_principal","name":"Meu Salário","amount":5000,"color":"#10b981"},{"id":"box_gloria","name":"Glória","amount":600,"color":"#3b82f6"},{"id":"box_sofia","name":"Pensão Sophia","amount":1500,"color":"#ec4899"}],"creditCards":[{"id":"card_itau","name":"Itaú Mastercard Black","limit":4000,"initialUsed":0,"color":"#f97316","lastDigits":"8821","brand":"Mastercard","skin":"titanium","closingDay":5,"dueDay":12},{"id":"card_bradesco","name":"Bradesco Visa Infinite","limit":3000,"initialUsed":0,"color":"#ef4444","lastDigits":"4190","brand":"Visa","skin":"ultraviolet","closingDay":10,"dueDay":18},{"id":"card_amazon","name":"Amazon Prime Card","limit":2500,"initialUsed":0,"color":"#0ea5e9","lastDigits":"6034","brand":"Mastercard","skin":"midnight","closingDay":20,"dueDay":28},{"id":"card_samsung","name":"Samsung Itaú Platinum","limit":3500,"initialUsed":0,"color":"#334155","lastDigits":"9152","brand":"Visa","skin":"emerald","closingDay":15,"dueDay":22}],"categories":[{"id":"cat_1","name":"🍔 Alimentação","color":"#f59e0b","limit":1200},{"id":"cat_2","name":"🏠 Moradia & Contas","color":"#6366f1","limit":1800},{"id":"cat_3","name":"🚗 Transporte & Combustível","color":"#3b82f6","limit":500},{"id":"cat_4","name":"💊 Saúde & Farmácia","color":"#ec4899","limit":400},{"id":"cat_5","name":"🎮 Lazer & Assinaturas","color":"#8b5cf6","limit":350}],"transactions":[{"id":1790608473597,"type":"expense","desc":"Supermercado Mensal Pão de Açúcar","value":589.4,"category":"🍔 Alimentação","boxId":"box_principal","cardId":"card_itau","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790608474597,"type":"expense","desc":"Farmácia Drogasil - Suplementos","value":145,"category":"💊 Saúde & Farmácia","boxId":"box_gloria","cardId":"card_bradesco","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790608475597,"type":"expense","desc":"Abastecimento Posto Shell (V-Power)","value":210,"category":"🚗 Transporte & Combustível","boxId":"box_principal","cardId":"card_samsung","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790608476597,"type":"expense","desc":"Curso de Natação Sophia","value":380,"category":"🏠 Moradia & Contas","boxId":"box_sofia","cardId":null,"payment":"Dinheiro/Caixa","date":"2026-09-28","monthKey":"2026-09"}],"monthIncomes":{},"extraIncomes":[],"goals":[{"id":1,"name":"🛡️ Reserva de Emergência (6 Meses)","target":12000,"current":3600},{"id":2,"name":"✈️ Viagem de Fim de Ano","target":5000,"current":1250},{"id":3,"name":"📱 Upgrade Smartphone Pro","target":4500,"current":800}],"investments":[{"id":1,"platform":"XP Investimentos","type":"Renda Fixa","asset":"CDB 120% CDI Liquidez Diária","value":4500},{"id":2,"platform":"Binance","type":"Criptomoeda","asset":"Bitcoin (BTC) Cold Storage","value":2150},{"id":3,"platform":"BTG Pactual","type":"Ações / FIIs","asset":"Fundo Imobiliário HGLG11","value":1800}],"recurringBills":[{"id":"rec_1","name":"Netflix 4K","value":55.9,"dueDay":10,"category":"🎮 Lazer & Assinaturas","paymentMethod":"Cartão de Crédito","cardId":"card_itau"},{"id":"rec_2","name":"Spotify Duo","value":27.9,"dueDay":15,"category":"🎮 Lazer & Assinaturas","paymentMethod":"Cartão de Crédito","cardId":"card_amazon"},{"id":"rec_3","name":"Academia SmartFit","value":119.9,"dueDay":20,"category":"💊 Saúde & Farmácia","paymentMethod":"Cartão de Crédito","cardId":"card_samsung"},{"id":"rec_4","name":"Internet Fibra Óptica 500MB","value":129.9,"dueDay":25,"category":"🏠 Moradia & Contas","paymentMethod":"Dinheiro/Caixa"}]};
+      const INITIAL_DATA = {"cash":0,"privacyMode":false,"budgetBoxes":[{"id":"box_principal","name":"Meu Salário","amount":5000,"color":"#10b981"},{"id":"box_gloria","name":"Glória","amount":600,"color":"#3b82f6"},{"id":"box_sofia","name":"Pensão Sophia","amount":1500,"color":"#ec4899"}],"creditCards":[{"id":"card_itau","name":"Itaú Mastercard Black","limit":4000,"initialUsed":0,"color":"#f97316","lastDigits":"8821","brand":"Mastercard","skin":"titanium","closingDay":5,"dueDay":12},{"id":"card_bradesco","name":"Bradesco Visa Infinite","limit":3000,"initialUsed":0,"color":"#ef4444","lastDigits":"4190","brand":"Visa","skin":"ultraviolet","closingDay":10,"dueDay":18},{"id":"card_amazon","name":"Amazon Prime Card","limit":2500,"initialUsed":0,"color":"#0ea5e9","lastDigits":"6034","brand":"Mastercard","skin":"midnight","closingDay":20,"dueDay":28},{"id":"card_samsung","name":"Samsung Itaú Platinum","limit":3500,"initialUsed":0,"color":"#334155","lastDigits":"9152","brand":"Visa","skin":"emerald","closingDay":15,"dueDay":22}],"categories":[{"id":"cat_1","name":"🍔 Alimentação","color":"#f59e0b","limit":1200},{"id":"cat_2","name":"🏠 Moradia & Contas","color":"#6366f1","limit":1800},{"id":"cat_3","name":"🚗 Transporte & Combustível","color":"#3b82f6","limit":500},{"id":"cat_4","name":"💊 Saúde & Farmácia","color":"#ec4899","limit":400},{"id":"cat_5","name":"🎮 Lazer & Assinaturas","color":"#8b5cf6","limit":350}],"transactions":[{"id":1790609181317,"type":"expense","desc":"Supermercado Mensal Pão de Açúcar","value":589.4,"category":"🍔 Alimentação","boxId":"box_principal","cardId":"card_itau","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790609182317,"type":"expense","desc":"Farmácia Drogasil - Suplementos","value":145,"category":"💊 Saúde & Farmácia","boxId":"box_gloria","cardId":"card_bradesco","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790609183317,"type":"expense","desc":"Abastecimento Posto Shell (V-Power)","value":210,"category":"🚗 Transporte & Combustível","boxId":"box_principal","cardId":"card_samsung","payment":"Cartão de Crédito","date":"2026-09-28","monthKey":"2026-09"},{"id":1790609184317,"type":"expense","desc":"Curso de Natação Sophia","value":380,"category":"🏠 Moradia & Contas","boxId":"box_sofia","cardId":null,"payment":"Dinheiro/Caixa","date":"2026-09-28","monthKey":"2026-09"}],"monthIncomes":{},"extraIncomes":[],"goals":[{"id":1,"name":"🛡️ Reserva de Emergência (6 Meses)","target":12000,"current":3600},{"id":2,"name":"✈️ Viagem de Fim de Ano","target":5000,"current":1250},{"id":3,"name":"📱 Upgrade Smartphone Pro","target":4500,"current":800}],"investments":[{"id":1,"platform":"XP Investimentos","type":"Renda Fixa","asset":"CDB 120% CDI Liquidez Diária","value":4500},{"id":2,"platform":"Binance","type":"Criptomoeda","asset":"Bitcoin (BTC) Cold Storage","value":2150},{"id":3,"platform":"BTG Pactual","type":"Ações / FIIs","asset":"Fundo Imobiliário HGLG11","value":1800}],"recurringBills":[{"id":"rec_1","name":"Netflix 4K","value":55.9,"dueDay":10,"category":"🎮 Lazer & Assinaturas","paymentMethod":"Cartão de Crédito","cardId":"card_itau"},{"id":"rec_2","name":"Spotify Duo","value":27.9,"dueDay":15,"category":"🎮 Lazer & Assinaturas","paymentMethod":"Cartão de Crédito","cardId":"card_amazon"},{"id":"rec_3","name":"Academia SmartFit","value":119.9,"dueDay":20,"category":"💊 Saúde & Farmácia","paymentMethod":"Cartão de Crédito","cardId":"card_samsung"},{"id":"rec_4","name":"Internet Fibra Óptica 500MB","value":129.9,"dueDay":25,"category":"🏠 Moradia & Contas","paymentMethod":"Dinheiro/Caixa"}]};
 
       function loadData() {
         let loaded = null;
@@ -327,18 +467,141 @@
         };
       }
 
+      const savedTheme = localStorage.getItem('financas_pro_theme');
+      // Padrão: DIA (false), como solicitado pelo usuário: "abrisse de dia, não de noite"
+      const initialDarkMode = savedTheme ? savedTheme === 'dark' : false;
+
+      const savedScreenMode = localStorage.getItem('financas_pro_screen_mode');
+      const initialScreenMode = savedScreenMode || (window.innerWidth >= 900 ? 'desktop' : 'mobile');
+
       const state = {
         data: loadData(),
         currentYear: new Date().getFullYear(),
         currentMonth: new Date().getMonth() + 1,
         currentTab: 'painel',
         privacyMode: false,
-        darkMode: true,
+        darkMode: initialDarkMode,
+        screenMode: initialScreenMode,
         revealedCvv: {},
         showSimulator: false,
         simDiscount: 5,
         simCdi: 0.9,
         newTransType: 'despesa'
+      };
+
+      function updateThemeUI() {
+        const htmlEl = document.documentElement;
+        const btnTheme = document.getElementById('btn-theme');
+        if (state.darkMode) {
+          htmlEl.classList.add('dark');
+          if (btnTheme) {
+            btnTheme.textContent = '☀️';
+            btnTheme.title = 'Modo Noite ativado (Clique para Modo Dia)';
+          }
+        } else {
+          htmlEl.classList.remove('dark');
+          if (btnTheme) {
+            btnTheme.textContent = '🌙';
+            btnTheme.title = 'Modo Dia ativado (Clique para Modo Noite)';
+          }
+        }
+      }
+
+      window.toggleTheme = function() {
+        state.darkMode = !state.darkMode;
+        try {
+          localStorage.setItem('financas_pro_theme', state.darkMode ? 'dark' : 'light');
+        } catch (e) {}
+        updateThemeUI();
+        showToast(state.darkMode ? '🌙 Modo Noite ativado!' : '☀️ Modo Dia ativado!');
+      };
+
+      function updateScreenMode(mode) {
+        state.screenMode = mode;
+        try {
+          localStorage.setItem('financas_pro_screen_mode', mode);
+        } catch (e) {}
+
+        const frame = document.getElementById('phone-frame');
+        const nav = document.getElementById('bottom-nav');
+        const icon = document.getElementById('screen-icon');
+        const text = document.getElementById('screen-text');
+        const badge = document.getElementById('screen-badge');
+
+        if (mode === 'desktop') {
+          if (frame) {
+            frame.classList.add('desktop-mode');
+            frame.classList.remove('max-w-[430px]', 'md:rounded-[42px]', 'md:border-[7px]');
+            frame.classList.add('max-w-5xl', 'md:rounded-3xl', 'md:border-2');
+          }
+          if (nav) {
+            nav.classList.remove('max-w-[430px]');
+            nav.classList.add('max-w-5xl');
+          }
+          if (icon) icon.textContent = '📱';
+          if (text) text.textContent = 'Celular';
+          if (badge) badge.textContent = '💻 Computador';
+        } else {
+          if (frame) {
+            frame.classList.remove('desktop-mode');
+            frame.classList.remove('max-w-5xl', 'md:rounded-3xl', 'md:border-2');
+            frame.classList.add('max-w-[430px]', 'md:rounded-[42px]', 'md:border-[7px]');
+          }
+          if (nav) {
+            nav.classList.remove('max-w-5xl');
+            nav.classList.add('max-w-[430px]');
+          }
+          if (icon) icon.textContent = '💻';
+          if (text) text.textContent = 'PC';
+          if (badge) badge.textContent = '📱 Celular';
+        }
+      }
+
+      window.toggleScreenMode = function() {
+        const nextMode = state.screenMode === 'desktop' ? 'mobile' : 'desktop';
+        updateScreenMode(nextMode);
+        showToast(nextMode === 'desktop' ? 'Modo Computador ativado! Tela ampla para PC 💻' : 'Modo Celular ativado! Moldura compacta 📱');
+      };
+
+      window.openModalComputador = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
+            <span>💻</span>
+            <span>Configurar Exibição (Computador / Celular)</span>
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Selecione como deseja visualizar o aplicativo na tela do seu computador ou celular:
+          </p>
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="updateScreenMode('desktop'); closeModal(); showToast('Modo Computador ativado! 💻');" class="p-3 rounded-2xl ${state.screenMode === 'desktop' ? 'bg-indigo-600 text-white ring-2 ring-indigo-400' : 'bg-slate-800 text-slate-200'} text-xs font-bold flex flex-col items-center gap-1.5 cursor-pointer shadow-sm active:scale-95">
+              <span class="text-xl">💻</span>
+              <span class="font-black">Modo Computador</span>
+              <span class="text-[10px] opacity-80">Tela Ampla (PC)</span>
+            </button>
+            <button onclick="updateScreenMode('mobile'); closeModal(); showToast('Modo Celular ativado! 📱');" class="p-3 rounded-2xl ${state.screenMode === 'mobile' ? 'bg-indigo-600 text-white ring-2 ring-indigo-400' : 'bg-slate-800 text-slate-200'} text-xs font-bold flex flex-col items-center gap-1.5 cursor-pointer shadow-sm active:scale-95">
+              <span class="text-xl">📱</span>
+              <span class="font-black">Modo Celular</span>
+              <span class="text-[10px] opacity-80">Moldura Compacta</span>
+            </button>
+          </div>
+          <div class="pt-2 border-t border-slate-800 space-y-2">
+            <button onclick="copyAppLink()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+              <span>🔗</span>
+              <span>Copiar Link para Abrir no Computador</span>
+            </button>
+            <button onclick="closeModal()" class="w-full py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold cursor-pointer">Fechar</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.copyAppLink = function() {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(window.location.href);
+          showToast('Link copiado! Cole no navegador do seu computador 📋');
+        } else {
+          prompt('Copie o link do aplicativo:', window.location.href);
+        }
       };
 
       function saveData() {
@@ -369,6 +632,7 @@
       const phoneFrame = document.getElementById('phone-frame');
       const viewContent = document.getElementById('view-content');
       const monthLabel = document.getElementById('month-label');
+      const btnScreenMode = document.getElementById('btn-screen-mode');
       const btnPrivacy = document.getElementById('btn-privacy');
       const btnTheme = document.getElementById('btn-theme');
       const btnPrevMonth = document.getElementById('btn-prev-month');
@@ -376,6 +640,14 @@
       const tabButtons = document.querySelectorAll('.tab-btn');
       const modalContainer = document.getElementById('modal-container');
       const modalBox = document.getElementById('modal-box');
+
+      // Aplica tema e modo de tela iniciais
+      updateThemeUI();
+      updateScreenMode(state.screenMode);
+
+      if (btnScreenMode) {
+        btnScreenMode.addEventListener('click', toggleScreenMode);
+      }
 
       if (btnPrivacy) {
         btnPrivacy.addEventListener('click', () => {
@@ -386,17 +658,7 @@
       }
 
       if (btnTheme) {
-        btnTheme.addEventListener('click', () => {
-          state.darkMode = !state.darkMode;
-          const htmlEl = document.documentElement;
-          if (state.darkMode) {
-            htmlEl.classList.add('dark');
-            btnTheme.textContent = '☀️';
-          } else {
-            htmlEl.classList.remove('dark');
-            btnTheme.textContent = '🌙';
-          }
-        });
+        btnTheme.addEventListener('click', toggleTheme);
       }
 
       if (btnPrevMonth) {
@@ -1981,6 +2243,42 @@
                       <span class="font-black text-rose-400">${formatMoeda(bill.value)}</span>
                     </div>
                   `).join('')}
+                </div>
+
+                <!-- Configuração de Exibição (Computador / Celular) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                  <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide flex items-center gap-1.5">
+                      <span>💻</span>
+                      <span>Visualização no Computador & Celular</span>
+                    </h3>
+                  </div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Alterne entre o modo computador (tela ampla de PC com colunas) e o modo celular clássico quando quiser:
+                  </p>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button
+                      onclick="updateScreenMode('desktop'); showToast('Modo Computador ativado! 💻');"
+                      class="py-2.5 px-3 rounded-2xl ${state.screenMode === 'desktop' ? 'bg-indigo-600 text-white font-black ring-2 ring-indigo-400' : 'bg-slate-800 text-slate-300 font-bold'} text-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 shadow-xs"
+                    >
+                      <span>💻</span>
+                      <span>Modo Computador</span>
+                    </button>
+                    <button
+                      onclick="updateScreenMode('mobile'); showToast('Modo Celular ativado! 📱');"
+                      class="py-2.5 px-3 rounded-2xl ${state.screenMode === 'mobile' ? 'bg-indigo-600 text-white font-black ring-2 ring-indigo-400' : 'bg-slate-800 text-slate-300 font-bold'} text-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 shadow-xs"
+                    >
+                      <span>📱</span>
+                      <span>Modo Celular</span>
+                    </button>
+                  </div>
+                  <button
+                    onclick="copyAppLink()"
+                    class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-700/60 cursor-pointer active:scale-95"
+                  >
+                    <span>🔗</span>
+                    <span>Copiar Link para Abrir no Computador</span>
+                  </button>
                 </div>
 
                 <!-- Backup & Restauração com Botão Verde -->
