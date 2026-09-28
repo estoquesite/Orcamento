@@ -26,7 +26,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --input-bg: #f8fafc;
-            --card-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.08);
+            --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #3b82f6;
@@ -324,9 +324,7 @@
             align-items: center;
         }
 
-        /* ========================================================
-           NOVO CARD MOBILE OTIMIZADO (SEM CORTES E SEM APERTO)
-           ======================================================== */
+        /* CARD DE LANÇAMENTO */
         .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -379,7 +377,6 @@
             background: #1e293b;
         }
 
-        /* Painel de Valor */
         .amount-hero-box {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
@@ -452,7 +449,6 @@
             outline: none !important;
         }
 
-        /* Contador de vezes com botões +/- */
         .stepper-times {
             display: flex;
             align-items: center;
@@ -499,7 +495,6 @@
             align-items: center;
         }
 
-        /* Linhas completas sem corte */
         .detail-row {
             display: flex;
             align-items: center;
@@ -534,6 +529,119 @@
             gap: 6px;
         }
 
+        /* ========================================================
+           NOVO EXTRATO DESEMBOLADO (ESTILO BANCO MODERNO)
+           ======================================================== */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 2px 0;
+        }
+
+        .clean-statement-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .statement-icon-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .statement-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .statement-top-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .statement-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .statement-value {
+            font-size: 0.86rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .statement-value.expense { color: var(--red); }
+        .statement-value.income { color: var(--green); }
+
+        .statement-bottom-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .statement-meta-tags {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .box-pill-tag {
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+
+        .statement-action-btns {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-mini-action {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 3px 5px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+        }
+
+        .btn-mini-action:hover { color: var(--primary); background: var(--input-bg); }
+        .btn-mini-action.del:hover { color: var(--red); }
+
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
@@ -560,43 +668,6 @@
             font-weight: 700;
             cursor: pointer;
         }
-
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            max-height: 290px;
-            overflow-y: auto;
-        }
-
-        .item-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            background: var(--input-bg);
-            border-radius: 12px;
-            border-left: 4px solid #ccc;
-        }
-
-        .item-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            max-width: 65%;
-        }
-        .item-title { font-weight: 700; font-size: 0.84rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .item-meta { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
-
-        .tag-person { padding: 1px 6px; border-radius: 6px; font-size: 0.62rem; font-weight: 800; }
-
-        .item-right { display: flex; align-items: center; gap: 6px; }
-        .val-expense { font-weight: 800; color: var(--red); font-size: 0.85rem; }
-        .val-income { font-weight: 800; color: var(--green); font-size: 0.85rem; }
-
-        .btn-icon { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 0.8rem; }
-        .btn-icon:hover { color: var(--primary); }
-        .btn-icon.del:hover { color: var(--red); }
 
         .backup-card {
             background: var(--card-bg);
@@ -676,7 +747,6 @@
             </div>
         </header>
 
-        <!-- 4 ABAS LIMPAS -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -743,7 +813,7 @@
 
                     <div>
                         <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra livre do mês</span>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total da família / mês</span>
                     </div>
 
                     <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
@@ -811,11 +881,10 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR REDESENHADO ULTRA COMPACTO -->
+            <!-- TELA 2: LANÇAR COM FORMULÁRIO OTIMIZADO E EXTRATO MODERNO -->
             <div id="tab-lancar" class="tab-pane">
                 
                 <div class="mobile-entry-card">
-                    <!-- 1. TIPO: DESPESA / RECEITA -->
                     <div class="entry-top-switch">
                         <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
                             <i class="fa-solid fa-arrow-down"></i> Despesa
@@ -825,7 +894,6 @@
                         </button>
                     </div>
 
-                    <!-- 2. BLOCO DE VALOR & VEZES -->
                     <div class="amount-hero-box">
                         <div class="mode-row">
                             <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
@@ -841,7 +909,6 @@
                                 <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="clean-val-input" oninput="calcularResumoParcelas()">
                             </div>
                             
-                            <!-- Contador de parcelas com toque rápido -->
                             <div class="stepper-times" title="Quantidade de parcelas">
                                 <button type="button" class="step-btn" onclick="mudarParcelasRapido(-1)">-</button>
                                 <input type="number" id="trans-installments-num" min="1" max="120" value="1" class="step-input" oninput="calcularResumoParcelas()">
@@ -855,13 +922,11 @@
                         </div>
                     </div>
 
-                    <!-- 3. DESCRIÇÃO -->
                     <div class="detail-row">
                         <i class="fa-solid fa-pen"></i>
                         <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
                     </div>
 
-                    <!-- 4. LINHAS HORIZONTAIS LIMPAS -->
                     <div class="two-cols-clean">
                         <div class="detail-row">
                             <i class="fa-solid fa-box"></i>
@@ -893,7 +958,7 @@
                     </button>
                 </div>
 
-                <!-- EXTRATO COMPLETO -->
+                <!-- EXTRATO COMPLETO DESEMBOLADO -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
@@ -902,7 +967,9 @@
                             <option value="cartao">💳 Só Cartão</option>
                         </select>
                     </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 8px; font-size: 0.78rem; padding: 7px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); width:100%;">
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 6px; font-size: 0.78rem; padding: 7px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); width:100%;">
+                    
+                    <!-- CONTAINER DO EXTRATO LIMPO -->
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
@@ -934,7 +1001,6 @@
 
             <!-- TELA 4: MAIS (BACKUP & RESERVAS) -->
             <div id="tab-mais" class="tab-pane">
-                
                 <div class="backup-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
@@ -1002,7 +1068,6 @@
                         🗑️ Zerar Todos os Dados
                     </button>
                 </div>
-
             </div>
 
         </div>
@@ -1021,7 +1086,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v16_mobile_native";
+        const STORAGE_KEY = "financas_pro_v17_clean_statement";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1053,6 +1118,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v16_mobile_native",
                 "financas_pro_v15_ultra",
                 "financas_pro_v14_clean_backup",
                 "financas_pro_v13_compact_form",
@@ -1392,7 +1458,7 @@
                 });
             }
 
-            // ÚLTIMOS LANÇAMENTOS
+            // ÚLTIMOS LANÇAMENTOS NO PAINEL
             const recentContainer = document.getElementById("painel-recent-transactions");
             if (recentContainer) {
                 recentContainer.innerHTML = '';
@@ -1477,7 +1543,7 @@
             if (selectBox) {
                 selectBox.innerHTML = '';
                 if (boxes.length === 0) {
-                    selectBox.innerHTML = '<option value="">Geral / Sem Caixinha</option>';
+                    selectBox.innerHTML = '<option value="">Sem Caixinha</option>';
                 } else {
                     boxes.forEach(b => {
                         const opt = document.createElement("option");
@@ -1487,7 +1553,7 @@
                     });
                     const optGeral = document.createElement("option");
                     optGeral.value = "";
-                    optGeral.textContent = "Outro / Sem Caixinha";
+                    optGeral.textContent = "Outro / Geral";
                     selectBox.appendChild(optGeral);
                 }
             }
@@ -1502,10 +1568,13 @@
                 });
             }
 
-            // EXTRATO COMPLETO
+            // ========================================================
+            // RENDERIZAÇÃO DO NOVO EXTRATO DESEMBOLADO
+            // ========================================================
             const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
             const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
+            
             if (listContainer) {
                 listContainer.innerHTML = '';
                 const filtrados = transDoMes.filter(t => {
@@ -1516,36 +1585,54 @@
                 });
 
                 if (filtrados.length === 0) {
-                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhum lançamento neste mês.</span>';
+                    listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:16px;">Nenhum lançamento encontrado neste mês.</span>';
                 } else {
                     filtrados.forEach((trans) => {
                         const isExpense = trans.type === 'expense';
                         const prefix = isExpense ? '- R$' : '+ R$';
-                        const valClass = isExpense ? 'val-expense' : 'val-income';
-                        const dataFormatada = trans.date ? trans.date.split('-').reverse().slice(0, 2).join('/') : '';
+                        const valClass = isExpense ? 'expense' : 'income';
+                        const dataFormatada = trans.date ? trans.date.split('-').slice(1).reverse().join('/') : '';
                         
                         const boxObj = boxes.find(b => b.id === trans.boxId);
-                        const tagHtml = boxObj 
-                            ? `<span class="tag-person" style="background:${boxObj.color}20; color:${boxObj.color}; border:1px solid ${boxObj.color}40;">${boxObj.name}</span>`
-                            : `<span style="font-size:0.62rem; color:var(--text-muted);">Geral</span>`;
+                        const isCard = trans.payment === 'Cartão de Crédito';
+                        const iconBadge = isCard ? '💳' : '💵';
+
+                        const boxTagHtml = boxObj 
+                            ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}35;">${boxObj.name}</span>`
+                            : `<span class="box-pill-tag" style="background:rgba(0,0,0,0.05); color:var(--text-muted);">Geral</span>`;
 
                         const item = document.createElement("div");
-                        item.className = "item-card";
-                        item.style.borderLeftColor = boxObj ? boxObj.color : '#ccc';
+                        item.className = "clean-statement-item";
+                        if (boxObj) {
+                            item.style.borderLeft = `3px solid ${boxObj.color}`;
+                        }
+
                         item.innerHTML = `
-                            <div class="item-info">
-                                <span class="item-title" title="${trans.desc}">${trans.desc}</span>
-                                <div class="item-meta">
-                                    ${tagHtml}
-                                    <span>${trans.payment === 'Cartão de Crédito' ? '💳' : '💵'}</span> • 
-                                    <span>${trans.category || 'Geral'}</span> • 
-                                    <span>${dataFormatada}</span>
-                                </div>
+                            <div class="statement-icon-badge" title="${trans.payment}">
+                                ${iconBadge}
                             </div>
-                            <div class="item-right">
-                                <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar Lançamento"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+
+                            <div class="statement-content">
+                                <div class="statement-top-line">
+                                    <span class="statement-title" title="${trans.desc}">${trans.desc}</span>
+                                    <span class="statement-value ${valClass}">
+                                        ${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                    </span>
+                                </div>
+
+                                <div class="statement-bottom-line">
+                                    <div class="statement-meta-tags">
+                                        <span>${dataFormatada}</span>
+                                        <span>•</span>
+                                        <span>${trans.category || 'Geral'}</span>
+                                        <span>•</span>
+                                        ${boxTagHtml}
+                                    </div>
+                                    <div class="statement-action-btns">
+                                        <button class="btn-mini-action" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-mini-action del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         `;
                         listContainer.appendChild(item);
