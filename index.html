@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Finanças Pro Mobile - v2.4.3</title>
-  <meta name="description" content="Gestão financeira pessoal completa para telemóvel." />
+  <title>Finanças Pro Mobile</title>
+  <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para celular." />
   <meta name="theme-color" content="#ffffff" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -27,21 +27,34 @@
   <style>
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.3); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
     ::-webkit-scrollbar-track { background: transparent; }
     body {
       user-select: none;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 0;
     }
     .modal-backdrop {
-      background-color: rgba(15, 23, 42, 0.6);
+      background-color: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(4px);
+    }
+    /* Barra elevada e segura sobre os botões do sistema Android */
+    #floating-bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 75px;
+      max-width: 402px;
+      margin: 0 auto;
+      z-index: 50;
     }
     #nav-indicator {
       position: absolute;
-      top: 5px;
+      top: 6px;
       left: 0;
-      height: calc(100% - 10px);
+      height: calc(100% - 12px);
       width: 20%;
       border-radius: 1.25rem;
       pointer-events: none;
@@ -49,107 +62,95 @@
     }
   </style>
 </head>
-<body class="bg-slate-200 text-slate-900 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
+<body class="text-slate-900 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- ESTRUTURA DO DISPOSITIVO -->
-  <div id="phone-frame" class="w-full max-w-[430px] h-[100dvh] md:h-[92vh] md:min-h-[890px] flex flex-col relative overflow-hidden bg-slate-50 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300">
+  <!-- ESTRUTURA DO DISPOSITIVO (Inicia em Light Mode) -->
+  <div id="phone-frame" class="w-full max-w-[430px] h-[100dvh] md:h-[92vh] md:min-h-[890px] flex flex-col relative overflow-hidden bg-slate-50 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300">
     
     <!-- CABEÇALHO -->
-    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
+    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/95 border-b border-slate-200 shrink-0 z-20">
       <div class="flex items-center gap-2">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <div class="flex items-baseline gap-1.5">
-          <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
-          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">v2.4.3</span>
+          <span class="text-xs font-black tracking-wider text-slate-800 uppercase">Finanças Pro</span>
+          <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-600 border border-indigo-200">v2.6.0</span>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <button
-          id="btn-privacy"
-          type="button"
-          class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
-          title="Ocultar / Mostrar Valores"
-        >
+        <button id="btn-privacy" type="button" class="p-2 rounded-full bg-slate-100 text-slate-600 hover:scale-105 active:scale-90 transition-transform cursor-pointer" title="Ocultar / Mostrar Valores">
           👁️
         </button>
 
-        <button
-          id="btn-theme"
-          type="button"
-          class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 active:scale-90 transition-transform cursor-pointer"
-          title="Alternar Tema Claro / Escuro"
-        >
+        <button id="btn-theme" type="button" class="p-2 rounded-full bg-slate-100 text-slate-600 hover:scale-105 active:scale-90 transition-transform cursor-pointer" title="Alternar Tema Claro / Escuro">
           🌙
         </button>
       </div>
     </header>
 
     <!-- NAVEGAÇÃO DE MÊS/ANO -->
-    <div class="px-4 py-2 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
-      <button id="btn-prev-month" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
+    <div class="px-4 py-2 bg-white border-b border-slate-200 flex justify-between items-center text-xs font-bold shrink-0">
+      <button id="btn-prev-month" class="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
         ◀
       </button>
-      <div id="month-label" class="text-center font-black text-slate-800 dark:text-slate-100">
+      <div id="month-label" class="text-center font-black text-slate-800">
         Setembro de 2026
       </div>
-      <button id="btn-next-month" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
+      <button id="btn-next-month" class="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition-transform cursor-pointer">
         ▶
       </button>
     </div>
 
-    <!-- ÁREA PRINCIPAL COM SCROLL CONTÍNUO -->
-    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-6">
-      <!-- O conteúdo será injetado aqui -->
+    <!-- ÁREA PRINCIPAL COM SCROLL E ESPAÇO SUFICIENTE PARA NÃO TAPAR BOTÕES -->
+    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4" style="padding-bottom: 165px;">
+      <!-- Conteúdo inserido dinamicamente -->
     </main>
 
-    <!-- BARRA INFERIOR FLUTUANTE BEM ELEVADA (COM MARGEM REAL PARA NÃO SER COBERTA) -->
-    <div class="shrink-0 px-4 pt-1 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] bg-gradient-to-t from-slate-100 via-slate-50/90 to-transparent dark:from-slate-950 dark:via-slate-950/90 z-30">
-      <nav class="relative w-full bg-white dark:bg-slate-900 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 rounded-3xl flex items-center px-2 py-2 shadow-2xl shadow-slate-950/20">
-        <div id="nav-indicator" class="bg-indigo-600/15 dark:bg-indigo-400/20 border border-indigo-500/30"></div>
+    <!-- BARRA INFERIOR BEM ELEVADA -->
+    <div id="floating-bottom-nav">
+      <nav class="relative w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl flex items-center px-2 py-2 shadow-2xl">
+        <div id="nav-indicator" class="bg-indigo-600/15 border border-indigo-500/30"></div>
 
-        <button data-tab="painel" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
-          <span class="text-lg leading-none transition-transform">📊</span>
+        <button data-tab="painel" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-indigo-600 font-black">
+          <span class="text-lg leading-none">📊</span>
           <span class="text-[10px] mt-0.5">Painel</span>
         </button>
         <button data-tab="lancar" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-          <span class="text-lg leading-none transition-transform">➕</span>
+          <span class="text-lg leading-none">➕</span>
           <span class="text-[10px] mt-0.5">Lançar</span>
         </button>
         <button data-tab="cartoes" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-          <span class="text-lg leading-none transition-transform">💳</span>
+          <span class="text-lg leading-none">💳</span>
           <span class="text-[10px] mt-0.5">Cartões</span>
         </button>
         <button data-tab="meses" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-          <span class="text-lg leading-none transition-transform">📅</span>
+          <span class="text-lg leading-none">📅</span>
           <span class="text-[10px] mt-0.5">Meses</span>
         </button>
         <button data-tab="mais" class="tab-btn relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-all cursor-pointer text-slate-400 font-bold">
-          <span class="text-lg leading-none transition-transform">⚙️</span>
+          <span class="text-lg leading-none">⚙️</span>
           <span class="text-[10px] mt-0.5">Mais</span>
         </button>
       </nav>
     </div>
 
     <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
-    <div id="toast" class="hidden absolute bottom-36 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
+    <div id="toast" class="hidden fixed bottom-36 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-black px-4 py-2 rounded-full shadow-2xl pointer-events-none transition-all">
       Notificação
     </div>
 
     <!-- CONTAINER MODAL DINÂMICO -->
     <div id="modal-container" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
-      <div id="modal-box" class="w-full max-w-[380px] bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-5 space-y-4 max-h-[85vh] overflow-y-auto">
-        <!-- Injetado por JS -->
-      </div>
+      <div id="modal-box" class="w-full max-w-[380px] bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-5 space-y-4 max-h-[85vh] overflow-y-auto"></div>
     </div>
 
   </div>
 
   <script>
     (function () {
-      const APP_VERSION = 'v2.4.3';
+      const APP_VERSION = 'v2.6.0';
       const APP_BUILD = '2026.09.28';
-      const STORAGE_KEY = 'FINANCAS_PRO_DATA_CLEAN_V1';
+      const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
       const now = new Date();
@@ -162,8 +163,7 @@
           value: 1200,
           dueDay: 10,
           recipient: 'Sophia',
-          pixKey: 'Chave Pix da Sophia',
-          notes: 'Pagamento mensal prioritário'
+          pixKey: 'Chave Pix da Sophia'
         },
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
@@ -185,7 +185,8 @@
         transactions: [
           { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-01`, year: currentYear, month: currentMonth },
           { id: 2, desc: 'Supermercado', value: 480, type: 'despesa', boxId: '2', category: 'Alimentação', payment: 'Cartão de Crédito', cardId: 'card-1', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-05`, year: currentYear, month: currentMonth },
-          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-08`, year: currentYear, month: currentMonth }
+          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-08`, year: currentYear, month: currentMonth },
+          { id: 4, desc: 'Notebook Dell (3/10)', value: 250, type: 'despesa', boxId: '1', category: 'Compras Parceladas', payment: 'Cartão de Crédito', cardId: 'card-1', date: `${currentYear}-${String(currentMonth).padStart(2, '0')}-10`, year: currentYear, month: currentMonth }
         ],
         savingsGoals: [
           { id: 1, name: 'Reserva de Emergência', targetValue: 15000, currentValue: 6500, color: '#10b981', icon: '🛡️' },
@@ -198,25 +199,65 @@
         ]
       };
 
+      // Recuperação segura e unificação de dados existentes
       function loadData() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-          const parsed = JSON.parse(raw);
-          if (!parsed || typeof parsed !== 'object') return JSON.parse(JSON.stringify(DEFAULT_DATA));
-          
-          if (!parsed.sophiaPension) parsed.sophiaPension = DEFAULT_DATA.sophiaPension;
-          if (!Array.isArray(parsed.quickButtons)) parsed.quickButtons = DEFAULT_DATA.quickButtons;
-          if (!Array.isArray(parsed.boxes)) parsed.boxes = DEFAULT_DATA.boxes;
-          if (!Array.isArray(parsed.creditCards)) parsed.creditCards = DEFAULT_DATA.creditCards;
-          if (!Array.isArray(parsed.savingsGoals)) parsed.savingsGoals = DEFAULT_DATA.savingsGoals;
-          if (!Array.isArray(parsed.recurringBills)) parsed.recurringBills = DEFAULT_DATA.recurringBills;
-          if (!Array.isArray(parsed.transactions)) parsed.transactions = DEFAULT_DATA.transactions;
+        const potentialKeys = [
+          'FINANCAS_PRO_DATA_AUTONOMO',
+          'FINANCAS_PRO_DATA_V242',
+          'FINANCAS_PRO_DATA_V250_STABLE',
+          'FINANCAS_PRO_DATA_CLEAN_V1'
+        ];
 
-          return parsed;
-        } catch (e) {
-          return JSON.parse(JSON.stringify(DEFAULT_DATA));
+        let bestData = null;
+        let maxLen = -1;
+
+        for (const k of potentialKeys) {
+          try {
+            const raw = localStorage.getItem(k);
+            if (raw) {
+              const p = JSON.parse(raw);
+              if (p && Array.isArray(p.transactions) && p.transactions.length > maxLen) {
+                maxLen = p.transactions.length;
+                bestData = p;
+              }
+            }
+          } catch (e) {}
         }
+
+        if (!bestData) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+
+        // Assegurar compatibilidade de propriedades
+        if (!bestData.sophiaPension) bestData.sophiaPension = DEFAULT_DATA.sophiaPension;
+        if (!Array.isArray(bestData.boxes) || bestData.boxes.length === 0) bestData.boxes = DEFAULT_DATA.boxes;
+        if (!Array.isArray(bestData.quickButtons)) bestData.quickButtons = DEFAULT_DATA.quickButtons;
+        if (!Array.isArray(bestData.creditCards)) bestData.creditCards = DEFAULT_DATA.creditCards;
+        if (!Array.isArray(bestData.savingsGoals)) bestData.savingsGoals = DEFAULT_DATA.savingsGoals;
+        if (!Array.isArray(bestData.recurringBills)) bestData.recurringBills = DEFAULT_DATA.recurringBills;
+        if (!Array.isArray(bestData.transactions)) bestData.transactions = DEFAULT_DATA.transactions;
+
+        // Normalização de datas nos lançamentos
+        bestData.transactions = bestData.transactions.map((t, idx) => {
+          const item = Object.assign({}, t);
+          item.id = item.id || Date.now() + idx;
+          item.value = Number(item.value) || 0;
+          item.desc = item.desc || 'Lançamento';
+          item.type = item.type === 'receita' ? 'receita' : 'despesa';
+
+          if (!item.year || !item.month) {
+            if (item.date && typeof item.date === 'string' && item.date.includes('-')) {
+              const parts = item.date.split('-');
+              item.year = parseInt(parts[0], 10) || currentYear;
+              item.month = parseInt(parts[1], 10) || currentMonth;
+            } else {
+              item.year = currentYear;
+              item.month = currentMonth;
+              item.date = `${currentYear}-${String(currentMonth).padStart(2, '0')}-01`;
+            }
+          }
+          return item;
+        });
+
+        return bestData;
       }
 
       const state = {
@@ -235,11 +276,14 @@
 
       function saveData() {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+          const json = JSON.stringify(state.data);
+          localStorage.setItem(STORAGE_KEY, json);
         } catch (e) {
           console.error(e);
         }
       }
+
+      saveData();
 
       function formatMoeda(num) {
         if (state.privacyMode) return 'R$ ••••••';
@@ -286,13 +330,8 @@
 
       btnTheme.addEventListener('click', () => {
         state.darkMode = !state.darkMode;
-        if (state.darkMode) {
-          phoneFrame.classList.add('dark');
-          btnTheme.textContent = '☀️';
-        } else {
-          phoneFrame.classList.remove('dark');
-          btnTheme.textContent = '🌙';
-        }
+        phoneFrame.classList.toggle('dark', state.darkMode);
+        btnTheme.textContent = state.darkMode ? '☀️' : '🌙';
       });
 
       btnPrevMonth.addEventListener('click', () => {
@@ -327,9 +366,7 @@
       }
 
       tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          switchTab(btn.getAttribute('data-tab'));
-        });
+        btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
       });
 
       window.closeModal = function() {
@@ -341,16 +378,24 @@
         if (e.target === modalContainer) closeModal();
       });
 
-      // PENSÃO DA SOPHIA
+      // ==================== PENSÃO DA SOPHIA ====================
+      window.copiarPixSophia = function() {
+        const pix = state.data.sophiaPension.pixKey || '';
+        if (pix && navigator.clipboard) {
+          navigator.clipboard.writeText(pix);
+          showToast('Chave Pix da Sophia copiada! 📋');
+        }
+      };
+
       window.openModalEditarPensaoSophia = function() {
-        const p = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
+        const p = state.data.sophiaPension;
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
             <span>✏️</span>
             <span>Editar Pensão da Sophia</span>
           </h3>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Título:</label>
+            <label class="text-xs font-bold text-slate-500 block">Título do Cartão:</label>
             <input type="text" id="m-pensao-title" value="${p.title || 'Pensão da Sophia'}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
@@ -368,8 +413,8 @@
             </div>
           </div>
           <div>
-            <label class="text-xs font-bold text-slate-500 block">Chave Pix ou Notas:</label>
-            <input type="text" id="m-pensao-pix" value="${p.pixKey || ''}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <label class="text-xs font-bold text-slate-500 block">Chave Pix:</label>
+            <input type="text" id="m-pensao-pix" value="${p.pixKey || ''}" placeholder="Ex: CPF ou Telemóvel" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div class="flex gap-2 pt-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
@@ -381,22 +426,14 @@
 
       window.savePensaoSophia = function() {
         const title = document.getElementById('m-pensao-title').value.trim() || 'Pensão da Sophia';
-        const val = parseFloat(document.getElementById('m-pensao-val').value);
+        const val = parseFloat(document.getElementById('m-pensao-val').value) || 1200;
         const day = parseInt(document.getElementById('m-pensao-day').value, 10) || 10;
         const recip = document.getElementById('m-pensao-recip').value.trim() || 'Sophia';
         const pix = document.getElementById('m-pensao-pix').value.trim();
 
         if (isNaN(val) || val <= 0) return alert('Por favor, informe um valor válido.');
 
-        state.data.sophiaPension = {
-          title,
-          value: val,
-          dueDay: day,
-          recipient: recip,
-          pixKey: pix,
-          notes: 'Pagamento prioritário mensal'
-        };
-
+        state.data.sophiaPension = { title, value: val, dueDay: day, recipient: recip, pixKey: pix };
         saveData();
         closeModal();
         showToast('Pensão da Sophia atualizada! 🌸');
@@ -404,7 +441,7 @@
       };
 
       window.pagarPensaoSophia = function() {
-        const p = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
+        const p = state.data.sophiaPension;
         const jaPago = state.data.transactions.find(t => 
           Number(t.year) === Number(state.currentYear) && 
           Number(t.month) === Number(state.currentMonth) && 
@@ -441,68 +478,24 @@
         render();
       };
 
-      window.openModalNovoQuick = function() {
-        modalBox.innerHTML = `
-          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-            <span>⚡</span>
-            <span>Novo Atalho Rápido</span>
-          </h3>
-          <div>
-            <label class="text-xs font-bold text-slate-500 block">Emoji / Ícone:</label>
-            <input type="text" id="m-quick-icon" value="☕" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          </div>
-          <div>
-            <label class="text-xs font-bold text-slate-500 block">Descrição:</label>
-            <input type="text" id="m-quick-desc" placeholder="Ex: Farmácia" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          </div>
-          <div>
-            <label class="text-xs font-bold text-slate-500 block">Valor Padrão (R$):</label>
-            <input type="number" step="0.5" id="m-quick-val" placeholder="Ex: 50.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
-          </div>
-          <div>
-            <label class="text-xs font-bold text-slate-500 block">Categoria / Caixinha:</label>
-            <select id="m-quick-cat" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
-              ${state.data.boxes.map(b => `<option value="${b.name}">${b.icon} ${b.name}</option>`).join('')}
-            </select>
-          </div>
-          <div class="flex gap-2 pt-2">
-            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
-            <button onclick="saveNovoQuick()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Atalho</button>
-          </div>
-        `;
-        modalContainer.classList.remove('hidden');
-      };
-
-      window.saveNovoQuick = function() {
-        const icon = document.getElementById('m-quick-icon').value.trim() || '⚡';
-        const desc = document.getElementById('m-quick-desc').value.trim();
-        const val = parseFloat(document.getElementById('m-quick-val').value);
-        const cat = document.getElementById('m-quick-cat').value;
-        if (!desc || isNaN(val) || val <= 0) return alert('Preencha os campos com valores válidos.');
-
-        state.data.quickButtons.push({ icon, desc, val, cat });
-        saveData();
-        closeModal();
-        showToast('Novo atalho adicionado!');
-        render();
-      };
-
+      // ==================== RENDIMENTO / SALÁRIO ====================
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
-        const currentVal = mainBox ? mainBox.limit : 5000;
-
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
             <span>✏️</span>
-            <span>Editar Salário / Rendimento</span>
+            <span>Editar Salário / Rendimento Mensal</span>
           </h3>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            Informe o valor líquido mensal. Todos os cálculos de sobra serão recalculados.
+          </p>
           <label class="text-xs font-bold text-slate-500 block mt-2">Valor da Renda Mensal (R$):</label>
           <input
             type="number"
             step="50"
             id="m-salario-val"
-            value="${currentVal}"
-            class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 focus:outline-none"
+            value="${mainBox ? mainBox.limit : 5000}"
+            class="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700 focus:outline-none"
           />
           <div class="flex gap-2 pt-2">
             <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
@@ -519,9 +512,9 @@
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         if (mainBox) mainBox.limit = val;
 
-        const existingRec = state.data.transactions.find(t => t.type === 'receita' && Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
-        if (existingRec) {
-          existingRec.value = val;
+        const rec = state.data.transactions.find(t => t.type === 'receita' && Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
+        if (rec) {
+          rec.value = val;
         } else {
           state.data.transactions.unshift({
             id: Date.now(),
@@ -543,11 +536,12 @@
         render();
       };
 
+      // ==================== CAIXINHAS ====================
       window.openModalNovaCaixinha = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
             <span>📦</span>
-            <span>Nova Caixinha</span>
+            <span>Nova Caixinha de Verba</span>
           </h3>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Ícone / Emoji:</label>
@@ -555,7 +549,7 @@
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Nome da Categoria:</label>
-            <input type="text" id="m-newbox-name" placeholder="Ex: Farmácia, Mercado" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="m-newbox-name" placeholder="Ex: Farmácia, Educação" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
           </div>
           <div>
             <label class="text-xs font-bold text-slate-500 block">Limite Planeado (R$):</label>
@@ -655,6 +649,54 @@
         }
       };
 
+      // ==================== ATALHOS RÁPIDOS ====================
+      window.openModalNovoQuick = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Novo Atalho Rápido</span>
+          </h3>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Emoji / Ícone:</label>
+            <input type="text" id="m-quick-icon" value="☕" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Descrição:</label>
+            <input type="text" id="m-quick-desc" placeholder="Ex: Farmácia" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Valor Padrão (R$):</label>
+            <input type="number" step="0.5" id="m-quick-val" placeholder="Ex: 50.00" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-slate-500 block">Categoria / Caixinha:</label>
+            <select id="m-quick-cat" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+              ${state.data.boxes.map(b => `<option value="${b.name}">${b.icon} ${b.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovoQuick()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Atalho</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovoQuick = function() {
+        const icon = document.getElementById('m-quick-icon').value.trim() || '⚡';
+        const desc = document.getElementById('m-quick-desc').value.trim();
+        const val = parseFloat(document.getElementById('m-quick-val').value);
+        const cat = document.getElementById('m-quick-cat').value;
+        if (!desc || isNaN(val) || val <= 0) return alert('Preencha os campos com valores válidos.');
+
+        state.data.quickButtons.push({ icon, desc, val, cat });
+        saveData();
+        closeModal();
+        showToast('Novo atalho adicionado!');
+        render();
+      };
+
+      // ==================== COMPRAS PARCELADAS ====================
       window.openModalNovaParcela = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
@@ -788,6 +830,7 @@
         }
       };
 
+      // ==================== CARTÕES DE CRÉDITO ====================
       window.openModalNovoCartao = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">💳 Novo Cartão</h3>
@@ -893,6 +936,7 @@
         }
       };
 
+      // ==================== METAS FINANCEIRAS ====================
       window.openModalNovaMeta = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🎯 Nova Meta</h3>
@@ -988,6 +1032,7 @@
         }
       };
 
+      // ==================== ASSINATURAS RECORRENTES ====================
       window.openModalNovaAssinatura = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🔄 Nova Assinatura</h3>
@@ -1082,6 +1127,7 @@
         }
       };
 
+      // ==================== EDITAR LANÇAMENTO NORMAL ====================
       window.openModalEditarTrans = function(id) {
         const t = state.data.transactions.find(item => item.id === id);
         if (!t) return;
@@ -1134,6 +1180,7 @@
         }
       };
 
+      // ==================== OPERAÇÕES RÁPIDAS E CARTÕES ====================
       window.quickLancar = function (desc, val, cat) {
         state.data.transactions.unshift({
           id: Date.now(),
@@ -1148,7 +1195,7 @@
           month: state.currentMonth
         });
         saveData();
-        showToast('Lançado: ' + desc + ' (' + formatMoeda(val) + ')! ⚡');
+        showToast(`Lançado: ${desc} (${formatMoeda(val)})! ⚡`);
         render();
       };
 
@@ -1323,6 +1370,7 @@
         switchTab('painel');
       };
 
+      // ==================== CONTROLO DOS EVENTOS DA ABA LANÇAR ====================
       function attachLancarEvents() {
         const form = document.getElementById('form-lancar');
         if (!form) return;
@@ -1453,11 +1501,11 @@
         };
       }
 
+      // ==================== RENDERIZAÇÃO COMPLETA ====================
       function render() {
         monthLabel.textContent = `${MONTHS[state.currentMonth - 1]} de ${state.currentYear}`;
 
-        const currentTrans = Array.isArray(state.data.transactions) ? state.data.transactions : [];
-        const monthTrans = currentTrans.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
+        const monthTrans = state.data.transactions.filter(t => Number(t.year) === Number(state.currentYear) && Number(t.month) === Number(state.currentMonth));
         const totalReceitas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (Number(b.value) || 0), 0);
         const totalDespesas = monthTrans.filter(t => t.type === 'despesa').reduce((a, b) => a + (Number(b.value) || 0), 0);
         const totalCartao = monthTrans.filter(t => t.type === 'despesa' && t.payment === 'Cartão de Crédito').reduce((a, b) => a + (Number(b.value) || 0), 0);
@@ -1473,8 +1521,8 @@
         // 1. ABA PAINEL
         if (state.currentTab === 'painel') {
           const pSophia = state.data.sophiaPension || DEFAULT_DATA.sophiaPension;
-          const qButtons = Array.isArray(state.data.quickButtons) ? state.data.quickButtons : DEFAULT_DATA.quickButtons;
-          const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
+          const qButtons = state.data.quickButtons || DEFAULT_DATA.quickButtons;
+          const boxes = state.data.boxes || DEFAULT_DATA.boxes;
 
           html = `
             <div class="space-y-4">
@@ -1517,7 +1565,7 @@
                 ${pSophia.pixKey ? `
                   <div class="pt-2 border-t border-white/20 flex justify-between items-center text-[10px] text-pink-100">
                     <span>🔑 Pix: <b class="text-white">${pSophia.pixKey}</b></span>
-                    <button onclick="navigator.clipboard.writeText('${pSophia.pixKey}'); showToast('Chave Pix copiada! 📋');" class="underline text-white font-bold cursor-pointer">Copiar</button>
+                    <button onclick="copiarPixSophia()" class="underline text-white font-bold cursor-pointer">Copiar Pix</button>
                   </div>
                 ` : ''}
               </div>
@@ -1550,7 +1598,7 @@
                 </div>
               </div>
 
-              <!-- ATALHOS RÁPIDOS -->
+              <!-- ATALHOS RÁPIDOS DE 1 TOQUE -->
               <div class="space-y-1.5">
                 <div class="flex justify-between items-center px-1">
                   <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Atalhos Rápidos</span>
@@ -1567,7 +1615,7 @@
                 </div>
               </div>
 
-              <!-- CAIXINHAS DE VERBA -->
+              <!-- CAIXINHAS DE VERBA COM EDIÇÃO -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <div>
@@ -1634,8 +1682,8 @@
 
         // 2. ABA LANÇAR
         else if (state.currentTab === 'lancar') {
-          const boxes = Array.isArray(state.data.boxes) ? state.data.boxes : DEFAULT_DATA.boxes;
-          const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+          const boxes = state.data.boxes || DEFAULT_DATA.boxes;
+          const cards = state.data.creditCards || DEFAULT_DATA.creditCards;
 
           html = `
             <div class="space-y-4">
@@ -1765,7 +1813,7 @@
                 </button>
               </form>
 
-              <!-- EXTRATO COM EDIÇÃO -->
+              <!-- EXTRATO COM EDIÇÃO DIRETA -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
@@ -1861,7 +1909,7 @@
             }
           });
           const installmentList = Object.values(installmentMap);
-          const cards = Array.isArray(state.data.creditCards) ? state.data.creditCards : DEFAULT_DATA.creditCards;
+          const cards = state.data.creditCards || DEFAULT_DATA.creditCards;
 
           html = `
             <div class="space-y-4">
@@ -1948,7 +1996,7 @@
                 <div class="flex justify-between items-center">
                   <div>
                     <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                      🛍️ Compras Parceladas
+                      🛍️ Compras Parceladas no Cartão
                     </h3>
                     <span class="text-[10px] text-slate-400">Total liberdade para editar</span>
                   </div>
@@ -2066,8 +2114,8 @@
 
         // 5. ABA MAIS
         else if (state.currentTab === 'mais') {
-          const goals = Array.isArray(state.data.savingsGoals) ? state.data.savingsGoals : DEFAULT_DATA.savingsGoals;
-          const bills = Array.isArray(state.data.recurringBills) ? state.data.recurringBills : DEFAULT_DATA.recurringBills;
+          const goals = state.data.savingsGoals || DEFAULT_DATA.savingsGoals;
+          const bills = state.data.recurringBills || DEFAULT_DATA.recurringBills;
 
           html = `
             <div class="space-y-4">
