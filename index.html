@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V05</title>
+    <title>Finanças Pro V06</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -183,7 +183,6 @@
         }
         .header-btn:active { transform: scale(0.92); }
 
-        /* BARRA DE NAVEGAÇÃO FIXA NO TOPO */
         .top-nav {
             background: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
@@ -1016,7 +1015,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V05</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V06</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1037,7 +1036,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V05</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V06</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1430,7 +1429,7 @@
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V05</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Controle <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V06</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Configurações, backup e ativos</span>
                     </div>
                     <div style="text-align:right;">
@@ -1529,15 +1528,16 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v35";
+        const STORAGE_KEY = "financas_pro_neon_v36";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_theme_mode";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        const hoje = new Date();
-        let currentYear = hoje.getFullYear();
-        let currentMonthNum = hoje.getMonth() + 1;
+        // RECONHECIMENTO DA DATA REAL DE HOJE
+        const hojeReal = new Date();
+        let currentYear = hojeReal.getFullYear();
+        let currentMonthNum = hojeReal.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
         let selectedYearTabela = currentYear;
 
@@ -1642,7 +1642,6 @@
                 if (lock) lock.classList.add("hidden");
             }
             
-            // CARREGAR TEMA SALVO (PERSISTENTE)
             const savedTheme = localStorage.getItem(THEME_KEY);
             if (savedTheme === 'light') {
                 document.body.classList.add("light-mode");
@@ -1654,6 +1653,12 @@
             popularSeletoresDeAno();
             sincronizarDataFormulario();
             
+            // SINCRONIZAR SELECTS DO PAINEL COM O MÊS ATUAL REAL
+            const selYear = document.getElementById("select-year");
+            const selMonth = document.getElementById("select-month");
+            if (selYear) selYear.value = currentYear;
+            if (selMonth) selMonth.value = currentMonthNum;
+
             const abaSalva = localStorage.getItem(CURRENT_TAB_KEY) || 'painel';
             trocarAba(abaSalva);
             
@@ -1679,7 +1684,7 @@
             const dateInput = document.getElementById("trans-date");
             if (!dateInput) return;
 
-            let dia = hoje.getDate();
+            let dia = hojeReal.getDate();
             const ultimoDiaDoMes = new Date(currentYear, currentMonthNum, 0).getDate();
             if (dia > ultimoDiaDoMes) dia = ultimoDiaDoMes;
 
@@ -1830,6 +1835,7 @@
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             popularSeletoresDeAno();
             sincronizarDataFormulario();
+            document.getElementById("select-year").value = currentYear;
             atualizarTela();
         }
 
@@ -1849,6 +1855,8 @@
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             popularSeletoresDeAno();
             sincronizarDataFormulario();
+            document.getElementById("select-year").value = currentYear;
+            document.getElementById("select-month").value = currentMonthNum;
             atualizarTela();
         }
 
@@ -2611,6 +2619,8 @@
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             popularSeletoresDeAno();
             sincronizarDataFormulario();
+            document.getElementById("select-year").value = currentYear;
+            document.getElementById("select-month").value = currentMonthNum;
             trocarAba('painel');
             atualizarTela();
         }
