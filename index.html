@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V07</title>
+    <title>Finanças Pro V08</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#a855f7">
@@ -25,6 +25,7 @@
             --primary: #a855f7;
             --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
             --neon-glow: 0 0 20px rgba(168, 85, 247, 0.35);
+            --border-neon: 1px solid rgba(168, 85, 247, 0.4);
             --bg-color: #05050a;
             --card-bg: #0c0c14;
             --text-main: #f3f4f6;
@@ -39,11 +40,12 @@
             --purple: #c084fc;
         }
 
-        /* TEMAS EXTRAS PERSONALIZADOS */
+        /* TEMAS EXTRAS PERSONALIZADOS (COM CONTROLE DE BORDAS NEON) */
         body.theme-ciano {
             --primary: #06b6d4;
             --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
             --neon-glow: 0 0 20px rgba(6, 182, 212, 0.35);
+            --border-neon: 1px solid rgba(6, 182, 212, 0.4);
             --bg-color: #030712;
             --card-bg: #0b1120;
         }
@@ -52,6 +54,7 @@
             --primary: #10b981;
             --primary-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
             --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
+            --border-neon: 1px solid rgba(16, 185, 129, 0.4);
             --bg-color: #020c08;
             --card-bg: #061a12;
         }
@@ -60,6 +63,7 @@
             --primary: #ec4899;
             --primary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #a855f7 100%);
             --neon-glow: 0 0 20px rgba(236, 72, 153, 0.35);
+            --border-neon: 1px solid rgba(236, 72, 153, 0.4);
             --bg-color: #0f050a;
             --card-bg: #1c0c15;
         }
@@ -68,6 +72,7 @@
             --primary: #f59e0b;
             --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #ef4444 100%);
             --neon-glow: 0 0 20px rgba(245, 158, 11, 0.35);
+            --border-neon: 1px solid rgba(245, 158, 11, 0.4);
             --bg-color: #0d0a02;
             --card-bg: #1c1605;
         }
@@ -76,6 +81,7 @@
             --primary: #9333ea;
             --primary-gradient: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #0284c7 100%);
             --neon-glow: 0 0 15px rgba(147, 51, 234, 0.2);
+            --border-neon: 1px solid rgba(147, 51, 234, 0.25);
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
@@ -270,13 +276,13 @@
             background: var(--card-bg);
             padding: 8px 14px;
             border-radius: 16px;
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             box-shadow: var(--card-shadow);
         }
 
         .date-nav-btn {
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             color: var(--text-main);
             width: 28px;
             height: 26px;
@@ -300,7 +306,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--border-neon);
         }
 
         .quick-actions-bar {
@@ -313,7 +319,7 @@
             padding: 10px;
             border-radius: 14px;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             color: var(--text-main);
             font-size: 0.72rem;
             font-weight: 800;
@@ -330,13 +336,13 @@
             background: var(--card-bg);
             padding: 16px;
             border-radius: 18px;
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             box-shadow: var(--card-shadow);
         }
 
         .budget-summary-banner {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 16px;
             padding: 14px 16px;
             display: flex;
@@ -353,7 +359,7 @@
 
         .box-clean-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 16px;
             padding: 14px;
             display: flex;
@@ -390,7 +396,7 @@
             border-radius: 6px;
             overflow: hidden;
             width: 100%;
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
         }
 
         .box-clean-footer {
@@ -403,7 +409,7 @@
 
         .btn-box-action {
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 6px 10px;
             border-radius: 8px;
             font-size: 0.7rem;
@@ -418,7 +424,7 @@
 
         .extra-income-card {
             background: var(--card-bg);
-            border: 1px dashed var(--border-color);
+            border: 1px dashed var(--primary);
             border-radius: 16px;
             padding: 14px;
             display: flex;
@@ -432,7 +438,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 8px 12px;
             border-radius: 12px;
             font-size: 0.75rem;
@@ -440,7 +446,7 @@
 
         .mobile-entry-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 18px;
             padding: 16px;
             box-shadow: var(--card-shadow);
@@ -451,7 +457,7 @@
 
         .lancar-header-dashboard {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 16px;
             padding: 12px 14px;
             display: flex;
@@ -489,7 +495,7 @@
         .entry-top-switch {
             display: flex;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 4px;
             border-radius: 12px;
             gap: 4px;
@@ -515,19 +521,19 @@
             background: var(--card-bg);
             color: var(--red);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            border: 1px solid rgba(244, 63, 94, 0.3);
+            border: 1px solid rgba(244, 63, 94, 0.4);
         }
 
         .top-btn.active.income {
             background: var(--card-bg);
             color: var(--green);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.4);
         }
 
         .amount-hero-box {
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 14px;
             padding: 12px 14px;
             display: flex;
@@ -601,7 +607,7 @@
             display: flex;
             align-items: center;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -641,14 +647,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            border: var(--border-neon);
         }
 
         .detail-row {
             display: flex;
             align-items: center;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 12px;
             padding: 2px 12px;
             gap: 10px;
@@ -683,7 +689,7 @@
             flex-direction: column;
             gap: 6px;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 10px;
             border-radius: 12px;
         }
@@ -702,7 +708,7 @@
             align-items: center;
             gap: 6px;
             background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
+            border: var(--border-neon);
             padding: 6px 12px;
             border-radius: 10px;
             font-size: 0.75rem;
@@ -717,7 +723,7 @@
             border-color: var(--primary);
             background: rgba(168, 85, 247, 0.15);
             color: var(--primary);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
         }
 
         .card-pill-btn .color-dot {
@@ -736,7 +742,7 @@
 
         .clean-statement-item {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 14px;
             padding: 12px 14px;
             display: flex;
@@ -750,7 +756,7 @@
             height: 38px;
             border-radius: 12px;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -844,7 +850,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: var(--border-neon);
         }
 
         .year-selector-header {
@@ -852,7 +858,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 16px;
             padding: 10px 14px;
             box-shadow: var(--card-shadow);
@@ -867,7 +873,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--border-neon);
         }
 
         .months-elegant-grid {
@@ -878,7 +884,7 @@
 
         .month-card-item {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 14px;
             padding: 12px 16px;
             display: flex;
@@ -911,12 +917,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--border-neon);
         }
 
         .modern-action-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             border-radius: 18px;
             padding: 16px;
             display: flex;
@@ -930,7 +936,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--input-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 0.8rem;
@@ -956,7 +962,7 @@
         button.btn-secondary {
             background: var(--input-bg);
             color: var(--text-main);
-            border: 1px solid var(--border-color);
+            border: var(--border-neon);
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 0.8rem;
@@ -964,7 +970,6 @@
             cursor: pointer;
         }
 
-        /* PALETA DE CORES DO PAINEL DE TEMAS */
         .color-palette-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -974,7 +979,7 @@
         .color-theme-card {
             padding: 10px;
             border-radius: 12px;
-            border: 2px solid var(--border-color);
+            border: var(--border-neon);
             background: var(--input-bg);
             cursor: pointer;
             text-align: center;
@@ -986,7 +991,7 @@
             align-items: center;
             gap: 4px;
         }
-        .color-theme-card:hover { border-color: var(--primary); }
+        .color-theme-card:hover { border-color: var(--primary); box-shadow: var(--neon-glow); }
         .color-circle {
             width: 24px;
             height: 24px;
@@ -1008,7 +1013,7 @@
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: var(--card-bg);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            border: var(--border-neon);
             border-radius: 20px;
             padding: 20px;
             width: 100%;
@@ -1018,7 +1023,7 @@
             gap: 12px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 20px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), var(--neon-glow);
         }
 
         #toast-container {
@@ -1044,8 +1049,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 15px rgba(168, 85, 247, 0.3);
-            border: 1px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), var(--neon-glow);
+            border: var(--border-neon);
             animation: slideDown 0.3s ease forwards;
         }
         @keyframes slideDown {
@@ -1067,7 +1072,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V07</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Neon V08</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1088,7 +1093,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V07</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V08</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1255,12 +1260,12 @@
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
-                <div style="background:var(--input-bg); border:1px solid var(--border-color); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="background:var(--input-bg); border:var(--border-neon); padding:10px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <span style="font-size:0.65rem; color:var(--text-muted); display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
                     </div>
-                    <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:1px solid var(--border-color); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
+                    <button onclick="trocarAba('meses')" style="background:var(--card-bg); border:var(--border-neon); padding:4px 10px; border-radius:8px; font-size:0.7rem; font-weight:800; color:var(--primary); cursor:pointer;">
                         Ver Meses
                     </button>
                 </div>
@@ -1386,8 +1391,8 @@
                     </div>
                     
                     <div style="display:flex; gap:6px; margin-bottom:8px;">
-                        <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:8px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main);">
-                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--text-main);">
+                        <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:8px 10px; border-radius:10px; background:var(--input-bg); border:var(--border-neon); color:var(--text-main);">
+                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:var(--border-neon); color:var(--text-main);">
                             <option value="all">Todos</option>
                             <option value="cartao">💳 Só Cartão</option>
                             <option value="cash">💵 Só À Vista</option>
@@ -1473,12 +1478,12 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES E CONFIGURAÇÕES) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES & TEMAS) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V07</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Personalize o visual do aplicativo</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Temas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V08</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Personalize o visual e as bordas neon</span>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:0.62rem; font-weight:800; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
@@ -1487,10 +1492,9 @@
                     </div>
                 </div>
 
-                <!-- PAINEL DE ESCOLHA DE CORES NEON -->
                 <div class="modern-action-card">
                     <b style="font-size:0.85rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha a Cor do Aplicativo:
+                        <i class="fa-solid fa-palette text-purple-400"></i> Escolha a Cor & Borda Neon:
                     </b>
                     <div class="color-palette-grid">
                         <div class="color-theme-card" onclick="mudarTemaCor('neon')">
@@ -1609,7 +1613,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v37";
+        const STORAGE_KEY = "financas_pro_neon_v38";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_custom_theme";
@@ -1722,7 +1726,6 @@
                 if (lock) lock.classList.add("hidden");
             }
             
-            // CARREGAR TEMA DE COR SALVO
             const savedTheme = localStorage.getItem(THEME_KEY) || 'neon';
             aplicarTemaCor(savedTheme, false);
 
@@ -1755,7 +1758,7 @@
             }
             if (salvar) {
                 localStorage.setItem(THEME_KEY, tema);
-                showToast(`Tema alterado com sucesso!`, "fa-palette");
+                showToast(`Bordas e Tema Neon atualizados!`, "fa-palette");
                 renderizarGrafico();
             }
         }
@@ -2331,7 +2334,7 @@
                         const payTag = t.payment === "Cartão de Crédito" ? '💳' : '💵';
                         
                         const item = document.createElement("div");
-                        item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:8px 10px; border-radius:10px; font-size:0.75rem; border:1px solid var(--border-color);";
+                        item.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:8px 10px; border-radius:10px; font-size:0.75rem; border: var(--border-neon);";
                         item.innerHTML = `
                             <div style="display:flex; flex-direction:column; gap:1px;">
                                 <b style="font-size:0.78rem; color:var(--text-main);">${t.desc}</b>
@@ -2638,7 +2641,7 @@
                     (financialData.goals || []).forEach((goal) => {
                         const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
                         const gItem = document.createElement("div");
-                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;";
+                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border: var(--border-neon); display:flex; flex-direction:column; gap:4px;";
                         gItem.innerHTML = `
                             <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700;">
                                 <span>${goal.name}</span>
@@ -3082,14 +3085,14 @@
         function fallbackCopiar(texto) {
             abrirModal("Seu Código de Backup", `
                 <p class="text-xs text-gray-400 mb-2">Copie todo o texto abaixo:</p>
-                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--text-main);" readonly>${texto}</textarea>
+                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:var(--border-neon); border-radius:8px; background:var(--input-bg); color:var(--text-main);" readonly>${texto}</textarea>
             `, () => {});
         }
 
         function abrirModalRestaurarTexto() {
             abrirModal("Restaurar Dados em Texto", `
                 <p class="text-xs text-gray-400 mb-2">Cole aqui o código de backup:</p>
-                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--text-main);"></textarea>
+                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:var(--border-neon); border-radius:8px; background:var(--input-bg); color:var(--text-main);"></textarea>
             `, () => {
                 const input = document.getElementById("txt-restore-input").value.trim();
                 if (!input) return;
@@ -3318,4 +3321,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
