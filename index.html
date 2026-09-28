@@ -335,6 +335,50 @@
             gap: 10px;
         }
 
+        /* MINI BARRA DE TOTAL E CONTROLE DE MÊS DA TELA LANÇAR */
+        .lancar-header-dashboard {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .lancar-date-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .lancar-metrics-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lancar-metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .lancar-metric-item span {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .lancar-metric-item b {
+            font-size: 0.84rem;
+            font-weight: 900;
+        }
+
         .entry-top-switch {
             display: flex;
             background: var(--input-bg);
@@ -954,8 +998,38 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR COM TAGS DE CARTÃO CONECTADAS -->
+            <!-- TELA 2: LANÇAR COM MINI PAINEL DE TOTAIS E CONTROLE DE MÊS NO TOPO -->
             <div id="tab-lancar" class="tab-pane">
+                
+                <!-- MINI DASHBOARD COM FILTRO DE MÊS E TOTAIS NO TOPO -->
+                <div class="lancar-header-dashboard">
+                    <div class="lancar-date-row">
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(-1)">◀</button>
+                            <span id="txt-lancar-mes-ano" style="font-size:0.82rem; font-weight:900; color:var(--primary);">Setembro 2026</span>
+                            <button class="date-nav-btn" style="width:24px; height:24px; font-size:0.7rem;" onclick="mudarMes(1)">▶</button>
+                        </div>
+                        <button onclick="trocarAba('painel')" style="background:none; border:none; color:var(--text-muted); font-size:0.68rem; font-weight:800; cursor:pointer;">
+                            Ver Painel →
+                        </button>
+                    </div>
+
+                    <div class="lancar-metrics-row">
+                        <div class="lancar-metric-item">
+                            <span>Gasto Mês:</span>
+                            <b id="txt-lancar-total-gasto" style="color:var(--red);">- R$ 0,00</b>
+                        </div>
+                        <div class="lancar-metric-item">
+                            <span>No Cartão:</span>
+                            <b id="txt-lancar-total-cartao" style="color:var(--yellow);">R$ 0,00</b>
+                        </div>
+                        <div class="lancar-metric-item" style="text-align:right;">
+                            <span>Sobra Livre:</span>
+                            <b id="txt-lancar-sobra-livre" style="color:var(--green);">R$ 0,00</b>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mobile-entry-card">
                     <div class="entry-top-switch">
                         <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
@@ -1052,7 +1126,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES (O CADASTRO CENTRAL) -->
+            <!-- TELA 3: ABA CARTÕES -->
             <div id="tab-cartoes" class="tab-pane">
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1209,7 +1283,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v24_stay_tab";
+        const STORAGE_KEY = "financas_pro_v25_lancar_totals";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1249,6 +1323,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v24_stay_tab",
                 "financas_pro_v23_card_tags",
                 "financas_pro_v22_linked_cards",
                 "financas_pro_v21_samsung_card",
@@ -1308,7 +1383,6 @@
             }
             sincronizarDataFormulario();
             
-            // Lembra exatamente em qual tela você estava
             const abaSalva = localStorage.getItem(CURRENT_TAB_KEY) || 'painel';
             trocarAba(abaSalva);
             
@@ -1448,7 +1522,6 @@
             if (lock) lock.classList.remove("hidden");
         }
 
-        // TROCA E MEMORIZA A TELA ATUAL
         function trocarAba(aba) {
             const tabs = ['painel', 'lancar', 'cartoes', 'meses', 'mais'];
             localStorage.setItem(CURRENT_TAB_KEY, aba);
@@ -1510,6 +1583,30 @@
             const despesasTotalMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
+
+            // ==============================================
+            // ATUALIZAÇÃO DO MINI PAINEL NA ABA LANÇAR
+            // ==============================================
+            const txtLancarMesAno = document.getElementById("txt-lancar-mes-ano");
+            if (txtLancarMesAno) {
+                txtLancarMesAno.innerText = `${mesesNomes[currentMonthNum - 1]} ${currentYear}`;
+            }
+
+            const txtLancarTotalGasto = document.getElementById("txt-lancar-total-gasto");
+            if (txtLancarTotalGasto) {
+                txtLancarTotalGasto.innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            const txtLancarTotalCartao = document.getElementById("txt-lancar-total-cartao");
+            if (txtLancarTotalCartao) {
+                txtLancarTotalCartao.innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            const txtLancarSobraLivre = document.getElementById("txt-lancar-sobra-livre");
+            if (txtLancarSobraLivre) {
+                txtLancarSobraLivre.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                txtLancarSobraLivre.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
+            }
 
             // HERO CARD PAINEL
             const heroSobra = document.getElementById("hero-sobra-livre");
@@ -2227,14 +2324,12 @@
                 });
             }
 
-            // Limpa apenas os campos de entrada para o próximo gasto
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
             document.getElementById("trans-installments-num").value = '1';
             calcularResumoParcelas();
             salvarDados();
             
-            // Atualiza tudo mantendo você exatamente na tela em que estava
             atualizarTela();
             alert("Lançamento salvo com sucesso!");
         }
@@ -2559,4 +2654,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-</html>
+    </html>
