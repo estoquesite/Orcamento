@@ -335,7 +335,6 @@
             gap: 10px;
         }
 
-        /* MINI BARRA DE TOTAL E CONTROLE DE MÊS DA TELA LANÇAR */
         .lancar-header-dashboard {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -998,10 +997,9 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR COM MINI PAINEL DE TOTAIS E CONTROLE DE MÊS NO TOPO -->
+            <!-- TELA 2: LANÇAR COM MINI DASHBOARD NO TOPO -->
             <div id="tab-lancar" class="tab-pane">
                 
-                <!-- MINI DASHBOARD COM FILTRO DE MÊS E TOTAIS NO TOPO -->
                 <div class="lancar-header-dashboard">
                     <div class="lancar-date-row">
                         <div style="display:flex; align-items:center; gap:4px;">
@@ -1087,7 +1085,6 @@
                         </div>
                     </div>
 
-                    <!-- FILEIRA DE TAGS DE CARTÃO CONECTADAS DIRETO À ABA DE CARTÕES -->
                     <div id="row-select-card" class="card-tags-scroll-wrap">
                         <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
                             Selecione o Cartão Utilizado:
@@ -1126,29 +1123,34 @@
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES -->
+            <!-- TELA 3: ABA CARTÕES (COM PAINEL CONSOLIDADOR E SOMA TOTAL) -->
             <div id="tab-cartoes" class="tab-pane">
-                <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
+                
+                <div class="hero-wallet-card" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Total Faturas do Mês</span>
-                        <span style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(251,191,36,0.2); color:#fbbf24; border:1px solid rgba(251,191,36,0.3);">
-                            💳 Crédito Total
+                        <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Fatura Total dos Cartões</span>
+                        <span style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(251,191,36,0.25); color:#fbbf24; border:1px solid rgba(251,191,36,0.3);">
+                            💳 Soma Consolidada
                         </span>
                     </div>
 
                     <div>
-                        <h2 id="card-hero-total-faturas" style="font-size:1.8rem; font-weight:900; color:#fbbf24;">R$ 0,00</h2>
-                        <span id="card-hero-impacto" style="font-size:0.68rem; color:rgba(255,255,255,0.7);">0% da sua renda mensal</span>
+                        <h2 id="card-hero-total-faturas" style="font-size:1.85rem; font-weight:900; color:#fbbf24; letter-spacing:-0.5px;">R$ 0,00</h2>
+                        <span id="card-hero-impacto" style="font-size:0.68rem; color:rgba(255,255,255,0.7);">0% do seu orçamento mensal</span>
                     </div>
 
                     <div style="display:flex; justify-content:space-between; font-size:0.72rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:8px; margin-top:4px;">
                         <div>
-                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Total Cadastrado</span>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Somado</span>
                             <b id="card-hero-limite-total" style="color:white;">R$ 0,00</b>
                         </div>
                         <div>
-                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Livre Geral</span>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Limite Disponível</span>
                             <b id="card-hero-limite-livre" style="color:#34d399;">R$ 0,00</b>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:0.62rem; color:rgba(255,255,255,0.6);">Cartões Ativos</span>
+                            <b id="card-hero-qtd-badge" style="color:#60a5fa;">0 cartões</b>
                         </div>
                     </div>
                 </div>
@@ -1283,7 +1285,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v25_lancar_totals";
+        const STORAGE_KEY = "financas_pro_v26_complete_dash";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1323,6 +1325,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v25_lancar_totals",
                 "financas_pro_v24_stay_tab",
                 "financas_pro_v23_card_tags",
                 "financas_pro_v22_linked_cards",
@@ -1584,9 +1587,7 @@
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // ==============================================
             // ATUALIZAÇÃO DO MINI PAINEL NA ABA LANÇAR
-            // ==============================================
             const txtLancarMesAno = document.getElementById("txt-lancar-mes-ano");
             if (txtLancarMesAno) {
                 txtLancarMesAno.innerText = `${mesesNomes[currentMonthNum - 1]} ${currentYear}`;
@@ -1786,7 +1787,7 @@
                 }
             }
 
-            // ABA CARTÕES
+            // ATUALIZAÇÃO DA ABA CARTÕES COM SOMA TOTAL E RESUMO CONSOLIDADO
             const cards = financialData.creditCards || [];
             document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
 
@@ -1857,6 +1858,7 @@
                 }
             }
 
+            // SOMA TOTAL DOS CARTÕES NO HEADER
             const heroTotalFaturas = document.getElementById("card-hero-total-faturas");
             if (heroTotalFaturas) heroTotalFaturas.innerText = `R$ ${totalGastoCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
@@ -1866,6 +1868,9 @@
             const heroLimiteLivre = document.getElementById("card-hero-limite-livre");
             const limiteLivreGeral = totalLimiteCartoesGeral - totalGastoCartoesGeral;
             if (heroLimiteLivre) heroLimiteLivre.innerText = `R$ ${limiteLivreGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const heroQtdBadge = document.getElementById("card-hero-qtd-badge");
+            if (heroQtdBadge) heroQtdBadge.innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
 
             const heroImpacto = document.getElementById("card-hero-impacto");
             if (heroImpacto) {
@@ -2272,7 +2277,7 @@
             }
         }
 
-        // --- LANÇAMENTOS COM PERMANÊNCIA NA MESMA TELA ---
+        // --- LANÇAMENTOS COM PERSISTÊNCIA NA TELA ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -2654,4 +2659,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-    </html>
+                                                      </html>
