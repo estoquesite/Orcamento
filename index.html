@@ -639,7 +639,7 @@
         .btn-mini-action:hover { color: var(--primary); background: var(--input-bg); }
         .btn-mini-action.del:hover { color: var(--red); }
 
-        /* CARTOES ESPECÍFICOS DA NOVA ABA */
+        /* WIDGETS DE CARTÃO COM CAPINHA VISUAL */
         .credit-card-widget {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
@@ -770,7 +770,7 @@
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO COM A NOVA ABA CARTÕES -->
+        <!-- 5 ABAS EQUILIBRADAS -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -968,7 +968,6 @@
                         </div>
                     </div>
 
-                    <!-- Seletor específico de cartão quando cartão estiver selecionado -->
                     <div id="row-select-card" class="detail-row">
                         <i class="fa-solid fa-wallet"></i>
                         <select id="trans-card-id"></select>
@@ -1006,11 +1005,10 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- NOVA TELA 3: GESTÃO COMPLETA DE CARTÕES -->
+            <!-- TELA 3: ABA CARTÕES (COM CAPINHAS COLORIDAS) -->
             <!-- ============================================== -->
             <div id="tab-cartoes" class="tab-pane">
                 
-                <!-- PAINEL CONSOLIDADOR DE GASTOS COM CARTÃO NO MÊS -->
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Total Faturas do Mês</span>
@@ -1045,7 +1043,6 @@
                     </button>
                 </div>
 
-                <!-- LISTA DOS SEUS CARTÕES COM GASTOS EM TEMPO REAL -->
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 SEUS CARTÕES CADASTRADOS</span>
@@ -1081,7 +1078,7 @@
                 </div>
             </div>
 
-            <!-- TELA 5: MAIS (BACKUP & RESERVAS) -->
+            <!-- TELA 5: MAIS -->
             <div id="tab-mais" class="tab-pane">
                 <div class="backup-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1150,7 +1147,6 @@
                         🗑️ Zerar Todos os Dados
                     </button>
                 </div>
-
             </div>
 
         </div>
@@ -1169,7 +1165,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v18_cards_tab";
+        const STORAGE_KEY = "financas_pro_v19_card_skins";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1186,10 +1182,10 @@
                 { id: "box_principal", name: "💼 Meu Salário", amount: 5000.00, color: "#10b981" },
                 { id: "box_sofia", name: "👧 Verba Sofia", amount: 1500.00, color: "#ec4899" }
             ],
-            // Cartões iniciais editáveis
             creditCards: [
                 { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316" },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" }
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#ef4444" },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0ea5e9" }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
@@ -1206,6 +1202,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v18_cards_tab",
                 "financas_pro_v17_clean_statement",
                 "financas_pro_v16_mobile_native",
                 "financas_pro_v15_ultra",
@@ -1586,7 +1583,7 @@
             }
 
             // ==============================================
-            // ATUALIZAÇÃO DA NOVA ABA CARTÕES
+            // ATUALIZAÇÃO DA ABA CARTÕES COM CAPINHAS COLORIDAS
             // ==============================================
             const cards = financialData.creditCards || [];
             document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
@@ -1598,10 +1595,9 @@
             if (cardsContainer) {
                 cardsContainer.innerHTML = '';
                 if (cards.length === 0) {
-                    cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado. Adicione seus cartões acima.</div>';
+                    cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>';
                 } else {
                     cards.forEach(card => {
-                        // Gastos no mês direcionados a este cartão
                         const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id))).reduce((acc, curr) => acc + curr.value, 0);
 
                         const totalUsado = (card.initialUsed || 0) + gastosDoCartao;
@@ -1618,28 +1614,31 @@
 
                         const cardElem = document.createElement("div");
                         cardElem.className = "credit-card-widget";
-                        cardElem.style.borderLeft = `4px solid ${card.color || 'var(--primary)'}`;
+                        cardElem.style.background = `linear-gradient(135deg, ${card.color || '#1e293b'} 0%, #0f172a 100%)`;
+                        cardElem.style.borderLeft = `5px solid ${card.color || '#6366f1'}`;
                         cardElem.innerHTML = `
                             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                                <div>
-                                    <span style="font-size:0.85rem; font-weight:900;">${card.name}</span>
-                                    <span style="font-size:0.65rem; color:rgba(255,255,255,0.6); display:block;">Fatura deste mês</span>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <div style="width:30px; height:20px; background:rgba(255,255,255,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                                        <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fbbf24;"></i>
+                                    </div>
+                                    <span style="font-size:0.9rem; font-weight:900;">${card.name}</span>
                                 </div>
-                                <div style="display:flex; gap:6px;">
+                                <div style="display:flex; gap:8px;">
                                     <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
                                     <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
                                 </div>
                             </div>
 
-                            <div>
-                                <span style="font-size:1.45rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.65); display:block;">${gastosDoCartao > 0 ? `+ R$ ${gastosDoCartao.toFixed(2)} lançados este mês` : 'Nenhum novo gasto lançado neste mês'}</span>
+                            <div style="margin: 4px 0;">
+                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">R$ ${totalUsado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ R$ ${gastosDoCartao.toFixed(2)} lançados neste mês` : 'Fatura atual'}</span>
                             </div>
 
-                            <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
+                            <div style="display:flex; flex-direction:column; gap:4px;">
                                 <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.85); font-weight:700;">
-                                    <span>${percConsumo}% do limite</span>
-                                    <span>Resta: R$ ${limiteDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                    <span>${percConsumo}% utilizado</span>
+                                    <span>Livre: R$ ${limiteDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.15); height:6px; border-radius:6px; overflow:hidden;">
                                     <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
@@ -1647,8 +1646,8 @@
                             </div>
 
                             <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
-                                <span>Limite total: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.15); border:none; color:white; padding:2px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Comprar com ele</button>
+                                <span>Limite: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
                             </div>
                         `;
                         cardsContainer.appendChild(cardElem);
@@ -1672,7 +1671,7 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // SELETORES DE CARTÃO E CAIXINHA NA ABA LANÇAR
+            // SELETORES
             const selectCard = document.getElementById("trans-card-id");
             if (selectCard) {
                 selectCard.innerHTML = '';
@@ -1713,7 +1712,7 @@
                 });
             }
 
-            // RENDERIZAÇÃO DO EXTRATO BANCÁRIO DESEMBOLADO
+            // EXTRATO
             const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
             const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
@@ -1837,7 +1836,7 @@
 
             document.getElementById("txt-meses-preenchidos").innerText = `${mesesPreenchidosContador} ${mesesPreenchidosContador === 1 ? 'mês preenchido' : 'meses preenchidos'}`;
 
-            // RESERVAS / CAIXINHAS NA ABA MAIS
+            // RESERVAS
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
                 goalsContainer.innerHTML = '';
@@ -1922,12 +1921,10 @@
             if (selectCard) selectCard.value = cardId;
         }
 
-        // ==============================================
-        // MÉTODOS DA NOVA ABA DE CARTÕES
-        // ==============================================
+        // --- CARTÕES DE CRÉDITO ---
         function abrirModalNovoCartao() {
             abrirModal("Adicionar Novo Cartão", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Nubank, Itaú...):</label>
+                <label class="text-xs text-gray-500 font-bold">Nome do Cartão (ex: Itaú, Bradesco, Amazon...):</label>
                 <input type="text" id="new-card-name" placeholder="Nome do Cartão">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Limite Total (R$):</label>
@@ -1936,8 +1933,8 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
                 <input type="number" id="new-card-initial" step="50" value="0" placeholder="Ex: 0 se fatura zerada">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor de Destaque:</label>
-                <input type="color" id="new-card-color" value="#8b5cf6" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
+                <input type="color" id="new-card-color" value="#f97316" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
@@ -1977,8 +1974,8 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
                 <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cor da Capinha:</label>
+                <input type="color" id="edit-card-color" value="${card.color || '#f97316'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-card-limit").value);
@@ -2078,7 +2075,7 @@
             }
         }
 
-        // --- LANÇAMENTOS COM VÍNCULO AO CARTÃO ESPECÍFICO ---
+        // --- LANÇAMENTOS ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -2311,7 +2308,7 @@
             });
         }
 
-        // --- RESERVAS / CAIXINHAS NA ABA MAIS ---
+        // --- RESERVAS ---
         function abrirModalNovaMeta() {
             abrirModal("Nova Caixinha de Reserva", `
                 <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
