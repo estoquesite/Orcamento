@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro v2.0</title>
+    <title>Finanças Pro v2.1</title>
     
     <!-- PWA & Configurações de Tela Cheia -->
     <meta name="theme-color" content="#6366f1">
@@ -36,6 +36,7 @@
             --blue: #3b82f6;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
+            --pink: #ec4899;
         }
 
         body.dark-mode {
@@ -53,6 +54,7 @@
             --blue: #60a5fa;
             --yellow: #fbbf24;
             --purple: #c084fc;
+            --pink: #f472b6;
         }
 
         * {
@@ -93,7 +95,7 @@
             }
         }
 
-        /* TELA DE BLOQUEIO */
+        /* TELA DE ENTRADA */
         .lock-screen {
             position: absolute;
             inset: 0;
@@ -113,14 +115,6 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-        }
-
-        @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.15); opacity: 1; }
-        }
-        .animate-pulse-slow {
-            animation: pulse-slow 2.5s infinite ease-in-out;
         }
 
         header {
@@ -426,17 +420,6 @@
             cursor: pointer;
         }
 
-        button.btn-danger {
-            background: rgba(244, 63, 94, 0.1);
-            color: var(--red);
-            border: 1px solid rgba(244, 63, 94, 0.2);
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         .list-container {
             display: flex;
             flex-direction: column;
@@ -458,7 +441,7 @@
         .item-info {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 3px;
         }
 
         .item-title {
@@ -470,7 +453,20 @@
             font-size: 0.72rem;
             color: var(--text-muted);
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
         }
+
+        .tag-person {
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+        }
+        .tag-sofia { background: rgba(236, 72, 153, 0.15); color: var(--pink); border: 1px solid rgba(236, 72, 153, 0.3); }
+        .tag-diego { background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
 
         .item-right {
             display: flex;
@@ -480,7 +476,6 @@
 
         .val-expense { font-weight: 800; color: var(--red); font-size: 0.88rem; }
         .val-income { font-weight: 800; color: var(--green); font-size: 0.88rem; }
-        .val-neutral { font-weight: 800; color: var(--blue); font-size: 0.88rem; }
 
         .btn-icon {
             background: none;
@@ -489,7 +484,6 @@
             cursor: pointer;
             font-size: 0.85rem;
             padding: 4px;
-            border-radius: 6px;
         }
         .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
@@ -523,46 +517,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .budget-header, .goal-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .chart-box {
-            position: relative;
-            height: 220px;
-            margin-bottom: 10px;
-        }
-
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.78rem;
-            text-align: left;
-        }
-
-        .report-table th, .report-table td {
-            padding: 9px 6px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .report-table th {
-            color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.68rem;
-        }
-
-        .report-table tr.total-row td {
-            font-weight: 800;
-            border-top: 2px solid var(--primary);
-            border-bottom: none;
-            font-size: 0.82rem;
-        }
-
-        /* MODAL CUSTOMIZADO */
+        /* MODAL */
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -600,7 +555,7 @@
 
     <div class="phone-container">
 
-        <!-- TELA DE ENTRADA / SEGURANÇA -->
+        <!-- TELA DE ENTRADA -->
         <div id="lock-screen" class="lock-screen">
             <div class="w-full flex flex-col items-center pt-4 space-y-3">
                 <div class="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-2xl shadow-indigo-500/30">
@@ -610,37 +565,26 @@
                 </div>
                 <div>
                     <h2 class="text-2xl font-black tracking-tight text-white">Finanças Pro</h2>
-                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Gestão Financeira Pessoal</p>
+                    <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest mt-1">Gestão de Verbas & Família</p>
                 </div>
             </div>
 
-            <!-- Botão Biometria / Desbloqueio Rápido -->
             <div class="flex flex-col items-center space-y-4 my-auto">
-                <div class="relative flex justify-center items-center">
-                    <div class="absolute w-24 h-24 bg-indigo-500/25 rounded-full animate-pulse-slow"></div>
-                    <button id="biometric-btn" onclick="desbloquearApp(true)" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-xl shadow-indigo-500/40 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition duration-300 border-none">
-                        <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white"></i>
-                    </button>
-                </div>
+                <button id="biometric-btn" onclick="desbloquearApp()" class="w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-xl shadow-indigo-500/40 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition border-none">
+                    <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white"></i>
+                </button>
                 <p id="bio-status" class="text-xs text-gray-300 font-medium">Toque para desbloquear</p>
-                
-                <button onclick="desbloquearApp(false)" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2.5 px-6 rounded-xl border border-white/15 transition text-white">
+                <button onclick="desbloquearApp()" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2.5 px-6 rounded-xl border border-white/15 transition text-white">
                     🔓 Entrar no Painel
                 </button>
             </div>
 
-            <!-- Instalação PWA -->
-            <div class="w-full max-w-xs pb-2 space-y-2">
-                <button id="btn-instalar-app" onclick="instalarAppPWA()" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 py-3 px-4 rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 transition text-white">
-                    <i class="fa-solid fa-cloud-arrow-down text-sm"></i> Instalar no Telemóvel / PC
-                </button>
-                <p class="text-[10px] text-gray-400 text-center">
-                    Funciona 100% offline e sem necessidade de conexão.
-                </p>
+            <div class="w-full max-w-xs pb-2">
+                <p class="text-[10px] text-gray-400 text-center">Armazenamento 100% privado no seu aparelho.</p>
             </div>
         </div>
 
-        <!-- CABEÇALHO PRINCIPAL -->
+        <!-- CABEÇALHO -->
         <header>
             <div class="header-brand">
                 <div class="app-logo">
@@ -651,7 +595,7 @@
                 </div>
                 <div class="brand-title-wrapper">
                     <h1>Finanças Pro</h1>
-                    <span class="app-version">v2.0 • Offline Ready</span>
+                    <span class="app-version">v2.1 • Controle de Verbas</span>
                 </div>
             </div>
             
@@ -661,7 +605,7 @@
             </div>
         </header>
 
-        <!-- BARRA DE NAVEGAÇÃO -->
+        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('gastos')">
                 <span class="tab-icon">💳</span>
@@ -693,32 +637,73 @@
                 </div>
 
                 <div class="summary-grid">
-                    <div class="card blue full-width editable">
-                        <span>💵 Saldo Disponível (Caixa / Conta)</span>
-                        <h2 id="card-cash" onclick="abrirModalSaldo()" title="Clique para ajustar o saldo">R$ 0,00</h2>
+                    
+                    <!-- 1. QUADRADO COM A VERBA TOTAL CONSOLIDADA (PATRIMÔNIO) -->
+                    <div class="card purple full-width" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(236, 72, 153, 0.12) 100%); border: 2px solid var(--primary);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL ACUMULADA</span>
+                            <span style="background:var(--primary); color:white; font-size:0.62rem; font-weight:800; padding:2px 7px; border-radius:10px;">PATRIMÔNIO</span>
+                        </div>
+                        <h2 id="card-total-wealth" style="font-size:1.6rem; color:var(--primary);">R$ 0,00</h2>
+                        <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); border-top:1px dashed var(--border-color); padding-top:6px; margin-top:2px;">
+                            <span>Conta: <b id="sub-cash" style="color:var(--text-main);">R$ 0</b></span>
+                            <span>Caixinhas: <b id="sub-goals" style="color:var(--text-main);">R$ 0</b></span>
+                            <span>Investido: <b id="sub-invest" style="color:var(--text-main);">R$ 0</b></span>
+                        </div>
                     </div>
-                    <div class="card green">
-                        <span>📈 Receitas do Mês</span>
-                        <h2 id="card-income">R$ 0,00</h2>
+
+                    <!-- 2. CARD DE COMPOSIÇÃO DA VERBA DO MÊS (DIEGO + SOFIA + PRÓPRIO) -->
+                    <div class="card full-width" style="border-left: 4px solid var(--pink);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:800; color:var(--pink); font-size:0.75rem;">👨‍👩‍👧 COMPOSIÇÃO DAS VERBAS DO MÊS</span>
+                            <a href="#" onclick="abrirModalFontesVerba()" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">[AJUSTAR VERBAS]</a>
+                        </div>
+                        
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:4px;">
+                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
+                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">👨 Diego</span>
+                                <b id="verba-diego-val" style="font-size:0.82rem; color:var(--blue);">R$ 0</b>
+                            </div>
+                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
+                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">👧 Pensão Sofia</span>
+                                <b id="verba-sofia-val" style="font-size:0.82rem; color:var(--pink);">R$ 0</b>
+                            </div>
+                            <div style="background:var(--input-bg); padding:8px 6px; border-radius:12px; text-align:center;">
+                                <span style="font-size:0.64rem; color:var(--text-muted); display:block; font-weight:700;">💼 Minha Renda</span>
+                                <b id="verba-propria-val" style="font-size:0.82rem; color:var(--green);">R$ 0</b>
+                            </div>
+                        </div>
+
+                        <!-- COMPENSAÇÃO / BALANÇO DA SOFIA -->
+                        <div style="margin-top:6px; padding-top:6px; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; font-size:0.72rem;">
+                            <span>👧 <b>Gastos Sofia:</b> <span id="sofia-spent" style="color:var(--red); font-weight:700;">R$ 0</span></span>
+                            <span>Restante da Pensão: <b id="sofia-remain" style="color:var(--green);">R$ 0</b></span>
+                        </div>
                     </div>
-                    <div class="card red">
-                        <span>📉 Despesas do Mês</span>
-                        <h2 id="card-spent">R$ 0,00</h2>
-                    </div>
-                    <div class="card purple">
-                        <span>⚖️ Saldo Líquido do Mês</span>
-                        <h2 id="card-net">R$ 0,00</h2>
+
+                    <!-- SALDOS CONVENCIONAIS -->
+                    <div class="card blue editable">
+                        <span>💵 Saldo em Caixa / Conta</span>
+                        <h2 id="card-cash" onclick="abrirModalSaldo()" title="Clique para editar">R$ 0,00</h2>
                     </div>
                     <div class="card yellow editable">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>💳 Fatura do Cartão</span>
-                            <a href="#" onclick="abrirModalPagarFatura()" style="font-size:0.68rem; color:var(--yellow); text-decoration:none; font-weight:800;">[PAGAR]</a>
+                            <span>💳 Fatura Cartão</span>
+                            <a href="#" onclick="abrirModalPagarFatura()" style="font-size:0.65rem; color:var(--yellow); font-weight:800; text-decoration:none;">[PAGAR]</a>
                         </div>
                         <h2 id="card-credit">R$ 0,00</h2>
                     </div>
+                    <div class="card green">
+                        <span>📈 Receitas Totais</span>
+                        <h2 id="card-income">R$ 0,00</h2>
+                    </div>
+                    <div class="card red">
+                        <span>📉 Despesas Totais</span>
+                        <h2 id="card-spent">R$ 0,00</h2>
+                    </div>
                 </div>
 
-                <!-- Formulário de Transação -->
+                <!-- FORMULÁRIO DE LANÇAMENTO COM DESTINO (SOFIA / DIEGO / GERAL) -->
                 <div class="section-box">
                     <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
@@ -729,46 +714,57 @@
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Salário)">
+                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Escola, Roupas, Farmácia)">
+                        
                         <div class="form-row">
+                            <!-- SELETOR DE DESTINO / PESSOA -->
+                            <select id="trans-beneficiary">
+                                <option value="Geral">👤 Conta Geral</option>
+                                <option value="Sofia">👧 Para Sofia (Pensão / Partes)</option>
+                                <option value="Diego">👨 Diego</option>
+                            </select>
                             <select id="trans-category">
                                 <option value="">Selecione Categoria</option>
                             </select>
+                        </div>
+
+                        <div class="form-row">
                             <select id="trans-payment">
                                 <option value="Dinheiro/Caixa">💵 Dinheiro / Débito / Pix</option>
                                 <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
                             </select>
-                        </div>
-                        <div class="form-row">
                             <input type="date" id="trans-date">
+                        </div>
+
+                        <div class="form-row">
                             <select id="trans-installments">
                                 <option value="1">À vista (1x)</option>
-                                <option value="2">2x parcelas</option>
-                                <option value="3">3x parcelas</option>
-                                <option value="4">4x parcelas</option>
-                                <option value="5">5x parcelas</option>
-                                <option value="6">6x parcelas</option>
-                                <option value="10">10x parcelas</option>
-                                <option value="12">12x parcelas</option>
+                                <option value="2">2x parcelas (Partes)</option>
+                                <option value="3">3x parcelas (Partes)</option>
+                                <option value="4">4x parcelas (Partes)</option>
+                                <option value="5">5x parcelas (Partes)</option>
+                                <option value="6">6x parcelas (Partes)</option>
+                                <option value="10">10x parcelas (Partes)</option>
+                                <option value="12">12x parcelas (Partes)</option>
                             </select>
                         </div>
                         <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
                     </div>
                 </div>
 
-                <!-- Lista de Transações com Busca -->
+                <!-- EXTRATO COM BUSCA E TAGS -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
-                        <div style="display:flex; gap:6px;">
-                            <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.72rem;">
-                                <option value="all">Todos</option>
-                                <option value="expense">Despesas</option>
-                                <option value="income">Receitas</option>
-                            </select>
-                        </div>
+                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 4px 8px; font-size: 0.72rem;">
+                            <option value="all">Todos</option>
+                            <option value="expense">Despesas</option>
+                            <option value="income">Receitas</option>
+                            <option value="sofia">👧 Só Sofia</option>
+                            <option value="diego">👨 Só Diego</option>
+                        </select>
                     </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 10px; font-size: 0.78rem; padding: 8px 12px;">
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar despesas ou partes..." style="margin-bottom: 10px; font-size: 0.78rem; padding: 8px 12px;">
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
@@ -778,24 +774,24 @@
                 <div class="section-box">
                     <h3>🏷️ Nova Categoria & Teto</h3>
                     <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
+                        <input type="text" id="cat-name" placeholder="Nome (ex: 👧 Sofia Cuidados, 🍔 Alimentação)">
                         <div class="form-row">
                             <input type="number" id="cat-limit" step="10" min="0" placeholder="Teto Mensal R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 42px; padding: 0; cursor: pointer; border-radius: 10px;">
+                            <input type="color" id="cat-color" value="#ec4899" style="width: 50px; height: 42px; padding: 0; cursor: pointer; border-radius: 10px;">
                         </div>
                         <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
                     </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>📊 Orçamento do Mês (Gasto vs Limite)</h3>
+                    <h3>📊 Orçamento do Mês (Consumo vs Teto)</h3>
                     <div class="list-container" id="budget-progress-list"></div>
                 </div>
 
                 <div class="section-box">
-                    <h3>🏦 Nova Caixinha / Objetivo</h3>
+                    <h3>🏦 Nova Caixinha / Reserva</h3>
                     <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🛡️ Reserva de Emergência)">
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Futuro Sofia, 🛡️ Emergência)">
                         <input type="number" id="goal-target" min="1" step="10" placeholder="Meta Total (R$)">
                         <button class="btn-primary" onclick="adicionarMeta()">🎯 Criar Caixinha</button>
                     </div>
@@ -811,7 +807,7 @@
             <div id="tab-investimentos" class="tab-pane">
                 <div class="summary-grid">
                     <div class="card purple full-width">
-                        <span>💼 Total Geral Aportado</span>
+                        <span>💼 Total Geral em Ativos</span>
                         <h2 id="card-total-invested">R$ 0,00</h2>
                     </div>
                     <div class="card yellow">
@@ -831,7 +827,7 @@
                             <select id="invest-platform">
                                 <option value="XP Investimentos">XP Investimentos</option>
                                 <option value="Binance">Binance</option>
-                                <option value="Nubank/Outro">Outra Corretora</option>
+                                <option value="Outros">Outra Corretora</option>
                             </select>
                             <select id="invest-type">
                                 <option value="Renda Fixa">🏛️ Renda Fixa / CDB</option>
@@ -841,7 +837,7 @@
                                 <option value="Outros">📦 Outros</option>
                             </select>
                         </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: BTC, Tesouro Selic, PETR4)">
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC, Selic)">
                         <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor Aportado (R$)">
                         <button class="btn-primary" onclick="adicionarInvestimento()">➕ Adicionar Ativo</button>
                     </div>
@@ -855,7 +851,6 @@
 
             <!-- ABA 4: RELATÓRIOS E BACKUP -->
             <div id="tab-relatorios" class="tab-pane">
-                
                 <div class="summary-grid">
                     <div class="card green">
                         <span>📈 Entradas no Ano</span>
@@ -865,65 +860,29 @@
                         <span>📉 Saídas no Ano</span>
                         <h2 id="card-year-expense">R$ 0,00</h2>
                     </div>
-                    <div class="card blue">
-                        <span>💰 Economia Anual</span>
+                    <div class="card blue full-width">
+                        <span>💰 Economia Anual Acumulada</span>
                         <h2 id="card-year-savings">R$ 0,00</h2>
                     </div>
-                    <div class="card purple">
-                        <span>📊 Taxa de Poupança</span>
-                        <h2 id="card-savings-rate">0%</h2>
-                    </div>
                 </div>
 
                 <div class="section-box">
-                    <h3>📈 Evolução Mensal (Entradas vs Saídas)</h3>
-                    <div class="chart-box">
-                        <canvas id="monthlyComparisonChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>📋 Histórico Detalhado dos Meses</h3>
-                    <div style="overflow-x: auto;">
-                        <table class="report-table">
-                            <thead>
-                                <tr>
-                                    <th>Mês</th>
-                                    <th>Receitas</th>
-                                    <th>Despesas</th>
-                                    <th>Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody id="monthly-report-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>🥧 Despesas por Categoria (Mês Ativo)</h3>
-                    <div class="chart-box" style="height: 180px;">
-                        <canvas id="expenseCategoryChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>💾 Backup e Segurança</h3>
+                    <h3>💾 Backup dos Dados</h3>
                     <div class="form-group">
-                        <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Extrato em CSV (Excel)</button>
+                        <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Extrato CSV</button>
                         <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
                         <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
                         <input type="file" id="import-file" style="display:none;" accept=".json" onchange="importarBackupJSON(event)">
-                        <button class="btn-danger" onclick="limparTodosDados()" style="margin-top: 6px;">🗑️ Reiniciar e Limpar Todos os Dados</button>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- MODAL GENÉRICO PARA ENTRADAS RÁPIDAS -->
+        <!-- MODAL NATIVO -->
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
-                <h4 id="modal-title">Título do Modal</h4>
+                <h4 id="modal-title">Título</h4>
                 <div id="modal-body" class="form-group"></div>
                 <div class="form-row">
                     <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
@@ -935,7 +894,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "meu_orcamento_limpo_v5";
+        const STORAGE_KEY = "financas_pro_v2_data";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -945,32 +904,37 @@
 
         const defaultData = {
             cash: 0.00,
+            sources: {
+                diego: 0.00,
+                sofiaPension: 0.00,
+                personal: 0.00
+            },
             categories: [
+                { name: "👧 Sofia (Pensão / Partes)", color: "#ec4899", limit: 1500 },
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 800 },
                 { name: "🏠 Moradia", color: "#6366f1", limit: 1200 },
-                { name: "🚗 Transporte", color: "#ec4899", limit: 400 },
-                { name: "🎮 Lazer", color: "#06b6d4", limit: 300 }
+                { name: "🚗 Transporte", color: "#3b82f6", limit: 400 }
             ],
             transactions: [],
             goals: [],
             investments: []
         };
 
-        // Carregamento resiliente (nunca quebra por propriedades ausentes)
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("meu_orcamento_limpo_v4");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("meu_orcamento_limpo_v5") || localStorage.getItem("meu_orcamento_limpo_v4");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
                     return {
                         cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
+                        sources: parsed.sources || { diego: 0.00, sofiaPension: 0.00, personal: 0.00 },
                         categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
                         goals: Array.isArray(parsed.goals) ? parsed.goals : [],
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
                 } catch (e) {
-                    console.error("Falha ao analisar dados:", e);
+                    console.error("Erro ao carregar dados:", e);
                 }
             }
             return JSON.parse(JSON.stringify(defaultData));
@@ -982,7 +946,6 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
         }
 
-        // --- SISTEMA DE SESSÃO & DESBLOQUEIO ---
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
                 const lock = document.getElementById("lock-screen");
@@ -992,23 +955,10 @@
             atualizarTela();
         });
 
-        function desbloquearApp(comFeedbackVisual = false) {
-            const icon = document.getElementById('bio-icon');
-            const status = document.getElementById('bio-status');
-            const btn = document.getElementById('biometric-btn');
-
-            if (comFeedbackVisual && icon && status) {
-                icon.className = "fa-solid fa-check text-3xl text-emerald-300";
-                btn.classList.add('bg-emerald-700');
-                status.textContent = "Acesso liberado!";
-                status.className = "text-xs text-emerald-400 font-bold";
-            }
-
+        function desbloquearApp() {
             sessionStorage.setItem('app_ja_desbloqueado', 'true');
-            setTimeout(() => {
-                const lock = document.getElementById("lock-screen");
-                if (lock) lock.classList.add("hidden");
-            }, comFeedbackVisual ? 250 : 50);
+            const lock = document.getElementById("lock-screen");
+            if (lock) lock.classList.add("hidden");
         }
 
         function bloquearManualmente() {
@@ -1016,26 +966,6 @@
             const lock = document.getElementById("lock-screen");
             if (lock) lock.classList.remove("hidden");
         }
-
-        // --- PWA INSTALLATION PROMPT ---
-        let deferredPrompt = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        function instalarAppPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            } else {
-                alert("Para instalar:\n• No Android/Chrome: Toque nos três pontos (⋮) e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n• No iPhone/Safari: Toque no botão Compartilhar e selecione 'Adicionar à Tela de Início'.");
-            }
-        }
-
-        // --- NAVEGAÇÃO ENTRE ABAS ---
-        let monthlyChartInstance = null;
-        let expenseChartInstance = null;
 
         function trocarAba(aba) {
             const tabs = ['gastos', 'metas', 'investimentos', 'relatorios'];
@@ -1046,10 +976,6 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
-
-            if (aba === 'relatorios') {
-                renderizarRelatorios();
-            }
         }
 
         function mudarMes(delta) {
@@ -1074,47 +1000,75 @@
             }
         }
 
-        // --- ATUALIZAÇÃO DA INTERFACE ---
         function atualizarTela() {
             document.getElementById("current-month-display").innerText = `${mesesNomes[currentMonthNum - 1]} de ${currentYear}`;
             
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
+            // Cálculos
             const despesasMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const receitasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const faturaCartaoMes = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-            const liquidoMes = receitasMes - despesasMes;
 
-            document.getElementById("card-cash").innerText = `R$ ${financialData.cash.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-spent").innerText = `R$ ${despesasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-income").innerText = `R$ ${receitasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-net").innerText = `R$ ${liquidoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            // Caixinhas e Investimentos
+            const totalCaixinhas = (financialData.goals || []).reduce((acc, curr) => acc + (curr.current || 0), 0);
+            const totalInvestimentos = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
+            
+            // 1. VERBA TOTAL ACUMULADA (Caixa + Caixinhas + Investimentos)
+            const verbaTotalAcumulada = (financialData.cash || 0) + totalCaixinhas + totalInvestimentos;
+            document.getElementById("card-total-wealth").innerText = `R$ ${verbaTotalAcumulada.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("sub-cash").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+            document.getElementById("sub-goals").innerText = `R$ ${totalCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+            document.getElementById("sub-invest").innerText = `R$ ${totalInvestimentos.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
+
+            // 2. COMPOSIÇÃO DAS VERBAS DO MÊS
+            const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
+            document.getElementById("verba-diego-val").innerText = `R$ ${(src.diego || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("verba-sofia-val").innerText = `R$ ${(src.sofiaPension || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("verba-propria-val").innerText = `R$ ${(src.personal || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            // GASTOS E RESTANTE DA PENSÃO DA SOFIA
+            const gastosSofia = transDoMes.filter(t => t.type === 'expense' && t.beneficiary === 'Sofia').reduce((acc, curr) => acc + curr.value, 0);
+            const restaSofia = (src.sofiaPension || 0) - gastosSofia;
+            document.getElementById("sofia-spent").innerText = `R$ ${gastosSofia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const remainElem = document.getElementById("sofia-remain");
+            remainElem.innerText = `R$ ${restaSofia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            remainElem.style.color = restaSofia >= 0 ? "var(--green)" : "var(--red)";
+
+            // CARDS PADRÃO
+            document.getElementById("card-cash").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-credit").innerText = `R$ ${faturaCartaoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-income").innerText = `R$ ${receitasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("card-spent").innerText = `R$ ${despesasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // Select de Categorias
+            // SELECT CATEGORIAS
             const select = document.getElementById("trans-category");
             select.innerHTML = '<option value="">Selecione Categoria</option>';
             (financialData.categories || []).forEach(cat => {
                 const opt = document.createElement("option");
-                opt.value = cat.name;
-                opt.textContent = cat.name;
+                opt.value = cat.name; opt.textContent = cat.name;
                 select.appendChild(opt);
             });
 
-            // Lista de Transações com Busca
+            // FILTRO E BUSCA NO EXTRATO
             const filter = document.getElementById("filter-type").value;
             const searchVal = (document.getElementById("search-trans").value || "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
             listContainer.innerHTML = '';
 
             const filtrados = transDoMes.filter(t => {
-                const bateTipo = (filter === 'all' || t.type === filter);
+                let bateTipo = true;
+                if (filter === 'expense') bateTipo = (t.type === 'expense');
+                else if (filter === 'income') bateTipo = (t.type === 'income');
+                else if (filter === 'sofia') bateTipo = (t.beneficiary === 'Sofia');
+                else if (filter === 'diego') bateTipo = (t.beneficiary === 'Diego');
+
                 const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal) || (t.category && t.category.toLowerCase().includes(searchVal));
                 return bateTipo && bateTexto;
             });
 
             if (filtrados.length === 0) {
-                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhuma movimentação encontrada.</span>';
+                listContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:12px;">Nenhum lançamento encontrado.</span>';
             } else {
                 filtrados.forEach((trans) => {
                     const catObj = financialData.categories.find(c => c.name === trans.category);
@@ -1124,17 +1078,28 @@
                     const valClass = isExpense ? 'val-expense' : 'val-income';
                     const dataFormatada = trans.date ? trans.date.split('-').reverse().slice(0, 2).join('/') : '';
 
+                    let tagHtml = '';
+                    if (trans.beneficiary === 'Sofia') {
+                        tagHtml = '<span class="tag-person tag-sofia">👧 Sofia</span>';
+                    } else if (trans.beneficiary === 'Diego') {
+                        tagHtml = '<span class="tag-person tag-diego">👨 Diego</span>';
+                    }
+
                     const item = document.createElement("div");
                     item.className = "item-card";
-                    item.style.borderLeftColor = catColor;
+                    item.style.borderLeftColor = trans.beneficiary === 'Sofia' ? 'var(--pink)' : catColor;
                     item.innerHTML = `
                         <div class="item-info">
                             <span class="item-title">${trans.desc}</span>
-                            <span class="item-meta">${trans.category || 'Geral'} • ${trans.payment} • ${dataFormatada}</span>
+                            <div class="item-meta">
+                                ${tagHtml}
+                                <span>${trans.category || 'Geral'}</span> • 
+                                <span>${trans.payment}</span> • 
+                                <span>${dataFormatada}</span>
+                            </div>
                         </div>
                         <div class="item-right">
                             <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
@@ -1142,7 +1107,31 @@
                 });
             }
 
-            // Progresso de Orçamento das Categorias
+            // Metas / Caixinhas
+            const goalsContainer = document.getElementById("goals-list");
+            goalsContainer.innerHTML = '';
+            (financialData.goals || []).forEach((goal) => {
+                const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
+                const gItem = document.createElement("div");
+                gItem.className = "goal-item";
+                gItem.innerHTML = `
+                    <div class="budget-header">
+                        <span>${goal.name}</span>
+                        <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
+                    </div>
+                    <div style="display:flex; gap:6px; margin-top:6px;">
+                        <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                        <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                        <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                goalsContainer.appendChild(gItem);
+            });
+
+            // Orçamento
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
             (financialData.categories || []).forEach((cat) => {
@@ -1168,74 +1157,15 @@
                 `;
                 budgetContainer.appendChild(bItem);
             });
-
-            // Metas / Caixinhas
-            const goalsContainer = document.getElementById("goals-list");
-            goalsContainer.innerHTML = '';
-            if (!financialData.goals || financialData.goals.length === 0) {
-                goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada ainda.</span>';
-            } else {
-                financialData.goals.forEach((goal) => {
-                    const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
-                    const gItem = document.createElement("div");
-                    gItem.className = "goal-item";
-                    gItem.innerHTML = `
-                        <div class="goal-header">
-                            <span>${goal.name}</span>
-                            <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width: ${perc}%; background: var(--primary);"></div>
-                        </div>
-                        <div style="display:flex; gap:6px; margin-top:6px;">
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
-                            <button class="btn-secondary" style="flex:1; padding:4px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
-                            <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    goalsContainer.appendChild(gItem);
-                });
-            }
-
-            // Investimentos
-            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
-            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
-            const totalOutros = (financialData.investments || []).filter(i => i.platform !== "XP Investimentos" && i.platform !== "Binance").reduce((acc, curr) => acc + curr.value, 0);
-
-            document.getElementById("card-total-invested").innerText = `R$ ${(totalXP + totalBinance + totalOutros).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-xp-total").innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-binance-total").innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
-            const investList = document.getElementById("investment-list");
-            investList.innerHTML = '';
-            if (!financialData.investments || financialData.investments.length === 0) {
-                investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum aporte registrado.</span>';
-            } else {
-                financialData.investments.forEach((inv) => {
-                    const item = document.createElement("div");
-                    item.className = "item-card";
-                    item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
-                    item.innerHTML = `
-                        <div class="item-info">
-                            <span class="item-title">${inv.asset}</span>
-                            <span class="item-meta">${inv.platform} • ${inv.type} • ${inv.date}</span>
-                        </div>
-                        <div class="item-right">
-                            <span class="val-neutral">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                            <button class="btn-icon del" onclick="removerInvestimento(${inv.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    investList.appendChild(item);
-                });
-            }
         }
 
-        // --- LANÇAMENTOS & PARCELAMENTO ---
+        // --- LANÇAMENTOS COM PARTES / PARCELAS ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
             const value = parseFloat(document.getElementById("trans-value").value);
             const category = document.getElementById("trans-category").value;
+            const beneficiary = document.getElementById("trans-beneficiary").value;
             const payment = document.getElementById("trans-payment").value;
             const installments = parseInt(document.getElementById("trans-installments").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
@@ -1245,7 +1175,6 @@
                 return;
             }
 
-            // Atualiza o saldo em dinheiro de imediato se não for cartão
             if (type === 'expense' && payment !== "Cartão de Crédito") {
                 financialData.cash -= value;
             } else if (type === 'income') {
@@ -1256,12 +1185,11 @@
             const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
 
             for (let i = 0; i < installments; i++) {
-                let m = mesBase + i;
-                let a = anoBase;
+                let m = mesBase + i; let a = anoBase;
                 while (m > 12) { m -= 12; a += 1; }
                 const mKey = `${a}-${String(m).padStart(2, '0')}`;
                 const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaBase).padStart(2, '0')}`;
-                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments})` : desc;
+                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª parte)` : desc;
 
                 financialData.transactions.unshift({
                     id: Date.now() + i,
@@ -1269,6 +1197,7 @@
                     desc: descricaoFinal,
                     value: valorParcela,
                     category: category || "Geral",
+                    beneficiary: beneficiary || "Geral",
                     payment: type === 'expense' ? payment : "Dinheiro/Caixa",
                     date: dataParcela,
                     monthKey: mKey
@@ -1295,20 +1224,27 @@
             atualizarTela();
         }
 
-        // --- MODAL NATIVO (SUBSTITUI PROMPT) ---
-        function abrirModal(titulo, htmlBody, callbackConfirm) {
-            document.getElementById("modal-title").innerText = titulo;
-            document.getElementById("modal-body").innerHTML = htmlBody;
-            const confirmBtn = document.getElementById("modal-confirm-btn");
-            confirmBtn.onclick = () => {
-                callbackConfirm();
-                fecharModal();
-            };
-            document.getElementById("app-modal").classList.add("active");
-        }
+        // --- MODAL DE AJUSTE DAS FONTES DE VERBA ---
+        function abrirModalFontesVerba() {
+            const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
+            abrirModal("Ajustar Fontes de Verba do Mês", `
+                <label class="text-xs text-gray-500 font-bold">👨 Contribuição Diego (R$):</label>
+                <input type="number" id="input-src-diego" step="10" value="${src.diego || 0}">
 
-        function fecharModal() {
-            document.getElementById("app-modal").classList.remove("active");
+                <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão Sofia (R$):</label>
+                <input type="number" id="input-src-sofia" step="10" value="${src.sofiaPension || 0}">
+
+                <label class="text-xs text-gray-500 font-bold mt-2">💼 Minha Renda / Outros (R$):</label>
+                <input type="number" id="input-src-personal" step="10" value="${src.personal || 0}">
+            `, () => {
+                const diego = parseFloat(document.getElementById("input-src-diego").value) || 0;
+                const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
+                const personal = parseFloat(document.getElementById("input-src-personal").value) || 0;
+
+                financialData.sources = { diego, sofiaPension: sofia, personal };
+                salvarDados();
+                atualizarTela();
+            });
         }
 
         function abrirModalSaldo() {
@@ -1325,75 +1261,13 @@
             });
         }
 
-        function abrirModalPagarFatura() {
-            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
-            const faturaAtual = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-
-            if (faturaAtual <= 0) {
-                alert("Não há despesas no cartão de crédito para este mês.");
-                return;
-            }
-
-            abrirModal("Pagar Fatura do Cartão", `
-                <p class="text-xs text-gray-500">Saldo em caixa atual: <b>R$ ${financialData.cash.toFixed(2)}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Fatura do mês: <b>R$ ${faturaAtual.toFixed(2)}</b></p>
-                <label class="text-xs text-gray-500 font-bold">Valor a deduzir do caixa:</label>
-                <input type="number" id="input-modal-fatura" step="0.01" value="${faturaAtual}">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-fatura").value);
-                if (!isNaN(val) && val > 0) {
-                    financialData.cash -= val;
-                    financialData.transactions.unshift({
-                        id: Date.now(),
-                        type: 'expense',
-                        desc: `Pagamento Fatura (${mesesNomes[currentMonthNum - 1]})`,
-                        value: val,
-                        category: 'Pagamentos',
-                        payment: 'Dinheiro/Caixa',
-                        date: new Date().toISOString().slice(0, 10),
-                        monthKey: selectedMonthKey
-                    });
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalEditarTransacao(id) {
-            const t = financialData.transactions.find(x => x.id === id);
-            if (!t) return;
-
-            abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
-                <input type="text" id="edit-t-desc" value="${t.desc}">
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
-                <input type="number" id="edit-t-val" step="0.01" value="${t.value}">
-            `, () => {
-                const newDesc = document.getElementById("edit-t-desc").value.trim();
-                const newVal = parseFloat(document.getElementById("edit-t-val").value);
-                if (newDesc && !isNaN(newVal) && newVal > 0) {
-                    // Ajusta o caixa proporcionalmente
-                    if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
-                        financialData.cash += t.value - newVal;
-                    } else if (t.type === 'income') {
-                        financialData.cash -= t.value - newVal;
-                    }
-                    t.desc = newDesc;
-                    t.value = newVal;
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
         function abrirModalCaixinha(id, tipo) {
             const goal = financialData.goals.find(g => g.id === id);
             if (!goal) return;
 
             abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
                 <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b> / R$ ${goal.target.toFixed(2)}</p>
-                <label class="text-xs text-gray-500 font-bold">Valor (R$):</label>
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
                 <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Ex: 50.00">
             `, () => {
                 const val = parseFloat(document.getElementById("input-modal-goal-val").value);
@@ -1402,7 +1276,7 @@
                         financialData.cash -= val;
                         goal.current += val;
                     } else {
-                        if (val > goal.current) { alert("Saldo insuficiente na caixinha."); return; }
+                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
                         goal.current -= val;
                         financialData.cash += val;
                     }
@@ -1412,237 +1286,46 @@
             });
         }
 
-        // --- CATEGORIAS, METAS E INVESTIMENTOS ---
-        function adicionarCategoria() {
-            const name = document.getElementById("cat-name").value.trim();
-            const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
-            const color = document.getElementById("cat-color").value;
-            if (!name) { alert("Informe o nome da categoria."); return; }
+        function abrirModalPagarFatura() {
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+            const faturaAtual = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            const existente = financialData.categories.find(c => c.name.toLowerCase() === name.toLowerCase());
-            if (existente) {
-                existente.limit = limit;
-                existente.color = color;
-            } else {
-                financialData.categories.push({ name, color, limit });
+            if (faturaAtual <= 0) {
+                alert("Não há fatura pendente neste mês.");
+                return;
             }
 
-            document.getElementById("cat-name").value = '';
-            document.getElementById("cat-limit").value = '';
-            salvarDados();
-            atualizarTela();
-        }
-
-        function adicionarMeta() {
-            const name = document.getElementById("goal-name").value.trim();
-            const target = parseFloat(document.getElementById("goal-target").value);
-            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e a meta pretendida."); return; }
-
-            financialData.goals.push({ id: Date.now(), name, target, current: 0 });
-            document.getElementById("goal-name").value = '';
-            document.getElementById("goal-target").value = '';
-            salvarDados();
-            atualizarTela();
-        }
-
-        function removerMeta(id) {
-            financialData.goals = financialData.goals.filter(g => g.id !== id);
-            salvarDados();
-            atualizarTela();
-        }
-
-        function adicionarInvestimento() {
-            const platform = document.getElementById("invest-platform").value;
-            const type = document.getElementById("invest-type").value;
-            const asset = document.getElementById("invest-asset").value.trim();
-            const value = parseFloat(document.getElementById("invest-value").value);
-            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
-
-            const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value, date: dataAtual });
-
-            document.getElementById("invest-asset").value = '';
-            document.getElementById("invest-value").value = '';
-            salvarDados();
-            atualizarTela();
-        }
-
-        function removerInvestimento(id) {
-            financialData.investments = financialData.investments.filter(i => i.id !== id);
-            salvarDados();
-            atualizarTela();
-        }
-
-        // --- RELATÓRIOS E GRÁFICOS ---
-        function renderizarRelatorios() {
-            const anoAtual = currentYear;
-            const transAno = (financialData.transactions || []).filter(t => t.monthKey && t.monthKey.startsWith(String(anoAtual)));
-
-            const totalEntradasAno = transAno.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            const totalSaidasAno = transAno.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
-            const economiaAno = totalEntradasAno - totalSaidasAno;
-            const taxaPoupanca = totalEntradasAno > 0 ? Math.round((economiaAno / totalEntradasAno) * 100) : 0;
-
-            document.getElementById("card-year-income").innerText = `R$ ${totalEntradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-year-expense").innerText = `R$ ${totalSaidasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-year-savings").innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-savings-rate").innerText = `${taxaPoupanca}%`;
-
-            const monthlyIncome = [];
-            const monthlyExpense = [];
-            const tableBody = document.getElementById("monthly-report-table-body");
-            tableBody.innerHTML = '';
-
-            for (let m = 1; m <= 12; m++) {
-                const mKey = `${anoAtual}-${String(m).padStart(2, '0')}`;
-                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                const inc = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
-                const exp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
-                const net = inc - exp;
-
-                monthlyIncome.push(inc);
-                monthlyExpense.push(exp);
-
-                const tr = document.createElement("tr");
-                const netColor = net >= 0 ? "var(--green)" : "var(--red)";
-                tr.innerHTML = `
-                    <td style="font-weight:700;">${mesesNomes[m - 1]}</td>
-                    <td style="color:var(--green);">R$ ${inc.toFixed(0)}</td>
-                    <td style="color:var(--red);">R$ ${exp.toFixed(0)}</td>
-                    <td style="color:${netColor}; font-weight:700;">R$ ${net.toFixed(0)}</td>
-                `;
-                tableBody.appendChild(tr);
-            }
-
-            const totalRow = document.createElement("tr");
-            totalRow.className = "total-row";
-            const totNetColor = economiaAno >= 0 ? "var(--green)" : "var(--red)";
-            totalRow.innerHTML = `
-                <td>TOTAL ANUAL</td>
-                <td style="color:var(--green);">R$ ${totalEntradasAno.toFixed(0)}</td>
-                <td style="color:var(--red);">R$ ${totalSaidasAno.toFixed(0)}</td>
-                <td style="color:${totNetColor};">R$ ${economiaAno.toFixed(0)}</td>
-            `;
-            tableBody.appendChild(totalRow);
-
-            // Gráfico de Barras Mensal
-            const canvasMonthly = document.getElementById('monthlyComparisonChart');
-            if (canvasMonthly) {
-                const ctxMonthly = canvasMonthly.getContext('2d');
-                if (monthlyChartInstance) monthlyChartInstance.destroy();
-                monthlyChartInstance = new Chart(ctxMonthly, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        datasets: [
-                            { label: 'Receitas', data: monthlyIncome, backgroundColor: '#10b981', borderRadius: 6 },
-                            { label: 'Despesas', data: monthlyExpense, backgroundColor: '#f43f5e', borderRadius: 6 }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
-                        scales: { x: { grid: { display: false } }, y: { ticks: { font: { size: 9 } } } }
-                    }
-                });
-            }
-
-            // Gráfico Donut de Despesas por Categoria
-            const canvasCat = document.getElementById('expenseCategoryChart');
-            if (canvasCat) {
-                const ctxCat = canvasCat.getContext('2d');
-                const catLabels = (financialData.categories || []).map(c => c.name);
-                const catColors = (financialData.categories || []).map(c => c.color);
-                const transMesAtivo = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
-                const catTotals = (financialData.categories || []).map(cat => {
-                    return transMesAtivo.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
-                });
-
-                if (expenseChartInstance) expenseChartInstance.destroy();
-                expenseChartInstance = new Chart(ctxCat, {
-                    type: 'doughnut',
-                    data: {
-                        labels: catLabels,
-                        datasets: [{ data: catTotals, backgroundColor: catColors, borderWidth: 2, borderColor: '#0f172a' }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
-                    }
-                });
-            }
-        }
-
-        // --- BACKUP, IMPORTAÇÃO & EXPORTAÇÃO ---
-        function exportarCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Data;Mes;Tipo;Descricao;Valor;Categoria;Pagamento\n";
-            (financialData.transactions || []).forEach(t => {
-                csvContent += `${t.date};${t.monthKey};${t.type === 'expense' ? 'Despesa' : 'Receita'};${t.desc};${t.value};${t.category};${t.payment}\n`;
-            });
-            const link = document.createElement("a");
-            link.setAttribute("href", encodeURI(csvContent));
-            link.setAttribute("download", `extrato_${selectedMonthKey}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function exportarBackupJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(financialData, null, 2));
-            const link = document.createElement("a");
-            link.setAttribute("href", dataStr);
-            link.setAttribute("download", `financas_pro_backup_${new Date().toISOString().slice(0, 10)}.json`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function importarBackupJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (parsed && typeof parsed === 'object') {
-                        financialData = {
-                            cash: typeof parsed.cash === 'number' ? parsed.cash : 0,
-                            categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
-                            transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
-                            investments: Array.isArray(parsed.investments) ? parsed.investments : []
-                        };
-                        salvarDados();
-                        atualizarTela();
-                        alert("Backup restaurado com sucesso!");
-                    }
-                } catch (err) {
-                    alert("Arquivo de backup inválido.");
+            abrirModal("Pagar Fatura do Cartão", `
+                <p class="text-xs text-gray-500">Saldo atual: <b>R$ ${financialData.cash.toFixed(2)}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Fatura a pagar: <b>R$ ${faturaAtual.toFixed(2)}</b></p>
+                <input type="number" id="input-modal-fatura" step="0.01" value="${faturaAtual}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-fatura").value);
+                if (!isNaN(val) && val > 0) {
+                    financialData.cash -= val;
+                    salvarDados();
+                    atualizarTela();
                 }
-            };
-            reader.readAsText(file);
+            });
         }
 
-        function limparTodosDados() {
-            if (confirm("Tem certeza que deseja apagar todos os lançamentos e restaurar o app para o padrão?")) {
-                financialData = JSON.parse(JSON.stringify(defaultData));
-                salvarDados();
-                atualizarTela();
-                alert("Aplicativo reiniciado com sucesso.");
-            }
+        function abrirModal(titulo, htmlBody, callbackConfirm) {
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-body").innerHTML = htmlBody;
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            confirmBtn.onclick = () => {
+                callbackConfirm();
+                fecharModal();
+            };
+            document.getElementById("app-modal").classList.add("active");
+        }
+
+        function fecharModal() {
+            document.getElementById("app-modal").classList.remove("active");
         }
 
         function alternarTema() {
-            const body = document.body;
-            const btn = document.querySelector(".theme-toggle");
-            body.classList.toggle("dark-mode");
-            btn.textContent = body.classList.contains("dark-mode") ? "☀️ Claro" : "🌙 Escuro";
-            if (document.getElementById('tab-relatorios').classList.contains('active')) {
-                renderizarRelatorios();
-            }
+            document.body.classList.toggle("dark-mode");
         }
     </script>
 </body>
