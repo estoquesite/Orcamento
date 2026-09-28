@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V16</title>
+    <title>Finanças Pro V17</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -19,7 +19,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* PALETA PROFISSIONAL DE FINANÇAS (SUAVE, LIMPA E SEGURA) */
         :root {
             --global-bg: #f8fafc;
             --primary: #059669;
@@ -289,7 +288,7 @@
             background: var(--custom-card);
             border: 1px solid var(--border-color);
             color: var(--custom-text);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -911,32 +910,6 @@
             cursor: pointer;
         }
 
-        .color-control-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 6px;
-        }
-        .color-picker-box {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            background: var(--input-bg);
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.72rem;
-            font-weight: 800;
-        }
-        .color-picker-box input[type="color"] {
-            width: 100%;
-            height: 34px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -1010,7 +983,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V16</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V17</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1031,7 +1004,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V16</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V17</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1071,7 +1044,7 @@
             <!-- TELA 1: PAINEL -->
             <div id="tab-painel" class="tab-pane">
                 <div class="date-control-bar custom-card-box" id="bloco_data" data-bloco-id="data">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('data')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('data')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
                         <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;"></select>
@@ -1099,7 +1072,7 @@
                 </div>
 
                 <div class="hero-wallet-card" id="bloco_saldo" data-bloco-id="saldo">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.8); text-transform:uppercase;">Disponível no Mês</span>
                     </div>
@@ -1149,7 +1122,7 @@
 
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner custom-card-box" id="bloco_soma" data-bloco-id="soma">
-                        <button class="btn-config-bloco" onclick="abrirConfigBloco('soma')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                        <button class="btn-config-bloco" onclick="abrirConfigBloco('soma')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                         <div>
                             <span style="font-size:0.65rem; font-weight:800; opacity:0.7; text-transform:uppercase; display:block;">
                                 📦 Soma Total das Verbas
@@ -1168,7 +1141,7 @@
                 </div>
 
                 <div class="extra-income-card custom-card-box" id="bloco_extra" data-bloco-id="extra">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('extra')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('extra')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <b style="font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:5px;">
@@ -1185,7 +1158,7 @@
                 </div>
 
                 <div class="section-box custom-card-box" id="bloco_ultimos" data-bloco-id="ultimos">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('ultimos')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('ultimos')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; opacity:0.8;">🕒 ÚLTIMOS LANÇAMENTOS</span>
                         <a href="#" onclick="trocarAba('lancar')" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">Ver extrato →</a>
@@ -1194,7 +1167,7 @@
                 </div>
 
                 <div class="custom-card-box" id="bloco_footer" data-bloco-id="footer" style="padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('footer')" title="Configurar Cores deste Bloco"><i class="fa-solid fa-palette"></i></button>
+                    <button class="btn-config-bloco" onclick="abrirConfigBloco('footer')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div>
                         <span style="font-size:0.65rem; opacity:0.7; display:block; font-weight:700;">📅 ANO <span id="txt-ano-atual">2026</span></span>
                         <span style="font-size:0.82rem; font-weight:900; color:var(--primary);">Economia: <span id="ano-economia-val">R$ 0,00</span></span>
@@ -1337,16 +1310,15 @@
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <h3><span style="font-size:0.85rem; font-weight:800;">📑 Extrato do Mês</span></h3>
                         <button onclick="exportarCSV()" class="btn-box-action" title="Exportar Extrato em Planilha Excel">
-                            <i class="fa-solid fa-file-excel text-green-600"></i> Exportar CSV
+                            <i class="fa-solid fa-file-excel text-emerald-600"></i> Exportar CSV
                         </button>
                     </div>
                     
                     <div style="display:flex; gap:6px; margin-bottom:8px;">
                         <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="flex:1; font-size:0.75rem; padding:8px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--custom-text);">
-                        <select id="filter-type" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--custom-text);">
-                            <option value="all">Todos</option>
-                            <option value="cartao">💳 Só Cartão</option>
-                            <option value="cash">💵 Só À Vista</option>
+                        <!-- NOVO: FILTRO POR CATEGORIA -->
+                        <select id="filter-category" onchange="atualizarTela()" style="padding:2px 8px; font-size:0.72rem; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); color:var(--custom-text);">
+                            <option value="all">Todas Categorias</option>
                         </select>
                     </div>
                     
@@ -1403,7 +1375,7 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES -->
+            <!-- TELA 4: MESES (COM GRÁFICO DE FLUXO DE CAIXA ANUAL) -->
             <div id="tab-meses" class="tab-pane">
                 <div class="year-selector-header custom-card-box" style="padding:8px 12px;">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
@@ -1426,6 +1398,14 @@
                     </div>
                 </div>
 
+                <!-- NOVO GRÁFICO DE EVOLUÇÃO ANUAL -->
+                <div class="section-box custom-card-box" style="padding:12px;">
+                    <span style="font-size:0.75rem; font-weight:800; opacity:0.8; display:block; margin-bottom:6px;"><i class="fa-solid fa-chart-line text-emerald-600"></i> FLUXO DE CAIXA ANUAL</span>
+                    <div style="position:relative; width:100%; height:150px;">
+                        <canvas id="annualCashFlowChart"></canvas>
+                    </div>
+                </div>
+
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
@@ -1433,7 +1413,7 @@
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Estilos <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V16</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores & Estilos <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V17</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Paleta profissional de finanças</span>
                     </div>
                 </div>
@@ -1539,10 +1519,10 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v46";
+        const STORAGE_KEY = "financas_pro_neon_v47";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
-        const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v16";
+        const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v17";
 
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1556,6 +1536,7 @@
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
         let privacyMode = localStorage.getItem(PRIVACY_KEY) === 'true';
+        let annualChartInstance = null;
 
         let blocksConfig = JSON.parse(localStorage.getItem(BLOCKS_CONFIG_KEY)) || {};
 
@@ -1567,10 +1548,10 @@
                 { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
             ],
             creditCards: [
-                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316", closingDay: 25, dueDay: 5 },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#dc2626", closingDay: 20, dueDay: 28 },
-                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0284c7", closingDay: 15, dueDay: 22 },
-                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#7c3aed", closingDay: 10, dueDay: 17 }
+                { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#059669", closingDay: 25, dueDay: 5 },
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#0284c7", closingDay: 20, dueDay: 28 },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#7c3aed", closingDay: 15, dueDay: 22 },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#d97706", closingDay: 10, dueDay: 17 }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
@@ -1884,6 +1865,10 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
+
+            if (aba === 'meses') {
+                setTimeout(renderizarGraficoAnual, 50);
+            }
             setTimeout(aplicarTodasConfiguracoesBlocos, 10);
         }
 
@@ -1931,11 +1916,13 @@
             if (selectedYearTabela > 2035) selectedYearTabela = 2035;
             popularSeletoresDeAno();
             atualizarTela();
+            renderizarGraficoAnual();
         }
 
         function alterarAnoTabela(novoAno) {
             selectedYearTabela = parseInt(novoAno, 10);
             atualizarTela();
+            renderizarGraficoAnual();
         }
 
         function obterVerbaDoMes(mKey, totalBaseCaixinhas) {
@@ -1943,6 +1930,56 @@
                 return financialData.monthIncomes[mKey];
             }
             return totalBaseCaixinhas;
+        }
+
+        // RENDERIZAÇÃO DO GRÁFICO DE FLUXO DE CAIXA ANUAL NA ABA MESES
+        function renderizarGraficoAnual() {
+            const ctx = document.getElementById('annualCashFlowChart');
+            if (!ctx) return;
+
+            const labelsMesesCurto = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+            const dadosEntradas = [];
+            const dadosGastos = [];
+            const boxes = financialData.budgetBoxes || [];
+            const totalVerbaBase = boxes.reduce((acc, b) => acc + (b.amount || 0), 0);
+
+            for (let m = 1; m <= 12; m++) {
+                const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
+                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
+                const mExtras = (financialData.extraIncomes || []).filter(e => e.monthKey === mKey);
+
+                const mExtLançadas = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                const mExtrasValor = mExtras.reduce((acc, c) => acc + c.value, 0);
+                const verbaBase = obterVerbaDoMes(mKey, totalVerbaBase);
+                
+                const mInc = verbaBase + mExtLançadas + mExtrasValor;
+                const mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
+
+                dadosEntradas.push(mInc);
+                dadosGastos.push(mExp);
+            }
+
+            if (annualChartInstance) annualChartInstance.destroy();
+
+            annualChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labelsMesesCurto,
+                    datasets: [
+                        { label: 'Entradas', data: dadosEntradas, backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'Gastos', data: dadosGastos, backgroundColor: '#e11d48', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { boxWidth: 10, font: { size: 9 } } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 9 } } },
+                        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
         }
 
         function exportarCSV() {
@@ -2357,6 +2394,7 @@
             }
 
             const selectCat = document.getElementById("trans-category");
+            const filterCat = document.getElementById("filter-category");
             if (selectCat) {
                 selectCat.innerHTML = '<option value="">Categoria...</option>';
                 (financialData.categories || []).forEach(cat => {
@@ -2365,8 +2403,19 @@
                     selectCat.appendChild(opt);
                 });
             }
+            if (filterCat) {
+                const atualFiltro = filterCat.value;
+                filterCat.innerHTML = '<option value="all">Todas Categorias</option>';
+                (financialData.categories || []).forEach(cat => {
+                    const opt = document.createElement("option");
+                    opt.value = cat.name; opt.textContent = cat.name;
+                    if (cat.name === atualFiltro) opt.selected = true;
+                    filterCat.appendChild(opt);
+                });
+            }
 
             const filter = document.getElementById("filter-type") ? document.getElementById("filter-type").value : 'all';
+            const catFilter = document.getElementById("filter-category") ? document.getElementById("filter-category").value : 'all';
             const searchVal = (document.getElementById("search-trans") ? document.getElementById("search-trans").value : "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
             
@@ -2376,8 +2425,9 @@
                     let bateTipo = true;
                     if (filter === 'cartao') bateTipo = (t.payment === 'Cartão de Crédito');
                     if (filter === 'cash') bateTipo = (t.payment !== 'Cartão de Crédito');
+                    let bateCat = (catFilter === 'all' || t.category === catFilter);
                     const bateTexto = !searchVal || t.desc.toLowerCase().includes(searchVal);
-                    return bateTipo && bateTexto;
+                    return bateTipo && bateCat && bateTexto;
                 });
 
                 if (filtrados.length === 0) {
@@ -2797,423 +2847,6 @@
                 salvarDados();
                 atualizarTela();
                 showToast("Caixinha removida.");
-            }
-        }
-
-        function adicionarTransacao() {
-            const type = selectedTransactionType;
-            const desc = document.getElementById("trans-desc").value.trim();
-            const inputVal = parseFloat(document.getElementById("trans-value").value);
-            const modo = selectedCalcMode;
-            const category = document.getElementById("trans-category").value;
-            const boxId = document.getElementById("trans-box-id").value;
-            const payment = document.getElementById("trans-payment").value;
-            const cardId = payment === "Cartão de Crédito" ? selectedCardIdSelected : null;
-            const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
-            const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
-            const isFixed = document.getElementById("trans-is-fixed").checked;
-
-            if (!desc || isNaN(inputVal) || inputVal <= 0) {
-                showToast("Preencha descrição e valor válido.", "fa-circle-exclamation");
-                return;
-            }
-
-            let valorParcela = modo === "parcela" ? inputVal : (inputVal / installments);
-            const [anoBase, mesBase, diaBase] = inputDate.split('-').map(Number);
-
-            for (let i = 0; i < installments; i++) {
-                let m = mesBase + i; let a = anoBase;
-                while (m > 12) { m -= 12; a += 1; }
-                const mKey = `${a}-${String(m).padStart(2, '0')}`;
-                
-                const ultimoDiaDesseMes = new Date(a, m, 0).getDate();
-                const diaAjustado = Math.min(diaBase, ultimoDiaDesseMes);
-                const dataParcela = `${a}-${String(m).padStart(2, '0')}-${String(diaAjustado).padStart(2, '0')}`;
-                const descricaoFinal = installments > 1 ? `${desc} (${i + 1}/${installments}ª)` : desc;
-
-                financialData.transactions.unshift({
-                    id: Date.now() + i,
-                    type,
-                    desc: descricaoFinal,
-                    value: valorParcela,
-                    category: category || "Geral",
-                    boxId: boxId || null,
-                    cardId: cardId || null,
-                    payment,
-                    date: dataParcela,
-                    monthKey: mKey,
-                    isFixed
-                });
-            }
-
-            document.getElementById("trans-desc").value = '';
-            document.getElementById("trans-value").value = '';
-            document.getElementById("trans-installments-num").value = '1';
-            document.getElementById("trans-is-fixed").checked = false;
-            calcularResumoParcelas();
-            salvarDados();
-            atualizarTela();
-            showToast("Lançamento salvo com sucesso!");
-        }
-
-        function abrirModalEditarTransacao(id) {
-            const t = financialData.transactions.find(x => x.id === id);
-            if (!t) return;
-
-            let optionsCaixinhas = '<option value="">Sem caixinha (Geral)</option>';
-            (financialData.budgetBoxes || []).forEach(b => {
-                optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
-            });
-
-            let optionsCartoes = '<option value="">Sem cartão específico</option>';
-            (financialData.creditCards || []).forEach(c => {
-                optionsCartoes += `<option value="${c.id}" ${t.cardId === c.id ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            let optionsCategorias = '<option value="">Sem categoria</option>';
-            (financialData.categories || []).forEach(c => {
-                optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
-            });
-
-            abrirModal("Editar Lançamento", `
-                <label class="text-xs text-gray-700 font-bold">Descrição:</label>
-                <input type="text" id="edit-trans-desc" value="${t.desc}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor (R$):</label>
-                <input type="number" id="edit-trans-val" step="0.01" value="${t.value}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Tipo:</label>
-                <select id="edit-trans-type">
-                    <option value="expense" ${t.type === 'expense' ? 'selected' : ''}>📉 Despesa (-)</option>
-                    <option value="income" ${t.type === 'income' ? 'selected' : ''}>📈 Receita (+)</option>
-                </select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Data:</label>
-                <input type="date" id="edit-trans-date" value="${t.date || ''}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Pagamento:</label>
-                <select id="edit-trans-payment">
-                    <option value="Cartão de Crédito" ${t.payment === 'Cartão de Crédito' ? 'selected' : ''}>💳 Cartão de Crédito</option>
-                    <option value="Dinheiro/Caixa" ${t.payment !== 'Cartão de Crédito' ? 'selected' : ''}>💵 Dinheiro / Pix</option>
-                </select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Cartão:</label>
-                <select id="edit-trans-card">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Caixinha:</label>
-                <select id="edit-trans-box">${optionsCaixinhas}</select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Categoria:</label>
-                <select id="edit-trans-cat">${optionsCategorias}</select>
-
-                <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-                    <input type="checkbox" id="edit-trans-fixed" ${t.isFixed ? 'checked' : ''} style="width:16px; height:16px; accent-color:var(--primary);">
-                    <label class="text-xs text-gray-700 font-bold">Despesa Fixa (Recorrente)</label>
-                </div>
-            `, () => {
-                const desc = document.getElementById("edit-trans-desc").value.trim();
-                const val = parseFloat(document.getElementById("edit-trans-val").value);
-                const type = document.getElementById("edit-trans-type").value;
-                const date = document.getElementById("edit-trans-date").value;
-                const payment = document.getElementById("edit-trans-payment").value;
-                const cardId = document.getElementById("edit-trans-card").value;
-                const boxId = document.getElementById("edit-trans-box").value;
-                const cat = document.getElementById("edit-trans-cat").value;
-                const isFixed = document.getElementById("edit-trans-fixed").checked;
-
-                if (!desc || isNaN(val) || val <= 0) {
-                    showToast("Dados inválidos.", "fa-circle-exclamation");
-                    return;
-                }
-
-                t.desc = desc;
-                t.value = val;
-                t.type = type;
-                t.date = date;
-                if (date) t.monthKey = date.slice(0, 7);
-                t.payment = payment;
-                t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
-                t.boxId = boxId || null;
-                t.category = cat || "Geral";
-                t.isFixed = isFixed;
-
-                salvarDados();
-                atualizarTela();
-                showToast("Lançamento alterado!");
-            });
-        }
-
-        function removerTransacao(id) {
-            if (confirm("Excluir este lançamento?")) {
-                financialData.transactions = financialData.transactions.filter(t => t.id !== id);
-                salvarDados();
-                atualizarTela();
-                showToast("Lançamento excluído.");
-            }
-        }
-
-        function abrirModalPagarFatura() {
-            const cards = financialData.creditCards || [];
-            let optionsCartoes = '<option value="all">Todos os Cartões</option>';
-            cards.forEach(c => { optionsCartoes += `<option value="${c.id}">${c.name}</option>`; });
-
-            abrirModal("Abater ou Pagar Fatura", `
-                <p class="text-xs text-gray-500 mb-2">Informe o valor pago para liberar seu limite:</p>
-                <label class="text-xs text-gray-700 font-bold">Cartão:</label>
-                <select id="modal-pay-card-id">${optionsCartoes}</select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Pago (R$):</label>
-                <input type="number" id="input-modal-fatura" step="0.01" placeholder="Ex: 500.00">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-fatura").value);
-                const cardId = document.getElementById("modal-pay-card-id").value;
-
-                if (!isNaN(val) && val > 0) {
-                    if (cardId === "all") {
-                        cards.forEach(c => { if (c.initialUsed > 0) c.initialUsed = Math.max(0, c.initialUsed - val); });
-                    } else {
-                        const targetCard = cards.find(c => c.id === cardId);
-                        if (targetCard) targetCard.initialUsed = Math.max(0, (targetCard.initialUsed || 0) - val);
-                    }
-                    financialData.cash -= val;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Fatura abatida com sucesso!");
-                }
-            });
-        }
-
-        function copiarBackupTexto() {
-            const texto = JSON.stringify(financialData);
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(texto).then(() => {
-                    showToast("Backup copiado para a Área de Transferência!");
-                }).catch(() => fallbackCopiar(texto));
-            } else {
-                fallbackCopiar(texto);
-            }
-        }
-
-        function fallbackCopiar(texto) {
-            abrirModal("Seu Código de Backup", `
-                <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo:</p>
-                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--custom-text);" readonly>${texto}</textarea>
-            `, () => {});
-        }
-
-        function abrirModalRestaurarTexto() {
-            abrirModal("Restaurar Dados em Texto", `
-                <p class="text-xs text-gray-500 mb-2">Cole aqui o código de backup:</p>
-                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px; background:var(--input-bg); color:var(--custom-text);"></textarea>
-            `, () => {
-                const input = document.getElementById("txt-restore-input").value.trim();
-                if (!input) return;
-                try {
-                    const parsed = JSON.parse(input);
-                    if (parsed && typeof parsed === 'object') {
-                        financialData = parsed;
-                        salvarDados();
-                        atualizarTela();
-                        showToast("Dados restaurados com sucesso!");
-                    } else {
-                        showToast("Código inválido.", "fa-circle-exclamation");
-                    }
-                } catch (e) {
-                    showToast("Backup corrompido ou inválido.", "fa-circle-exclamation");
-                }
-            });
-        }
-
-        function abrirModalNovaMeta() {
-            abrirModal("Nova Caixinha de Reserva", `
-                <label class="text-xs text-gray-700 font-bold">Nome da Reserva:</label>
-                <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro">
-                
-                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="new-goal-target" placeholder="Ex: 5000">
-            `, () => {
-                const name = document.getElementById("new-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("new-goal-target").value);
-                if (name && !isNaN(target) && target > 0) {
-                    if (!financialData.goals) financialData.goals = [];
-                    financialData.goals.push({ id: Date.now(), name, target, current: 0 });
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Reserva criada!");
-                }
-            });
-        }
-
-        function abrirModalEditarMeta(id) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal("Editar Reserva", `
-                <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-goal-name" value="${goal.name}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="edit-goal-target" value="${goal.target}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Já Guardado (R$):</label>
-                <input type="number" id="edit-goal-current" value="${goal.current}">
-            `, () => {
-                const name = document.getElementById("edit-goal-name").value.trim();
-                const target = parseFloat(document.getElementById("edit-goal-target").value);
-                const current = parseFloat(document.getElementById("edit-goal-current").value);
-
-                if (name && !isNaN(target) && !isNaN(current)) {
-                    goal.name = name;
-                    goal.target = target;
-                    goal.current = current;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Reserva atualizada!");
-                }
-            });
-        }
-
-        function removerMeta(id) {
-            if (confirm("Remover esta reserva?")) {
-                financialData.goals = financialData.goals.filter(g => g.id !== id);
-                salvarDados();
-                atualizarTela();
-                showToast("Reserva removida.");
-            }
-        }
-
-        function abrirModalCaixinha(id, tipo) {
-            const goal = financialData.goals.find(g => g.id === id);
-            if (!goal) return;
-
-            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Reserva`, `
-                <p class="text-xs text-gray-500">Objetivo: <b>${goal.name}</b></p>
-                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>${formatarMoeda(goal.current)}</b></p>
-                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
-            `, () => {
-                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
-                if (!isNaN(val) && val > 0) {
-                    if (tipo === 'guardar') {
-                        goal.current += val;
-                        showToast(`Guardado ${formatarMoeda(val)}!`);
-                    } else {
-                        if (val > goal.current) { showToast("Saldo insuficiente.", "fa-circle-exclamation"); return; }
-                        goal.current -= val;
-                        showToast(`Resgatado ${formatarMoeda(val)}!`);
-                    }
-                    salvarDados();
-                    atualizarTela();
-                }
-            });
-        }
-
-        function abrirModalNovaCategoria() {
-            abrirModal("Criar Nova Categoria", `
-                <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer">
-                <label class="text-xs text-gray-700 font-bold mt-2">Teto Mensal R$ (opcional):</label>
-                <input type="number" id="modal-cat-limit" placeholder="Ex: 500">
-            `, () => {
-                const name = document.getElementById("modal-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("modal-cat-limit").value) || 0;
-                if (name) {
-                    if (!financialData.categories) financialData.categories = [];
-                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#059669", limit });
-                    salvarDados();
-                    atualizarTela();
-                    const sel = document.getElementById("trans-category");
-                    if (sel) sel.value = name;
-                    showToast("Categoria adicionada!");
-                }
-            });
-        }
-
-        function abrirModalEditarCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-
-            abrirModal("Editar Categoria", `
-                <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-cat-name" value="${cat.name}">
-                <label class="text-xs text-gray-700 font-bold mt-2">Teto Mensal R$:</label>
-                <input type="number" id="edit-cat-limit" value="${cat.limit || 0}">
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-cat-color" value="${cat.color || '#059669'}" style="width:50px; height:36px; padding:0; cursor:pointer;">
-            `, () => {
-                const name = document.getElementById("edit-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
-                const color = document.getElementById("edit-cat-color").value;
-
-                if (name) {
-                    cat.name = name;
-                    cat.limit = limit;
-                    cat.color = color;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Categoria atualizada!");
-                }
-            });
-        }
-
-        function removerCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-            if (confirm(`Excluir categoria "${cat.name}"?`)) {
-                financialData.categories.splice(index, 1);
-                salvarDados();
-                atualizarTela();
-                showToast("Categoria removida.");
-            }
-        }
-
-        function abrirModalNovoInvestimento() {
-            abrirModal("Registrar Aporte / Ativo", `
-                <label class="text-xs text-gray-700 font-bold">Corretora / Banco:</label>
-                <select id="invest-platform">
-                    <option value="XP Investimentos">XP Investimentos</option>
-                    <option value="Binance">Binance</option>
-                    <option value="Outros">Outra Corretora</option>
-                </select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Tipo de Ativo:</label>
-                <select id="invest-type">
-                    <option value="Renda Fixa">Renda Fixa / CDB</option>
-                    <option value="Criptomoeda">Criptomoeda</option>
-                    <option value="Ações">Ações / FIIs</option>
-                </select>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Nome do Ativo:</label>
-                <input type="text" id="invest-asset" placeholder="Ex: CDB 120%, BTC">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Aplicado (R$):</label>
-                <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
-            `, () => {
-                const platform = document.getElementById("invest-platform").value;
-                const type = document.getElementById("invest-type").value;
-                const asset = document.getElementById("invest-asset").value.trim();
-                const value = parseFloat(document.getElementById("invest-value").value);
-                if (!asset || isNaN(value) || value <= 0) { showToast("Preencha ativo e valor válido.", "fa-circle-exclamation"); return; }
-
-                financialData.investments.unshift({ id: Date.now(), platform, type, asset, value });
-                salvarDados();
-                atualizarTela();
-                showToast("Investimento registrado!");
-            });
-        }
-
-        function removerInvestimento(id) {
-            financialData.investments = financialData.investments.filter(i => i.id !== id);
-            salvarDados();
-            atualizarTela();
-            showToast("Investimento excluído.");
-        }
-
-        function limparTodosDados() {
-            if (confirm("Tem certeza que deseja zerar todos os dados e restaurar o app limpo?")) {
-                financialData = JSON.parse(JSON.stringify(defaultData));
-                salvarDados();
-                atualizarTela();
-                showToast("Aplicativo reiniciado.");
             }
         }
 
