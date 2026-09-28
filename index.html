@@ -160,7 +160,6 @@
             font-size: 1.15rem;
             font-weight: 900;
             letter-spacing: -0.3px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .header-actions {
@@ -200,7 +199,6 @@
         }
         .tab-pane.active { display: flex; }
 
-        /* BARRA INFERIOR SUPER FLUTUANTE ESTILO NEON */
         .bottom-nav {
             position: absolute;
             bottom: 14px;
@@ -295,6 +293,19 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(217, 70, 239, 0.25);
+        }
+
+        /* NOVO BADGE DE STATUS PREMIUM (SEM BOLA FEIA) */
+        .status-badge-modern {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .quick-actions-bar {
@@ -829,7 +840,6 @@
         .btn-mini-action.del:hover { color: var(--red); }
 
         .credit-card-widget {
-            background: linear-gradient(135deg, #18082e 0%, #0c0c14 100%);
             color: white;
             padding: 16px;
             border-radius: 18px;
@@ -839,7 +849,7 @@
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(168, 85, 247, 0.25);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .year-selector-header {
@@ -1099,9 +1109,10 @@
                 <div class="hero-wallet-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.7); text-transform:uppercase;">Disponível no Mês</span>
-                        <span id="hero-badge-status" style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:12px; background:rgba(16,185,129,0.25); color:#34d399; border:1px solid rgba(52,211,153,0.3);">
-                            🟢 Orçamento Seguro
-                        </span>
+                        <!-- BADGE DE STATUS ELEGANTE (SEM A BOLA SIMPLES) -->
+                        <div id="hero-badge-status" class="status-badge-modern" style="background:rgba(16,185,129,0.2); color:#34d399; border-color:rgba(52,211,153,0.3);">
+                            <i class="fa-solid fa-shield-halved"></i> Orçamento Seguro
+                        </div>
                     </div>
 
                     <div>
@@ -1545,7 +1556,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v33";
+        const STORAGE_KEY = "financas_pro_neon_v34";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -1571,9 +1582,9 @@
             ],
             creditCards: [
                 { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#f97316", closingDay: 25, dueDay: 5 },
-                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#f43f5e", closingDay: 20, dueDay: 28 },
-                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#06b6d4", closingDay: 15, dueDay: 22 },
-                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#a855f7", closingDay: 10, dueDay: 17 }
+                { id: "card_bradesco", name: "Bradesco Visa", limit: 3000.00, initialUsed: 0.00, color: "#dc2626", closingDay: 20, dueDay: 28 },
+                { id: "card_amazon", name: "Amazon Bradesco", limit: 2500.00, initialUsed: 0.00, color: "#0284c7", closingDay: 15, dueDay: 22 },
+                { id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#7c3aed", closingDay: 10, dueDay: 17 }
             ],
             categories: [
                 { id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
@@ -2111,19 +2122,22 @@
             if (badge) {
                 if (percConsumido >= 95) {
                     progressBar.style.background = '#f43f5e';
-                    badge.innerText = '🔴 Orçamento no Limite';
+                    badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Orçamento no Limite';
                     badge.style.color = '#f43f5e';
                     badge.style.background = 'rgba(244,63,94,0.2)';
+                    badge.style.borderColor = 'rgba(244,63,94,0.4)';
                 } else if (percConsumido >= 70) {
                     progressBar.style.background = '#f59e0b';
-                    badge.innerText = '🟡 Atenção aos Gastos';
+                    badge.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Atenção aos Gastos';
                     badge.style.color = '#f59e0b';
                     badge.style.background = 'rgba(245,158,11,0.2)';
+                    badge.style.borderColor = 'rgba(245,158,11,0.4)';
                 } else {
                     progressBar.style.background = '#10b981';
-                    badge.innerText = '🟢 Orçamento Seguro';
-                    badge.style.color = '#10b981';
+                    badge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Orçamento Seguro';
+                    badge.style.color = '#34d399';
                     badge.style.background = 'rgba(16,185,129,0.2)';
+                    badge.style.borderColor = 'rgba(52,211,153,0.3)';
                 }
             }
 
@@ -2291,49 +2305,51 @@
                         totalGastoCartoesGeral += totalUsado;
                         totalLimiteCartoesGeral += limite;
 
-                        let corBarra = card.color || 'var(--primary)';
+                        let corRealCard = card.color || '#a855f7';
+                        let corBarra = corRealCard;
                         if (percConsumo >= 90) corBarra = 'var(--red)';
                         else if (percConsumo >= 70) corBarra = 'var(--yellow)';
 
                         const cardElem = document.createElement("div");
                         cardElem.className = "credit-card-widget";
-                        cardElem.style.background = `linear-gradient(135deg, ${card.color || '#18082e'} 0%, #0c0c14 100%)`;
-                        cardElem.style.borderLeft = `5px solid ${card.color || '#a855f7'}`;
+                        // APLICANDO A COR REAL DO CARTÃO EM GRADIENTE MODERNO
+                        cardElem.style.background = `linear-gradient(135deg, ${corRealCard} 0%, #0c0c14 75%)`;
+                        cardElem.style.borderLeft = `6px solid ${corRealCard}`;
                         cardElem.innerHTML = `
                             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:30px; height:20px; background:rgba(255,255,255,0.2); border-radius:4px; display:flex; align-items:center; justify-content:center;">
+                                    <div style="width:30px; height:20px; background:rgba(255,255,255,0.25); border-radius:4px; display:flex; align-items:center; justify-content:center;">
                                         <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fbbf24;"></i>
                                     </div>
                                     <div>
-                                        <span style="font-size:0.9rem; font-weight:900; display:block; color:white;">${card.name}</span>
-                                        <span style="font-size:0.62rem; color:rgba(255,255,255,0.7);">Fecha dia ${card.closingDay || '25'} • Vence dia ${card.dueDay || '05'}</span>
+                                        <span style="font-size:0.9rem; font-weight:900; display:block; color:white; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${card.name}</span>
+                                        <span style="font-size:0.62rem; color:rgba(255,255,255,0.8);">Fecha dia ${card.closingDay || '25'} • Vence dia ${card.dueDay || '05'}</span>
                                     </div>
                                 </div>
                                 <div style="display:flex; gap:8px;">
-                                    <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
+                                    <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.8); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
                                     <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
                                 </div>
                             </div>
 
                             <div style="margin: 4px 0;">
-                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24;">${formatarMoeda(totalUsado)}</span>
-                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7); display:block;">${gastosDoCartao > 0 ? `+ ${formatarMoeda(gastosDoCartao)} lançados neste mês` : 'Fatura atual'}</span>
+                                <span style="font-size:1.5rem; font-weight:900; color:#fbbf24; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${formatarMoeda(totalUsado)}</span>
+                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.8); display:block;">${gastosDoCartao > 0 ? `+ ${formatarMoeda(gastosDoCartao)} lançados neste mês` : 'Fatura atual'}</span>
                             </div>
 
                             <div style="display:flex; flex-direction:column; gap:4px;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.85); font-weight:700;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.9); font-weight:700;">
                                     <span>${percConsumo}% utilizado</span>
                                     <span>Livre: ${formatarMoeda(limiteDisponivel)}</span>
                                 </div>
-                                <div style="background:rgba(255,255,255,0.15); height:6px; border-radius:6px; overflow:hidden;">
+                                <div style="background:rgba(255,255,255,0.2); height:6px; border-radius:6px; overflow:hidden;">
                                     <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
                                 </div>
                             </div>
 
-                            <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.7); border-top:1px solid rgba(255,255,255,0.15); padding-top:6px;">
                                 <span>Limite: ${formatarMoeda(limite)}</span>
-                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar cartão</button>
+                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.25); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar cartão</button>
                             </div>
                         `;
                         cardsContainer.appendChild(cardElem);
@@ -2655,8 +2671,8 @@
                     </div>
                 </div>
 
-                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
-                <input type="color" id="new-card-color" value="#a855f7" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor Real do Cartão (Escolha sua cor preferida):</label>
+                <input type="color" id="new-card-color" value="#7c3aed" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("new-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("new-card-limit").value);
@@ -2706,8 +2722,8 @@
                     </div>
                 </div>
 
-                <label class="text-xs text-gray-400 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#a855f7'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-400 font-bold mt-2">Cor Real do Cartão:</label>
+                <input type="color" id="edit-card-color" value="${card.color || '#7c3aed'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
             `, () => {
                 const name = document.getElementById("edit-card-name").value.trim();
                 const limit = parseFloat(document.getElementById("edit-card-limit").value);
