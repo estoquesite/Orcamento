@@ -305,17 +305,6 @@
             align-items: center;
         }
 
-        .budget-summary-banner {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--card-shadow);
-        }
-
         .budget-list-elegant {
             display: flex;
             flex-direction: column;
@@ -479,21 +468,10 @@
             gap: 6px;
         }
 
-        .mode-row { display: flex; justify-content: space-between; align-items: center; }
-        .mode-chip-group { display: flex; gap: 4px; background: rgba(0,0,0,0.04); padding: 2px; border-radius: 8px; }
-        .mode-chip { border: none; background: transparent; font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; color: var(--text-muted); cursor: pointer; }
-        .mode-chip.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-
         .val-controls-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .val-input-group { display: flex; align-items: baseline; gap: 4px; flex: 1; }
         .val-input-group span { font-size: 1.1rem; font-weight: 900; color: var(--text-muted); }
         .clean-val-input { width: 100%; border: none !important; background: transparent !important; font-size: 1.6rem !important; font-weight: 900 !important; color: var(--text-main) !important; outline: none !important; }
-
-        .stepper-times { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
-        .step-btn { border: none; background: transparent; width: 26px; height: 30px; font-size: 0.9rem; font-weight: 900; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .step-input { width: 32px !important; border: none !important; background: transparent !important; text-align: center !important; font-size: 0.82rem !important; font-weight: 900 !important; color: var(--primary) !important; }
-
-        .calc-preview-bar { font-size: 0.68rem; font-weight: 800; color: var(--primary); background: rgba(99, 102, 241, 0.08); padding: 4px 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
 
         .detail-row { display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2px 10px; gap: 8px; }
         .detail-row i { font-size: 0.82rem; color: var(--text-muted); width: 16px; text-align: center; }
@@ -508,16 +486,13 @@
         .color-dot { width: 8px; height: 8px; border-radius: 50%; }
 
         .list-container { display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto; padding: 2px 0; }
-
         .clean-statement-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-        .statement-icon-badge { width: 36px; height: 36px; border-radius: 10px; background: var(--input-bg); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
         .statement-content { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
         .statement-top-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
         .statement-title { font-size: 0.82rem; font-weight: 800; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .statement-value { font-size: 0.86rem; font-weight: 900; white-space: nowrap; }
         .statement-value.expense { color: var(--red); }
         .statement-value.income { color: var(--green); }
-        .statement-bottom-line { display: flex; justify-content: space-between; align-items: center; font-size: 0.68rem; color: var(--text-muted); font-weight: 600; }
         .btn-mini-action { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 3px 5px; border-radius: 6px; font-size: 0.72rem; }
         .btn-mini-action.del:hover { color: var(--red); }
 
@@ -645,6 +620,7 @@
                 </div>
 
                 <div class="budget-list-elegant" id="budget-boxes-container"></div>
+                
                 <div class="section-box" style="padding:12px;">
                     <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">🕒 ÚLTIMOS LANÇAMENTOS</div>
                     <div id="painel-recent-transactions" style="display:flex; flex-direction:column; gap:6px;"></div>
@@ -717,7 +693,7 @@
                 <div id="cards-container" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
 
-            <!-- TELA 4: MESES (Com Lápis de Edição) -->
+            <!-- TELA 4: MESES -->
             <div id="tab-meses" class="tab-pane">
                 <div class="year-selector-header">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
@@ -769,7 +745,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_clean_v2";
+        const STORAGE_KEY = "financas_pro_clean_v3";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -782,14 +758,13 @@
         let selectedTransactionType = 'expense';
         let selectedCardIdSelected = null;
 
-        // Mantém a estrutura limpa, mas pronta para uso e com suporte a customizações de mês
         const defaultData = {
             cash: 0.00,
             budgetBoxes: [],
             creditCards: [],
             categories: [{ id: "cat_1", name: "🍔 Alimentação", color: "#f59e0b", limit: 0 }],
             transactions: [],
-            monthCustomValues: {} // Permite salvar ajustes feitos com o lápis nos meses
+            monthCustomValues: {}
         };
 
         function carregarDados() {
@@ -896,6 +871,7 @@
 
         function atualizarTela() {
             const boxes = financialData.budgetBoxes || [];
+            const cards = financialData.creditCards || [];
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
             const totalVerba = boxes.reduce((a, b) => a + (b.amount || 0), 0);
@@ -908,6 +884,69 @@
             document.getElementById("hero-total-gasto-small").innerText = `- R$ ${totalGasto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("hero-fatura-cartao-small").innerText = `R$ ${fatura.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
+            // RENDERIZAR CAIXINHAS DE VERBA
+            const boxesContainer = document.getElementById("budget-boxes-container");
+            if (boxesContainer) {
+                boxesContainer.innerHTML = '';
+                if (boxes.length === 0) {
+                    boxesContainer.innerHTML = `<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhuma caixinha criada.</div>`;
+                } else {
+                    boxes.forEach(box => {
+                        const spent = transDoMes.filter(t => t.type === 'expense' && t.boxId === box.id).reduce((a, b) => a + b.value, 0);
+                        const perc = box.amount > 0 ? Math.min(Math.round((spent / box.amount) * 100), 100) : 0;
+                        boxesContainer.innerHTML += `
+                            <div class="elegant-box-card" style="border-left:4px solid ${box.color||'var(--primary)'}">
+                                <div class="elegant-box-header">
+                                    <span class="box-badge-tag" style="background:${box.color||'var(--primary)'}15; color:${box.color||'var(--primary)'}">${box.name}</span>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <b class="elegant-box-amount">R$ ${box.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>
+                                        <button onclick="removerCaixinhaVerba('${box.id}')" class="btn-mini-action del"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="elegant-progress-track"><div style="width:${perc}%; height:100%; background:${box.color||'var(--primary)'}"></div></div>
+                                <div class="elegant-box-footer">
+                                    <span style="color:var(--text-muted);">Gasto: <b style="color:var(--red);">R$ ${spent.toFixed(0)}</b> (${perc}%)</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+
+            // RENDERIZAR CARTÕES
+            const cardsContainer = document.getElementById("cards-container");
+            if (cardsContainer) {
+                cardsContainer.innerHTML = '';
+                let totalCartoesGeral = 0;
+                if (cards.length === 0) {
+                    cardsContainer.innerHTML = `<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>`;
+                } else {
+                    cards.forEach(card => {
+                        const gastoCard = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && t.cardId === card.id).reduce((a, b) => a + b.value, 0);
+                        const usado = (card.initialUsed || 0) + gastoCard;
+                        totalCartoesGeral += usado;
+                        cardsContainer.innerHTML += `
+                            <div class="credit-card-widget" style="border-left:5px solid ${card.color||'#6366f1'}">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <b>${card.name}</b>
+                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fb7185; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <span style="font-size:1.4rem; font-weight:900; color:#fbbf24;">R$ ${usado.toFixed(2)}</span>
+                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.7);">Limite: R$ ${card.limit.toFixed(2)}</span>
+                            </div>
+                        `;
+                    });
+                }
+                document.getElementById("card-hero-total-faturas").innerText = `R$ ${totalCartoesGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+
+            // SELECT DE CAIXINHAS NO LANÇAR
+            const selectBox = document.getElementById("trans-box-id");
+            if (selectBox) {
+                selectBox.innerHTML = '<option value="">Sem Caixinha</option>';
+                boxes.forEach(b => { selectBox.innerHTML += `<option value="${b.id}">${b.name}</option>`; });
+            }
+
             // ABA MESES COM LÁPIS
             document.getElementById("txt-ano-exibido").innerText = `Ano ${selectedYearTabela}`;
             const monthsContainer = document.getElementById("months-cards-container");
@@ -919,7 +958,7 @@
                     const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
                     const custom = financialData.monthCustomValues[mKey] || { verba: totalVerba, gasto: 0 };
                     
-                    const mTrans = transDoMes.filter(t => t.monthKey === mKey);
+                    const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
                     const mExp = mTrans.length > 0 ? mTrans.filter(t => t.type === 'expense').reduce((a,b)=>a+b.value, 0) : custom.gasto;
                     const mInc = custom.verba;
                     const mNet = mInc - mExp;
@@ -951,12 +990,11 @@
             atualizarTagsCartoesVisual();
         }
 
-        // --- FUNÇÃO DO LÁPIS PARA EDITAR O MÊS ---
         function abrirModalEditarMes(mKey, nomeMes, verbaAtual, gastoAtual) {
             abrirModal(`Editar ${nomeMes}`, `
                 <label class="text-xs text-gray-500 font-bold">Verba / Entradas (R$):</label>
                 <input type="number" id="edit-mes-verba" value="${verbaAtual}" step="50">
-                <label class="text-xs text-gray-500 font-bold mt-2">Gastos Previstos/Realizados (R$):</label>
+                <label class="text-xs text-gray-500 font-bold mt-2">Gastos (R$):</label>
                 <input type="number" id="edit-mes-gasto" value="${gastoAtual}" step="50">
             `, () => {
                 const v = parseFloat(document.getElementById("edit-mes-verba").value) || 0;
@@ -968,7 +1006,6 @@
             });
         }
 
-        // --- DEMAIS FUNÇÕES AUXILIARES ---
         function adicionarTransacao() {
             const desc = document.getElementById("trans-desc").value.trim();
             const val = parseFloat(document.getElementById("trans-value").value);
@@ -976,6 +1013,7 @@
 
             financialData.transactions.unshift({
                 id: Date.now(), type: selectedTransactionType, desc, value: val,
+                boxId: document.getElementById("trans-box-id").value || null,
                 payment: document.getElementById("trans-payment").value,
                 cardId: selectedCardIdSelected, monthKey: selectedMonthKey
             });
@@ -997,6 +1035,13 @@
             });
         }
 
+        function removerCartao(cardId) {
+            if (confirm("Excluir cartão?")) {
+                financialData.creditCards = financialData.creditCards.filter(c => c.id !== cardId);
+                salvarDados(); atualizarTela();
+            }
+        }
+
         function abrirModalNovaCaixinhaVerba() {
             abrirModal("Nova Caixinha", `<input type="text" id="b-name" placeholder="Nome"><input type="number" id="b-val" placeholder="Valor">`, () => {
                 const name = document.getElementById("b-name").value;
@@ -1008,6 +1053,13 @@
             });
         }
 
+        function removerCaixinhaVerba(boxId) {
+            if (confirm("Excluir caixinha?")) {
+                financialData.budgetBoxes = financialData.budgetBoxes.filter(b => b.id !== boxId);
+                salvarDados(); atualizarTela();
+            }
+        }
+
         function copiarBackupTexto() { navigator.clipboard.writeText(JSON.stringify(financialData)).then(() => alert("Backup copiado!")); }
         function abrirModalRestaurarTexto() {
             abrirModal("Restaurar", `<textarea id="txt-res" style="width:100%;height:100px;"></textarea>`, () => {
@@ -1015,7 +1067,7 @@
             });
         }
         function limparTodosDados() {
-            if (confirm("Zerá tudo?")) { localStorage.removeItem(STORAGE_KEY); financialData = JSON.parse(JSON.stringify(defaultData)); salvarDados(); atualizarTela(); alert("Limpo!"); }
+            if (confirm("Zerar tudo?")) { localStorage.removeItem(STORAGE_KEY); financialData = JSON.parse(JSON.stringify(defaultData)); salvarDados(); atualizarTela(); alert("Limpo!"); }
         }
 
         function abrirModal(titulo, htmlBody, cb) {
