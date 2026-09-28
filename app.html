@@ -20,6 +20,10 @@
 
     <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -620,11 +624,75 @@
             border-bottom: none;
             font-size: 0.8rem;
         }
+
+        /* MODAL DE INSTALAÇÃO (LANDING PAGE DE DOWNLOAD) */
+        .install-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .install-modal.hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
+
+        <!-- MODAL / TELA DE INSTALAÇÃO & QR CODE -->
+        <div id="install-modal" class="install-modal hidden">
+            <div class="max-w-md w-full bg-slate-900 border border-slate-700/60 p-6 rounded-3xl shadow-2xl text-white relative flex flex-col space-y-6">
+                <!-- Botão Fechar Modal -->
+                <button onclick="fecharModalInstalacao()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg font-bold w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">✕</button>
+                
+                <div class="text-center space-y-2">
+                    <span class="bg-indigo-600/30 text-indigo-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-500/50">
+                        Aplicativo PWA & Mobile
+                    </span>
+                    <h2 class="text-2xl font-extrabold tracking-tight">Baixe o Finanças Pro</h2>
+                    <p class="text-xs text-gray-300">
+                        Instale na tela inicial do seu celular para acesso rápido, seguro e offline.
+                    </p>
+                </div>
+
+                <!-- Botões das Lojas / Instalação Direta -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="baixarAppDireto()" class="flex items-center justify-center gap-2 bg-black hover:bg-gray-900 border border-gray-700 px-4 py-3 rounded-xl transition shadow-md group">
+                        <i class="fa-solid fa-mobile-screen-button text-2xl text-indigo-400 group-hover:scale-110 transition"></i>
+                        <div class="text-left">
+                            <p class="text-[10px] text-gray-400">INSTALAR NO</p>
+                            <p class="text-xs font-bold">Celular / PWA</p>
+                        </div>
+                    </button>
+
+                    <a href="https://play.google.com" target="_blank" class="flex items-center justify-center gap-2 bg-black hover:bg-gray-900 border border-gray-700 px-4 py-3 rounded-xl transition shadow-md group">
+                        <i class="fa-brands fa-google-play text-2xl text-green-400 group-hover:scale-110 transition"></i>
+                        <div class="text-left">
+                            <p class="text-[10px] text-gray-400">GOOGLE PLAY</p>
+                            <p class="text-xs font-bold">Android</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- QR Code de Exemplo -->
+                <div class="flex flex-col items-center justify-center bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <div class="w-32 h-32 bg-white p-2 rounded-xl shadow flex items-center justify-center mb-2">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://financas-pro.app" alt="QR Code App" class="w-full h-full object-contain">
+                    </div>
+                    <p class="text-[11px] text-gray-300 font-medium text-center">
+                        Escaneie com a câmera para abrir no smartphone
+                    </p>
+                </div>
+            </div>
+        </div>
 
         <!-- TELA DE BLOQUEIO BIOMÉTRICO / PIN -->
         <div id="lock-screen" class="lock-screen">
@@ -677,7 +745,7 @@
             
             <div class="header-actions">
                 <button class="header-btn" onclick="bloquearManualmente()" title="Trancar Aplicativo">🔒</button>
-                <button class="header-btn" id="btn-instalar" onclick="baixarApp()" title="Instalar App no Celular">
+                <button class="header-btn" onclick="abrirModalInstalacao()" title="Instalar App no Celular">
                     <span>📲</span> Baixar
                 </button>
                 <button class="header-btn theme-toggle" onclick="alternarTema()">🌙 Modo Escuro</button>
@@ -990,18 +1058,28 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredInstallPrompt = e;
-            const btn = document.getElementById('btn-instalar');
-            if (btn) btn.style.display = 'inline-flex';
         });
 
-        function baixarApp() {
+        function abrirModalInstalacao() {
+            document.getElementById('install-modal').classList.remove('hidden');
+        }
+
+        function fecharModalInstalacao() {
+            document.getElementById('install-modal').classList.add('hidden');
+        }
+
+        function baixarAppDireto() {
             if (deferredInstallPrompt) {
                 deferredInstallPrompt.prompt();
-                deferredInstallPrompt.userChoice.then(() => {
+                deferredInstallPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Usuário aceitou a instalação');
+                    }
                     deferredInstallPrompt = null;
+                    fecharModalInstalacao();
                 });
             } else {
-                alert("Para instalar na tela do celular:\n\n1. Toque nos 3 pontinhos (⋮) no topo direito do Chrome.\n2. Escolha 'Instalar aplicativo' ou 'Criar atalho'.");
+                alert("Para instalar na tela do celular:\n\n1. No Chrome: Toque nos 3 pontinhos (⋮) e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n2. No iPhone (Safari): Toque no botão de Compartilhar (caixa com seta) e escolha 'Adicionar à Tela de Início'.");
             }
         }
 
