@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V11</title>
+    <title>Finanças Pro V12</title>
     
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDMwNzEyIiwgInRoZW1lX2NvbG9yIjogIiNhODU1ZjciLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLciR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn0sIHsic3JjIjogImh0dHBzOi8vaW1nLmljb25zOC5jb20vZmx1ZW5jeS81MTIvd2FsbGV0LnBuZyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1d">
     <meta name="theme-color" content="#a855f7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,8 +23,8 @@
         :root {
             --primary: #a855f7;
             --primary-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #06b6d4 100%);
-            --neon-glow: 0 0 15px rgba(168, 85, 247, 0.3);
-            --custom-border-color: rgba(168, 85, 247, 0.45);
+            --neon-glow: 0 0 20px rgba(168, 85, 247, 0.4);
+            --custom-border-color: rgba(168, 85, 247, 0.5);
             --bg-color: #05050a;
             --card-bg: #0c0c14;
             --text-main: #f3f4f6;
@@ -37,6 +37,26 @@
             --blue: #06b6d4;
             --yellow: #f59e0b;
             --purple: #c084fc;
+        }
+
+        /* ANIMAÇÃO PULSANTE NEON */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 8px rgba(168, 85, 247, 0.25), inset 0 0 5px rgba(168, 85, 247, 0.1);
+                border-color: var(--custom-border-color);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(168, 85, 247, 0.65), inset 0 0 12px rgba(168, 85, 247, 0.25);
+                border-color: var(--primary);
+            }
+            100% {
+                box-shadow: 0 0 8px rgba(168, 85, 247, 0.25), inset 0 0 5px rgba(168, 85, 247, 0.1);
+                border-color: var(--custom-border-color);
+            }
+        }
+
+        .pulsing-card {
+            animation: neonPulse 3s infinite ease-in-out;
         }
 
         * {
@@ -65,7 +85,7 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 50px rgba(168, 85, 247, 0.15);
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.25);
             position: relative;
             overflow: hidden;
         }
@@ -194,7 +214,7 @@
 
         .top-nav-item i { font-size: 1rem; }
         .top-nav-item span { font-size: 0.6rem; font-weight: 800; }
-        .top-nav-item.active { color: var(--primary); background: rgba(168, 85, 247, 0.1); }
+        .top-nav-item.active { color: var(--primary); background: rgba(168, 85, 247, 0.15); box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
 
         .content {
             padding: 12px 16px 20px 16px;
@@ -243,13 +263,14 @@
             color: white;
             padding: 18px;
             border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1.5px solid var(--custom-border-color);
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            animation: neonPulse 3.5s infinite ease-in-out;
         }
 
         .quick-actions-bar {
@@ -817,6 +838,7 @@
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
             border: 1.5px solid var(--custom-border-color);
+            animation: neonPulse 3.5s infinite ease-in-out;
         }
 
         .months-elegant-grid {
@@ -861,6 +883,7 @@
             align-items: center;
             box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
             border: 1.5px solid var(--custom-border-color);
+            animation: neonPulse 3.5s infinite ease-in-out;
         }
 
         .modern-action-card {
@@ -911,6 +934,35 @@
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        .color-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .color-theme-card {
+            padding: 10px;
+            border-radius: 12px;
+            border: 1.5px solid var(--custom-border-color);
+            background: var(--input-bg);
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .color-theme-card:hover { border-color: var(--primary); box-shadow: var(--neon-glow); }
+        .color-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
         }
 
         .modal-overlay {
@@ -986,7 +1038,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V11</h2>
+                <h2 class="text-2xl font-black text-white tracking-wider">Finanças Pro V12</h2>
                 <p class="text-xs text-purple-300 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1007,7 +1059,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V11</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:1px 5px; border-radius:6px;">V12</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1382,11 +1434,11 @@
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
-            <!-- TELA 5: MAIS (PAINEL DE CORES PERSONALIZADAS RECOLHIDINHO) -->
+            <!-- TELA 5: MAIS (PAINEL DE CORES RECOLHIDINHO & LIVRE) -->
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V11</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel de Cores Customizadas <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:6px;">V12</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.7);">Controle total das bordas e temas</span>
                     </div>
                     <div style="text-align:right;">
@@ -1408,10 +1460,10 @@
                     <div id="conteudo-painel-cores" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border-color); padding-top:10px;">
                         
                         <div>
-                            <span style="font-size:0.7rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">Selecione a Cor da Borda/Quadrados:</span>
+                            <span style="font-size:0.7rem; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">Selecione a Cor da Borda/Quadrados (Livre):</span>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <input type="color" id="picker-borda-cor" value="#a855f7" onchange="aplicarCorBordaCustomizada(this.value)" style="width:45px; height:38px; border:none; background:transparent; cursor:pointer; border-radius:8px;">
-                                <span style="font-size:0.75rem; font-weight:700; color:var(--text-main);">Cor livre (Vermelho normal, Azul, Neon...)</span>
+                                <span style="font-size:0.75rem; font-weight:700; color:var(--text-main);">Vermelho, Azul, Verde, Neon...</span>
                             </div>
                         </div>
 
@@ -1517,7 +1569,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v41";
+        const STORAGE_KEY = "financas_pro_neon_v42";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const THEME_KEY = "financas_pro_custom_theme";
@@ -1909,9 +1961,7 @@
             return totalBaseCaixinhas;
         }
 
-        function renderizarGrafico() {
-            // Removido do painel principal
-        }
+        function renderizarGrafico() {}
 
         function exportarCSV() {
             const trans = financialData.transactions || [];
@@ -3189,4 +3239,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
