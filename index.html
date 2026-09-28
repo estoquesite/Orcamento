@@ -454,7 +454,7 @@
                     </div>
                 </div>
                 <h2 class="text-2xl font-black text-white">Finanças Pro</h2>
-                <p class="text-xs text-indigo-300 font-semibold">Meu Salário & Pensão Sofia</p>
+                <p class="text-xs text-indigo-300 font-semibold">Orçamento Completo & Família</p>
             </div>
 
             <div class="flex flex-col items-center space-y-3 my-auto">
@@ -506,12 +506,11 @@
         
         <div class="content">
 
-            <!-- ABA GASTOS -->
+            <!-- ABA 1: GASTOS E ORÇAMENTO -->
             <div id="tab-gastos" class="tab-pane active">
                 
                 <!-- SELETOR DE ANO E MÊS INDEPENDENTES -->
                 <div class="date-control-bar">
-                    <!-- Linha 1: Seletor de Ano -->
                     <div class="date-control-row">
                         <button class="date-nav-btn" onclick="mudarAno(-1)" title="Ano Anterior">«</button>
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -527,7 +526,6 @@
                         <button class="date-nav-btn" onclick="mudarAno(1)" title="Próximo Ano">»</button>
                     </div>
 
-                    <!-- Linha 2: Seletor de Mês -->
                     <div class="date-control-row" style="border-top:1px solid var(--border-color); padding-top:6px;">
                         <button class="date-nav-btn" onclick="mudarMes(-1)">◀</button>
                         <select id="select-month" onchange="alterarMesDireto(this.value)" style="width: auto; padding: 3px 8px; font-weight:800; font-size:0.88rem; color:var(--text-main); background:var(--input-bg);">
@@ -548,7 +546,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 1: SOMA DO ANO (ACUMULADO ANUAL) -->
+                <!-- CARD: SOMA DO ANO (ACUMULADO ANUAL) -->
                 <div class="card" style="border-left: 4px solid var(--purple); background: var(--input-bg);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:800; font-size:0.75rem; color:var(--purple);">📅 SOMA DO ANO (<span id="txt-ano-atual">2026</span>)</span>
@@ -570,7 +568,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: VERBA TOTAL DO MÊS & SOBRA GERAL -->
+                <!-- CARD: VERBA TOTAL DO MÊS & SOBRA GERAL -->
                 <div class="card card-verba-total">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL DO MÊS (ENTRADAS)</span>
@@ -585,7 +583,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 3: PAINEL DE SOBRAS (SALÁRIO vs PENSÃO) -->
+                <!-- PAINEL DE SOBRAS (SALÁRIO vs PENSÃO) -->
                 <div class="budget-duo-grid">
                     <!-- Coluna 1: MEU SALÁRIO -->
                     <div class="budget-box" style="border-left: 3px solid var(--green);">
@@ -612,21 +610,24 @@
                     </div>
                 </div>
 
-                <!-- CARD 4: GRID DE INDICADORES MENSAIS DETALHADOS -->
+                <!-- INDICADORES MENSAIS DETALHADOS -->
                 <div class="indicators-grid">
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--red);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Despesas do Mês</span>
-                        <h2 id="ind-despesas-mes" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--blue); cursor:pointer;" onclick="abrirModalSaldo()" title="Clique para editar">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 Saldo em Caixa / Conta</span>
+                        <h2 id="ind-saldo-caixa" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
                     </div>
 
                     <div class="indicator-mini-card" style="border-left: 3px solid var(--yellow);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
+                            <a href="#" onclick="abrirModalPagarFatura()" style="font-size:0.65rem; color:var(--yellow); font-weight:800; text-decoration:none;">[PAGAR]</a>
+                        </div>
                         <h2 id="ind-fatura-cartao" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
                     </div>
 
-                    <div class="indicator-mini-card" style="border-left: 3px solid var(--blue);">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 À Vista (Dinheiro/Pix)</span>
-                        <h2 id="ind-gastos-dinheiro" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--red);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Despesas do Mês</span>
+                        <h2 id="ind-despesas-mes" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
                     </div>
 
                     <div class="indicator-mini-card" style="border-left: 3px solid var(--green);">
@@ -698,49 +699,130 @@
                 </div>
             </div>
 
-            <!-- DEMAIS ABAS -->
+            <!-- ABA 2: METAS E CAIXINHAS -->
             <div id="tab-metas" class="tab-pane">
+                <!-- Nova Categoria e Teto -->
                 <div class="section-box">
-                    <h3>🏷️ Categorias & Tetos</h3>
+                    <h3>🏷️ Nova Categoria & Teto de Gastos</h3>
                     <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação)">
+                        <input type="text" id="cat-name" placeholder="Nome (ex: 🍔 Alimentação, 🚗 Carro)">
                         <div class="form-row">
-                            <input type="number" id="cat-limit" placeholder="Teto R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0;">
+                            <input type="number" id="cat-limit" placeholder="Teto Mensal R$ (ex: 800)">
+                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0; cursor:pointer; border-radius:8px;">
                         </div>
-                        <button class="btn-primary" onclick="adicionarCategoria()">Salvar Categoria</button>
+                        <button class="btn-primary" onclick="adicionarCategoria()">💾 Salvar Categoria</button>
                     </div>
                 </div>
+
+                <!-- Acompanhamento dos Tetos de Categoria -->
                 <div class="section-box">
-                    <h3>📊 Acompanhamento das Categorias</h3>
+                    <h3>📊 Orçamento do Mês (Consumo vs Limite)</h3>
                     <div class="list-container" id="budget-progress-list"></div>
+                </div>
+
+                <!-- Nova Caixinha / Reserva -->
+                <div class="section-box">
+                    <h3>🏦 Nova Caixinha / Reserva</h3>
+                    <div class="form-group">
+                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Futuro Sofia, 🛡️ Emergência)">
+                        <input type="number" id="goal-target" min="1" placeholder="Meta Total (R$)">
+                        <button class="btn-primary" onclick="adicionarMeta()">🎯 Criar Caixinha</button>
+                    </div>
+                </div>
+
+                <!-- Lista de Caixinhas Guardadas -->
+                <div class="section-box">
+                    <h3>🐷 Minhas Caixinhas Guardadas</h3>
+                    <div class="list-container" id="goals-list"></div>
                 </div>
             </div>
 
+            <!-- ABA 3: INVESTIMENTOS & ATIVOS -->
             <div id="tab-investimentos" class="tab-pane">
+                <!-- Cards de Resumo da Carteira -->
+                <div class="summary-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div class="card" style="grid-column: span 2; border-left: 4px solid var(--purple); background:var(--input-bg);">
+                        <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">💼 Total Geral em Ativos</span>
+                        <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--yellow);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">🟡 XP Investimentos</span>
+                        <h2 id="card-xp-total" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid #eab308;">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">🟡 Binance (Cripto)</span>
+                        <h2 id="card-binance-total" style="font-size:0.95rem; font-weight:900; color:#eab308;">R$ 0,00</h2>
+                    </div>
+                </div>
+
+                <!-- Formulário de Aporte -->
                 <div class="section-box">
                     <h3>🚀 Registrar Aporte / Ativo</h3>
                     <div class="form-group">
-                        <input type="text" id="invest-asset" placeholder="Nome (ex: Tesouro Selic, CDB)">
-                        <input type="number" id="invest-value" placeholder="Valor (R$)">
-                        <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
+                        <div class="form-row">
+                            <select id="invest-platform">
+                                <option value="XP Investimentos">XP Investimentos</option>
+                                <option value="Binance">Binance</option>
+                                <option value="Nubank">Nubank</option>
+                                <option value="Banco Inter">Banco Inter</option>
+                                <option value="Outros">Outra Corretora</option>
+                            </select>
+                            <select id="invest-type">
+                                <option value="Renda Fixa">🏛️ Renda Fixa / CDB</option>
+                                <option value="Criptomoeda">🪙 Criptomoeda</option>
+                                <option value="Ações">📈 Ações</option>
+                                <option value="Fundos Imobiliários">🏢 FIIs</option>
+                                <option value="Outros">📦 Outros</option>
+                            </select>
+                        </div>
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC, Selic)">
+                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor Aportado (R$)">
+                        <button class="btn-primary" onclick="adicionarInvestimento()">➕ Adicionar Ativo</button>
                     </div>
                 </div>
+
+                <!-- Carteira de Ativos -->
                 <div class="section-box">
                     <h3>📁 Carteira de Ativos</h3>
                     <div class="list-container" id="investment-list"></div>
                 </div>
             </div>
 
-            <!-- RELATÓRIOS DO ANO SELECIONADO -->
+            <!-- ABA 4: RELATÓRIOS & GRÁFICOS -->
             <div id="tab-relatorios" class="tab-pane">
+                <!-- Desempenho Anual -->
+                <div class="summary-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div class="card" style="border-left: 3px solid var(--green);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📈 Entradas no Ano</span>
+                        <h2 id="rel-ano-entradas" style="font-size:0.95rem; font-weight:900; color:var(--green);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--red);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Saídas no Ano</span>
+                        <h2 id="rel-ano-saidas" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--blue);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💰 Economia Anual</span>
+                        <h2 id="rel-ano-economia" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--purple);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📊 Taxa de Poupança</span>
+                        <h2 id="rel-ano-taxa" style="font-size:0.95rem; font-weight:900; color:var(--purple);">0%</h2>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Evolução Mensal (Barras) -->
                 <div class="section-box">
-                    <h3>📊 Relatório Completo do Ano (<span id="txt-ano-relatorio">2026</span>)</h3>
-                    <div style="height: 200px; position:relative; margin-bottom:12px;">
+                    <h3>📈 Evolução Mensal do Ano (<span id="txt-ano-relatorio">2026</span>)</h3>
+                    <div style="height: 190px; position:relative; margin-bottom:8px;">
                         <canvas id="monthlyComparisonChart"></canvas>
                     </div>
+                </div>
+
+                <!-- Tabela Mês a Mês -->
+                <div class="section-box">
+                    <h3>📋 Relatório Mensal Detalhado</h3>
                     <div style="overflow-x: auto;">
-                        <table style="width:100%; font-size:0.75rem; border-collapse:collapse;" id="tabela-meses-ano">
+                        <table style="width:100%; font-size:0.75rem; border-collapse:collapse;">
                             <thead>
                                 <tr style="border-bottom:1px solid var(--border-color); color:var(--text-muted); text-align:left;">
                                     <th style="padding:6px;">Mês</th>
@@ -754,12 +836,23 @@
                     </div>
                 </div>
 
+                <!-- Gráfico de Rosca de Categorias -->
                 <div class="section-box">
-                    <h3>💾 Backup e Restauração</h3>
+                    <h3>🥧 Despesas por Categoria (Mês Ativo)</h3>
+                    <div style="height: 180px; position:relative;">
+                        <canvas id="expenseCategoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Backup e Exportação -->
+                <div class="section-box">
+                    <h3>💾 Exportação e Backup</h3>
                     <div class="form-group">
+                        <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Planilha (CSV / Excel)</button>
                         <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
                         <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
                         <input type="file" id="import-file" style="display:none;" accept=".json" onchange="importarBackupJSON(event)">
+                        <button class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3);" onclick="limparTodosDados()">🗑️ Zerar / Resetar Todos os Dados</button>
                     </div>
                 </div>
             </div>
@@ -781,7 +874,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v5_definitivo";
+        const STORAGE_KEY = "financas_pro_v6_completo";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -790,34 +883,40 @@
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
         const defaultData = {
+            cash: 0.00,
             sources: {
-                personal: 5000.00,       // Salário base padrão
+                personal: 5000.00,       // Seu salário padrão
                 sofiaPension: 1500.00    // Pensão da Sofia padrão
             },
             categories: [
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 1200 },
                 { name: "🏠 Moradia / Contas", color: "#6366f1", limit: 1800 },
                 { name: "👧 Sofia Cuidados / Escola", color: "#ec4899", limit: 1500 },
-                { name: "🚗 Transporte", color: "#3b82f6", limit: 500 }
+                { name: "🚗 Transporte", color: "#3b82f6", limit: 500 },
+                { name: "🎮 Lazer", color: "#06b6d4", limit: 400 }
             ],
             transactions: [],
-            goals: [],
+            goals: [
+                { id: 1, name: "🎓 Futuro Sofia", target: 10000, current: 0 },
+                { id: 2, name: "🛡️ Reserva de Emergência", target: 15000, current: 0 }
+            ],
             investments: []
         };
 
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v4_definitivo") || localStorage.getItem("financas_pro_v3_data");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v5_definitivo") || localStorage.getItem("financas_pro_v4_definitivo");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
                     return {
+                        cash: typeof parsed.cash === 'number' ? parsed.cash : 0.00,
                         sources: {
                             personal: (parsed.sources && typeof parsed.sources.personal === 'number') ? parsed.sources.personal : 5000.00,
                             sofiaPension: (parsed.sources && typeof parsed.sources.sofiaPension === 'number') ? parsed.sources.sofiaPension : 1500.00
                         },
                         categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 ? parsed.categories : defaultData.categories,
                         transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-                        goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+                        goals: Array.isArray(parsed.goals) && parsed.goals.length > 0 ? parsed.goals : defaultData.goals,
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
                 } catch (e) {
@@ -874,12 +973,14 @@
             currentYear += delta;
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
+            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function alterarAnoDireto(novoAno) {
             currentYear = parseInt(novoAno, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
+            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function mudarMes(delta) {
@@ -888,12 +989,14 @@
             else if (currentMonthNum < 1) { currentMonthNum = 12; currentYear -= 1; }
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
+            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         function alterarMesDireto(novoMes) {
             currentMonthNum = parseInt(novoMes, 10);
             selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
             atualizarTela();
+            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
         }
 
         // --- ATUALIZAÇÃO DA TELA E CÁLCULOS ---
@@ -905,7 +1008,7 @@
             const elemAnoRel = document.getElementById("txt-ano-relatorio");
             if (elemAnoRel) elemAnoRel.innerText = String(currentYear);
 
-            // Transações do Mês e do Ano
+            // Transações
             const transDoAno = (financialData.transactions || []).filter(t => t.monthKey && t.monthKey.startsWith(String(currentYear)));
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
@@ -920,19 +1023,18 @@
             const despesasTotalMes = gastosSofia + gastosMeuSalario;
 
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-            const gastosDinheiro = transDoMes.filter(t => t.type === 'expense' && t.payment !== "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
-
             const sobraSalario = salario - gastosMeuSalario;
             const sobraPensao = pensao - gastosSofia;
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
 
-            // 2. CÁLCULO ANUAL (SOMA DO ANO SELECIONADO)
+            // 2. CÁLCULO ANUAL
             const receitasExtrasAno = transDoAno.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const entradasAno = (salario + pensao) * 12 + receitasExtrasAno;
             const despesasAno = transDoAno.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const economiaAno = entradasAno - despesasAno;
+            const taxaPoupanca = entradasAno > 0 ? Math.round((economiaAno / entradasAno) * 100) : 0;
 
-            // PREENCHIMENTO DO CARD ANUAL
+            // PREENCHIMENTO DO CARD ANUAL (SOMA DO ANO)
             document.getElementById("ano-entradas-val").innerText = `R$ ${entradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("ano-saidas-val").innerText = `R$ ${despesasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             const anoEconElem = document.getElementById("ano-economia-val");
@@ -960,11 +1062,21 @@
             sobraPensaoElem.innerText = `R$ ${sobraPensao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraPensaoElem.style.color = sobraPensao >= 0 ? "var(--green)" : "var(--red)";
 
-            // INDICADORES MENSAIS COMPLEMENTARES
+            // INDICADORES MENSAIS DETALHADOS
+            document.getElementById("ind-saldo-caixa").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("ind-despesas-mes").innerText = `R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("ind-fatura-cartao").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("ind-gastos-dinheiro").innerText = `R$ ${gastosDinheiro.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("ind-receitas-extras").innerText = `R$ ${receitasExtrasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            // RELATÓRIOS DO TOPO
+            const relEnt = document.getElementById("rel-ano-entradas");
+            if (relEnt) relEnt.innerText = `R$ ${entradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const relSai = document.getElementById("rel-ano-saidas");
+            if (relSai) relSai.innerText = `R$ ${despesasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const relEco = document.getElementById("rel-ano-economia");
+            if (relEco) relEco.innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const relTax = document.getElementById("rel-ano-taxa");
+            if (relTax) relTax.innerText = `${taxaPoupanca}%`;
 
             // SELECT CATEGORIAS
             const select = document.getElementById("trans-category");
@@ -1015,6 +1127,7 @@
                         </div>
                         <div class="item-right">
                             <span class="${valClass}">${prefix} ${trans.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                            <button class="btn-icon" onclick="abrirModalEditarTransacao(${trans.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn-icon del" onclick="removerTransacao(${trans.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
@@ -1022,7 +1135,7 @@
                 });
             }
 
-            // Progresso das Categorias
+            // ABA METAS: Tetos de Categorias
             const budgetContainer = document.getElementById("budget-progress-list");
             if (budgetContainer) {
                 budgetContainer.innerHTML = '';
@@ -1034,18 +1147,88 @@
                     if (perc >= 90) colorFill = 'var(--red)'; else if (perc >= 70) colorFill = 'var(--yellow)';
 
                     const bItem = document.createElement("div");
-                    bItem.style.cssText = "background:var(--input-bg); padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:0.75rem;";
+                    bItem.style.cssText = "background:var(--input-bg); padding:9px 12px; border-radius:12px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
                     bItem.innerHTML = `
                         <div style="display:flex; justify-content:space-between; font-weight:700;">
-                            <span>${cat.name}</span>
+                            <span style="display:flex; align-items:center; gap:6px;">
+                                <span style="width:10px; height:10px; border-radius:50%; background:${cat.color}"></span>
+                                ${cat.name}
+                            </span>
                             <span>R$ ${gastoCat.toFixed(0)} / R$ ${limit.toFixed(0)} (${perc}%)</span>
                         </div>
-                        <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; margin-top:4px; overflow:hidden;">
-                            <div style="width:${perc}%; height:100%; background:${colorFill};"></div>
+                        <div style="background:rgba(0,0,0,0.1); height:7px; border-radius:6px; margin-top:5px; overflow:hidden;">
+                            <div style="width:${perc}%; height:100%; background:${colorFill}; transition: width 0.3s;"></div>
                         </div>
                     `;
                     budgetContainer.appendChild(bItem);
                 });
+            }
+
+            // ABA METAS: Caixinhas
+            const goalsContainer = document.getElementById("goals-list");
+            if (goalsContainer) {
+                goalsContainer.innerHTML = '';
+                if (!financialData.goals || financialData.goals.length === 0) {
+                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhuma caixinha criada.</span>';
+                } else {
+                    financialData.goals.forEach((goal) => {
+                        const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
+                        const gItem = document.createElement("div");
+                        gItem.style.cssText = "background:var(--input-bg); padding:10px 12px; border-radius:12px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; flex-direction:column; gap:5px;";
+                        gItem.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700;">
+                                <span>${goal.name}</span>
+                                <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.1); height:7px; border-radius:6px; overflow:hidden;">
+                                <div style="width:${perc}%; height:100%; background:var(--primary); transition: width 0.3s;"></div>
+                            </div>
+                            <div style="display:flex; gap:6px; margin-top:4px;">
+                                <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'guardar')">📥 Guardar</button>
+                                <button class="btn-secondary" style="flex:1; padding:3px;" onclick="abrirModalCaixinha(${goal.id}, 'resgatar')">📤 Resgatar</button>
+                                <button class="btn-icon del" onclick="removerMeta(${goal.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        goalsContainer.appendChild(gItem);
+                    });
+                }
+            }
+
+            // ABA INVESTIMENTOS: Carteira
+            const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
+            const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
+            const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
+
+            const cardTotInv = document.getElementById("card-total-invested");
+            if (cardTotInv) cardTotInv.innerText = `R$ ${totalGeralInvest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const cardXp = document.getElementById("card-xp-total");
+            if (cardXp) cardXp.innerText = `R$ ${totalXP.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const cardBin = document.getElementById("card-binance-total");
+            if (cardBin) cardBin.innerText = `R$ ${totalBinance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
+            const investList = document.getElementById("investment-list");
+            if (investList) {
+                investList.innerHTML = '';
+                if (!financialData.investments || financialData.investments.length === 0) {
+                    investList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:10px;">Nenhum ativo registrado.</span>';
+                } else {
+                    financialData.investments.forEach((inv) => {
+                        const item = document.createElement("div");
+                        item.className = "item-card";
+                        item.style.borderLeftColor = inv.platform === "XP Investimentos" ? "var(--yellow)" : "#eab308";
+                        item.innerHTML = `
+                            <div class="item-info">
+                                <span class="item-title">${inv.asset}</span>
+                                <span class="item-meta">${inv.platform} • ${inv.type} • ${inv.date}</span>
+                            </div>
+                            <div class="item-right">
+                                <span style="font-weight:800; color:var(--blue); font-size:0.85rem;">R$ ${inv.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                <button class="btn-icon del" onclick="removerInvestimento(${inv.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        investList.appendChild(item);
+                    });
+                }
             }
         }
 
@@ -1063,6 +1246,12 @@
             if (!desc || isNaN(value) || value <= 0) {
                 alert("Preencha a descrição e um valor numérico válido.");
                 return;
+            }
+
+            if (type === 'expense' && payment !== "Cartão de Crédito") {
+                financialData.cash -= value;
+            } else if (type === 'income') {
+                financialData.cash += value;
             }
 
             const valorParcela = value / installments;
@@ -1095,12 +1284,77 @@
         }
 
         function removerTransacao(id) {
-            financialData.transactions = financialData.transactions.filter(t => t.id !== id);
+            const idx = financialData.transactions.findIndex(t => t.id === id);
+            if (idx === -1) return;
+            const t = financialData.transactions[idx];
+            if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
+                financialData.cash += t.value;
+            } else if (t.type === 'income') {
+                financialData.cash -= t.value;
+            }
+            financialData.transactions.splice(idx, 1);
             salvarDados();
             atualizarTela();
         }
 
-        // --- MODAL DE DEFINIR ORÇAMENTO ---
+        // --- CAIXINHAS, CATEGORIAS & INVESTIMENTOS ---
+        function adicionarCategoria() {
+            const name = document.getElementById("cat-name").value.trim();
+            const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
+            const color = document.getElementById("cat-color").value;
+            if (!name) { alert("Informe o nome da categoria."); return; }
+
+            const existente = financialData.categories.find(c => c.name.toLowerCase() === name.toLowerCase());
+            if (existente) { existente.limit = limit; existente.color = color; }
+            else { financialData.categories.push({ name, color, limit }); }
+
+            document.getElementById("cat-name").value = '';
+            document.getElementById("cat-limit").value = '';
+            salvarDados();
+            atualizarTela();
+        }
+
+        function adicionarMeta() {
+            const name = document.getElementById("goal-name").value.trim();
+            const target = parseFloat(document.getElementById("goal-target").value);
+            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e o valor da meta."); return; }
+
+            financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+            document.getElementById("goal-name").value = '';
+            document.getElementById("goal-target").value = '';
+            salvarDados();
+            atualizarTela();
+        }
+
+        function removerMeta(id) {
+            financialData.goals = financialData.goals.filter(g => g.id !== id);
+            salvarDados();
+            atualizarTela();
+        }
+
+        function adicionarInvestimento() {
+            const platform = document.getElementById("invest-platform").value;
+            const type = document.getElementById("invest-type").value;
+            const asset = document.getElementById("invest-asset").value.trim();
+            const value = parseFloat(document.getElementById("invest-value").value);
+            if (!asset || isNaN(value) || value <= 0) { alert("Informe o ativo e um valor válido."); return; }
+
+            const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+            financialData.investments.unshift({ id: Date.now(), platform, type, asset, value, date: dataAtual });
+
+            document.getElementById("invest-asset").value = '';
+            document.getElementById("invest-value").value = '';
+            salvarDados();
+            atualizarTela();
+        }
+
+        function removerInvestimento(id) {
+            financialData.investments = financialData.investments.filter(i => i.id !== id);
+            salvarDados();
+            atualizarTela();
+        }
+
+        // --- MODAIS NATIVOS ---
         function abrirModalOrcamento() {
             const src = financialData.sources || { personal: 5000, sofiaPension: 1500 };
             abrirModal("Definir Orçamento & Verba", `
@@ -1121,8 +1375,98 @@
             });
         }
 
-        // --- RELATÓRIO DO ANO COMPLETO ---
+        function abrirModalSaldo() {
+            abrirModal("Definir Saldo em Caixa / Conta", `
+                <label class="text-xs text-gray-500 font-bold">Novo Saldo Disponível (R$):</label>
+                <input type="number" id="input-modal-saldo" step="0.01" value="${financialData.cash || 0}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-saldo").value);
+                if (!isNaN(val)) {
+                    financialData.cash = val;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalPagarFatura() {
+            const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+            const faturaAtual = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
+
+            if (faturaAtual <= 0) {
+                alert("Não há fatura pendente neste mês.");
+                return;
+            }
+
+            abrirModal("Pagar Fatura do Cartão", `
+                <p class="text-xs text-gray-500">Saldo em caixa: <b>R$ ${(financialData.cash || 0).toFixed(2)}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Fatura a pagar: <b>R$ ${faturaAtual.toFixed(2)}</b></p>
+                <input type="number" id="input-modal-fatura" step="0.01" value="${faturaAtual}">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-fatura").value);
+                if (!isNaN(val) && val > 0) {
+                    financialData.cash -= val;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalEditarTransacao(id) {
+            const t = financialData.transactions.find(x => x.id === id);
+            if (!t) return;
+
+            abrirModal("Editar Lançamento", `
+                <label class="text-xs text-gray-500 font-bold">Descrição:</label>
+                <input type="text" id="edit-t-desc" value="${t.desc}">
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor (R$):</label>
+                <input type="number" id="edit-t-val" step="0.01" value="${t.value}">
+            `, () => {
+                const newDesc = document.getElementById("edit-t-desc").value.trim();
+                const newVal = parseFloat(document.getElementById("edit-t-val").value);
+                if (newDesc && !isNaN(newVal) && newVal > 0) {
+                    if (t.type === 'expense' && t.payment !== "Cartão de Crédito") {
+                        financialData.cash += t.value - newVal;
+                    } else if (t.type === 'income') {
+                        financialData.cash -= t.value - newVal;
+                    }
+                    t.desc = newDesc;
+                    t.value = newVal;
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        function abrirModalCaixinha(id, tipo) {
+            const goal = financialData.goals.find(g => g.id === id);
+            if (!goal) return;
+
+            abrirModal(`${tipo === 'guardar' ? 'Guardar na' : 'Resgatar da'} Caixinha`, `
+                <p class="text-xs text-gray-500">Caixinha: <b>${goal.name}</b></p>
+                <p class="text-xs text-gray-500 mb-2">Acumulado: <b>R$ ${goal.current.toFixed(2)}</b></p>
+                <input type="number" id="input-modal-goal-val" step="0.01" min="1" placeholder="Valor (R$)">
+            `, () => {
+                const val = parseFloat(document.getElementById("input-modal-goal-val").value);
+                if (!isNaN(val) && val > 0) {
+                    if (tipo === 'guardar') {
+                        financialData.cash -= val;
+                        goal.current += val;
+                    } else {
+                        if (val > goal.current) { alert("Saldo insuficiente."); return; }
+                        goal.current -= val;
+                        financialData.cash += val;
+                    }
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
+        }
+
+        // --- RELATÓRIOS E GRÁFICOS (CHART.JS) ---
         let monthlyChartInstance = null;
+        let expenseChartInstance = null;
+
         function renderizarRelatorios() {
             const ano = currentYear;
             const salario = financialData.sources.personal || 0;
@@ -1157,6 +1501,7 @@
                 tbody.appendChild(tr);
             }
 
+            // Gráfico de Barras Mensal
             const canvas = document.getElementById('monthlyComparisonChart');
             if (canvas) {
                 if (monthlyChartInstance) monthlyChartInstance.destroy();
@@ -1177,21 +1522,46 @@
                     }
                 });
             }
+
+            // Gráfico Donut de Despesas por Categoria
+            const canvasCat = document.getElementById('expenseCategoryChart');
+            if (canvasCat) {
+                const transMesAtivo = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
+                const catLabels = (financialData.categories || []).map(c => c.name);
+                const catColors = (financialData.categories || []).map(c => c.color);
+                const catTotals = (financialData.categories || []).map(cat => {
+                    return transMesAtivo.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
+                });
+
+                if (expenseChartInstance) expenseChartInstance.destroy();
+                expenseChartInstance = new Chart(canvasCat.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: catLabels,
+                        datasets: [{ data: catTotals, backgroundColor: catColors, borderWidth: 2, borderColor: '#0f172a' }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } }
+                    }
+                });
+            }
         }
 
-        function abrirModal(titulo, htmlBody, callbackConfirm) {
-            document.getElementById("modal-title").innerText = titulo;
-            document.getElementById("modal-body").innerHTML = htmlBody;
-            const confirmBtn = document.getElementById("modal-confirm-btn");
-            confirmBtn.onclick = () => {
-                callbackConfirm();
-                fecharModal();
-            };
-            document.getElementById("app-modal").classList.add("active");
-        }
-
-        function fecharModal() {
-            document.getElementById("app-modal").classList.remove("active");
+        // --- BACKUP E RESTAURAÇÃO ---
+        function exportarCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Data;Mes;Tipo;Descricao;Destino;Valor;Categoria;Pagamento\n";
+            (financialData.transactions || []).forEach(t => {
+                csvContent += `${t.date};${t.monthKey};${t.type === 'expense' ? 'Despesa' : 'Receita'};${t.desc};${t.beneficiary};${t.value};${t.category};${t.payment}\n`;
+            });
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("download", `extrato_${selectedMonthKey}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function exportarBackupJSON() {
@@ -1219,7 +1589,34 @@
             reader.readAsText(file);
         }
 
-        function alternarTema() { document.body.classList.toggle("dark-mode"); }
+        function limparTodosDados() {
+            if (confirm("Tem certeza que deseja zerar todos os lançamentos e restaurar o app?")) {
+                financialData = JSON.parse(JSON.stringify(defaultData));
+                salvarDados();
+                atualizarTela();
+                alert("Aplicativo reiniciado com sucesso.");
+            }
+        }
+
+        function abrirModal(titulo, htmlBody, callbackConfirm) {
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-body").innerHTML = htmlBody;
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            confirmBtn.onclick = () => {
+                callbackConfirm();
+                fecharModal();
+            };
+            document.getElementById("app-modal").classList.add("active");
+        }
+
+        function fecharModal() {
+            document.getElementById("app-modal").classList.remove("active");
+        }
+
+        function alternarTema() {
+            document.body.classList.toggle("dark-mode");
+            if (document.getElementById('tab-relatorios').classList.contains('active')) renderizarRelatorios();
+        }
     </script>
 </body>
 </html>
