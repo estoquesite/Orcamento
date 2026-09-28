@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanças Pro</title>
+    <title>Finanças Pro - Acesso</title>
     
-    <!-- Configurações para o PWA rodar como App no Celular -->
+    <!-- Configurações PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,7 +13,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para ícones -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -31,134 +31,117 @@
     <!-- Fundo com luzes decorativas -->
     <div class="absolute top-10 w-72 h-72 bg-indigo-600/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <!-- Topo: Ícone / Foto e Informações do App -->
-    <header class="w-full max-w-sm flex flex-col items-center text-center pt-8 space-y-4 z-10">
+    <!-- Topo: Foto / Logo e Informações do App -->
+    <header class="w-full max-w-sm flex flex-col items-center text-center pt-6 space-y-3 z-10">
         <!-- Foto / Logo do App -->
         <div class="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-1 shadow-2xl shadow-indigo-500/30">
             <div class="w-full h-full bg-[#151d30] rounded-[22px] flex items-center justify-center overflow-hidden">
-                <!-- Você pode trocar a URL da imagem abaixo pela foto/logo que quiser -->
+                <!-- Ícone de Carteira / Foto oficial -->
                 <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo do App" class="w-14 h-14 object-contain">
             </div>
         </div>
 
         <div class="space-y-1">
             <h1 class="text-2xl font-black tracking-tight">Finanças Pro</h1>
-            <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest">Seu cofre financeiro pessoal</p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-3 w-full text-xs text-gray-300 backdrop-blur-md">
-            <p>Gerencie seus gastos e investimentos com segurança total no seu próprio dispositivo.</p>
+            <p class="text-xs text-indigo-300 font-semibold uppercase tracking-widest">Painel Financeiro Pessoal</p>
         </div>
     </header>
 
-    <!-- Centro: Área de Desbloqueio por Biometria -->
-    <main class="w-full max-w-sm flex flex-col items-center justify-center my-auto space-y-6 z-10 py-6">
-        <div class="bg-white/[0.04] backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl w-full text-center space-y-5">
+    <!-- Centro: Área de Desbloqueio por Biometria / Acesso -->
+    <main class="w-full max-w-sm flex flex-col items-center justify-center my-auto space-y-5 z-10 py-4">
+        <div class="bg-white/[0.04] backdrop-blur-xl border border-white/10 p-6 rounded-[2.5rem] shadow-2xl w-full text-center space-y-4">
             <div class="space-y-1">
-                <span class="text-purple-400 text-[10px] font-extrabold uppercase tracking-widest">Área Restrita</span>
-                <h3 class="text-lg font-bold">Toque para Entrar</h3>
+                <span class="text-purple-400 text-[10px] font-extrabold uppercase tracking-widest">Segurança Ativa</span>
+                <h3 class="text-lg font-bold">Desbloquear Aplicativo</h3>
             </div>
 
-            <!-- Botão da Digital Interativo / Real -->
+            <!-- Botão da Digital Interativo -->
             <div class="relative flex justify-center items-center py-2">
-                <div class="absolute w-24 h-24 bg-indigo-500/20 rounded-full animate-pulse-slow"></div>
-                <div id="biometric-btn" onclick="autenticarBiometria()" class="relative z-10 w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-lg shadow-indigo-500/30 flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 group">
-                    <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white group-hover:scale-110 transition"></i>
+                <div class="absolute w-20 h-20 bg-indigo-500/20 rounded-full animate-pulse-slow"></div>
+                <div id="biometric-btn" onclick="desbloquearApp()" class="relative z-10 w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-lg shadow-indigo-500/30 flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 group">
+                    <i id="bio-icon" class="fa-solid fa-fingerprint text-2xl text-white group-hover:scale-110 transition"></i>
                 </div>
             </div>
 
             <p id="bio-status" class="text-xs text-gray-400 font-medium leading-relaxed">
-                Use sua digital ou Face ID para desbloquear o acesso.
+                Toque na digital para entrar no sistema.
             </p>
         </div>
     </main>
 
-    <!-- Rodapé: Botão e Ícone para Instalar no Celular -->
-    <footer class="w-full max-w-sm flex flex-col items-center space-y-4 pb-4 z-10">
-        <button onclick="instalarAppNoCelular()" class="w-full flex items-center justify-center gap-3 bg-indigo-600 hover:bg-indigo-500 border border-indigo-500/50 py-3.5 px-6 rounded-2xl transition duration-300 shadow-lg shadow-indigo-600/30 text-sm font-bold">
-            <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
-            <span>Instalar no Celular</span>
+    <!-- Rodapé: Botão de Instalação Direta -->
+    <footer class="w-full max-w-sm flex flex-col items-center space-y-3 pb-2 z-10">
+        <button onclick="instalarNoCelular()" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 border border-indigo-500/50 py-3 px-5 rounded-2xl transition duration-300 shadow-lg shadow-indigo-600/30 text-xs font-bold">
+            <i class="fa-solid fa-cloud-arrow-down text-base"></i>
+            <span>Adicionar App à Tela Inicial</span>
         </button>
-        <p class="text-[11px] text-gray-500 text-center">
-            Adicione à tela inicial para rodar como aplicativo independente.
+        <p class="text-[11px] text-gray-500 text-center leading-normal">
+            Dica: Se abrir direto pelo arquivo local, use o menu do navegador (3 pontinhos) e selecione <b>"Adicionar à Tela Inicial"</b>.
         </p>
     </footer>
 
-    <!-- Script de Biometria e Instalação -->
+    <!-- Script de Controle -->
     <script>
         let deferredPrompt = null;
 
-        // Captura o comando de instalação do navegador do celular
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
 
-        function instalarAppNoCelular() {
+        function instalarNoCelular() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     deferredPrompt = null;
                 });
             } else {
-                alert("Para instalar este app no seu celular:\n\n• No Android (Chrome): Toque nos 3 pontos (⋮) no canto superior direito e selecione 'Adicionar à tela inicial' ou 'Instalar aplicativo'.\n• No iPhone (Safari): Toque no botão de Compartilhar (caixa com seta para cima) e escolha 'Adicionar à Tela de Início'.");
+                alert("Como instalar manualmente no celular:\n\n• Android (Chrome): Toque nos 3 pontinhos (⋮) no canto superior direito e escolha 'Adicionar à tela inicial'.\n• iPhone (Safari): Toque no botão de Compartilhar (caixa com seta) e escolha 'Adicionar à Tela de Início'.");
             }
         }
 
-        // Função de Biometria Real (WebAuthn)
-        async function autenticarBiometria() {
+        async function desbloquearApp() {
             const icon = document.getElementById('bio-icon');
             const status = document.getElementById('bio-status');
             const btn = document.getElementById('biometric-btn');
 
-            if (!window.PublicKeyCredential) {
-                alert("Seu navegador não suporta biometria web.");
-                return;
-            }
-
             try {
-                status.textContent = "Lendo digital...";
+                status.textContent = "Verificando biometria...";
                 status.className = "text-xs text-amber-300 font-medium";
 
-                const challenge = new Uint8Array(32);
-                window.crypto.getRandomValues(challenge);
-                const userId = new Uint8Array(16);
-                window.crypto.getRandomValues(userId);
+                if (window.PublicKeyCredential) {
+                    const challenge = new Uint8Array(32);
+                    window.crypto.getRandomValues(challenge);
+                    const userId = new Uint8Array(16);
+                    window.crypto.getRandomValues(userId);
 
-                const credential = await navigator.credentials.create({
-                    publicKey: {
-                        challenge: challenge,
-                        rp: { name: "Finanças Pro" },
-                        user: {
-                            id: userId,
-                            name: "usuario@app.local",
-                            displayName: "Meu App"
-                        },
-                        pubKeyCredParams: [{ alg: -7, type: "public-key" }, { alg: -257, type: "public-key" }],
-                        authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
-                        timeout: 60000
-                    }
-                });
-
-                if (credential) {
-                    icon.className = "fa-solid fa-check text-3xl text-emerald-300 scale-110 transition";
-                    btn.classList.remove('from-indigo-600', 'to-purple-600', 'shadow-indigo-500/30');
-                    btn.classList.add('bg-emerald-950', 'border', 'border-emerald-500');
-                    status.textContent = "Acesso autorizado! Carregando aplicativo...";
-                    status.className = "text-xs text-emerald-400 font-bold";
-
-                    // Aqui você pode redirecionar para a página interna do app ou carregar o resto do conteúdo
-                    setTimeout(() => {
-                        alert("Bem-vindo ao seu aplicativo!");
-                    }, 1000);
+                    await navigator.credentials.create({
+                        publicKey: {
+                            challenge: challenge,
+                            rp: { name: "Finanças Pro" },
+                            user: { id: userId, name: "usuario@app.local", displayName: "Usuário" },
+                            pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+                            authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
+                            timeout: 30000
+                        }
+                    });
                 }
-            } catch (error) {
-                status.textContent = "Leitura cancelada ou não cadastrada.";
-                status.className = "text-xs text-rose-400 font-bold";
+
+                // Sucesso na entrada
+                icon.className = "fa-solid fa-check text-2xl text-emerald-300 scale-110 transition";
+                btn.classList.remove('from-indigo-600', 'to-purple-600');
+                btn.classList.add('bg-emerald-950', 'border', 'border-emerald-500');
+                status.textContent = "Acesso liberado!";
+                status.className = "text-xs text-emerald-400 font-bold";
+
                 setTimeout(() => {
-                    status.textContent = "Use sua digital ou Face ID para desbloquear o acesso.";
-                    status.className = "text-xs text-gray-400 font-medium";
-                }, 3000);
+                    alert("Bem-vindo ao Finanças Pro!");
+                    // Aqui você pode colocar a lógica para exibir o painel completo do app quando logar
+                }, 600);
+
+            } catch (error) {
+                status.textContent = "Toque novamente para confirmar.";
+                status.className = "text-xs text-gray-400 font-medium";
             }
         }
     </script>
