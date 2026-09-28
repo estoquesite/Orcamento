@@ -766,6 +766,7 @@
             </div>
         </header>
 
+        <!-- NAVEGAÇÃO -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -904,7 +905,7 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR -->
+            <!-- TELA 2: LANÇAR COM SELEÇÃO DIRETA DOS CARTÕES -->
             <div id="tab-lancar" class="tab-pane">
                 <div class="mobile-entry-card">
                     <div class="entry-top-switch">
@@ -963,10 +964,11 @@
                         </div>
                     </div>
 
-                    <div id="row-select-card" class="detail-row">
+                    <!-- CAMPO DINÂMICO CONECTADO AOS CARTÕES COM BOTÃO '+' -->
+                    <div id="row-select-card" class="detail-row" style="position:relative;">
                         <i class="fa-solid fa-wallet"></i>
-                        <input type="text" id="trans-card-name" list="cards-datalist" placeholder="Qual cartão? (Itaú, Bradesco, Amazon, Samsung...)" style="font-weight:700;">
-                        <datalist id="cards-datalist"></datalist>
+                        <select id="trans-card-id" style="flex:1;"></select>
+                        <button type="button" onclick="abrirModalNovoCartao()" title="Novo Cartão" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer; padding-left:4px;">+</button>
                     </div>
 
                     <div class="two-cols-clean">
@@ -1000,7 +1002,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: ABA CARTÕES (COM SAMSUNG ITAÚ INCLUÍDO) -->
+            <!-- TELA 3: ABA CARTÕES -->
             <div id="tab-cartoes" class="tab-pane">
                 <div class="hero-wallet-card" style="background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1157,7 +1159,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v21_samsung_card";
+        const STORAGE_KEY = "financas_pro_v22_linked_cards";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -1195,6 +1197,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v21_samsung_card",
                 "financas_pro_v20_free_card_input",
                 "financas_pro_v19_card_skins",
                 "financas_pro_v18_cards_tab",
@@ -1217,7 +1220,6 @@
                         const parsed = JSON.parse(salvo);
                         let cartoes = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0 ? parsed.creditCards : defaultData.creditCards;
                         
-                        // Garante que o Samsung Itaú seja adicionado se ainda não existir
                         if (!cartoes.some(c => c.name.toLowerCase().includes("samsung"))) {
                             cartoes.push({ id: "card_samsung", name: "Samsung Itaú", limit: 3500.00, initialUsed: 0.00, color: "#334155" });
                         }
@@ -1584,7 +1586,7 @@
                 }
             }
 
-            // ABA CARTÕES COM SAMSUNG ITAÚ
+            // ABA CARTÕES
             const cards = financialData.creditCards || [];
             document.getElementById("txt-qtd-cartoes").innerText = `${cards.length} ${cards.length === 1 ? 'cartão' : 'cartões'}`;
 
@@ -1598,7 +1600,7 @@
                     cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--card-bg); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>';
                 } else {
                     cards.forEach(card => {
-                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (t.cardName && t.cardName.toLowerCase() === card.name.toLowerCase()))).reduce((acc, curr) => acc + curr.value, 0);
+                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id))).reduce((acc, curr) => acc + curr.value, 0);
 
                         const totalUsado = (card.initialUsed || 0) + gastosDoCartao;
                         const limite = card.limit || 0;
@@ -1647,7 +1649,7 @@
 
                             <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.6); border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
                                 <span>Limite: R$ ${limite.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                <button onclick="lancarDiretoNoCartao('${card.name}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
+                                <button onclick="lancarDiretoNoCartao('${card.id}')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:3px 8px; border-radius:6px; font-weight:800; cursor:pointer;">+ Usar este cartão</button>
                             </div>
                         `;
                         cardsContainer.appendChild(cardElem);
@@ -1671,15 +1673,20 @@
                 heroImpacto.innerText = `${percImpacto}% do seu orçamento mensal comprometido em cartões`;
             }
 
-            // DATALIST
-            const datalist = document.getElementById("cards-datalist");
-            if (datalist) {
-                datalist.innerHTML = '';
-                cards.forEach(c => {
-                    const opt = document.createElement("option");
-                    opt.value = c.name;
-                    datalist.appendChild(opt);
-                });
+            // SELETOR DINÂMICO CONECTADO AOS CARTÕES DA ABA CARTÕES
+            const selectCard = document.getElementById("trans-card-id");
+            if (selectCard) {
+                selectCard.innerHTML = '';
+                if (cards.length === 0) {
+                    selectCard.innerHTML = '<option value="">Nenhum cartão cadastrado</option>';
+                } else {
+                    cards.forEach(c => {
+                        const opt = document.createElement("option");
+                        opt.value = c.id;
+                        opt.textContent = `Cartão: ${c.name}`;
+                        selectCard.appendChild(opt);
+                    });
+                }
             }
 
             const selectBox = document.getElementById("trans-box-id");
@@ -1738,8 +1745,8 @@
                         const isCard = trans.payment === 'Cartão de Crédito';
                         const iconBadge = isCard ? '💳' : '💵';
 
-                        const cardNomeExibicao = trans.cardName || (cards.find(c => c.id === trans.cardId) ? cards.find(c => c.id === trans.cardId).name : '');
-                        const cardTag = isCard && cardNomeExibicao ? `<span style="font-size:0.6rem; color:var(--yellow); font-weight:800;">[${cardNomeExibicao}]</span>` : '';
+                        const cardObj = cards.find(c => c.id === trans.cardId);
+                        const cardTag = isCard && cardObj ? `<span style="font-size:0.6rem; color:var(--yellow); font-weight:800;">[${cardObj.name}]</span>` : '';
 
                         const boxTagHtml = boxObj 
                             ? `<span class="box-pill-tag" style="background:${boxObj.color}15; color:${boxObj.color}; border:1px solid ${boxObj.color}35;">${boxObj.name}</span>`
@@ -1912,12 +1919,12 @@
             if (select) select.value = boxId;
         }
 
-        function lancarDiretoNoCartao(cardName) {
+        function lancarDiretoNoCartao(cardId) {
             trocarAba('lancar');
             document.getElementById("trans-payment").value = "Cartão de Crédito";
             verificarExibicaoCartao("Cartão de Crédito");
-            const inputCard = document.getElementById("trans-card-name");
-            if (inputCard) inputCard.value = cardName;
+            const selectCard = document.getElementById("trans-card-id");
+            if (selectCard) selectCard.value = cardId;
         }
 
         // --- CARTÕES DE CRÉDITO ---
@@ -2083,30 +2090,13 @@
             const category = document.getElementById("trans-category").value;
             const boxId = document.getElementById("trans-box-id").value;
             const payment = document.getElementById("trans-payment").value;
-            const cardTypedName = document.getElementById("trans-card-name").value.trim();
+            const cardId = payment === "Cartão de Crédito" ? document.getElementById("trans-card-id").value : null;
             const installments = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const inputDate = document.getElementById("trans-date").value || new Date().toISOString().slice(0, 10);
 
             if (!desc || isNaN(inputVal) || inputVal <= 0) {
                 alert("Preencha a descrição e um valor numérico válido.");
                 return;
-            }
-
-            let cardId = null;
-            if (payment === "Cartão de Crédito" && cardTypedName) {
-                let cardObj = (financialData.creditCards || []).find(c => c.name.toLowerCase() === cardTypedName.toLowerCase());
-                if (!cardObj) {
-                    cardObj = {
-                        id: "card_" + Date.now(),
-                        name: cardTypedName,
-                        limit: 3000.00,
-                        initialUsed: 0.00,
-                        color: "#6366f1"
-                    };
-                    if (!financialData.creditCards) financialData.creditCards = [];
-                    financialData.creditCards.push(cardObj);
-                }
-                cardId = cardObj.id;
             }
 
             let valorParcela = 0;
@@ -2137,7 +2127,6 @@
                     category: category || "Geral",
                     boxId: boxId || null,
                     cardId: cardId || null,
-                    cardName: cardTypedName || null,
                     payment,
                     date: dataParcela,
                     monthKey: mKey
@@ -2146,7 +2135,6 @@
 
             document.getElementById("trans-desc").value = '';
             document.getElementById("trans-value").value = '';
-            document.getElementById("trans-card-name").value = '';
             document.getElementById("trans-installments-num").value = '1';
             calcularResumoParcelas();
             salvarDados();
@@ -2163,12 +2151,15 @@
                 optionsCaixinhas += `<option value="${b.id}" ${t.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
             });
 
+            let optionsCartoes = '<option value="">Sem cartão específico</option>';
+            (financialData.creditCards || []).forEach(c => {
+                optionsCartoes += `<option value="${c.id}" ${t.cardId === c.id ? 'selected' : ''}>${c.name}</option>`;
+            });
+
             let optionsCategorias = '<option value="">Sem categoria</option>';
             (financialData.categories || []).forEach(c => {
                 optionsCategorias += `<option value="${c.name}" ${t.category === c.name ? 'selected' : ''}>${c.name}</option>`;
             });
-
-            const cartaoAtual = t.cardName || ((financialData.creditCards || []).find(c => c.id === t.cardId) ? (financialData.creditCards || []).find(c => c.id === t.cardId).name : '');
 
             abrirModal("Editar Lançamento", `
                 <label class="text-xs text-gray-500 font-bold">Descrição:</label>
@@ -2192,8 +2183,8 @@
                     <option value="Dinheiro/Caixa" ${t.payment === 'Dinheiro/Caixa' ? 'selected' : ''}>💵 Dinheiro / Débito / Pix</option>
                 </select>
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Nome do Cartão (livre):</label>
-                <input type="text" id="edit-trans-card-name" value="${cartaoAtual}" placeholder="Ex: Itaú, Bradesco...">
+                <label class="text-xs text-gray-500 font-bold mt-2">Cartão de Crédito Usado:</label>
+                <select id="edit-trans-card">${optionsCartoes}</select>
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Caixinha:</label>
                 <select id="edit-trans-box">${optionsCaixinhas}</select>
@@ -2206,7 +2197,7 @@
                 const type = document.getElementById("edit-trans-type").value;
                 const date = document.getElementById("edit-trans-date").value;
                 const payment = document.getElementById("edit-trans-payment").value;
-                const cardNameTyped = document.getElementById("edit-trans-card-name").value.trim();
+                const cardId = document.getElementById("edit-trans-card").value;
                 const boxId = document.getElementById("edit-trans-box").value;
                 const cat = document.getElementById("edit-trans-cat").value;
 
@@ -2224,7 +2215,7 @@
                     t.monthKey = `${parts[0]}-${parts[1]}`;
                 }
                 t.payment = payment;
-                t.cardName = payment === "Cartão de Crédito" ? cardNameTyped : null;
+                t.cardId = payment === "Cartão de Crédito" ? (cardId || null) : null;
                 t.boxId = boxId || null;
                 t.category = cat || "Geral";
 
