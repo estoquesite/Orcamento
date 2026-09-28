@@ -478,7 +478,6 @@
       }
 
       const savedTheme = localStorage.getItem('financas_pro_theme');
-      // Padrão: DIA (false), como solicitado pelo usuário: "abrisse de dia, não de noite"
       const initialDarkMode = savedTheme ? savedTheme === 'dark' : false;
 
       const savedScreenMode = localStorage.getItem('financas_pro_screen_mode');
@@ -651,7 +650,6 @@
       const modalContainer = document.getElementById('modal-container');
       const modalBox = document.getElementById('modal-box');
 
-      // Aplica tema e modo de tela iniciais
       updateThemeUI();
       updateScreenMode(state.screenMode);
 
@@ -717,20 +715,21 @@
           if (e.target === modalContainer) closeModal();
         });
       }
-            window.mudarCorQuadrados = function(cor) {
-        // Altera o fundo de todos os cartões, blocos, caixinhas e áreas principais
+
+      window.mudarCorQuadrados = function(cor) {
         document.querySelectorAll('.bg-slate-900, .bg-slate-800, #phone-frame, header, #month-nav, #bottom-nav, #modal-box, div[class*="bg-slate"]').forEach(el => {
           el.style.backgroundColor = cor;
         });
         showToast('Cor dos quadrados alterada com sucesso!');
       };
+
       window.mudarCorLetras = function(cor) {
         document.querySelectorAll('body, header, span, h3, div, p, label').forEach(el => {
           el.style.color = cor;
         });
         showToast('Cor das letras alterada!');
       };
-      // 1. EDIÇÃO DE SALÁRIO
+
       window.openModalEditarSalario = function() {
         let mainBox = state.data.boxes.find(b => b.isMain) || state.data.boxes[0];
         const currentVal = mainBox ? mainBox.limit : 5000;
@@ -792,7 +791,6 @@
         render();
       };
 
-      // 2. EDIÇÃO DE CAIXINHA
       window.openModalEditarCaixinha = function(boxId) {
         const box = state.data.boxes.find(b => b.id === String(boxId));
         if (!box) return;
@@ -854,7 +852,6 @@
         }
       };
 
-      // 3. CRIAR NOVA CAIXINHA
       window.openModalNovaCaixinha = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
@@ -889,7 +886,6 @@
         render();
       };
 
-      // 4. EDIÇÃO DE CARTÕES
       window.openModalNovoCartao = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
@@ -998,7 +994,6 @@
         }
       };
 
-      // 5. GESTÃO DE COMPRAS PARCELADAS
       window.openModalNovaParcela = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
@@ -1132,7 +1127,6 @@
         }
       };
 
-      // 6. EDIÇÃO DE VERBA POR MÊS NA ABA MESES
       window.openModalEditarVerbaMes = function(mNum) {
         const nomeMes = MONTHS[mNum - 1];
         const mKey = state.currentYear + '-' + String(mNum).padStart(2, '0');
@@ -1168,7 +1162,6 @@
         render();
       };
 
-      // 7. EDIÇÃO DE METAS FINANCEIRAS
       window.openModalNovaMeta = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
@@ -1254,7 +1247,6 @@
         }
       };
 
-      // 8. EDIÇÃO DE ASSINATURAS E CONTAS FIXAS
       window.openModalNovaAssinatura = function() {
         modalBox.innerHTML = `
           <h3 class="text-xs font-black uppercase tracking-wide text-slate-100 flex items-center gap-1.5">
@@ -1651,11 +1643,9 @@
 
           let html = '';
 
-          // 1. ABA PAINEL (100% EDITÁVEL)
           if (state.currentTab === 'painel') {
             html = `
               <div class="space-y-4">
-                <!-- Cartões de Resumo -->
                 <div class="grid grid-cols-2 gap-2.5">
                   <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md relative">
                     <div class="flex justify-between items-center">
@@ -1683,7 +1673,6 @@
                   </div>
                 </div>
 
-                <!-- Lançamentos Rápidos de 1 toque -->
                 <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
                   <button onclick="quickLancar('Mercado Express', 80, 'Alimentação')" class="py-1 px-3 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer active:scale-95">
                     🛒 Mercado R$ 80
@@ -1699,7 +1688,6 @@
                   </button>
                 </div>
 
-                <!-- Caixinhas com Lápis e Botão '+ Nova Caixinha' -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <div>
@@ -1765,7 +1753,6 @@
             `;
           }
 
-          // 2. ABA LANÇAR (100% EDITÁVEL)
           else if (state.currentTab === 'lancar') {
             html = `
               <div class="space-y-4">
@@ -1818,7 +1805,6 @@
                     </select>
                   </div>
 
-                  <!-- Simulador CDI -->
                   <div class="pt-1">
                     <button
                       type="button"
@@ -1858,7 +1844,6 @@
                     </div>
                   </div>
 
-                  <!-- Caixinha & Forma de Pagamento -->
                   <div class="grid grid-cols-2 gap-2">
                     <select
                       id="input-caixinha"
@@ -1895,7 +1880,6 @@
                   </button>
                 </form>
 
-                <!-- Extrato com CSV & WhatsApp -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
@@ -1947,7 +1931,6 @@
             `;
           }
 
-          // 3. ABA CARTÕES COM BOTÃO + NOVO CARTÃO, + NOVA COMPRA PARCELADA E EDIÇÃO EM CADA ITEM
           else if (state.currentTab === 'cartoes') {
             const skinGradients = {
               titanium: 'from-slate-700 via-slate-800 to-zinc-950',
@@ -2072,7 +2055,6 @@
                   `;
                 }).join('')}
 
-                <!-- SEÇÃO DE COMPRAS PARCELADAS COM LÁPIS -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3 mt-3">
                   <div class="flex justify-between items-center">
                     <div>
@@ -2111,13 +2093,13 @@
                                 </span>
                               </div>
                               <div class="text-[11px] text-slate-400 font-semibold mt-0.5">
-                                Parcela ${currentP} de ${item.totalParcelas} (${perc}%) • ${formatMoeda(item.parcelValue)}/mês
+                                Parcela ${currentP} de${item.totalParcelas} (${perc}\%) •${formatMoeda(item.parcelValue)}/mês
                               </div>
                             </div>
 
                             <div class="flex items-center gap-1">
                               <button
-                                onclick="openModalEditarParcela('${item.baseName}', '${item.cardId || ''}', ${item.parcelValue})"
+                                onclick="openModalEditarParcela('${item.baseName}', '${item.cardId \vert{}\vert{} ''}',${item.parcelValue})"
                                 class="px-2 py-1 rounded-xl bg-slate-700/80 hover:bg-indigo-900/40 text-slate-200 text-xs font-bold flex items-center gap-1 cursor-pointer active:scale-95"
                                 title="Editar Compra Parcelada"
                               >
@@ -2153,7 +2135,6 @@
             `;
           }
 
-          // 4. ABA MESES (100% EDITÁVEL)
           else if (state.currentTab === 'meses') {
             html = `
               <div class="space-y-3">
@@ -2203,26 +2184,26 @@
             `;
           }
 
-          // 5. ABA MAIS (100% EDITÁVEL)
           else if (state.currentTab === 'mais') {
             html = `
-              <!-- SELETORES DE CORES NA ABA MAIS -->
+              <!-- CONTROLE TOTAL DE CORES NA ABA MAIS -->
               <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
-                  🎨 Mudar Cores de Quadrados e Letras
+                  🎨 Controle Total de Cores (Quadrados e Letras)
                 </h3>
+                <p class="text-[11px] text-slate-400">Escolha a cor que desejar para os blocos e textos instantaneamente:</p>
                 <div class="grid grid-cols-2 gap-2">
                   <div>
-                    <label class="text-[10px] font-bold text-slate-300 block mb-1">Quadrados:</label>
+                    <label class="text-[10px] font-bold text-slate-300 block mb-1">Cor dos Quadrados/Blocos:</label>
                     <input type="color" value="#ffffff" onchange="mudarCorQuadrados(this.value)" class="w-full h-10 rounded-xl cursor-pointer bg-slate-800 border border-slate-700" />
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-slate-300 block mb-1">Letras:</label>
+                    <label class="text-[10px] font-bold text-slate-300 block mb-1">Cor das Letras:</label>
                     <input type="color" value="#0f172a" onchange="mudarCorLetras(this.value)" class="w-full h-10 rounded-xl cursor-pointer bg-slate-800 border border-slate-700" />
                   </div>
                 </div>
               </div>
-                <!-- Metas de Poupança -->
+
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
@@ -2242,7 +2223,7 @@
                             <span>${goal.name}</span>
                             <button onclick="openModalEditarMeta(${goal.id})" class="p-1 text-[10px] text-slate-400 hover:text-white cursor-pointer" title="Editar Meta">✏️</button>
                           </span>
-                          <span>${formatMoeda(goal.currentValue)} / ${formatMoeda(goal.targetValue)}</span>
+                          <span>${formatMoeda(goal.currentValue)} /${formatMoeda(goal.targetValue)}</span>
                         </div>
                         <div class="w-full h-2 rounded-full bg-slate-700 overflow-hidden">
                           <div class="h-full bg-emerald-500 rounded-full" style="width: ${percent}%;"></div>
@@ -2260,7 +2241,6 @@
                   }).join('')}
                 </div>
 
-                <!-- Assinaturas Recorrentes -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
@@ -2274,7 +2254,7 @@
                     <div class="p-3 rounded-2xl bg-slate-800/50 flex justify-between items-center text-xs">
                       <span class="font-bold text-slate-200 flex items-center gap-1.5">
                         <span>${bill.icon}</span>
-                        <span>${bill.name} (Dia ${bill.dueDay})</span>
+                        <span>${bill.name} (Dia${bill.dueDay})</span>
                         <button onclick="openModalEditarAssinatura('${bill.id}')" class="p-1 text-[10px] text-slate-400 hover:text-white cursor-pointer" title="Editar Conta">✏️</button>
                       </span>
                       <span class="font-black text-rose-400">${formatMoeda(bill.value)}</span>
@@ -2282,7 +2262,6 @@
                   `).join('')}
                 </div>
 
-                <!-- Configuração de Exibição (Computador / Celular) -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide flex items-center gap-1.5">
@@ -2318,7 +2297,6 @@
                   </button>
                 </div>
 
-                <!-- Backup & Restauração com Botão Verde -->
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <h3 class="text-xs font-black text-slate-100 uppercase tracking-wide">
                     💾 Backup & Restauração
@@ -2358,7 +2336,6 @@
             viewContent.innerHTML = html;
           }
 
-          // Binds da aba Lançar
           if (state.currentTab === 'lancar') {
             const form = document.getElementById('form-lancar');
             const btnDesp = document.getElementById('btn-type-despesa');
