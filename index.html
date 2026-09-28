@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Finanças Pro Mobile</title>
   <meta name="description" content="Aplicativo de gestão financeira pessoal completo e autônomo para celular." />
   <meta name="theme-color" content="#4f46e5" />
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind CSS via CDN para renderização moderna imediata -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,23 +26,30 @@
     };
   </script>
   <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
     ::-webkit-scrollbar-track { background: transparent; }
     body {
-      -webkit-tap-highlight-color: transparent;
       user-select: none;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .modal-backdrop {
+      background-color: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
     }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-  <!-- Chassis do Smartphone -->
+  <!-- CHASSIS DO CELULAR -->
   <div id="phone-frame" class="w-full max-w-[430px] min-h-screen md:min-h-[890px] md:h-[92vh] flex flex-col relative overflow-hidden bg-slate-100 dark:bg-slate-950 md:rounded-[42px] md:border-[7px] md:border-slate-800 shadow-2xl transition-colors duration-300 dark">
     
-    <!-- Barra Superior / Header -->
-    <div class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
+    <!-- BARRA SUPERIOR (HEADER) -->
+    <header class="pt-3 px-5 pb-2.5 flex justify-between items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shrink-0 z-20">
       <div class="flex items-center gap-2">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
@@ -53,7 +60,7 @@
           id="btn-privacy"
           type="button"
           class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 transition-transform cursor-pointer"
-          title="Ocultar / Revelar Valores (Privacidade)"
+          title="Ocultar / Mostrar Valores"
         >
           👁️
         </button>
@@ -67,28 +74,28 @@
           ☀️
         </button>
       </div>
-    </div>
+    </header>
 
-    <!-- Navegação de Mês/Ano -->
+    <!-- NAVEGAÇÃO DE MÊS/ANO -->
     <div class="px-4 py-2 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs font-bold shrink-0">
       <button id="btn-prev-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
         ◀
       </button>
       <div id="month-label" class="text-center font-extrabold text-slate-900 dark:text-slate-100">
-        Janeiro de 2026
+        Carregando...
       </div>
       <button id="btn-next-month" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
         ▶
       </button>
     </div>
 
-    <!-- Conteúdo da Aba Ativa -->
-    <div id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
-      <!-- Injetado dinamicamente via JS Puro -->
-    </div>
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL COM PB-24 PARA NUNCA TAPAR BOTÕES -->
+    <main id="view-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 md:pb-20">
+      <!-- Injetado dinamicamente -->
+    </main>
 
-    <!-- Barra Inferior de Abas (Fixa) -->
-    <div class="absolute bottom-0 left-0 right-0 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex justify-around items-center px-2 z-20">
+    <!-- BARRA INFERIOR DE ABAS FIXA NO FUNDO (STICKY BOTTOM-0) -->
+    <nav class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex justify-around items-center px-2 py-1 shrink-0 sticky bottom-0 z-30 shadow-lg pb-[max(env(safe-area-inset-bottom),0.5rem)]">
       <button data-tab="painel" class="tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer text-indigo-600 dark:text-indigo-400 font-black">
         <span class="text-lg leading-none">📊</span>
         <span class="text-[10px] mt-0.5">Painel</span>
@@ -109,21 +116,28 @@
         <span class="text-lg leading-none">⚙️</span>
         <span class="text-[10px] mt-0.5">Mais</span>
       </button>
-    </div>
+    </nav>
 
-    <!-- Notificação Toast -->
+    <!-- NOTIFICAÇÃO TOAST FLUTUANTE -->
     <div id="toast" class="hidden absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-black px-4 py-2 rounded-full shadow-2xl border border-slate-700 dark:border-slate-300 pointer-events-none transition-all">
       Notificação
     </div>
 
+    <!-- MODAL POPUP DINÂMICO -->
+    <div id="modal-container" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+      <div id="modal-box" class="w-full max-w-[380px] bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-5 space-y-4 max-h-[85vh] overflow-y-auto">
+        <!-- Injetado por JavaScript -->
+      </div>
+    </div>
+
   </div>
 
-  <!-- JAVASCRIPT PURO (ZERO FRAMEWORKS / ZERO REACT) -->
   <script>
     (function () {
-      const STORAGE_KEY = 'FINANCAS_PRO_DATA_GITHUB_PAGES';
+      const STORAGE_KEY = 'FINANCAS_PRO_DATA_AUTONOMO';
       const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
+      // DADOS INICIAIS COMPLETOS E AUTÔNOMOS
       const DEFAULT_DATA = {
         boxes: [
           { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
@@ -133,26 +147,8 @@
           { id: '5', name: 'Saúde e Farmácia', limit: 350, color: '#06b6d4', icon: '💊', isMain: false }
         ],
         creditCards: [
-          {
-            id: 'card-1',
-            name: 'Nubank Ultravioleta',
-            limit: 8500,
-            color: '#6b21a8',
-            brand: 'Mastercard Black',
-            skin: 'ultraviolet',
-            cvv: '849',
-            isBlocked: false
-          },
-          {
-            id: 'card-2',
-            name: 'Inter Black Win',
-            limit: 15000,
-            color: '#0f172a',
-            brand: 'Mastercard Platinum',
-            skin: 'titanium',
-            cvv: '312',
-            isBlocked: false
-          }
+          { id: 'card-1', name: 'Nubank Ultravioleta', limit: 8500, color: '#6b21a8', brand: 'Mastercard Black', skin: 'ultraviolet', cvv: '849', isBlocked: false },
+          { id: 'card-2', name: 'Inter Black Win', limit: 15000, color: '#0f172a', brand: 'Mastercard Platinum', skin: 'titanium', cvv: '312', isBlocked: false }
         ],
         transactions: [
           { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
@@ -169,21 +165,6 @@
           { id: '2', name: 'Spotify Duo', value: 34.90, dueDay: 20, icon: '🎵' },
           { id: '3', name: 'Internet Fibra 600MB', value: 129.90, dueDay: 10, icon: '🌐' }
         ]
-      };
-
-      // Estado Global da Aplicação
-      const state = {
-        data: loadData(),
-        currentYear: new Date().getFullYear(),
-        currentMonth: new Date().getMonth() + 1,
-        currentTab: 'painel',
-        privacyMode: false,
-        darkMode: true,
-        revealedCvv: {},
-        showSimulator: false,
-        simDiscount: 5,
-        simCdi: 0.9,
-        newTransType: 'despesa'
       };
 
       function loadData() {
@@ -203,6 +184,20 @@
         }
       }
 
+      const state = {
+        data: loadData(),
+        currentYear: new Date().getFullYear(),
+        currentMonth: new Date().getMonth() + 1,
+        currentTab: 'painel',
+        privacyMode: false,
+        darkMode: true,
+        revealedCvv: {},
+        showSimulator: false,
+        simDiscount: 5,
+        simCdi: 0.9,
+        newTransType: 'despesa'
+      };
+
       function formatMoeda(num) {
         if (state.privacyMode) return 'R$ ••••••';
         return (Number(num) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -216,10 +211,9 @@
         if (toastTimeout) clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => {
           toast.classList.add('hidden');
-        }, 3000);
+        }, 3200);
       }
 
-      // Elementos Principais
       const phoneFrame = document.getElementById('phone-frame');
       const viewContent = document.getElementById('view-content');
       const monthLabel = document.getElementById('month-label');
@@ -228,8 +222,9 @@
       const btnPrevMonth = document.getElementById('btn-prev-month');
       const btnNextMonth = document.getElementById('btn-next-month');
       const tabButtons = document.querySelectorAll('.tab-btn');
+      const modalContainer = document.getElementById('modal-container');
+      const modalBox = document.getElementById('modal-box');
 
-      // Listeners do Topo
       btnPrivacy.addEventListener('click', () => {
         state.privacyMode = !state.privacyMode;
         btnPrivacy.textContent = state.privacyMode ? '🙈' : '👁️';
@@ -272,15 +267,22 @@
           state.currentTab = btn.getAttribute('data-tab');
           tabButtons.forEach(b => {
             const isCur = b.getAttribute('data-tab') === state.currentTab;
-            b.className = `tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer ${
-              isCur ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-400 font-bold'
-            }`;
+            b.className = 'tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer ' +
+              (isCur ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-400 font-bold');
           });
           render();
         });
       });
 
-      // Funções de Negócio Globais
+      window.closeModal = function() {
+        modalContainer.classList.add('hidden');
+        modalBox.innerHTML = '';
+      };
+
+      modalContainer.addEventListener('click', (e) => {
+        if (e.target === modalContainer) closeModal();
+      });
+
       window.quickLancar = function (desc, val, cat) {
         state.data.transactions.unshift({
           id: Date.now(),
@@ -295,7 +297,7 @@
           month: state.currentMonth
         });
         saveData();
-        showToast(`Lançado: ${desc} (${formatMoeda(val)})! ⚡`);
+        showToast('Lançado: ' + desc + ' (' + formatMoeda(val) + ')! ⚡');
         render();
       };
 
@@ -316,7 +318,7 @@
           const idx = skins.indexOf(card.skin || 'titanium');
           card.skin = skins[(idx + 1) % skins.length];
           saveData();
-          showToast(`Skin alterada para ${card.skin.toUpperCase()}! 🎨`);
+          showToast('Skin alterada para ' + card.skin.toUpperCase() + '! 🎨');
           render();
         }
       };
@@ -348,9 +350,117 @@
           }
           goal.currentValue = tipo === 'add' ? goal.currentValue + val : goal.currentValue - val;
           saveData();
-          showToast(tipo === 'add' ? `Guardado ${formatMoeda(val)}! 🐖` : `Resgatado ${formatMoeda(val)}! 💸`);
+          showToast(tipo === 'add' ? 'Guardado ' + formatMoeda(val) + '! 🐖' : 'Resgatado ' + formatMoeda(val) + '! 💸');
           render();
         }
+      };
+
+      window.openModalNovaMeta = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🎯 Nova Meta Financeira</h3>
+          <input type="text" id="m-meta-name" placeholder="Nome (Ex: Viagem, Carro Novo)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-meta-target" placeholder="Valor Alvo R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-meta-current" placeholder="Valor Inicial Guardado R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaMeta()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Meta</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaMeta = function() {
+        const name = document.getElementById('m-meta-name').value.trim();
+        const target = parseFloat(document.getElementById('m-meta-target').value);
+        const curr = parseFloat(document.getElementById('m-meta-current').value) || 0;
+        if (!name || isNaN(target) || target <= 0) return alert('Preencha os campos obrigatórios.');
+        state.data.savingsGoals.push({
+          id: Date.now(),
+          name,
+          targetValue: target,
+          currentValue: curr,
+          color: '#10b981',
+          icon: '🎯'
+        });
+        saveData();
+        closeModal();
+        showToast('Nova meta cadastrada! 🎯');
+        render();
+      };
+
+      window.openModalNovaAssinatura = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">🔄 Nova Assinatura ou Conta Fixa</h3>
+          <input type="text" id="m-ass-name" placeholder="Nome (Ex: Netflix, Academia)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" step="0.01" id="m-ass-val" placeholder="Valor Mensal R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" min="1" max="31" id="m-ass-day" placeholder="Dia de Vencimento (1 a 31)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovaAssinatura()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar Conta</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovaAssinatura = function() {
+        const name = document.getElementById('m-ass-name').value.trim();
+        const val = parseFloat(document.getElementById('m-ass-val').value);
+        const day = parseInt(document.getElementById('m-ass-day').value, 10) || 10;
+        if (!name || isNaN(val) || val <= 0) return alert('Preencha os campos obrigatórios.');
+        state.data.recurringBills.push({
+          id: String(Date.now()),
+          name,
+          value: val,
+          dueDay: day,
+          icon: '🔄'
+        });
+        saveData();
+        closeModal();
+        showToast('Assinatura adicionada! 🔄');
+        render();
+      };
+
+      window.openModalNovoCartao = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100">💳 Novo Cartão de Crédito</h3>
+          <input type="text" id="m-card-name" placeholder="Nome do Cartão (Ex: C6 Black)" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="number" id="m-card-limit" placeholder="Limite Total R$" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <input type="text" id="m-card-brand" placeholder="Bandeira (Ex: Mastercard Black)" value="Mastercard Black" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+          <select id="m-card-skin" class="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+            <option value="titanium">Skin Titanium</option>
+            <option value="ultraviolet">Skin Ultravioleta</option>
+            <option value="emerald">Skin Emerald</option>
+            <option value="gold">Skin Gold</option>
+            <option value="midnight">Skin Midnight</option>
+          </select>
+          <div class="flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovoCartao()" class="flex-1 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Criar Cartão</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovoCartao = function() {
+        const name = document.getElementById('m-card-name').value.trim();
+        const limit = parseFloat(document.getElementById('m-card-limit').value);
+        const brand = document.getElementById('m-card-brand').value.trim() || 'Mastercard';
+        const skin = document.getElementById('m-card-skin').value;
+        if (!name || isNaN(limit) || limit <= 0) return alert('Preencha nome e limite válidos.');
+        state.data.creditCards.push({
+          id: 'card-' + Date.now(),
+          name,
+          limit,
+          color: '#6366f1',
+          brand,
+          skin,
+          cvv: String(Math.floor(100 + Math.random() * 900)),
+          isBlocked: false
+        });
+        saveData();
+        closeModal();
+        showToast('Cartão cadastrado! 💳');
+        render();
       };
 
       window.shareWhatsApp = function () {
@@ -361,18 +471,18 @@
         const sobra = rec - desp;
 
         const lines = [
-          `📊 *Resumo Financeiro - ${MONTHS[state.currentMonth - 1]} / ${state.currentYear}*`,
-          `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-          `💰 *Receitas:* ${formatMoeda(rec)}`,
-          `📉 *Despesas:* ${formatMoeda(desp)}`,
-          `💳 *No Cartão:* ${formatMoeda(cartao)}`,
-          `🟢 *Sobra Líquida:* ${formatMoeda(sobra)}`,
-          `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-          `📑 *Lançamentos do Mês (${monthTrans.length}):*`,
-          ...monthTrans.slice(0, 10).map(t => `• ${t.desc}: ${formatMoeda(t.value)} (${t.payment})`),
-          monthTrans.length > 10 ? `... e mais ${monthTrans.length - 10} outros.` : '',
-          `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-          `Gerado por Finanças Pro Mobile ✨`
+          '📊 *Resumo Financeiro - ' + MONTHS[state.currentMonth - 1] + ' / ' + state.currentYear + '*',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━',
+          '💰 *Receitas:* ' + formatMoeda(rec),
+          '📉 *Despesas:* ' + formatMoeda(desp),
+          '💳 *No Cartão:* ' + formatMoeda(cartao),
+          '🟢 *Sobra Líquida:* ' + formatMoeda(sobra),
+          '━━━━━━━━━━━━━━━━━━━━━━━━━',
+          '📑 *Lançamentos (' + monthTrans.length + '):*',
+          ...monthTrans.slice(0, 10).map(t => '• ' + t.desc + ': ' + formatMoeda(t.value) + ' (' + t.payment + ')'),
+          monthTrans.length > 10 ? '... e mais ' + (monthTrans.length - 10) + ' outros.' : '',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━',
+          'Gerado por Finanças Pro Mobile ✨'
         ].filter(Boolean);
 
         const text = lines.join('\n');
@@ -386,10 +496,7 @@
 
       window.exportCSV = function () {
         const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
-        if (monthTrans.length === 0) {
-          alert('Nenhum lançamento para exportar!');
-          return;
-        }
+        if (monthTrans.length === 0) return alert('Nenhum lançamento no mês!');
         const rows = [
           ['Data', 'Descricao', 'Tipo', 'Categoria', 'Forma', 'Valor'],
           ...monthTrans.map(t => [t.date, t.desc, t.type, t.category, t.payment, t.value.toFixed(2)])
@@ -399,10 +506,31 @@
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `extrato_${state.currentMonth}_${state.currentYear}.csv`;
+        link.download = 'extrato_' + state.currentMonth + '_' + state.currentYear + '.csv';
         link.click();
         URL.revokeObjectURL(url);
         showToast('Planilha CSV baixada! 📊');
+      };
+
+      // BAIXAR INDEX.HTML COMPLETO E AUTÔNOMO
+      window.exportHtmlCompleto = function () {
+        try {
+          const fullHtml = document.documentElement.outerHTML;
+          const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'index.html';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 300);
+          showToast('Ficheiro index.html descarregado no celular! 🚀');
+        } catch (e) {
+          alert('Erro ao descarregar HTML.');
+        }
       };
 
       window.copyBackup = function () {
@@ -434,6 +562,7 @@
 
       window.resetData = function () {
         if (confirm('Tem certeza que deseja zerar todos os dados e restaurar o app de fábrica?')) {
+          localStorage.removeItem(STORAGE_KEY);
           state.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
           saveData();
           showToast('Dados restaurados de fábrica!');
@@ -446,16 +575,14 @@
         state.currentTab = 'painel';
         tabButtons.forEach(b => {
           const isCur = b.getAttribute('data-tab') === 'painel';
-          b.className = `tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer ${
-            isCur ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-400 font-bold'
-          }`;
+          b.className = 'tab-btn flex flex-col items-center justify-center w-14 py-1 rounded-2xl transition-all cursor-pointer ' +
+            (isCur ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-400 font-bold');
         });
         render();
       };
 
-      // MOTOR DE RENDERIZAÇÃO DECLARATIVO
       function render() {
-        monthLabel.textContent = `${MONTHS[state.currentMonth - 1]} de ${state.currentYear}`;
+        monthLabel.textContent = MONTHS[state.currentMonth - 1] + ' de ' + state.currentYear;
 
         const monthTrans = state.data.transactions.filter(t => t.year === state.currentYear && t.month === state.currentMonth);
         const totalReceitas = monthTrans.filter(t => t.type === 'receita').reduce((a, b) => a + (b.value || 0), 0);
@@ -476,7 +603,7 @@
         if (state.currentTab === 'painel') {
           html = `
             <div class="space-y-4">
-              <!-- Cartões de Métricas -->
+              <!-- Cartões de Resumo -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md">
                   <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Receitas</span>
@@ -499,7 +626,7 @@
                 </div>
               </div>
 
-              <!-- Lançamentos Rápidos -->
+              <!-- Lançamentos Rápidos de 1 toque -->
               <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
                 <button onclick="quickLancar('Mercado Express', 80, 'Alimentação')" class="py-1 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer">
                   🛒 Mercado R$ 80
@@ -515,7 +642,7 @@
                 </button>
               </div>
 
-              <!-- Widget Score de Saúde -->
+              <!-- Saúde Financeira com Score Real -->
               <div class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
                 <div>
                   <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Saúde Financeira</span>
@@ -523,7 +650,7 @@
                     ${healthScore >= 750 ? '🌟 Excelente' : healthScore >= 500 ? '⚡ Equilibrada' : '⚠️ Atenção'}
                   </h3>
                   <p class="text-[11px] text-slate-500 mt-0.5">
-                    ${healthScore >= 750 ? 'Excelente taxa de controle de despesas e poupança.' : 'Mantenha os gastos dentro do teto.'}
+                    ${healthScore >= 750 ? 'Excelente taxa de poupança e controle de limites.' : 'Atenção aos limites para preservar o saldo.'}
                   </p>
                 </div>
                 <div class="flex flex-col items-center">
@@ -534,7 +661,7 @@
                 </div>
               </div>
 
-              <!-- Caixinhas de Verba com Transbordo Automático -->
+              <!-- Caixinhas com Transbordo Automático -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
@@ -590,7 +717,6 @@
                   ➕ Novo Lançamento
                 </h3>
 
-                <!-- Switch Tipo -->
                 <div class="grid grid-cols-2 gap-2">
                   <button
                     type="button"
@@ -635,7 +761,7 @@
                   </select>
                 </div>
 
-                <!-- Simulador Inteligente -->
+                <!-- Simulador CDI -->
                 <div class="pt-1">
                   <button
                     type="button"
@@ -712,7 +838,7 @@
                 </button>
               </form>
 
-              <!-- Extrato -->
+              <!-- Extrato com CSV & WhatsApp -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
                   <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
@@ -773,9 +899,14 @@
 
           html = `
             <div class="space-y-4">
-              <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                💳 Seus Cartões Holográficos
-              </h3>
+              <div class="flex justify-between items-center">
+                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                  💳 Seus Cartões Holográficos
+                </h3>
+                <button onclick="openModalNovoCartao()" class="px-2.5 py-1 rounded-xl bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
+                  + Novo Cartão
+                </button>
+              </div>
 
               ${state.data.creditCards.map(card => {
                 const fatura = monthTrans
@@ -887,15 +1018,20 @@
           `;
         }
 
-        // 5. ABA MAIS
+        // 5. ABA MAIS (Metas, Assinaturas, Backup e Download)
         else if (state.currentTab === 'mais') {
           html = `
             <div class="space-y-4">
               <!-- Metas de Poupança -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                  🎯 Metas & Reservas Financeiras
-                </h3>
+                <div class="flex justify-between items-center">
+                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                    🎯 Metas & Reservas Financeiras
+                  </h3>
+                  <button onclick="openModalNovaMeta()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
+                    + Nova
+                  </button>
+                </div>
                 ${state.data.savingsGoals.map(goal => {
                   const percent = Math.min(100, Math.round((goal.currentValue / goal.targetValue) * 100));
                   return `
@@ -922,9 +1058,14 @@
 
               <!-- Assinaturas Recorrentes -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
-                  🔄 Assinaturas & Contas Fixas
-                </h3>
+                <div class="flex justify-between items-center">
+                  <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
+                    🔄 Assinaturas & Contas Fixas
+                  </h3>
+                  <button onclick="openModalNovaAssinatura()" class="px-2 py-0.5 rounded-lg bg-indigo-600 text-white font-bold text-[10px] cursor-pointer">
+                    + Adicionar
+                  </button>
+                </div>
                 ${state.data.recurringBills.map(bill => `
                   <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs">
                     <span class="font-bold text-slate-800 dark:text-slate-200">${bill.icon} ${bill.name} (Dia ${bill.dueDay})</span>
@@ -933,12 +1074,27 @@
                 `).join('')}
               </div>
 
-              <!-- Backup & Armazenamento -->
+              <!-- Backup & Restauração com Botão Verde -->
               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                 <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">
                   💾 Backup & Restauração
                 </h3>
-                <div class="grid grid-cols-2 gap-2">
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                  Baixe o site completo e autocontido ou copie os dados para restaurar quando quiser.
+                </p>
+
+                <!-- BOTÃO VERDE BEM VISÍVEL -->
+                <button
+                  type="button"
+                  onclick="exportHtmlCompleto()"
+                  class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer transition-all active:scale-[0.98] ring-2 ring-emerald-400/25"
+                  title="Descarregar ficheiro index.html pronto para o GitHub Pages"
+                >
+                  <span class="text-base">📥</span>
+                  <span class="tracking-wide text-xs sm:text-sm font-extrabold">Exportar / Baixar index.html</span>
+                </button>
+
+                <div class="grid grid-cols-2 gap-2 mt-1">
                   <button onclick="copyBackup()" class="py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-700 cursor-pointer">
                     Copiar Backup
                   </button>
@@ -946,6 +1102,7 @@
                     Restaurar
                   </button>
                 </div>
+
                 <button onclick="resetData()" class="w-full py-2 rounded-xl text-rose-500 font-bold text-xs hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer">
                   Zerar Dados de Fábrica
                 </button>
@@ -956,7 +1113,7 @@
 
         viewContent.innerHTML = html;
 
-        // Binds dinâmicos da aba Lançar
+        // Binds da aba Lançar
         if (state.currentTab === 'lancar') {
           const form = document.getElementById('form-lancar');
           const btnDesp = document.getElementById('btn-type-despesa');
@@ -1044,7 +1201,7 @@
             if (payment === 'Cartão de Crédito') {
               const cardObj = state.data.creditCards.find(c => c.id === cardId);
               if (cardObj && cardObj.isBlocked) {
-                showToast(`⚠️ O cartão "${cardObj.name}" está bloqueado!`);
+                showToast('⚠️ O cartão "' + cardObj.name + '" está bloqueado!');
                 return;
               }
             }
@@ -1059,7 +1216,7 @@
               }
               state.data.transactions.unshift({
                 id: Date.now() + i,
-                desc: parcelas > 1 ? `${desc} (${i + 1}/${parcelas})` : desc,
+                desc: parcelas > 1 ? desc + ' (' + (i + 1) + '/' + parcelas + ')' : desc,
                 value: valorPorParcela,
                 type: state.newTransType,
                 boxId,
@@ -1073,13 +1230,12 @@
             }
 
             saveData();
-            showToast(parcelas > 1 ? `${parcelas} parcelas cadastradas!` : 'Lançamento salvo!');
+            showToast(parcelas > 1 ? parcelas + ' parcelas cadastradas!' : 'Lançamento salvo!');
             render();
           });
         }
       }
 
-      // Inicialização
       render();
     })();
   </script>
