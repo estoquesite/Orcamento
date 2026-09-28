@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanças Pro - Controle Completo</title>
+    <title>Finanças Pro - Alertas e Cores Dinâmicas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -33,6 +33,16 @@
         .skin-ultraviolet { background: linear-gradient(135deg, #2e1a47 0%, #12091f 100%); border: 1px solid rgba(168,85,247,0.3); color: #fff; }
         .skin-midnight { background: linear-gradient(135deg, #172554 0%, #030712 100%); border: 1px solid rgba(59,130,246,0.3); color: #fff; }
         .skin-emerald { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); border: 1px solid rgba(16,185,129,0.3); color: #fff; }
+
+        /* Animação da Luzinha Piscante */
+        @keyframes piscar {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .led-piscante {
+            animation: piscar 1.2s infinite ease-in-out;
+        }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -65,27 +75,51 @@
         <!-- ================= ABA 1: PAINEL PRINCIPAL ================= -->
         <div id="tab-painel" class="tab-content active space-y-4">
             
-            <!-- Cards de Resumo (Editáveis) -->
+            <!-- Cards de Resumo com Luzinhas Piscantes no Topo -->
             <div class="grid grid-cols-2 gap-3">
+                
+                <!-- Card 1: Verba / Receitas (Azul Informativo) -->
                 <div class="card-custom p-4 rounded-2xl relative shadow-lg bg-gradient-to-br from-indigo-950/40 to-gray-900/40">
-                    <span id="card-t1" class="text-[10px] text-indigo-400 font-bold tracking-wider">VERBA / RECEITAS</span>
+                    <div class="flex justify-between items-start">
+                        <span id="card-t1" class="text-[10px] text-indigo-400 font-bold tracking-wider">VERBA / RECEITAS</span>
+                        <!-- Luzinha Azul Piscante -->
+                        <span class="w-2.5 h-2.5 bg-blue-400 rounded-full led-piscante shadow-[0_0_8px_#38bdf8]" title="Status: Normal"></span>
+                    </div>
                     <p id="card-v1" class="text-lg font-bold mt-2 valor-monetario">R$ 0,00</p>
-                    <span onclick="editarCard('card-t1', 'card-v1')" class="absolute top-3 right-3 text-xs cursor-pointer bg-indigo-500/20 text-indigo-300 p-1 rounded">✏️</span>
+                    <span onclick="editarCard('card-t1', 'card-v1')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-indigo-500/20 text-indigo-300 p-1 rounded">✏️</span>
                 </div>
+
+                <!-- Card 2: Total Gasto (Vermelho - Ultrapassou) -->
                 <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-rose-950/40 to-gray-900/40 relative">
-                    <span id="card-t2" class="text-[10px] text-rose-400 font-bold tracking-wider">TOTAL GASTO</span>
+                    <div class="flex justify-between items-start">
+                        <span id="card-t2" class="text-[10px] text-rose-400 font-bold tracking-wider">TOTAL GASTO</span>
+                        <!-- Luzinha Vermelha Piscante (Ultrapassou) -->
+                        <span class="w-2.5 h-2.5 bg-rose-500 rounded-full led-piscante shadow-[0_0_8px_#f43f5e]" title="Status: Ultrapassou o limite!"></span>
+                    </div>
                     <p id="card-v2" class="text-lg font-bold mt-2 text-rose-400 valor-monetario">R$ 1.324,40</p>
-                    <span onclick="editarCard('card-t2', 'card-v2')" class="absolute top-3 right-3 text-xs cursor-pointer bg-rose-500/20 text-rose-300 p-1 rounded">✏️</span>
+                    <span onclick="editarCard('card-t2', 'card-v2')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-rose-500/20 text-rose-300 p-1 rounded">✏️</span>
                 </div>
+
+                <!-- Card 3: Fatura Cartões (Laranja - Alerta) -->
                 <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-purple-950/40 to-gray-900/40 relative">
-                    <span id="card-t3" class="text-[10px] text-purple-400 font-bold tracking-wider">FATURA CARTÕES</span>
+                    <div class="flex justify-between items-start">
+                        <span id="card-t3" class="text-[10px] text-purple-400 font-bold tracking-wider">FATURA CARTÕES</span>
+                        <!-- Luzinha Laranja Piscante (Alerta) -->
+                        <span class="w-2.5 h-2.5 bg-amber-500 rounded-full led-piscante shadow-[0_0_8px_#f59e0b]" title="Status: Alerta Laranja"></span>
+                    </div>
                     <p id="card-v3" class="text-lg font-bold mt-2 valor-monetario">R$ 944,40</p>
-                    <span onclick="editarCard('card-t3', 'card-v3')" class="absolute top-3 right-3 text-xs cursor-pointer bg-purple-500/20 text-purple-300 p-1 rounded">✏️</span>
+                    <span onclick="editarCard('card-t3', 'card-v3')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-purple-500/20 text-purple-300 p-1 rounded">✏️</span>
                 </div>
+
+                <!-- Card 4: Sobra Líquida (Verde - Tudo OK) -->
                 <div class="card-custom p-4 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-950/40 to-gray-900/40 relative">
-                    <span id="card-t4" class="text-[10px] text-emerald-400 font-bold tracking-wider">SOBRA LÍQUIDA</span>
+                    <div class="flex justify-between items-start">
+                        <span id="card-t4" class="text-[10px] text-emerald-400 font-bold tracking-wider">SOBRA LÍQUIDA</span>
+                        <!-- Luzinha Verde Piscante (Tudo OK) -->
+                        <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full led-piscante shadow-[0_0_8px_#34d399]" title="Status: Tudo OK"></span>
+                    </div>
                     <p id="card-v4" class="text-lg font-bold mt-2 text-emerald-400 valor-monetario">-R$ 1.324,40</p>
-                    <span onclick="editarCard('card-t4', 'card-v4')" class="absolute top-3 right-3 text-xs cursor-pointer bg-emerald-500/20 text-emerald-300 p-1 rounded">✏️</span>
+                    <span onclick="editarCard('card-t4', 'card-v4')" class="absolute bottom-3 right-3 text-xs cursor-pointer bg-emerald-500/20 text-emerald-300 p-1 rounded">✏️</span>
                 </div>
             </div>
 
@@ -218,27 +252,6 @@
                     <button onclick="alert('Bloqueado!')" class="bg-gray-800 px-3 py-1 rounded-lg text-[11px] text-gray-200">🔒 Bloquear</button>
                 </div>
             </div>
-
-            <div class="skin-ultraviolet p-4 rounded-2xl space-y-3 shadow-xl">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-bold text-sm">Bradesco Visa Infinite</h3>
-                        <p class="text-[10px] text-purple-200">Visa</p>
-                    </div>
-                    <span class="text-[10px] bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/40 text-purple-200">Skin: ultraviolet</span>
-                </div>
-                <div class="flex justify-between text-xs pt-1">
-                    <span class="text-gray-300">Fatura Atual:</span>
-                    <span class="font-bold text-white">R$ 145,00</span>
-                </div>
-                <div class="w-full bg-black/40 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-indigo-400 h-full w-[5%]"></div>
-                </div>
-                <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
-                    <span class="text-gray-300">Limite: R$ 3.000,00</span>
-                    <button onclick="alert('Bloqueado!')" class="bg-gray-800 px-3 py-1 rounded-lg text-[11px] text-gray-200">🔒 Bloquear</button>
-                </div>
-            </div>
         </div>
 
         <!-- ================= ABA 4: MESES ================= -->
@@ -264,10 +277,6 @@
                     <div class="flex justify-between items-center card-custom p-2.5 rounded-xl">
                         <span>Netflix 4K (Dia 10)</span>
                         <span class="font-bold text-rose-500">R$ 55,90</span>
-                    </div>
-                    <div class="flex justify-between items-center card-custom p-2.5 rounded-xl">
-                        <span>Spotify Duo (Dia 15)</span>
-                        <span class="font-bold text-rose-500">R$ 27,90</span>
                     </div>
                 </div>
             </div>
