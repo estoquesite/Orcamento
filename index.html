@@ -174,6 +174,7 @@
             font-weight: 700;
         }
 
+        /* BARRA COM 4 ABAS DIRETAS */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
@@ -184,7 +185,7 @@
 
         .tab-button {
             flex: 1 1 0;
-            padding: 9px 2px;
+            padding: 10px 4px;
             border: none;
             background: none;
             color: var(--text-muted);
@@ -196,8 +197,8 @@
             position: relative;
         }
 
-        .tab-button .tab-icon { font-size: 1.05rem; }
-        .tab-button .tab-label { font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
+        .tab-button .tab-icon { font-size: 1.15rem; }
+        .tab-button .tab-label { font-size: 0.72rem; font-weight: 800; white-space: nowrap; }
         .tab-button.active { color: var(--primary); }
         .tab-button.active::after {
             content: '';
@@ -324,7 +325,7 @@
             align-items: center;
         }
 
-        /* NOVO DESIGN DO CARD COMPACTO DE LANÇAMENTO */
+        /* CARD COMPACTO DE LANÇAMENTO */
         .compact-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -365,7 +366,6 @@
             color: var(--primary);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
-
         .pill-btn.active.expense { color: var(--red); }
         .pill-btn.active.income { color: var(--green); }
 
@@ -402,7 +402,7 @@
         .big-val-input {
             border: none !important;
             background: transparent !important;
-            font-size: 1.4rem !important;
+            font-size: 1.35rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
             color: var(--text-main) !important;
@@ -445,8 +445,6 @@
             border-top: 1px dashed var(--border-color);
         }
 
-        .calc-live-pill b { color: var(--primary); }
-
         .fields-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -466,7 +464,7 @@
             text-transform: uppercase;
         }
 
-        input, select {
+        input, select, textarea {
             padding: 8px 10px;
             background: var(--input-bg);
             border: 1px solid var(--border-color);
@@ -542,6 +540,17 @@
         .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
 
+        /* QUADRADINHO RÁPIDO DE BACKUP */
+        .backup-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -610,6 +619,7 @@
             </div>
         </header>
 
+        <!-- NAVEGAÇÃO LIMPA: APENAS 4 ABAS (METAS REMOVIDA) -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -623,12 +633,8 @@
                 <span class="tab-icon">📅</span>
                 <span class="tab-label">Meses</span>
             </button>
-            <button class="tab-button" onclick="trocarAba('metas')">
-                <span class="tab-icon">🎯</span>
-                <span class="tab-label">Metas</span>
-            </button>
             <button class="tab-button" onclick="trocarAba('mais')">
-                <span class="tab-icon">💼</span>
+                <span class="tab-icon">⚙️</span>
                 <span class="tab-label">Mais</span>
             </button>
         </nav>
@@ -680,7 +686,7 @@
 
                     <div>
                         <h2 id="hero-sobra-livre" style="font-size:1.85rem; font-weight:900; letter-spacing:-0.5px; line-height:1;">R$ 0,00</h2>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra total da família / mês</span>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.65);">Sobra livre do mês</span>
                     </div>
 
                     <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
@@ -748,11 +754,10 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR REESTRUTURADO (CARD COMPACTO E INTELIGENTE) -->
+            <!-- TELA 2: LANÇAR REESTRUTURADO -->
             <div id="tab-lancar" class="tab-pane">
                 
                 <div class="compact-entry-card">
-                    <!-- 1. SELETOR RÁPIDO DESPESA / RECEITA -->
                     <div class="pill-switch">
                         <button type="button" id="btn-type-expense" class="pill-btn active expense" onclick="alternarTipoTransacao('expense')">
                             📉 Despesa
@@ -762,11 +767,9 @@
                         </button>
                     </div>
 
-                    <!-- 2. VALOR E MODO DE CÁLCULO (TOTAL VS PARCELA) -->
                     <div class="value-calculator-box">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor & Quantidade:</span>
-                            <!-- Modo de cálculo -->
+                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor & Vezes:</span>
                             <div style="display:flex; gap:3px;">
                                 <button type="button" id="btn-mode-total" class="pill-btn active" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('total')">Total</button>
                                 <button type="button" id="btn-mode-parcela" class="pill-btn" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
@@ -785,17 +788,14 @@
                             </div>
                         </div>
 
-                        <!-- Mini resumo que calcula o total sem abrir calculadora -->
                         <div class="calc-live-pill">
                             <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
                             <span id="calc-preview-pill-sub" style="font-size:0.62rem; opacity:0.8;">1x parcela</span>
                         </div>
                     </div>
 
-                    <!-- 3. DESCRIÇÃO PRINCIPAL -->
                     <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Pós-graduação...)" style="font-weight:700;">
 
-                    <!-- 4. GRADE COMPACTA COM OS OUTROS DADOS -->
                     <div class="fields-grid">
                         <div class="field-unit">
                             <label>Pagar com:</label>
@@ -812,7 +812,7 @@
                             <label>Categoria:</label>
                             <div style="display:flex; gap:3px;">
                                 <select id="trans-category" style="flex:1;"></select>
-                                <button type="button" onclick="trocarAba('metas')" title="Criar categoria" style="width:28px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:10px; font-weight:900;">+</button>
+                                <button type="button" onclick="abrirModalNovaCategoria()" title="Criar categoria" style="width:28px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:10px; font-weight:900;">+</button>
                             </div>
                         </div>
                         <div class="field-unit">
@@ -862,42 +862,39 @@
                 </div>
             </div>
 
-            <!-- TELA 4: METAS & CATEGORIAS (100% LIVRES) -->
-            <div id="tab-metas" class="tab-pane">
-                <div class="section-box">
-                    <h3>🏷️ Nova Categoria / Teto</h3>
-                    <div class="form-group">
-                        <input type="text" id="cat-name" placeholder="Nome da Categoria (ex: 🍔 Alimentação)">
-                        <div class="form-row">
-                            <input type="number" id="cat-limit" placeholder="Teto R$ (ex: 800)">
-                            <input type="color" id="cat-color" value="#6366f1" style="width: 50px; height: 38px; padding: 0;">
-                        </div>
-                        <button class="btn-primary" onclick="adicionarCategoria()">Salvar Categoria</button>
+            <!-- TELA 4: MAIS (COM BACKUP FÁCIL E CAIXINHAS DE RESERVA) -->
+            <div id="tab-mais" class="tab-pane">
+                
+                <!-- QUADRADINHO RÁPIDO DE BACKUP (SEM PROCURAR ARQUIVO) -->
+                <div class="backup-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
+                        <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
+                    </div>
+                    <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
+                        Não precisa procurar arquivos no celular. Você pode copiar seus dados em texto e colar no WhatsApp com você mesma.
+                    </p>
+                    
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-primary" style="flex:1; padding:7px; font-size:0.75rem;" onclick="copiarBackupTexto()">
+                            📋 Copiar Backup
+                        </button>
+                        <button class="btn-secondary" style="flex:1; padding:7px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
+                            📥 Restaurar Dados
+                        </button>
                     </div>
                 </div>
 
+                <!-- CAIXINHAS DE RESERVA GUARDADAS AQUI -->
                 <div class="section-box">
-                    <h3>📊 Gerenciar Categorias & Orçamento</h3>
-                    <div class="list-container" id="budget-progress-list"></div>
-                </div>
-
-                <div class="section-box">
-                    <h3>🏦 Nova Meta de Poupança / Reserva</h3>
-                    <div class="form-group">
-                        <input type="text" id="goal-name" placeholder="Objetivo (ex: 🎓 Pós-Graduação, 🛡️ Reserva)">
-                        <input type="number" id="goal-target" min="1" placeholder="Meta Total Pretendida (R$)">
-                        <button class="btn-primary" onclick="adicionarMeta()">Criar Meta</button>
-                    </div>
-                </div>
-
-                <div class="section-box">
-                    <h3>🐷 Minhas Metas & Reservas</h3>
+                    <h3>
+                        <span>🐷 Caixinhas de Reserva</span>
+                        <button class="btn-icon" onclick="abrirModalNovaMeta()" style="font-size:0.8rem; color:var(--primary); font-weight:bold;">+ Nova</button>
+                    </h3>
                     <div class="list-container" id="goals-list"></div>
                 </div>
-            </div>
 
-            <!-- TELA 5: MAIS (INVESTIMENTOS & BACKUP) -->
-            <div id="tab-mais" class="tab-pane">
+                <!-- INVESTIMENTOS / ATIVOS -->
                 <div class="section-box">
                     <h3>💼 Total Investido em Ativos</h3>
                     <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
@@ -909,8 +906,8 @@
 
                 <div class="section-box">
                     <h3>🚀 Registrar Aporte / Ativo</h3>
-                    <div class="form-group">
-                        <div class="form-row">
+                    <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
+                        <div class="fields-grid">
                             <select id="invest-platform">
                                 <option value="XP Investimentos">XP Investimentos</option>
                                 <option value="Binance">Binance</option>
@@ -933,16 +930,12 @@
                     <div class="list-container" id="investment-list"></div>
                 </div>
 
-                <div class="section-box">
-                    <h3>💾 Backup e Restauração</h3>
-                    <div class="form-group">
-                        <button class="btn-secondary" onclick="exportarCSV()">📥 Baixar Planilha (CSV / Excel)</button>
-                        <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
-                        <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
-                        <input type="file" id="import-file" style="display:none;" accept=".json" onchange="importarBackupJSON(event)">
-                        <button class="btn-secondary" style="color:var(--red); border-color:rgba(244,63,94,0.3);" onclick="limparTodosDados()">🗑️ Zerar Todos os Dados</button>
-                    </div>
+                <div style="text-align:center; padding:10px;">
+                    <button onclick="limparTodosDados()" style="background:none; border:none; color:var(--red); font-size:0.75rem; font-weight:800; cursor:pointer;">
+                        🗑️ Zerar Todos os Dados
+                    </button>
                 </div>
+
             </div>
 
         </div>
@@ -950,10 +943,10 @@
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
                 <h4 id="modal-title" style="font-weight:800; font-size:1rem;">Título</h4>
-                <div id="modal-body" class="form-group"></div>
-                <div class="form-row" style="margin-top:6px;">
-                    <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
-                    <button class="btn-primary" id="modal-confirm-btn">Confirmar</button>
+                <div id="modal-body" class="form-group" style="display:flex; flex-direction:column; gap:8px;"></div>
+                <div class="form-row" style="margin-top:6px; display:flex; gap:8px;">
+                    <button class="btn-secondary" style="flex:1;" onclick="fecharModal()">Cancelar</button>
+                    <button class="btn-primary" style="flex:1;" id="modal-confirm-btn">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -961,7 +954,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v13_compact_form";
+        const STORAGE_KEY = "financas_pro_v14_clean_backup";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -969,9 +962,8 @@
         let currentMonthNum = hoje.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
 
-        // Estados locais do formulário de lançamento
         let selectedTransactionType = 'expense';
-        let selectedCalcMode = 'total'; // 'total' ou 'parcela'
+        let selectedCalcMode = 'total';
 
         const defaultData = {
             cash: 0.00,
@@ -994,6 +986,7 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v13_compact_form",
                 "financas_pro_v12_calculator",
                 "financas_pro_v11_spillover",
                 "financas_pro_v10_livre",
@@ -1015,7 +1008,7 @@
                             investments: Array.isArray(parsed.investments) ? parsed.investments : []
                         };
                     } catch (e) {
-                        console.error("Erro na leitura de chave anterior:", e);
+                        console.error("Erro na leitura:", e);
                     }
                 }
             }
@@ -1050,7 +1043,6 @@
             dateInput.value = `${currentYear}-${mStr}-${dStr}`;
         }
 
-        // LÓGICA DO NOVO FORMULÁRIO COMPACTO
         function alternarTipoTransacao(tipo) {
             selectedTransactionType = tipo;
             const btnExp = document.getElementById('btn-type-expense');
@@ -1087,11 +1079,7 @@
 
             if (selectedCalcMode === 'parcela') {
                 const totalCalculado = inputVal * parcelas;
-                if (parcelas === 1) {
-                    previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
-                } else {
-                    previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
-                }
+                previewText.innerHTML = `Total: <b>R$ ${totalCalculado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
                 previewSub.innerHTML = `<b>${parcelas}x de R$ ${inputVal.toFixed(2)}</b>`;
             } else {
                 const valorParcela = inputVal / parcelas;
@@ -1118,7 +1106,7 @@
         }
 
         function trocarAba(aba) {
-            const tabs = ['painel', 'lancar', 'meses', 'metas', 'mais'];
+            const tabs = ['painel', 'lancar', 'meses', 'mais'];
             document.querySelectorAll('.tab-button').forEach((btn, idx) => {
                 btn.classList.toggle('active', tabs[idx] === aba);
             });
@@ -1487,46 +1475,12 @@
                 }
             }
 
-            // ABA METAS: CATEGORIAS
-            const budgetContainer = document.getElementById("budget-progress-list");
-            if (budgetContainer) {
-                budgetContainer.innerHTML = '';
-                if ((financialData.categories || []).length === 0) {
-                    budgetContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma categoria configurada.</span>';
-                } else {
-                    (financialData.categories || []).forEach((cat, idx) => {
-                        const gastoCat = transDoMes.filter(t => t.type === 'expense' && t.category === cat.name).reduce((acc, curr) => acc + curr.value, 0);
-                        const limit = cat.limit || 0;
-                        const perc = limit > 0 ? Math.min(Math.round((gastoCat / limit) * 100), 100) : 0;
-                        let colorFill = 'var(--green)';
-                        if (perc >= 90) colorFill = 'var(--red)'; else if (perc >= 70) colorFill = 'var(--yellow)';
-
-                        const bItem = document.createElement("div");
-                        bItem.style.cssText = "background:var(--input-bg); padding:8px 10px; border-radius:10px; margin-bottom:6px; font-size:0.75rem; border:1px solid var(--border-color);";
-                        bItem.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700;">
-                                <span>${cat.name}</span>
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    <span>R$ ${gastoCat.toFixed(0)} / R$ ${limit.toFixed(0)} (${perc}%)</span>
-                                    <button class="btn-icon" onclick="abrirModalEditarCategoria(${idx})" title="Editar Categoria"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
-                                    <button class="btn-icon del" onclick="removerCategoria(${idx})" title="Excluir Categoria"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
-                                </div>
-                            </div>
-                            <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; margin-top:4px; overflow:hidden;">
-                                <div style="width:${perc}%; height:100%; background:${colorFill};"></div>
-                            </div>
-                        `;
-                        budgetContainer.appendChild(bItem);
-                    });
-                }
-            }
-
-            // ABA METAS: OBJETIVOS
+            // RESERVAS / CAIXINHAS NA ABA MAIS
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
                 goalsContainer.innerHTML = '';
                 if ((financialData.goals || []).length === 0) {
-                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma meta cadastrada.</span>';
+                    goalsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--text-muted); text-align:center; padding:8px;">Nenhuma caixinha de reserva criada.</span>';
                 } else {
                     (financialData.goals || []).forEach((goal) => {
                         const perc = goal.target > 0 ? Math.min(Math.round((goal.current / goal.target) * 100), 100) : 0;
@@ -1537,8 +1491,8 @@
                                 <span>${goal.name}</span>
                                 <div style="display:flex; align-items:center; gap:6px;">
                                     <span>R$ ${goal.current.toFixed(0)} / R$ ${goal.target.toFixed(0)} (${perc}%)</span>
-                                    <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar Meta"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
-                                    <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir Meta"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
+                                    <button class="btn-icon" onclick="abrirModalEditarMeta(${goal.id})" title="Editar"><i class="fa-solid fa-pen" style="font-size:0.65rem;"></i></button>
+                                    <button class="btn-icon del" onclick="removerMeta(${goal.id})" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.65rem;"></i></button>
                                 </div>
                             </div>
                             <div style="background:rgba(0,0,0,0.1); height:6px; border-radius:6px; overflow:hidden;">
@@ -1554,7 +1508,7 @@
                 }
             }
 
-            // ABA MAIS: INVESTIMENTOS
+            // INVESTIMENTOS
             const totalXP = (financialData.investments || []).filter(i => i.platform === "XP Investimentos").reduce((acc, curr) => acc + curr.value, 0);
             const totalBinance = (financialData.investments || []).filter(i => i.platform === "Binance").reduce((acc, curr) => acc + curr.value, 0);
             const totalGeralInvest = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
@@ -1670,7 +1624,7 @@
             }
         }
 
-        // --- LANÇAMENTOS DO NOVO FORMULÁRIO ---
+        // --- LANÇAMENTOS ---
         function adicionarTransacao() {
             const type = selectedTransactionType;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1832,32 +1786,81 @@
             });
         }
 
-        // --- METAS EDITÁVEIS ---
-        function adicionarMeta() {
-            const name = document.getElementById("goal-name").value.trim();
-            const target = parseFloat(document.getElementById("goal-target").value);
-            if (!name || isNaN(target) || target <= 0) { alert("Preencha o objetivo e o valor da meta."); return; }
+        // --- BACKUP SIMPLES EM TEXTO (SEM ARQUIVOS SUMIDOS) ---
+        function copiarBackupTexto() {
+            const texto = JSON.stringify(financialData);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(texto).then(() => {
+                    alert("✅ Backup copiado! Agora você pode abrir o WhatsApp ou Bloco de Notas e colar lá para guardar.");
+                }).catch(() => fallbackCopiar(texto));
+            } else {
+                fallbackCopiar(texto);
+            }
+        }
 
-            financialData.goals.push({ id: Date.now(), name, target, current: 0 });
-            document.getElementById("goal-name").value = '';
-            document.getElementById("goal-target").value = '';
-            salvarDados();
-            atualizarTela();
+        function fallbackCopiar(texto) {
+            abrirModal("Seu Código de Backup", `
+                <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo e guarde no seu WhatsApp:</p>
+                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem;" readonly>${texto}</textarea>
+            `, () => {});
+        }
+
+        function abrirModalRestaurarTexto() {
+            abrirModal("Restaurar Dados em Texto", `
+                <p class="text-xs text-gray-500 mb-2">Cole aqui o código que você salvou no WhatsApp ou Bloco de Notas:</p>
+                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem;"></textarea>
+            `, () => {
+                const input = document.getElementById("txt-restore-input").value.trim();
+                if (!input) return;
+                try {
+                    const parsed = JSON.parse(input);
+                    if (parsed && typeof parsed === 'object') {
+                        financialData = parsed;
+                        salvarDados();
+                        atualizarTela();
+                        alert("🎉 Dados restaurados com sucesso!");
+                    } else {
+                        alert("Código inválido.");
+                    }
+                } catch (e) {
+                    alert("O texto colado não é um backup válido.");
+                }
+            });
+        }
+
+        // --- CAIXINHAS DE RESERVA (METAS) NA ABA MAIS ---
+        function abrirModalNovaMeta() {
+            abrirModal("Nova Caixinha de Reserva", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
+                <input type="text" id="new-goal-name" placeholder="Ex: Reserva Emergência, Carro...">
+                
+                <label class="text-xs text-gray-500 font-bold mt-2">Valor Total Pretendido (R$):</label>
+                <input type="number" id="new-goal-target" placeholder="Ex: 5000">
+            `, () => {
+                const name = document.getElementById("new-goal-name").value.trim();
+                const target = parseFloat(document.getElementById("new-goal-target").value);
+                if (name && !isNaN(target) && target > 0) {
+                    if (!financialData.goals) financialData.goals = [];
+                    financialData.goals.push({ id: Date.now(), name, target, current: 0 });
+                    salvarDados();
+                    atualizarTela();
+                }
+            });
         }
 
         function abrirModalEditarMeta(id) {
             const goal = financialData.goals.find(g => g.id === id);
             if (!goal) return;
 
-            abrirModal("Editar Meta / Reserva", `
-                <label class="text-xs text-gray-500 font-bold">Nome do Objetivo:</label>
+            abrirModal("Editar Reserva", `
+                <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
                 <input type="text" id="edit-goal-name" value="${goal.name}">
 
                 <label class="text-xs text-gray-500 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="edit-goal-target" step="100" value="${goal.target}">
+                <input type="number" id="edit-goal-target" value="${goal.target}">
 
-                <label class="text-xs text-gray-500 font-bold mt-2">Valor já guardado atual (R$):</label>
-                <input type="number" id="edit-goal-current" step="50" value="${goal.current}">
+                <label class="text-xs text-gray-500 font-bold mt-2">Já Guardado (R$):</label>
+                <input type="number" id="edit-goal-current" value="${goal.current}">
             `, () => {
                 const name = document.getElementById("edit-goal-name").value.trim();
                 const target = parseFloat(document.getElementById("edit-goal-target").value);
@@ -1874,7 +1877,7 @@
         }
 
         function removerMeta(id) {
-            if (confirm("Deseja realmente remover esta meta?")) {
+            if (confirm("Deseja realmente remover esta reserva?")) {
                 financialData.goals = financialData.goals.filter(g => g.id !== id);
                 salvarDados();
                 atualizarTela();
@@ -1906,69 +1909,22 @@
             });
         }
 
-        // --- CATEGORIAS EDITÁVEIS ---
-        function adicionarCategoria() {
-            const name = document.getElementById("cat-name").value.trim();
-            const limit = parseFloat(document.getElementById("cat-limit").value) || 0;
-            const color = document.getElementById("cat-color").value;
-            if (!name) { alert("Informe o nome da categoria."); return; }
-
-            const existente = (financialData.categories || []).find(c => c.name.toLowerCase() === name.toLowerCase());
-            if (existente) { 
-                existente.limit = limit; 
-                existente.color = color; 
-            } else { 
-                financialData.categories.push({ id: "cat_" + Date.now(), name, color, limit }); 
-            }
-
-            document.getElementById("cat-name").value = '';
-            document.getElementById("cat-limit").value = '';
-            salvarDados();
-            atualizarTela();
-        }
-
-        function abrirModalEditarCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-
-            abrirModal("Editar Categoria", `
+        // --- CATEGORIAS ---
+        function abrirModalNovaCategoria() {
+            abrirModal("Criar Nova Categoria", `
                 <label class="text-xs text-gray-500 font-bold">Nome da Categoria:</label>
-                <input type="text" id="edit-cat-name" value="${cat.name}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Teto Mensal (R$):</label>
-                <input type="number" id="edit-cat-limit" step="50" value="${cat.limit || 0}">
-
-                <label class="text-xs text-gray-500 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-cat-color" value="${cat.color || '#6366f1'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <input type="text" id="modal-cat-name" placeholder="Ex: Farmácia, Lazer...">
             `, () => {
-                const name = document.getElementById("edit-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
-                const color = document.getElementById("edit-cat-color").value;
-
+                const name = document.getElementById("modal-cat-name").value.trim();
                 if (name) {
-                    const nomeAntigo = cat.name;
-                    cat.name = name;
-                    cat.limit = limit;
-                    cat.color = color;
-
-                    (financialData.transactions || []).forEach(t => {
-                        if (t.category === nomeAntigo) t.category = name;
-                    });
-
+                    if (!financialData.categories) financialData.categories = [];
+                    financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#6366f1", limit: 0 });
                     salvarDados();
                     atualizarTela();
+                    const sel = document.getElementById("trans-category");
+                    if (sel) sel.value = name;
                 }
             });
-        }
-
-        function removerCategoria(index) {
-            const cat = financialData.categories[index];
-            if (!cat) return;
-            if (confirm(`Deseja realmente excluir a categoria "${cat.name}"?`)) {
-                financialData.categories.splice(index, 1);
-                salvarDados();
-                atualizarTela();
-            }
         }
 
         // --- INVESTIMENTOS ---
@@ -1990,46 +1946,6 @@
             financialData.investments = financialData.investments.filter(i => i.id !== id);
             salvarDados();
             atualizarTela();
-        }
-
-        // --- BACKUP E RESTAURAÇÃO ---
-        function exportarCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Data;Mes;Tipo;Descricao;Valor;Categoria;Pagamento\n";
-            (financialData.transactions || []).forEach(t => {
-                csvContent += `${t.date};${t.monthKey};${t.type === 'expense' ? 'Despesa' : 'Receita'};${t.desc};${t.value};${t.category};${t.payment}\n`;
-            });
-            const link = document.createElement("a");
-            link.setAttribute("href", encodeURI(csvContent));
-            link.setAttribute("download", `extrato_${selectedMonthKey}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function exportarBackupJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(financialData, null, 2));
-            const link = document.createElement("a");
-            link.setAttribute("href", dataStr);
-            link.setAttribute("download", `financas_pro_backup.json`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function importarBackupJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    financialData = JSON.parse(e.target.result);
-                    salvarDados();
-                    atualizarTela();
-                    alert("Backup restaurado com sucesso!");
-                } catch (err) { alert("Arquivo inválido."); }
-            };
-            reader.readAsText(file);
         }
 
         function limparTodosDados() {
