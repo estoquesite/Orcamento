@@ -35,6 +35,7 @@
             --blue: #3b82f6;
             --yellow: #f59e0b;
             --pink: #ec4899;
+            --purple: #8b5cf6;
         }
 
         body.dark-mode {
@@ -52,6 +53,7 @@
             --blue: #60a5fa;
             --yellow: #fbbf24;
             --pink: #f472b6;
+            --purple: #c084fc;
         }
 
         * {
@@ -227,33 +229,37 @@
         }
         .tab-pane.active { display: flex; }
 
-        .month-selector {
+        /* SELETOR DE ANO E MÊS */
+        .date-control-bar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
             background: var(--card-bg);
-            padding: 8px 14px;
-            border-radius: 14px;
+            padding: 10px 14px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             box-shadow: var(--card-shadow);
         }
 
-        .month-selector button {
+        .date-control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .date-nav-btn {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             width: 32px;
-            height: 32px;
+            height: 30px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-        }
-
-        .month-selector span {
-            font-size: 0.92rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: capitalize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
         }
 
         .card {
@@ -286,6 +292,23 @@
             display: flex;
             flex-direction: column;
             gap: 3px;
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .indicator-mini-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .section-box {
@@ -486,20 +509,74 @@
             <!-- ABA GASTOS -->
             <div id="tab-gastos" class="tab-pane active">
                 
-                <div class="month-selector">
-                    <button onclick="mudarMes(-1)">◀</button>
-                    <span id="current-month-display">Mês Atual</span>
-                    <button onclick="mudarMes(1)">▶</button>
+                <!-- SELETOR DE ANO E MÊS INDEPENDENTES -->
+                <div class="date-control-bar">
+                    <!-- Linha 1: Seletor de Ano -->
+                    <div class="date-control-row">
+                        <button class="date-nav-btn" onclick="mudarAno(-1)" title="Ano Anterior">«</button>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">ANO:</span>
+                            <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width: auto; padding: 3px 8px; font-weight:900; font-size:0.95rem; color:var(--primary); background:var(--input-bg);">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                            </select>
+                        </div>
+                        <button class="date-nav-btn" onclick="mudarAno(1)" title="Próximo Ano">»</button>
+                    </div>
+
+                    <!-- Linha 2: Seletor de Mês -->
+                    <div class="date-control-row" style="border-top:1px solid var(--border-color); padding-top:6px;">
+                        <button class="date-nav-btn" onclick="mudarMes(-1)">◀</button>
+                        <select id="select-month" onchange="alterarMesDireto(this.value)" style="width: auto; padding: 3px 8px; font-weight:800; font-size:0.88rem; color:var(--text-main); background:var(--input-bg);">
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                        <button class="date-nav-btn" onclick="mudarMes(1)">▶</button>
+                    </div>
                 </div>
 
-                <!-- 1. CARD PRINCIPAL: VERBA TOTAL DO MÊS & SOBRA GERAL -->
+                <!-- CARD 1: SOMA DO ANO (ACUMULADO ANUAL) -->
+                <div class="card" style="border-left: 4px solid var(--purple); background: var(--input-bg);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:800; font-size:0.75rem; color:var(--purple);">📅 SOMA DO ANO (<span id="txt-ano-atual">2026</span>)</span>
+                        <span style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">ACUMULADO ANUAL</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:4px;">
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">📈 Entradas Ano</span>
+                            <b id="ano-entradas-val" style="font-size:0.8rem; color:var(--green);">R$ 0,00</b>
+                        </div>
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">📉 Saídas Ano</span>
+                            <b id="ano-saidas-val" style="font-size:0.8rem; color:var(--red);">R$ 0,00</b>
+                        </div>
+                        <div style="text-align:center; background:var(--card-bg); padding:6px; border-radius:10px; border:1px solid var(--border-color);">
+                            <span style="font-size:0.62rem; color:var(--text-muted); display:block; font-weight:700;">💰 Economia Ano</span>
+                            <b id="ano-economia-val" style="font-size:0.8rem; color:var(--blue);">R$ 0,00</b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: VERBA TOTAL DO MÊS & SOBRA GERAL -->
                 <div class="card card-verba-total">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL DO MÊS (ENTRADAS)</span>
-                        <a href="#" onclick="abrirModalOrcamento()" style="font-size:0.7rem; color:var(--primary); font-weight:800; text-decoration:none;">[DEFINIR ORÇAMENTO ✏️]</a>
+                        <a href="#" onclick="abrirModalOrcamento()" style="font-size:0.7rem; color:var(--primary); font-weight:800; text-decoration:none;">[AJUSTAR VERBA ✏️]</a>
                     </div>
                     
-                    <!-- Valor Total das Entradas (Salário + Pensão) -->
                     <h2 id="card-verba-total-mes" style="font-size:1.6rem; color:var(--primary); font-weight:900;">R$ 6.500,00</h2>
                     
                     <div style="display:flex; justify-content:space-between; font-size:0.75rem; border-top:1px dashed var(--border-color); padding-top:6px; margin-top:2px;">
@@ -508,14 +585,11 @@
                     </div>
                 </div>
 
-                <!-- 2. PAINEL DE CONTROLE: MEU SALÁRIO vs PENSÃO DA SOFIA -->
+                <!-- CARD 3: PAINEL DE SOBRAS (SALÁRIO vs PENSÃO) -->
                 <div class="budget-duo-grid">
-                    
                     <!-- Coluna 1: MEU SALÁRIO -->
                     <div class="budget-box" style="border-left: 3px solid var(--green);">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">💼 MEU SALÁRIO</span>
-                        </div>
+                        <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">💼 MEU SALÁRIO</span>
                         <div id="box-meu-salario-val" style="font-size:1.05rem; font-weight:900; color:var(--green);">R$ 5.000,00</div>
                         <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">
                             Meus Gastos: <b id="box-meus-gastos-val" style="color:var(--red);">- R$ 0,00</b>
@@ -527,9 +601,7 @@
 
                     <!-- Coluna 2: PENSÃO DA SOFIA -->
                     <div class="budget-box" style="border-left: 3px solid var(--pink);">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">👧 PENSÃO SOFIA</span>
-                        </div>
+                        <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted);">👧 PENSÃO SOFIA</span>
                         <div id="box-pensao-sofia-val" style="font-size:1.05rem; font-weight:900; color:var(--pink);">R$ 1.500,00</div>
                         <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;">
                             Gastos Sofia: <b id="box-gastos-sofia-val" style="color:var(--red);">- R$ 0,00</b>
@@ -538,18 +610,28 @@
                             Sobra Pensão: <br><span id="box-sobra-pensao-val" style="color:var(--green); font-size:0.95rem;">R$ 1.500,00</span>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- 3. DETALHAMENTO DE CARTÃO vs DINHEIRO -->
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                    <div class="card" style="border-left: 3px solid var(--yellow); padding:8px 12px;">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
-                        <h2 id="card-fatura-cartao" style="font-size:1rem; font-weight:800; color:var(--yellow);">R$ 0,00</h2>
+                <!-- CARD 4: GRID DE INDICADORES MENSAIS DETALHADOS -->
+                <div class="indicators-grid">
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--red);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📉 Despesas do Mês</span>
+                        <h2 id="ind-despesas-mes" style="font-size:0.95rem; font-weight:900; color:var(--red);">R$ 0,00</h2>
                     </div>
-                    <div class="card" style="border-left: 3px solid var(--blue); padding:8px 12px;">
-                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 Dinheiro / Débito</span>
-                        <h2 id="card-gastos-dinheiro" style="font-size:1rem; font-weight:800; color:var(--blue);">R$ 0,00</h2>
+
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--yellow);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💳 Fatura Cartão</span>
+                        <h2 id="ind-fatura-cartao" style="font-size:0.95rem; font-weight:900; color:var(--yellow);">R$ 0,00</h2>
+                    </div>
+
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--blue);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">💵 À Vista (Dinheiro/Pix)</span>
+                        <h2 id="ind-gastos-dinheiro" style="font-size:0.95rem; font-weight:900; color:var(--blue);">R$ 0,00</h2>
+                    </div>
+
+                    <div class="indicator-mini-card" style="border-left: 3px solid var(--green);">
+                        <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">📈 Receitas Extras</span>
+                        <h2 id="ind-receitas-extras" style="font-size:0.95rem; font-weight:900; color:var(--green);">R$ 0,00</h2>
                     </div>
                 </div>
 
@@ -564,10 +646,9 @@
                             </select>
                             <input type="number" id="trans-value" step="0.01" min="0" placeholder="Valor (R$)">
                         </div>
-                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Remédio)">
+                        <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Farmácia)">
                         
                         <div class="form-row">
-                            <!-- Destino do gasto -->
                             <select id="trans-beneficiary">
                                 <option value="Geral">👤 Meu Gasto Pessoal / Casa</option>
                                 <option value="Sofia">👧 Gasto da Sofia (Pensão)</option>
@@ -651,9 +732,30 @@
                 </div>
             </div>
 
+            <!-- RELATÓRIOS DO ANO SELECIONADO -->
             <div id="tab-relatorios" class="tab-pane">
                 <div class="section-box">
-                    <h3>💾 Backup e Exportação</h3>
+                    <h3>📊 Relatório Completo do Ano (<span id="txt-ano-relatorio">2026</span>)</h3>
+                    <div style="height: 200px; position:relative; margin-bottom:12px;">
+                        <canvas id="monthlyComparisonChart"></canvas>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width:100%; font-size:0.75rem; border-collapse:collapse;" id="tabela-meses-ano">
+                            <thead>
+                                <tr style="border-bottom:1px solid var(--border-color); color:var(--text-muted); text-align:left;">
+                                    <th style="padding:6px;">Mês</th>
+                                    <th>Entradas</th>
+                                    <th>Despesas</th>
+                                    <th>Sobra</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela-ano"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>💾 Backup e Restauração</h3>
                     <div class="form-group">
                         <button class="btn-secondary" onclick="exportarBackupJSON()">📦 Fazer Backup Completo (JSON)</button>
                         <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 Restaurar Backup (JSON)</button>
@@ -679,7 +781,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v4_definitivo";
+        const STORAGE_KEY = "financas_pro_v5_definitivo";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -689,7 +791,7 @@
 
         const defaultData = {
             sources: {
-                personal: 5000.00,       // Seu salário padrão
+                personal: 5000.00,       // Salário base padrão
                 sofiaPension: 1500.00    // Pensão da Sofia padrão
             },
             categories: [
@@ -704,7 +806,7 @@
         };
 
         function carregarDados() {
-            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v3_data") || localStorage.getItem("financas_pro_v2_data");
+            const salvo = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("financas_pro_v4_definitivo") || localStorage.getItem("financas_pro_v3_data");
             if (salvo) {
                 try {
                     const parsed = JSON.parse(salvo);
@@ -761,6 +863,23 @@
                 const pane = document.getElementById(`tab-${t}`);
                 if (pane) pane.classList.toggle('active', t === aba);
             });
+
+            if (aba === 'relatorios') {
+                renderizarRelatorios();
+            }
+        }
+
+        // --- CONTROLE DE ANO E MÊS INDEPENDENTES ---
+        function mudarAno(delta) {
+            currentYear += delta;
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            atualizarTela();
+        }
+
+        function alterarAnoDireto(novoAno) {
+            currentYear = parseInt(novoAno, 10);
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            atualizarTela();
         }
 
         function mudarMes(delta) {
@@ -771,36 +890,58 @@
             atualizarTela();
         }
 
-        // --- CÁLCULO GERAL E ATUALIZAÇÃO DA TELA ---
+        function alterarMesDireto(novoMes) {
+            currentMonthNum = parseInt(novoMes, 10);
+            selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
+            atualizarTela();
+        }
+
+        // --- ATUALIZAÇÃO DA TELA E CÁLCULOS ---
         function atualizarTela() {
-            document.getElementById("current-month-display").innerText = `${mesesNomes[currentMonthNum - 1]} de ${currentYear}`;
-            
+            // Sincroniza os selects do topo
+            document.getElementById("select-year").value = String(currentYear);
+            document.getElementById("select-month").value = String(currentMonthNum);
+            document.getElementById("txt-ano-atual").innerText = String(currentYear);
+            const elemAnoRel = document.getElementById("txt-ano-relatorio");
+            if (elemAnoRel) elemAnoRel.innerText = String(currentYear);
+
+            // Transações do Mês e do Ano
+            const transDoAno = (financialData.transactions || []).filter(t => t.monthKey && t.monthKey.startsWith(String(currentYear)));
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
-            // 1. Entradas Base do Orçamento
+            // 1. CÁLCULO MENSAL
             const salario = financialData.sources.personal || 0;
             const pensao = financialData.sources.sofiaPension || 0;
-            const receitasExtras = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
-            const verbaTotalMes = salario + pensao + receitasExtras;
+            const receitasExtrasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            const verbaTotalMes = salario + pensao + receitasExtrasMes;
 
-            // 2. Despesas Divididas por Destino
             const gastosSofia = transDoMes.filter(t => t.type === 'expense' && t.beneficiary === 'Sofia').reduce((acc, curr) => acc + curr.value, 0);
             const gastosMeuSalario = transDoMes.filter(t => t.type === 'expense' && t.beneficiary !== 'Sofia').reduce((acc, curr) => acc + curr.value, 0);
             const despesasTotalMes = gastosSofia + gastosMeuSalario;
 
-            // 3. Pagamento: Cartão vs Dinheiro
             const faturaCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
             const gastosDinheiro = transDoMes.filter(t => t.type === 'expense' && t.payment !== "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // 4. Sobras
             const sobraSalario = salario - gastosMeuSalario;
             const sobraPensao = pensao - gastosSofia;
             const sobraTotalMes = verbaTotalMes - despesasTotalMes;
 
-            // ATUALIZAÇÃO DOS CARDS SUPERIORES
+            // 2. CÁLCULO ANUAL (SOMA DO ANO SELECIONADO)
+            const receitasExtrasAno = transDoAno.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
+            const entradasAno = (salario + pensao) * 12 + receitasExtrasAno;
+            const despesasAno = transDoAno.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
+            const economiaAno = entradasAno - despesasAno;
+
+            // PREENCHIMENTO DO CARD ANUAL
+            document.getElementById("ano-entradas-val").innerText = `R$ ${entradasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("ano-saidas-val").innerText = `R$ ${despesasAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            const anoEconElem = document.getElementById("ano-economia-val");
+            anoEconElem.innerText = `R$ ${economiaAno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            anoEconElem.style.color = economiaAno >= 0 ? "var(--green)" : "var(--red)";
+
+            // PREENCHIMENTO DO CARD VERBA TOTAL DO MÊS
             document.getElementById("card-verba-total-mes").innerText = `R$ ${verbaTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("sub-total-despesas").innerText = `- R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            
             const sobraTotalElem = document.getElementById("sub-sobra-total");
             sobraTotalElem.innerText = `R$ ${sobraTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraTotalElem.style.color = sobraTotalMes >= 0 ? "var(--green)" : "var(--red)";
@@ -819,9 +960,11 @@
             sobraPensaoElem.innerText = `R$ ${sobraPensao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             sobraPensaoElem.style.color = sobraPensao >= 0 ? "var(--green)" : "var(--red)";
 
-            // CARDS CARTÃO vs DINHEIRO
-            document.getElementById("card-fatura-cartao").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-            document.getElementById("card-gastos-dinheiro").innerText = `R$ ${gastosDinheiro.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            // INDICADORES MENSAIS COMPLEMENTARES
+            document.getElementById("ind-despesas-mes").innerText = `R$ ${despesasTotalMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("ind-fatura-cartao").innerText = `R$ ${faturaCartao.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("ind-gastos-dinheiro").innerText = `R$ ${gastosDinheiro.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            document.getElementById("ind-receitas-extras").innerText = `R$ ${receitasExtrasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
             // SELECT CATEGORIAS
             const select = document.getElementById("trans-category");
@@ -832,7 +975,7 @@
                 select.appendChild(opt);
             });
 
-            // LISTA DO EXTRATO COM BUSCA E FILTROS
+            // LISTA DO EXTRATO
             const filter = document.getElementById("filter-type").value;
             const searchVal = (document.getElementById("search-trans").value || "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
@@ -967,7 +1110,7 @@
                 <label class="text-xs text-gray-500 font-bold mt-2">👧 Pensão da Sofia (R$):</label>
                 <input type="number" id="input-src-sofia" step="50" value="${src.sofiaPension || 0}">
                 
-                <p class="text-[11px] text-gray-400 mt-2">A soma desses dois valores forma a sua Verba Total do Mês.</p>
+                <p class="text-[11px] text-gray-400 mt-2">A soma desses dois valores forma a Verba Total de cada mês.</p>
             `, () => {
                 const personal = parseFloat(document.getElementById("input-src-personal").value) || 0;
                 const sofia = parseFloat(document.getElementById("input-src-sofia").value) || 0;
@@ -976,6 +1119,64 @@
                 salvarDados();
                 atualizarTela();
             });
+        }
+
+        // --- RELATÓRIO DO ANO COMPLETO ---
+        let monthlyChartInstance = null;
+        function renderizarRelatorios() {
+            const ano = currentYear;
+            const salario = financialData.sources.personal || 0;
+            const pensao = financialData.sources.sofiaPension || 0;
+
+            const tbody = document.getElementById("corpo-tabela-ano");
+            tbody.innerHTML = '';
+
+            const monthlyIncome = [];
+            const monthlyExpense = [];
+
+            for (let m = 1; m <= 12; m++) {
+                const mKey = `${ano}-${String(m).padStart(2, '0')}`;
+                const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
+                
+                const recExtras = mTrans.filter(t => t.type === 'income').reduce((acc, c) => acc + c.value, 0);
+                const inc = salario + pensao + recExtras;
+                const exp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
+                const net = inc - exp;
+
+                monthlyIncome.push(inc);
+                monthlyExpense.push(exp);
+
+                const tr = document.createElement("tr");
+                tr.style.borderBottom = "1px solid var(--border-color)";
+                tr.innerHTML = `
+                    <td style="padding:6px; font-weight:700;">${mesesNomes[m - 1].slice(0, 3)}</td>
+                    <td style="color:var(--green);">R$ ${inc.toFixed(0)}</td>
+                    <td style="color:var(--red);">R$ ${exp.toFixed(0)}</td>
+                    <td style="color:${net >= 0 ? 'var(--blue)' : 'var(--red)'}; font-weight:700;">R$ ${net.toFixed(0)}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            const canvas = document.getElementById('monthlyComparisonChart');
+            if (canvas) {
+                if (monthlyChartInstance) monthlyChartInstance.destroy();
+                monthlyChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                        datasets: [
+                            { label: 'Entradas (R$)', data: monthlyIncome, backgroundColor: '#10b981', borderRadius: 4 },
+                            { label: 'Saídas (R$)', data: monthlyExpense, backgroundColor: '#f43f5e', borderRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } },
+                        scales: { x: { grid: { display: false } }, y: { ticks: { font: { size: 9 } } } }
+                    }
+                });
+            }
         }
 
         function abrirModal(titulo, htmlBody, callbackConfirm) {
