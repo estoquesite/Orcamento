@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro v2.1</title>
+    <title>Finanças Pro</title>
     
-    <!-- PWA & Configurações de Tela Cheia -->
+    <!-- Manifesto PWA Embutido (Ícone, Nome e Modo Aplicativo Standalone) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+
+    <!-- Configurações de Aplicativo Mobile -->
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Finanças Pro">
 
     <!-- Ícones -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/192/wallet.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
 
-    <!-- Bibliotecas externas via CDN -->
+    <!-- Bibliotecas externas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -95,7 +99,6 @@
             }
         }
 
-        /* TELA DE ENTRADA */
         .lock-screen {
             position: absolute;
             inset: 0;
@@ -105,7 +108,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 24px;
+            padding: 36px 24px;
             text-align: center;
             color: white;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -388,11 +391,6 @@
             width: 100%;
         }
 
-        input:focus, select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-        }
-
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
@@ -485,7 +483,6 @@
             font-size: 0.85rem;
             padding: 4px;
         }
-        .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
 
         .progress-bar-bg {
@@ -517,7 +514,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* MODAL */
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -557,7 +553,7 @@
 
         <!-- TELA DE ENTRADA -->
         <div id="lock-screen" class="lock-screen">
-            <div class="w-full flex flex-col items-center pt-4 space-y-3">
+            <div class="w-full flex flex-col items-center pt-2 space-y-3">
                 <div class="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-2xl shadow-indigo-500/30">
                     <div class="w-full h-full bg-[#0f172a] rounded-[22px] flex items-center justify-center overflow-hidden">
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-14 h-14 object-contain">
@@ -569,18 +565,24 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-center space-y-4 my-auto">
+            <div class="flex flex-col items-center space-y-3 my-auto">
                 <button id="biometric-btn" onclick="desbloquearApp()" class="w-20 h-20 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-xl shadow-indigo-500/40 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition border-none">
                     <i id="bio-icon" class="fa-solid fa-fingerprint text-3xl text-white"></i>
                 </button>
-                <p id="bio-status" class="text-xs text-gray-300 font-medium">Toque para desbloquear</p>
+                <p class="text-xs text-gray-300 font-medium">Toque para entrar</p>
                 <button onclick="desbloquearApp()" class="bg-white/10 hover:bg-white/20 text-xs font-bold py-2.5 px-6 rounded-xl border border-white/15 transition text-white">
                     🔓 Entrar no Painel
                 </button>
             </div>
 
-            <div class="w-full max-w-xs pb-2">
-                <p class="text-[10px] text-gray-400 text-center">Armazenamento 100% privado no seu aparelho.</p>
+            <!-- BOTÃO DE INSTALAÇÃO NATIVO (SÓ APARECE SE AINDA NÃO FOI INSTALADO) -->
+            <div id="pwa-install-area" class="w-full max-w-xs pb-2 space-y-2">
+                <button id="btn-instalar-app" onclick="acionarInstalacaoDireta()" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95 py-3 px-4 rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/30 transition text-white">
+                    <i class="fa-solid fa-download text-sm"></i> Instalar Aplicativo no Telemóvel
+                </button>
+                <p id="install-subtext" class="text-[10px] text-gray-400 text-center">
+                    Cria o ícone no seu ecrã inicial e abre direto como app independente.
+                </p>
             </div>
         </div>
 
@@ -595,7 +597,7 @@
                 </div>
                 <div class="brand-title-wrapper">
                     <h1>Finanças Pro</h1>
-                    <span class="app-version">v2.1 • Controle de Verbas</span>
+                    <span class="app-version">v2.2 • Aplicativo Instalável</span>
                 </div>
             </div>
             
@@ -638,7 +640,7 @@
 
                 <div class="summary-grid">
                     
-                    <!-- 1. QUADRADO COM A VERBA TOTAL CONSOLIDADA (PATRIMÔNIO) -->
+                    <!-- VERBA TOTAL CONSOLIDADA -->
                     <div class="card purple full-width" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(236, 72, 153, 0.12) 100%); border: 2px solid var(--primary);">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-weight:800; color:var(--primary); font-size:0.75rem;">💰 VERBA TOTAL ACUMULADA</span>
@@ -652,7 +654,7 @@
                         </div>
                     </div>
 
-                    <!-- 2. CARD DE COMPOSIÇÃO DA VERBA DO MÊS (DIEGO + SOFIA + PRÓPRIO) -->
+                    <!-- COMPOSIÇÃO DA VERBA DO MÊS (DIEGO + SOFIA + PRÓPRIO) -->
                     <div class="card full-width" style="border-left: 4px solid var(--pink);">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-weight:800; color:var(--pink); font-size:0.75rem;">👨‍👩‍👧 COMPOSIÇÃO DAS VERBAS DO MÊS</span>
@@ -674,7 +676,7 @@
                             </div>
                         </div>
 
-                        <!-- COMPENSAÇÃO / BALANÇO DA SOFIA -->
+                        <!-- BALANÇO DA SOFIA -->
                         <div style="margin-top:6px; padding-top:6px; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; font-size:0.72rem;">
                             <span>👧 <b>Gastos Sofia:</b> <span id="sofia-spent" style="color:var(--red); font-weight:700;">R$ 0</span></span>
                             <span>Restante da Pensão: <b id="sofia-remain" style="color:var(--green);">R$ 0</b></span>
@@ -703,7 +705,7 @@
                     </div>
                 </div>
 
-                <!-- FORMULÁRIO DE LANÇAMENTO COM DESTINO (SOFIA / DIEGO / GERAL) -->
+                <!-- FORMULÁRIO COM PARTES / SOFIA / DIEGO -->
                 <div class="section-box">
                     <h3>✍️ Novo Lançamento</h3>
                     <div class="form-group">
@@ -717,7 +719,6 @@
                         <input type="text" id="trans-desc" placeholder="Descrição (ex: Escola, Roupas, Farmácia)">
                         
                         <div class="form-row">
-                            <!-- SELETOR DE DESTINO / PESSOA -->
                             <select id="trans-beneficiary">
                                 <option value="Geral">👤 Conta Geral</option>
                                 <option value="Sofia">👧 Para Sofia (Pensão / Partes)</option>
@@ -752,7 +753,7 @@
                     </div>
                 </div>
 
-                <!-- EXTRATO COM BUSCA E TAGS -->
+                <!-- EXTRATO COM BUSCA -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
@@ -879,7 +880,7 @@
 
         </div>
 
-        <!-- MODAL NATIVO -->
+        <!-- MODAL -->
         <div id="app-modal" class="modal-overlay">
             <div class="modal-content">
                 <h4 id="modal-title">Título</h4>
@@ -904,11 +905,7 @@
 
         const defaultData = {
             cash: 0.00,
-            sources: {
-                diego: 0.00,
-                sofiaPension: 0.00,
-                personal: 0.00
-            },
+            sources: { diego: 0.00, sofiaPension: 0.00, personal: 0.00 },
             categories: [
                 { name: "👧 Sofia (Pensão / Partes)", color: "#ec4899", limit: 1500 },
                 { name: "🍔 Alimentação", color: "#f59e0b", limit: 800 },
@@ -934,7 +931,7 @@
                         investments: Array.isArray(parsed.investments) ? parsed.investments : []
                     };
                 } catch (e) {
-                    console.error("Erro ao carregar dados:", e);
+                    console.error("Erro ao carregar:", e);
                 }
             }
             return JSON.parse(JSON.stringify(defaultData));
@@ -944,6 +941,41 @@
 
         function salvarDados() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
+        }
+
+        // --- SISTEMA DE INSTALAÇÃO PWA REAL ---
+        let deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById("btn-instalar-app");
+            if (btn) btn.classList.add("animate-pulse");
+        });
+
+        // Se o aplicativo já estiver instalado e aberto na tela do celular, esconde o botão
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            window.addEventListener('DOMContentLoaded', () => {
+                const installArea = document.getElementById("pwa-install-area");
+                if (installArea) installArea.style.display = 'none';
+            });
+        }
+
+        function acionarInstalacaoDireta() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                });
+            } else {
+                // Sem alert! Se o arquivo estiver sendo aberto localmente, informa de forma elegante
+                abrirModal("Instalar Aplicativo", `
+                    <div style="font-size:0.8rem; color:var(--text-muted); line-height: 1.5;">
+                        <p class="mb-2 text-indigo-400 font-bold">Para instalar com 1 toque no celular:</p>
+                        <p class="mb-2">O Google Chrome só libera a instalação automática se o arquivo estiver em um endereço HTTPS seguro (como <b>Netlify</b> ou <b>Vercel</b>).</p>
+                        <p class="text-xs">Assim que colocado no ar, este botão abrirá a caixa oficial do Android instantaneamente para colocar o ícone na sua tela inicial!</p>
+                    </div>
+                `, () => {});
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -1005,29 +1037,27 @@
             
             const transDoMes = (financialData.transactions || []).filter(t => t.monthKey === selectedMonthKey);
 
-            // Cálculos
             const despesasMes = transDoMes.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.value, 0);
             const receitasMes = transDoMes.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.value, 0);
             const faturaCartaoMes = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito").reduce((acc, curr) => acc + curr.value, 0);
 
-            // Caixinhas e Investimentos
             const totalCaixinhas = (financialData.goals || []).reduce((acc, curr) => acc + (curr.current || 0), 0);
             const totalInvestimentos = (financialData.investments || []).reduce((acc, curr) => acc + curr.value, 0);
             
-            // 1. VERBA TOTAL ACUMULADA (Caixa + Caixinhas + Investimentos)
+            // VERBA TOTAL ACUMULADA
             const verbaTotalAcumulada = (financialData.cash || 0) + totalCaixinhas + totalInvestimentos;
             document.getElementById("card-total-wealth").innerText = `R$ ${verbaTotalAcumulada.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("sub-cash").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
             document.getElementById("sub-goals").innerText = `R$ ${totalCaixinhas.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
             document.getElementById("sub-invest").innerText = `R$ ${totalInvestimentos.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}`;
 
-            // 2. COMPOSIÇÃO DAS VERBAS DO MÊS
+            // COMPOSIÇÃO DAS VERBAS
             const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
             document.getElementById("verba-diego-val").innerText = `R$ ${(src.diego || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("verba-sofia-val").innerText = `R$ ${(src.sofiaPension || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("verba-propria-val").innerText = `R$ ${(src.personal || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-            // GASTOS E RESTANTE DA PENSÃO DA SOFIA
+            // GASTOS E RESTANTE DA SOFIA
             const gastosSofia = transDoMes.filter(t => t.type === 'expense' && t.beneficiary === 'Sofia').reduce((acc, curr) => acc + curr.value, 0);
             const restaSofia = (src.sofiaPension || 0) - gastosSofia;
             document.getElementById("sofia-spent").innerText = `R$ ${gastosSofia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1035,7 +1065,7 @@
             remainElem.innerText = `R$ ${restaSofia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             remainElem.style.color = restaSofia >= 0 ? "var(--green)" : "var(--red)";
 
-            // CARDS PADRÃO
+            // SALDOS
             document.getElementById("card-cash").innerText = `R$ ${(financialData.cash || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-credit").innerText = `R$ ${faturaCartaoMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
             document.getElementById("card-income").innerText = `R$ ${receitasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
@@ -1050,7 +1080,7 @@
                 select.appendChild(opt);
             });
 
-            // FILTRO E BUSCA NO EXTRATO
+            // FILTROS & BUSCA
             const filter = document.getElementById("filter-type").value;
             const searchVal = (document.getElementById("search-trans").value || "").toLowerCase().trim();
             const listContainer = document.getElementById("transaction-list");
@@ -1131,7 +1161,7 @@
                 goalsContainer.appendChild(gItem);
             });
 
-            // Orçamento
+            // Orçamento Categorias
             const budgetContainer = document.getElementById("budget-progress-list");
             budgetContainer.innerHTML = '';
             (financialData.categories || []).forEach((cat) => {
@@ -1159,7 +1189,6 @@
             });
         }
 
-        // --- LANÇAMENTOS COM PARTES / PARCELAS ---
         function adicionarTransacao() {
             const type = document.getElementById("trans-type").value;
             const desc = document.getElementById("trans-desc").value.trim();
@@ -1224,7 +1253,6 @@
             atualizarTela();
         }
 
-        // --- MODAL DE AJUSTE DAS FONTES DE VERBA ---
         function abrirModalFontesVerba() {
             const src = financialData.sources || { diego: 0, sofiaPension: 0, personal: 0 };
             abrirModal("Ajustar Fontes de Verba do Mês", `
