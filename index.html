@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro</title>
+    <title>Finanças Pro Mobile</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDcwYTE0IiwgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#6366f1">
@@ -25,8 +25,8 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #f1f5f9;
-            --card-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.08), 0 8px 10px -6px rgba(99, 102, 241, 0.04);
+            --input-bg: #f8fafc;
+            --card-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.08);
             --green: #10b981;
             --red: #f43f5e;
             --blue: #3b82f6;
@@ -174,7 +174,6 @@
             font-weight: 700;
         }
 
-        /* BARRA COM 4 ABAS DIRETAS */
         .tab-bar {
             display: flex;
             background: var(--card-bg);
@@ -212,7 +211,7 @@
         }
 
         .content {
-            padding: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -325,8 +324,10 @@
             align-items: center;
         }
 
-        /* CARD COMPACTO DE LANÇAMENTO */
-        .compact-entry-card {
+        /* ========================================================
+           NOVO CARD MOBILE OTIMIZADO (SEM CORTES E SEM APERTO)
+           ======================================================== */
+        .mobile-entry-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 20px;
@@ -337,153 +338,210 @@
             gap: 10px;
         }
 
-        .pill-switch {
+        .entry-top-switch {
             display: flex;
             background: var(--input-bg);
+            border: 1px solid var(--border-color);
             padding: 3px;
             border-radius: 12px;
-            gap: 3px;
+            gap: 4px;
         }
 
-        .pill-btn {
+        .top-btn {
             flex: 1;
             border: none;
             background: transparent;
-            color: var(--text-muted);
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 800;
-            padding: 6px;
+            padding: 6px 0;
             border-radius: 9px;
+            color: var(--text-muted);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 6px;
         }
 
-        .pill-btn.active {
-            background: var(--card-bg);
-            color: var(--primary);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        .top-btn.active.expense {
+            background: #fff;
+            color: var(--red);
+            box-shadow: 0 2px 6px rgba(244, 63, 94, 0.15);
         }
-        .pill-btn.active.expense { color: var(--red); }
-        .pill-btn.active.income { color: var(--green); }
 
-        .value-calculator-box {
+        .top-btn.active.income {
+            background: #fff;
+            color: var(--green);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+        }
+
+        body.dark-mode .top-btn.active {
+            background: #1e293b;
+        }
+
+        /* Painel de Valor */
+        .amount-hero-box {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 16px;
+            padding: 10px 14px;
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        .value-row {
+        .mode-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mode-chip-group {
+            display: flex;
+            gap: 4px;
+            background: rgba(0,0,0,0.04);
+            padding: 2px;
+            border-radius: 8px;
+        }
+
+        .mode-chip {
+            border: none;
+            background: transparent;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .mode-chip.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .val-controls-line {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
         }
 
-        .val-input-wrap {
+        .val-input-group {
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 4px;
             flex: 1;
         }
 
-        .val-input-wrap span {
+        .val-input-group span {
             font-size: 1.1rem;
             font-weight: 900;
             color: var(--text-muted);
         }
 
-        .big-val-input {
+        .clean-val-input {
+            width: 100%;
             border: none !important;
             background: transparent !important;
-            font-size: 1.35rem !important;
+            font-size: 1.6rem !important;
             font-weight: 900 !important;
             padding: 0 !important;
+            color: var(--text-main) !important;
+            outline: none !important;
+        }
+
+        /* Contador de vezes com botões +/- */
+        .stepper-times {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .step-btn {
+            border: none;
+            background: transparent;
+            width: 26px;
+            height: 30px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-input {
+            width: 32px !important;
+            border: none !important;
+            background: transparent !important;
+            text-align: center !important;
+            font-size: 0.82rem !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            color: var(--primary) !important;
+        }
+
+        .calc-preview-bar {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Linhas completas sem corte */
+        .detail-row {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2px 10px;
+            gap: 8px;
+        }
+
+        .detail-row i {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            width: 16px;
+            text-align: center;
+        }
+
+        .detail-row select, .detail-row input {
+            border: none !important;
+            background: transparent !important;
+            padding: 8px 0 !important;
+            font-size: 0.8rem !important;
+            font-weight: 700 !important;
             color: var(--text-main) !important;
             outline: none !important;
             width: 100% !important;
         }
 
-        .installment-badge-input {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .installment-badge-input input {
-            width: 42px !important;
-            border: none !important;
-            background: transparent !important;
-            padding: 0 !important;
-            text-align: center !important;
-            font-size: 0.82rem !important;
-            font-weight: 900 !important;
-            color: var(--primary) !important;
-        }
-
-        .calc-live-pill {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.68rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            padding-top: 4px;
-            border-top: 1px dashed var(--border-color);
-        }
-
-        .fields-grid {
+        .two-cols-clean {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .field-unit {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .field-unit label {
-            font-size: 0.62rem;
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        input, select, textarea {
-            padding: 8px 10px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            outline: none;
-            width: 100%;
+            gap: 6px;
         }
 
         button.btn-primary {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 11px;
+            border-radius: 14px;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
             display: flex;
@@ -540,7 +598,6 @@
         .btn-icon:hover { color: var(--primary); }
         .btn-icon.del:hover { color: var(--red); }
 
-        /* QUADRADINHO RÁPIDO DE BACKUP */
         .backup-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -619,7 +676,7 @@
             </div>
         </header>
 
-        <!-- NAVEGAÇÃO LIMPA: APENAS 4 ABAS (METAS REMOVIDA) -->
+        <!-- 4 ABAS LIMPAS -->
         <nav class="tab-bar">
             <button class="tab-button active" onclick="trocarAba('painel')">
                 <span class="tab-icon">🏠</span>
@@ -754,85 +811,98 @@
                 </div>
             </div>
 
-            <!-- TELA 2: LANÇAR REESTRUTURADO -->
+            <!-- TELA 2: LANÇAR REDESENHADO ULTRA COMPACTO -->
             <div id="tab-lancar" class="tab-pane">
                 
-                <div class="compact-entry-card">
-                    <div class="pill-switch">
-                        <button type="button" id="btn-type-expense" class="pill-btn active expense" onclick="alternarTipoTransacao('expense')">
-                            📉 Despesa
+                <div class="mobile-entry-card">
+                    <!-- 1. TIPO: DESPESA / RECEITA -->
+                    <div class="entry-top-switch">
+                        <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
+                            <i class="fa-solid fa-arrow-down"></i> Despesa
                         </button>
-                        <button type="button" id="btn-type-income" class="pill-btn" onclick="alternarTipoTransacao('income')">
-                            📈 Receita
+                        <button type="button" id="btn-type-income" class="top-btn" onclick="alternarTipoTransacao('income')">
+                            <i class="fa-solid fa-arrow-up"></i> Receita
                         </button>
                     </div>
 
-                    <div class="value-calculator-box">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.62rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor & Vezes:</span>
-                            <div style="display:flex; gap:3px;">
-                                <button type="button" id="btn-mode-total" class="pill-btn active" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('total')">Total</button>
-                                <button type="button" id="btn-mode-parcela" class="pill-btn" style="padding:2px 6px; font-size:0.62rem;" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
+                    <!-- 2. BLOCO DE VALOR & VEZES -->
+                    <div class="amount-hero-box">
+                        <div class="mode-row">
+                            <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Valor:</span>
+                            <div class="mode-chip-group">
+                                <button type="button" id="btn-mode-total" class="mode-chip active" onclick="alternarModoCalculo('total')">Total Compra</button>
+                                <button type="button" id="btn-mode-parcela" class="mode-chip" onclick="alternarModoCalculo('parcela')">Cada Parcela</button>
                             </div>
                         </div>
 
-                        <div class="value-row">
-                            <div class="val-input-wrap">
+                        <div class="val-controls-line">
+                            <div class="val-input-group">
                                 <span>R$</span>
-                                <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="big-val-input" oninput="calcularResumoParcelas()">
+                                <input type="number" id="trans-value" step="0.01" min="0" placeholder="0,00" class="clean-val-input" oninput="calcularResumoParcelas()">
                             </div>
-                            <div class="installment-badge-input" title="Quantidade de parcelas">
-                                <i class="fa-solid fa-repeat" style="font-size:0.7rem;"></i>
-                                <input type="number" id="trans-installments-num" min="1" max="120" value="1" oninput="calcularResumoParcelas()">
-                                <span>x</span>
+                            
+                            <!-- Contador de parcelas com toque rápido -->
+                            <div class="stepper-times" title="Quantidade de parcelas">
+                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(-1)">-</button>
+                                <input type="number" id="trans-installments-num" min="1" max="120" value="1" class="step-input" oninput="calcularResumoParcelas()">
+                                <button type="button" class="step-btn" onclick="mudarParcelasRapido(1)">+</button>
                             </div>
                         </div>
 
-                        <div class="calc-live-pill">
+                        <div class="calc-preview-bar">
                             <span id="calc-preview-pill-text">À vista: R$ 0,00</span>
-                            <span id="calc-preview-pill-sub" style="font-size:0.62rem; opacity:0.8;">1x parcela</span>
+                            <span id="calc-preview-pill-sub">1x</span>
                         </div>
                     </div>
 
-                    <input type="text" id="trans-desc" placeholder="Descrição (ex: Supermercado, Pós-graduação...)" style="font-weight:700;">
+                    <!-- 3. DESCRIÇÃO -->
+                    <div class="detail-row">
+                        <i class="fa-solid fa-pen"></i>
+                        <input type="text" id="trans-desc" placeholder="O que você comprou? (ex: Mercado, Farmácia...)">
+                    </div>
 
-                    <div class="fields-grid">
-                        <div class="field-unit">
-                            <label>Pagar com:</label>
+                    <!-- 4. LINHAS HORIZONTAIS LIMPAS -->
+                    <div class="two-cols-clean">
+                        <div class="detail-row">
+                            <i class="fa-solid fa-box"></i>
                             <select id="trans-box-id"></select>
                         </div>
-                        <div class="field-unit">
-                            <label>Forma:</label>
+                        <div class="detail-row">
+                            <i class="fa-solid fa-credit-card"></i>
                             <select id="trans-payment">
-                                <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
-                                <option value="Dinheiro/Caixa">💵 À vista (Pix/Débito)</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
                             </select>
                         </div>
-                        <div class="field-unit">
-                            <label>Categoria:</label>
-                            <div style="display:flex; gap:3px;">
-                                <select id="trans-category" style="flex:1;"></select>
-                                <button type="button" onclick="abrirModalNovaCategoria()" title="Criar categoria" style="width:28px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:10px; font-weight:900;">+</button>
-                            </div>
+                    </div>
+
+                    <div class="two-cols-clean">
+                        <div class="detail-row" style="position:relative;">
+                            <i class="fa-solid fa-tag"></i>
+                            <select id="trans-category"></select>
+                            <button type="button" onclick="abrirModalNovaCategoria()" title="Nova Categoria" style="border:none; background:transparent; color:var(--primary); font-weight:900; font-size:1rem; cursor:pointer;">+</button>
                         </div>
-                        <div class="field-unit">
-                            <label>Data:</label>
+                        <div class="detail-row">
+                            <i class="fa-solid fa-calendar-day"></i>
                             <input type="date" id="trans-date">
                         </div>
                     </div>
 
-                    <button class="btn-primary" onclick="adicionarTransacao()">💾 Salvar Lançamento</button>
+                    <button class="btn-primary" onclick="adicionarTransacao()">
+                        💾 Salvar Lançamento
+                    </button>
                 </div>
 
+                <!-- EXTRATO COMPLETO -->
                 <div class="section-box">
                     <h3>
                         <span>📑 Extrato do Mês</span>
-                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 3px 6px; font-size: 0.7rem;">
+                        <select id="filter-type" onchange="atualizarTela()" style="width: auto; padding: 2px 6px; font-size: 0.7rem; border-radius: 8px;">
                             <option value="all">Todos</option>
                             <option value="cartao">💳 Só Cartão</option>
                         </select>
                     </h3>
-                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 8px; font-size: 0.78rem; padding: 7px 10px;">
+                    <input type="text" id="search-trans" oninput="atualizarTela()" placeholder="🔍 Pesquisar no extrato..." style="margin-bottom: 8px; font-size: 0.78rem; padding: 7px 10px; border-radius:10px; background:var(--input-bg); border:1px solid var(--border-color); width:100%;">
                     <div class="list-container" id="transaction-list"></div>
                 </div>
             </div>
@@ -862,30 +932,28 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MAIS (COM BACKUP FÁCIL E CAIXINHAS DE RESERVA) -->
+            <!-- TELA 4: MAIS (BACKUP & RESERVAS) -->
             <div id="tab-mais" class="tab-pane">
                 
-                <!-- QUADRADINHO RÁPIDO DE BACKUP (SEM PROCURAR ARQUIVO) -->
                 <div class="backup-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.8rem; font-weight:800; color:var(--primary);">📋 Salvar e Restaurar Dados</span>
                         <span style="font-size:0.62rem; color:var(--green); font-weight:700;">🟢 Seguro</span>
                     </div>
                     <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.2;">
-                        Não precisa procurar arquivos no celular. Você pode copiar seus dados em texto e colar no WhatsApp com você mesma.
+                        Não precisa procurar arquivos no celular. Copie o código em texto para o seu WhatsApp e cole aqui quando quiser restaurar.
                     </p>
                     
                     <div style="display:flex; gap:6px;">
-                        <button class="btn-primary" style="flex:1; padding:7px; font-size:0.75rem;" onclick="copiarBackupTexto()">
+                        <button class="btn-primary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="copiarBackupTexto()">
                             📋 Copiar Backup
                         </button>
-                        <button class="btn-secondary" style="flex:1; padding:7px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
+                        <button class="btn-secondary" style="flex:1; padding:8px; font-size:0.75rem;" onclick="abrirModalRestaurarTexto()">
                             📥 Restaurar Dados
                         </button>
                     </div>
                 </div>
 
-                <!-- CAIXINHAS DE RESERVA GUARDADAS AQUI -->
                 <div class="section-box">
                     <h3>
                         <span>🐷 Caixinhas de Reserva</span>
@@ -894,7 +962,6 @@
                     <div class="list-container" id="goals-list"></div>
                 </div>
 
-                <!-- INVESTIMENTOS / ATIVOS -->
                 <div class="section-box">
                     <h3>💼 Total Investido em Ativos</h3>
                     <h2 id="card-total-invested" style="font-size:1.3rem; font-weight:900; color:var(--purple);">R$ 0,00</h2>
@@ -907,20 +974,20 @@
                 <div class="section-box">
                     <h3>🚀 Registrar Aporte / Ativo</h3>
                     <div class="form-group" style="display:flex; flex-direction:column; gap:6px;">
-                        <div class="fields-grid">
-                            <select id="invest-platform">
+                        <div class="two-cols-clean">
+                            <select id="invest-platform" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
                                 <option value="XP Investimentos">XP Investimentos</option>
                                 <option value="Binance">Binance</option>
                                 <option value="Outros">Outra Corretora</option>
                             </select>
-                            <select id="invest-type">
+                            <select id="invest-type" style="padding:6px; font-size:0.75rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
                                 <option value="Renda Fixa">Renda Fixa / CDB</option>
                                 <option value="Criptomoeda">Criptomoeda</option>
                                 <option value="Ações">Ações / FIIs</option>
                             </select>
                         </div>
-                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)">
-                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)">
+                        <input type="text" id="invest-asset" placeholder="Nome do Ativo (ex: CDB 120%, BTC)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
+                        <input type="number" id="invest-value" step="0.01" min="0" placeholder="Valor (R$)" style="padding:7px; font-size:0.78rem; border-radius:8px; background:var(--input-bg); border:1px solid var(--border-color);">
                         <button class="btn-primary" onclick="adicionarInvestimento()">Adicionar Ativo</button>
                     </div>
                 </div>
@@ -954,7 +1021,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_v14_clean_backup";
+        const STORAGE_KEY = "financas_pro_v16_mobile_native";
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         const hoje = new Date();
@@ -986,6 +1053,8 @@
         function carregarDados() {
             const chaves = [
                 STORAGE_KEY,
+                "financas_pro_v15_ultra",
+                "financas_pro_v14_clean_backup",
                 "financas_pro_v13_compact_form",
                 "financas_pro_v12_calculator",
                 "financas_pro_v11_spillover",
@@ -1049,11 +1118,11 @@
             const btnInc = document.getElementById('btn-type-income');
 
             if (tipo === 'expense') {
-                btnExp.className = 'pill-btn active expense';
-                btnInc.className = 'pill-btn';
+                btnExp.className = 'top-btn active expense';
+                btnInc.className = 'top-btn';
             } else {
-                btnExp.className = 'pill-btn';
-                btnInc.className = 'pill-btn active income';
+                btnExp.className = 'top-btn';
+                btnInc.className = 'top-btn active income';
             }
             calcularResumoParcelas();
         }
@@ -1065,6 +1134,15 @@
             calcularResumoParcelas();
         }
 
+        function mudarParcelasRapido(delta) {
+            const input = document.getElementById("trans-installments-num");
+            let val = (parseInt(input.value, 10) || 1) + delta;
+            if (val < 1) val = 1;
+            if (val > 120) val = 120;
+            input.value = val;
+            calcularResumoParcelas();
+        }
+
         function calcularResumoParcelas() {
             const inputVal = parseFloat(document.getElementById("trans-value").value);
             const parcelas = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
@@ -1073,7 +1151,7 @@
 
             if (isNaN(inputVal) || inputVal <= 0) {
                 previewText.innerHTML = "À vista: R$ 0,00";
-                previewSub.innerText = `${parcelas}x parcela${parcelas > 1 ? 's' : ''}`;
+                previewSub.innerText = `${parcelas}x`;
                 return;
             }
 
@@ -1085,7 +1163,7 @@
                 const valorParcela = inputVal / parcelas;
                 if (parcelas === 1) {
                     previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
-                    previewSub.innerText = "À vista (1x)";
+                    previewSub.innerText = "1x";
                 } else {
                     previewText.innerHTML = `Total: <b>R$ ${inputVal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</b>`;
                     previewSub.innerHTML = `<b>${parcelas}x de R$ ${valorParcela.toFixed(2)}</b>/mês`;
@@ -1404,7 +1482,7 @@
                     boxes.forEach(b => {
                         const opt = document.createElement("option");
                         opt.value = b.id;
-                        opt.textContent = `Pagar com: ${b.name}`;
+                        opt.textContent = `${b.name}`;
                         selectBox.appendChild(opt);
                     });
                     const optGeral = document.createElement("option");
@@ -1416,7 +1494,7 @@
 
             const selectCat = document.getElementById("trans-category");
             if (selectCat) {
-                selectCat.innerHTML = '<option value="">Selecione Categoria</option>';
+                selectCat.innerHTML = '<option value="">Categoria...</option>';
                 (financialData.categories || []).forEach(cat => {
                     const opt = document.createElement("option");
                     opt.value = cat.name; opt.textContent = cat.name;
@@ -1786,7 +1864,7 @@
             });
         }
 
-        // --- BACKUP SIMPLES EM TEXTO (SEM ARQUIVOS SUMIDOS) ---
+        // --- BACKUP SIMPLES EM TEXTO ---
         function copiarBackupTexto() {
             const texto = JSON.stringify(financialData);
             if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1801,14 +1879,14 @@
         function fallbackCopiar(texto) {
             abrirModal("Seu Código de Backup", `
                 <p class="text-xs text-gray-500 mb-2">Copie todo o texto abaixo e guarde no seu WhatsApp:</p>
-                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem;" readonly>${texto}</textarea>
+                <textarea id="txt-backup-code" style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;" readonly>${texto}</textarea>
             `, () => {});
         }
 
         function abrirModalRestaurarTexto() {
             abrirModal("Restaurar Dados em Texto", `
                 <p class="text-xs text-gray-500 mb-2">Cole aqui o código que você salvou no WhatsApp ou Bloco de Notas:</p>
-                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem;"></textarea>
+                <textarea id="txt-restore-input" placeholder="Cole o código aqui..." style="height:120px; font-size:0.7rem; width:100%; border:1px solid var(--border-color); border-radius:8px;"></textarea>
             `, () => {
                 const input = document.getElementById("txt-restore-input").value.trim();
                 if (!input) return;
@@ -1828,7 +1906,7 @@
             });
         }
 
-        // --- CAIXINHAS DE RESERVA (METAS) NA ABA MAIS ---
+        // --- RESERVAS / CAIXINHAS NA ABA MAIS ---
         function abrirModalNovaMeta() {
             abrirModal("Nova Caixinha de Reserva", `
                 <label class="text-xs text-gray-500 font-bold">Nome da Reserva:</label>
@@ -1976,4 +2054,4 @@
         function alternarTema() { document.body.classList.toggle("dark-mode"); }
     </script>
 </body>
-</html>
+                                         </html>
