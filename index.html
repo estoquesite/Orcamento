@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V32 - Cloud Supabase</title>
+    <title>Finanças Pro V33 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -838,15 +838,27 @@
 
         .credit-card-widget {
             color: white;
-            padding: 16px;
-            border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            padding: 14px 16px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
+
+        .credit- card-details-box {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 8px;
+            font-size: 0.75rem;
+        }
+        .credit-card-widget.expanded .credit-card-details-box { display: flex; }
 
         .year-selector-header {
             display: flex;
@@ -1082,7 +1094,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V32 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V33 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1103,7 +1115,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V32</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V33</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1432,7 +1444,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: CARTÕES -->
+            <!-- TELA 3: CARTÕES INTERATIVOS E RETRÁTEIS -->
             <div id="tab-cartoes" class="tab-pane">
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
@@ -1483,7 +1495,7 @@
 
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 SEUS CARTÕES CADASTRADOS</span>
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 SEUS CARTÕES CADASTRADOS (CLIQUE PARA EXPANDIR)</span>
                         <span id="txt-qtd-cartoes" style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">0 cartões</span>
                     </div>
                     <div id="cards-container" style="display:flex; flex-direction:column; gap:10px;"></div>
@@ -1535,7 +1547,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V32 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V33 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
@@ -2582,7 +2594,8 @@
                     cardsContainer.innerHTML = '<div style="text-align:center; padding:16px; background:var(--custom-card); border-radius:14px; border:1px dashed var(--border-color); font-size:0.75rem; color:var(--text-muted);">Nenhum cartão cadastrado.</div>';
                 } else {
                     cards.forEach(card => {
-                        const gastosDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id))).reduce((acc, curr) => acc + curr.value, 0);
+                        const despesasDoCartao = transDoMes.filter(t => t.type === 'expense' && t.payment === "Cartão de Crédito" && (t.cardId === card.id || (!t.cardId && card.id === cards[0].id)));
+                        const gastosDoCartao = despesasDoCartao.reduce((acc, curr) => acc + curr.value, 0);
 
                         const totalUsado = (card.initialUsed || 0) + gastosDoCartao;
                         const limite = card.limit || 0;
@@ -2597,39 +2610,60 @@
                         if (percConsumo >= 90) corBarra = 'var(--red)';
                         else if (percConsumo >= 70) corBarra = 'var(--yellow)';
 
+                        // Monta a lista de despesas internas do cartão quando expandido
+                        let htmlItensCartao = '';
+                        if (despesasDoCartao.length === 0) {
+                            htmlItensCartao = '<span style="font-size:0.68rem; color:rgba(255,255,255,0.7); font-style:italic;">Nenhum gasto neste cartão este mês.</span>';
+                        } else {
+                            despesasDoCartao.forEach(itemCard => {
+                                htmlItensCartao += `
+                                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:5px 8px; border-radius:8px; margin-bottom:3px;">
+                                        <span><b>${itemCard.desc}</b> (${itemCard.date ? itemCard.date.split('-').reverse().join('/') : ''})</span>
+                                        <span style="color:#fca5a5; font-weight:900;">- ${formatarMoeda(itemCard.value)}</span>
+                                    </div>
+                                `;
+                            });
+                        }
+
                         const cardElem = document.createElement("div");
                         cardElem.className = "credit-card-widget";
                         cardElem.style.background = `linear-gradient(135deg, ${corRealCard} 0%, #064e3b 75%)`;
                         cardElem.style.borderLeft = `6px solid ${corRealCard}`;
                         cardElem.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;" onclick="this.parentElement.classList.toggle('expanded')">
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     <div style="width:30px; height:20px; background:rgba(255,255,255,0.25); border-radius:4px; display:flex; align-items:center; justify-content:center;">
                                         <i class="fa-solid fa-sim-card" style="font-size:0.6rem; color:#fef3c7;"></i>
                                     </div>
                                     <div>
-                                        <span style="font-size:0.9rem; font-weight:900; display:block; color:white; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${card.name}</span>
+                                        <span style="font-size:0.9rem; font-weight:900; display:block; color:white; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${card.name} ▾</span>
                                         <span style="font-size:0.62rem; color:rgba(255,255,255,0.8);">Fecha dia ${card.closingDay || '25'} • Vence dia ${card.dueDay || '05'}</span>
                                     </div>
                                 </div>
                                 <div style="display:flex; gap:8px;">
-                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fca5a5; cursor:pointer;" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
+                                    <button onclick="event.stopPropagation(); removerCartao('${card.id}')" style="background:none; border:none; color:#fca5a5; cursor:pointer;" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
                                 </div>
                             </div>
 
-                            <div style="margin: 4px 0;">
-                                <span style="font-size:1.5rem; font-weight:900; color:#fef3c7; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${formatarMoeda(totalUsado)}</span>
-                                <span style="font-size:0.65rem; color:rgba(255,255,255,0.8); display:block;">${gastosDoCartao > 0 ? `+ ${formatarMoeda(gastosDoCartao)} lançados neste mês` : 'Fatura atual'}</span>
+                            <div style="margin: 2px 0;" onclick="this.parentElement.classList.toggle('expanded')">
+                                <span style="font-size:1.4rem; font-weight:900; color:#fef3c7; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">${formatarMoeda(totalUsado)}</span>
+                                <span style="font-size:0.62rem; color:rgba(255,255,255,0.8); display:block;">${gastosDoCartao > 0 ? `+ ${formatarMoeda(gastosDoCartao)} lançados neste mês` : 'Fatura atual'}</span>
                             </div>
 
-                            <div style="display:flex; flex-direction:column; gap:4px;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:rgba(255,255,255,0.9); font-weight:700;">
+                            <div style="display:flex; flex-direction:column; gap:4px;" onclick="this.parentElement.classList.toggle('expanded')">
+                                <div style="display:flex; justify-content:space-between; font-size:0.62rem; color:rgba(255,255,255,0.9); font-weight:700;">
                                     <span>${percConsumo}% utilizado</span>
                                     <span>Livre: ${formatarMoeda(limiteDisponivel)}</span>
                                 </div>
-                                <div style="background:rgba(255,255,255,0.2); height:6px; border-radius:6px; overflow:hidden;">
+                                <div style="background:rgba(255,255,255,0.2); height:5px; border-radius:6px; overflow:hidden;">
                                     <div style="width:${percConsumo}%; height:100%; background:${corBarra}; transition:width 0.3s;"></div>
                                 </div>
+                            </div>
+
+                            <!-- ÁREA EXPANSÍVEL COM AS DESPESAS DO CARTÃO -->
+                            <div class="credit-card-details-box">
+                                <span style="font-weight:800; font-size:0.7rem; color:#fef3c7; text-transform:uppercase;">Extrato deste Cartão no Mês:</span>
+                                ${htmlItensCartao}
                             </div>
 
                             <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:rgba(255,255,255,0.7); border-top:1px solid rgba(255,255,255,0.15); padding-top:6px;">
@@ -2759,7 +2793,6 @@
                 }
             }
 
-            // CONTROLE MENSAL DE GASTOS POR CATEGORIA (MOSTRANDO QUANTO GASTA EM CADA UMA NO MÊS)
             const maisCatContainer = document.getElementById("mais-categories-list");
             if (maisCatContainer) {
                 maisCatContainer.innerHTML = '';
@@ -3356,4 +3389,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
