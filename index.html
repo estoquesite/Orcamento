@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V40 - Cloud Supabase</title>
+    <title>Finanças Pro V39.1 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#047857">
@@ -215,7 +215,7 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 8px 6px;
+            padding: 8px 8px;
             z-index: 40;
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
@@ -229,14 +229,14 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            gap: 2px;
-            padding: 4px 8px;
-            border-radius: 10px;
+            gap: 3px;
+            padding: 6px 12px;
+            border-radius: 12px;
             transition: all 0.2s;
         }
 
-        .top-nav-item i { font-size: 0.95rem; }
-        .top-nav-item span { font-size: 0.6rem; font-weight: 800; }
+        .top-nav-item i { font-size: 1.05rem; }
+        .top-nav-item span { font-size: 0.65rem; font-weight: 800; }
         .top-nav-item.active { color: var(--primary); background: rgba(5, 150, 105, 0.12); }
 
         .content {
@@ -1528,7 +1528,7 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES (COM FILTRO COMPACTO E RETRÁTIL + RESUMO NÍDIDO) -->
+            <!-- TELA 4: MESES (COM BOTÃO DE SALVAR FILTRO) -->
             <div id="tab-meses" class="tab-pane">
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
@@ -1544,14 +1544,14 @@
                     <button class="date-nav-btn" onclick="mudarAnoTabela(1)">»</button>
                 </div>
 
-                <!-- PAINEL DE FILTRO DE MESES COMPACTO E COM BOTÃO DE RECOLHER -->
+                <!-- PAINEL DE FILTRO DE MESES COM BOTÃO DE SALVAR -->
                 <div class="custom-card-box" style="padding:10px 12px; display:flex; flex-direction:column; gap:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.72rem; font-weight:800; color:var(--primary);"><i class="fa-solid fa-filter"></i> FILTRAR MESES:</span>
                         <div style="display:flex; gap:4px; align-items:center;">
                             <button onclick="marcarTodosMeses(true)" class="btn-box-action" style="font-size:0.6rem; padding:3px 6px;">Todos</button>
                             <button onclick="marcarTodosMeses(false)" class="btn-box-action" style="font-size:0.6rem; padding:3px 6px;">Nenhum</button>
-                            <button onclick="alternarRecolherFiltroMeses()" id="btn-toggle-filtro-mes" class="btn-box-action" style="font-size:0.6rem; padding:3px 6px; color:var(--primary);">Ocultar ▴</button>
+                            <button onclick="salvarFiltroMesesEAbrir()" class="btn-primary" style="font-size:0.65rem; padding:4px 10px;" title="Salvar seleção e exibir apenas os meses escolhidos">💾 Salvar Filtro</button>
                         </div>
                     </div>
                     <div class="months-filter-grid" id="months-filter-grid"></div>
@@ -1569,7 +1569,7 @@
                     </div>
                 </div>
 
-                <!-- LISTAGEM DOS MESES ATIVOS -->
+                <!-- LISTAGEM DOS MESES SELECIONADOS E SALVOS -->
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
@@ -1581,7 +1581,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V39 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V39.1 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.85);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
@@ -1719,6 +1719,7 @@
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
         const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v20";
+        const MESES_FILTRO_KEY = "financas_pro_meses_filtro_salvo";
 
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         const mesesCurtos = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
@@ -1729,8 +1730,7 @@
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
         let selectedYearTabela = currentYear;
 
-        let mesesFiltroSelecionados = {1:true, 2:true, 3:true, 4:true, 5:true, 6:true, 7:true, 8:true, 9:true, 10:true, 11:true, 12:true};
-        let filtroMesesOculto = false;
+        let mesesFiltroSelecionados = JSON.parse(localStorage.getItem(MESES_FILTRO_KEY)) || {1:true, 2:true, 3:true, 4:true, 5:true, 6:true, 7:true, 8:true, 9:true, 10:true, 11:true, 12:true};
 
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
@@ -1802,11 +1802,10 @@
             atualizarTela();
         }
 
-        function alternarRecolherFiltroMeses() {
-            filtroMesesOculto = !filtroMesesOculto;
-            const btn = document.getElementById("btn-toggle-filtro-mes");
-            if (btn) btn.innerText = filtroMesesOculto ? "Mostrar ▾" : "Ocultar ▴";
+        function salvarFiltroMesesEAbrir() {
+            localStorage.setItem(MESES_FILTRO_KEY, JSON.stringify(mesesFiltroSelecionados));
             atualizarTela();
+            showToast("Filtro de meses salvo com sucesso!");
         }
 
         async function carregarDados() {
