@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V37.1 - Cloud Supabase</title>
+    <title>Finanças Pro V38 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#047857">
@@ -853,41 +853,66 @@
         }
         .credit-card-widget.expanded .credit-card-details-box { display: flex; }
 
-        /* CARROSSEL HORIZONTAL DE MESES ESTILO BANCO */
-        .months-carrossel-scroll {
+        .year-selector-header {
             display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            scrollbar-width: none;
-        }
-        .months-carrossel-scroll::-webkit-scrollbar { display: none; }
-
-        .month-chip-card {
-            background: var(--custom-card);
-            border: 2px solid var(--border-color);
-            border-radius: 14px;
-            padding: 10px 14px;
-            min-width: 95px;
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            flex-shrink: 0;
+            background: var(--custom-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px 14px;
             box-shadow: var(--card-shadow);
         }
-        .month-chip-card.active {
+
+        /* CARD DE SALDO ANUAL ELEGANTE E NÍTIDO (SEM TEXTO APAGADO) */
+        .year-summary-card {
+            background: linear-gradient(135deg, #065f46 0%, #059669 50%, #0284c7 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* GRID DE FILTRO DE MESES ESTILO CAIXINHAS (CHECKBOX) */
+        .months-filter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: var(--custom-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .month-filter-checkbox-card {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--custom-text);
+            cursor: pointer;
+        }
+        .month-filter-checkbox-card.checked {
+            background: rgba(5, 150, 105, 0.1);
             border-color: var(--primary);
-            background: rgba(5, 150, 105, 0.08);
-            box-shadow: 0 0 12px rgba(5, 150, 105, 0.25);
+            color: var(--primary);
         }
 
         .months-elegant-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 10px;
-            max-height: 480px;
+            max-height: 420px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -1095,7 +1120,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V37.1 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V38 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1116,7 +1141,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V37.1</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V38</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1503,13 +1528,13 @@
                 </div>
             </div>
 
-            <!-- TELA 4: MESES (COM CARROSSEL DE MESES INTERATIVO NO TOPO E LISTA COMPLETA) -->
+            <!-- TELA 4: MESES (COM PAINEL DE FILTRO DE MESES E CARD DE RESUMO NÍDIDO) -->
             <div id="tab-meses" class="tab-pane">
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
                 </button>
 
-                <div class="year-selector-header custom-card-box" style="padding:8px 12px;">
+                <div class="year-selector-header custom-card-box" style="padding:10px 14px;">
                     <button class="date-nav-btn" onclick="mudarAnoTabela(-1)">«</button>
                     <div style="display:flex; align-items:center; gap:6px;">
                         <i class="fa-solid fa-calendar-days text-emerald-600"></i>
@@ -1519,21 +1544,31 @@
                     <button class="date-nav-btn" onclick="mudarAnoTabela(1)">»</button>
                 </div>
 
-                <!-- CARROSSEL HORIZONTAL DE MESES NO TOPO DA TELA DE MESES -->
-                <div class="months-carrossel-scroll" id="months-carrossel-container"></div>
+                <!-- PAINEL DE FILTRO DE MESES (CHECKBOXES ESTILO CAIXINHAS) -->
+                <div class="custom-card-box" style="padding:12px; display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--primary);"><i class="fa-solid fa-filter"></i> FILTRAR MESES:</span>
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="marcarTodosMeses(true)" class="btn-box-action" style="font-size:0.65rem;">Marcar Todos</button>
+                            <button onclick="marcarTodosMeses(false)" class="btn-box-action" style="font-size:0.65rem;">Desmarcar</button>
+                        </div>
+                    </div>
+                    <div class="months-filter-grid" id="months-filter-grid"></div>
+                </div>
 
+                <!-- CARD DE RESUMO NÍDIDO E ELEGANTE -->
                 <div class="year-summary-card">
                     <div>
-                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.85); text-transform:uppercase; font-weight:800; display:block;">Saldo Real Acumulado</span>
-                        <b id="txt-ano-saldo-acumulado" style="font-size:1.35rem; font-weight:900;">R$ 0,00</b>
+                        <span style="font-size:0.65rem; color:rgba(255,255,255,0.9); text-transform:uppercase; font-weight:900; display:block;">Saldo Real Acumulado</span>
+                        <b id="txt-ano-saldo-acumulado" style="font-size:1.4rem; font-weight:900; color:#ffffff;">R$ 0,00</b>
                     </div>
-                    <div style="text-align:right; font-size:0.72rem;">
+                    <div style="text-align:right; font-size:0.75rem; font-weight:800;">
                         <div style="color:#d1fae5;">Entradas: <b id="txt-ano-entradas-total">R$ 0</b></div>
                         <div style="color:#fee2e2;">Gastos: <b id="txt-ano-gastos-total">R$ 0</b></div>
                     </div>
                 </div>
 
-                <!-- LISTAGEM COMPLETA DOS MESES ABAIXO -->
+                <!-- LISTAGEM DOS MESES FILTRADOS -->
                 <div class="months-elegant-grid" id="months-cards-container"></div>
             </div>
 
@@ -1545,7 +1580,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V37.1 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V38 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.85);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
@@ -1685,12 +1720,16 @@
         const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v20";
 
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const mesesCurtos = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
         const hojeReal = new Date();
         let currentYear = hojeReal.getFullYear();
         let currentMonthNum = hojeReal.getMonth() + 1;
         let selectedMonthKey = `${currentYear}-${String(currentMonthNum).padStart(2, '0')}`;
         let selectedYearTabela = currentYear;
+
+        // Estado do filtro de meses (todos marcados por padrão)
+        let mesesFiltroSelecionados = {1:true, 2:true, 3:true, 4:true, 5:true, 6:true, 7:true, 8:true, 9:true, 10:true, 11:true, 12:true};
 
         let selectedTransactionType = 'expense';
         let selectedCalcMode = 'total';
@@ -2207,6 +2246,18 @@
 
         function alterarAnoTabela(novoAno) {
             selectedYearTabela = parseInt(novoAno, 10);
+            atualizarTela();
+        }
+
+        function alternarFiltroMes(mesNum) {
+            mesesFiltroSelecionados[mesNum] = !mesesFiltroSelecionados[mesNum];
+            atualizarTela();
+        }
+
+        function marcarTodosMeses(status) {
+            for (let m = 1; m <= 12; m++) {
+                mesesFiltroSelecionados[m] = status;
+            }
             atualizarTela();
         }
 
@@ -2808,24 +2859,20 @@
                 }
             }
 
-            // CARROSSEL HORIZONTAL DE MESES NO TOPO + LISTA DOS 12 MESES EMBAIXO
-            const carrosselContainer = document.getElementById("months-carrossel-container");
-            if (carrosselContainer) {
-                carrosselContainer.innerHTML = '';
+            // RENDERIZAÇÃO DO FILTRO DE MESES EM GRID E LISTA DOS MESES ATIVOS
+            const filterGrid = document.getElementById("months-filter-grid");
+            if (filterGrid) {
+                filterGrid.innerHTML = '';
                 for (let m = 1; m <= 12; m++) {
-                    const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
-                    const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
-                    const mExp = mTrans.filter(t => t.type === 'expense').reduce((acc, c) => acc + c.value, 0);
-                    const isSelected = (m === currentMonthNum && selectedYearTabela === currentYear);
-
-                    const chip = document.createElement("div");
-                    chip.className = `month-chip-card ${isSelected ? 'active' : ''}`;
-                    chip.innerHTML = `
-                        <b style="font-size:0.8rem; color:${isSelected ? 'var(--primary)' : 'var(--custom-text)'};">${mesesNomes[m - 1].slice(0, 3)}</b>
-                        <span style="font-size:0.65rem; color:var(--red); font-weight:800;">${mExp > 0 ? formatarMoeda(mExp) : 'R$ 0'}</span>
+                    const isChecked = mesesFiltroSelecionados[m];
+                    const box = document.createElement("div");
+                    box.className = `month-filter-checkbox-card ${isChecked ? 'checked' : ''}`;
+                    box.innerHTML = `
+                        <i class="fa-solid ${isChecked ? 'fa-square-check' : 'fa-square'}"></i>
+                        <span>${mesesCurtos[m - 1]}</span>
                     `;
-                    chip.onclick = () => selecionarMesEAbrirAno(selectedYearTabela, m);
-                    carrosselContainer.appendChild(chip);
+                    box.onclick = () => alternarFiltroMes(m);
+                    filterGrid.appendChild(box);
                 }
             }
 
@@ -2834,6 +2881,8 @@
                 monthsContainer.innerHTML = '';
 
                 for (let m = 1; m <= 12; m++) {
+                    if (!mesesFiltroSelecionados[m]) continue;
+
                     const mKey = `${selectedYearTabela}-${String(m).padStart(2, '0')}`;
                     const mTrans = (financialData.transactions || []).filter(t => t.monthKey === mKey);
                     const mExtras = (financialData.extraIncomes || []).filter(e => e.monthKey === mKey);
@@ -2896,7 +2945,7 @@
             const elemSaldoAcum = document.getElementById("txt-ano-saldo-acumulado");
             if (elemSaldoAcum) {
                 elemSaldoAcum.innerText = formatarMoeda(saldoAcumuladoAno);
-                elemSaldoAcum.style.color = saldoAcumuladoAno >= 0 ? "var(--green)" : "var(--red)";
+                elemSaldoAcum.style.color = "#ffffff";
             }
 
             document.getElementById("txt-ano-entradas-total").innerText = formatarMoeda(anoEntradasTotal);
