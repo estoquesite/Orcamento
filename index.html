@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V24 - Cloud Supabase</title>
+    <title>Finanças Pro V25 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -1057,7 +1057,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V24 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V25 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1078,7 +1078,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V24</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V25</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1442,12 +1442,18 @@
                     </div>
                 </div>
 
-                <div class="quick-actions-bar">
-                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="abrirModalNovoCartao()">
-                        <i class="fa-solid fa-plus text-emerald-600"></i> Adicionar Cartão
-                    </button>
-                    <button class="quick-btn custom-card-box" style="margin:0; padding:10px;" onclick="abrirModalPagarFatura()">
-                        <i class="fa-solid fa-check text-blue-600"></i> Abater/Pagar Fatura
+                <!-- PAINEL DIRETO DE ADICIONAR CARTÃO (SEM ERRO DE MODAL) -->
+                <div class="custom-card-box" style="display:flex; flex-direction:column; gap:10px; background:var(--custom-card);">
+                    <b style="font-size:0.82rem; color:var(--primary); display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-credit-card"></i> Adicionar Novo Cartão Direto:
+                    </b>
+                    <div style="display:flex; gap:6px;">
+                        <input type="text" id="direct-card-name" placeholder="Nome (Ex: C6, XP...)" style="flex:2; padding:8px; border-radius:10px; border:1px solid var(--border-color); background:var(--input-bg); font-size:0.75rem; font-weight:700;">
+                        <input type="number" id="direct-card-limit" placeholder="Limite R$" style="flex:1; padding:8px; border-radius:10px; border:1px solid var(--border-color); background:var(--input-bg); font-size:0.75rem; font-weight:700;">
+                        <input type="color" id="direct-card-color" value="#059669" style="width:38px; height:36px; border:none; border-radius:8px; cursor:pointer; background:transparent;" title="Escolha a cor do cartão">
+                    </div>
+                    <button class="btn-primary" onclick="adicionarCartaoDireto()" style="padding:10px; font-size:0.75rem;">
+                        <i class="fa-solid fa-plus"></i> Salvar e Incluir Cartão
                     </button>
                 </div>
 
@@ -1505,7 +1511,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V24 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V25 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Bancos do Mercado</span>
                     </div>
                 </div>
@@ -1782,6 +1788,43 @@
             showToast("Dados sincronizados com sucesso!");
         }
 
+        // ADICIONAR CARTÃO DIRETO NA TELA DE CARTÕES (SEM MODAL QUEBRADO)
+        function adicionarCartaoDireto() {
+            const nomeInput = document.getElementById("direct-card-name");
+            const limiteInput = document.getElementById("direct-card-limit");
+            const corInput = document.getElementById("direct-card-color");
+
+            const name = nomeInput.value.trim();
+            const limit = parseFloat(limiteInput.value);
+            const color = corInput.value;
+
+            if (!name || isNaN(limit) || limit <= 0) {
+                showToast("Informe o nome e um limite válido.", "fa-circle-exclamation");
+                return;
+            }
+
+            if (!financialData.creditCards) financialData.creditCards = [];
+            const novoCartao = {
+                id: "card_" + Date.now(),
+                name: name,
+                limit: limit,
+                initialUsed: 0.00,
+                color: color,
+                closingDay: 25,
+                dueDay: 5
+            };
+
+            financialData.creditCards.push(novoCartao);
+            selectedCardIdSelected = novoCartao.id;
+
+            salvarDados();
+            atualizarTela();
+            showToast(`Cartão ${name} criado com sucesso!`);
+
+            nomeInput.value = "";
+            limiteInput.value = "";
+        }
+
         window.addEventListener('DOMContentLoaded', async () => {
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
                 const lock = document.getElementById("lock-screen");
@@ -2001,14 +2044,6 @@
                 btn.onclick = () => selecionarTagCartao(c.id);
                 container.appendChild(btn);
             });
-
-            const btnAdd = document.createElement("button");
-            btnAdd.type = "button";
-            btnAdd.className = "card-pill-btn";
-            btnAdd.style.borderStyle = "dashed";
-            btnAdd.innerHTML = `<i class="fa-solid fa-plus text-emerald-600"></i><span>Novo</span>`;
-            btnAdd.onclick = abrirModalNovoCartao;
-            container.appendChild(btnAdd);
         }
 
         function desbloquearApp() {
@@ -2545,8 +2580,7 @@
                                     </div>
                                 </div>
                                 <div style="display:flex; gap:8px;">
-                                    <button onclick="abrirModalEditarCartao('${card.id}')" style="background:none; border:none; color:rgba(255,255,255,0.8); cursor:pointer;"><i class="fa-solid fa-pen" style="font-size:0.75rem;"></i></button>
-                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fca5a5; cursor:pointer;"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
+                                    <button onclick="removerCartao('${card.id}')" style="background:none; border:none; color:#fca5a5; cursor:pointer;" title="Excluir"><i class="fa-solid fa-trash" style="font-size:0.75rem;"></i></button>
                                 </div>
                             </div>
 
@@ -2989,103 +3023,6 @@
             }
         }
 
-        function abrirModalNovoCartao() {
-            abrirModal("Adicionar Novo Cartão", `
-                <label class="text-xs text-gray-700 font-bold">Nome do Cartão:</label>
-                <input type="text" id="new-card-name" placeholder="Ex: Nubank, Inter">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Limite Total (R$):</label>
-                <input type="number" id="new-card-limit" step="100" placeholder="Ex: 5000">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Gasto Inicial Já Utilizado (R$):</label>
-                <input type="number" id="new-card-initial" step="50" value="0">
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
-                    <div>
-                        <label class="text-xs text-gray-700 font-bold">Dia Fechamento:</label>
-                        <input type="number" id="new-card-closing" min="1" max="31" value="25">
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-700 font-bold">Dia Vencimento:</label>
-                        <input type="number" id="new-card-due" min="1" max="31" value="5">
-                    </div>
-                </div>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor Real do Cartão:</label>
-                <input type="color" id="new-card-color" value="#059669" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
-            `, () => {
-                const name = document.getElementById("new-card-name").value.trim();
-                const limit = parseFloat(document.getElementById("new-card-limit").value);
-                const initialUsed = parseFloat(document.getElementById("new-card-initial").value) || 0;
-                const closingDay = parseInt(document.getElementById("new-card-closing").value, 10) || 25;
-                const dueDay = parseInt(document.getElementById("new-card-due").value, 10) || 5;
-                const color = document.getElementById("new-card-color").value;
-
-                if (!name || isNaN(limit) || limit <= 0) {
-                    showToast("Informe nome e limite válido.", "fa-circle-exclamation");
-                    return;
-                }
-
-                if (!financialData.creditCards) financialData.creditCards = [];
-                const novoCartao = { id: "card_" + Date.now(), name, limit, initialUsed, closingDay, dueDay, color };
-                financialData.creditCards.push(novoCartao);
-                selectedCardIdSelected = novoCartao.id;
-
-                salvarDados();
-                atualizarTela();
-                showToast("Cartão adicionado com sucesso!");
-            });
-        }
-
-        function abrirModalEditarCartao(cardId) {
-            const card = (financialData.creditCards || []).find(c => c.id === cardId);
-            if (!card) return;
-
-            abrirModal("Editar Cartão", `
-                <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-card-name" value="${card.name}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Limite Total (R$):</label>
-                <input type="number" id="edit-card-limit" step="100" value="${card.limit}">
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Saldo Anterior Já Usado (R$):</label>
-                <input type="number" id="edit-card-initial" step="50" value="${card.initialUsed || 0}">
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;">
-                    <div>
-                        <label class="text-xs text-gray-700 font-bold">Dia Fechamento:</label>
-                        <input type="number" id="edit-card-closing" min="1" max="31" value="${card.closingDay || 25}">
-                    </div>
-                    <div>
-                        <label class="text-xs text-gray-700 font-bold">Dia Vencimento:</label>
-                        <input type="number" id="edit-card-due" min="1" max="31" value="${card.dueDay || 5}">
-                    </div>
-                </div>
-
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor Real do Cartão:</label>
-                <input type="color" id="edit-card-color" value="${card.color || '#059669'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
-            `, () => {
-                const name = document.getElementById("edit-card-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-card-limit").value);
-                const initialUsed = parseFloat(document.getElementById("edit-card-initial").value) || 0;
-                const closingDay = parseInt(document.getElementById("edit-card-closing").value, 10) || 25;
-                const dueDay = parseInt(document.getElementById("edit-card-due").value, 10) || 5;
-                const color = document.getElementById("edit-card-color").value;
-
-                if (name && !isNaN(limit)) {
-                    card.name = name;
-                    card.limit = limit;
-                    card.initialUsed = initialUsed;
-                    card.closingDay = closingDay;
-                    card.dueDay = dueDay;
-                    card.color = color;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Cartão atualizado!");
-                }
-            });
-        }
-
         function removerCartao(cardId) {
             const card = (financialData.creditCards || []).find(c => c.id === cardId);
             if (!card) return;
@@ -3294,4 +3231,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
