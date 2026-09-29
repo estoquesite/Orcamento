@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V19 - Bordas Piscantes</title>
+    <title>Finanças Pro V20 - Neon Glow</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -112,6 +112,27 @@
             100% {
                 border-color: rgba(225, 29, 72, 0.3);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 0px rgba(225, 29, 72, 0);
+            }
+        }
+
+        /* EFEITO NEON VERDE PULSANTE PARA OS BOTÕES SELECIONADOS */
+        .neon-glow-btn {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+            color: white !important;
+            box-shadow: 0 0 12px rgba(5, 150, 105, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.4);
+            animation: neonPulse 2s infinite ease-in-out;
+            border: 1px solid #34d399 !important;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 8px rgba(5, 150, 105, 0.4), inset 0 0 4px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(16, 185, 129, 0.8), inset 0 0 8px rgba(255, 255, 255, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 8px rgba(5, 150, 105, 0.4), inset 0 0 4px rgba(255, 255, 255, 0.3);
             }
         }
 
@@ -1042,7 +1063,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V19</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V20</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1063,7 +1084,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V19</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V20</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1273,7 +1294,7 @@
                 <div class="entry-block-wrapper">
                     <div class="entry-isolated-box custom-card-box">
                         <div class="entry-top-switch">
-                            <button type="button" id="btn-type-expense" class="top-btn active expense" onclick="alternarTipoTransacao('expense')">
+                            <button type="button" id="btn-type-expense" class="top-btn active expense neon-glow-btn" onclick="alternarTipoTransacao('expense')">
                                 <i class="fa-solid fa-arrow-down"></i> Despesa
                             </button>
                             <button type="button" id="btn-type-income" class="top-btn" onclick="alternarTipoTransacao('income')">
@@ -1473,7 +1494,7 @@
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V19</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V20</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Bancos do Mercado</span>
                     </div>
                 </div>
@@ -1589,10 +1610,10 @@
     </div>
 
     <script>
-        const STORAGE_KEY = "financas_pro_neon_v49";
+        const STORAGE_KEY = "financas_pro_neon_v50";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
-        const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v19";
+        const BLOCKS_CONFIG_KEY = "financas_pro_blocks_config_v20";
 
         const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -1818,11 +1839,11 @@
             const btnInc = document.getElementById('btn-type-income');
 
             if (tipo === 'expense') {
-                btnExp.className = 'top-btn active expense';
+                btnExp.className = 'top-btn active expense neon-glow-btn';
                 btnInc.className = 'top-btn';
             } else {
                 btnExp.className = 'top-btn';
-                btnInc.className = 'top-btn active income';
+                btnInc.className = 'top-btn active income neon-glow-btn';
             }
             calcularResumoParcelas();
         }
@@ -2635,7 +2656,7 @@
                             </div>
                             <div style="text-align:right; min-width:70px;">
                                 <span style="font-size:0.6rem; color:var(--text-muted); display:block;">Sobra</span>
-                                <b style="color:${mNet >= 0 ? (mNet === 0 ? 'var(--text-muted)' : 'var(--blue)') : 'var(--red)'}; font-size:0.85rem;">
+                                <b style="color:${mNet >= 0 ? (mNet === 0 ? 'var(--text-muted)' : 'var(--blue)'): 'var(--red)'}; font-size:0.85rem;">
                                     ${(mInc > 0 || mExp > 0) ? formatarMoeda(mNet) : '-'}
                                 </b>
                             </div>
@@ -3168,13 +3189,11 @@
             }
         }
 
-        // Sistema centralizado de modais corrigido e blindado
         function abrirModal(titulo, htmlConteudo, callbackConfirmar) {
             document.getElementById("modal-title").innerText = titulo;
             document.getElementById("modal-body").innerHTML = htmlConteudo;
             const btnConfirm = document.getElementById("modal-confirm-btn");
             
-            // Remove event listeners antigos para evitar duplicação de cliques
             const novoBtn = btnConfirm.cloneNode(true);
             btnConfirm.parentNode.replaceChild(novoBtn, btnConfirm);
 
@@ -3190,4 +3209,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
