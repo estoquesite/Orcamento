@@ -7,7 +7,6 @@
   <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para celular." />
   <meta name="theme-color" content="#4f46e5" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -95,9 +94,6 @@
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
         <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 font-bold border border-indigo-500/20">V40 Cloud</span>
-        <div id="badge-nuvem-status" class="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 text-[9px]">
-          <span>☁️</span><span>Conectando...</span>
-        </div>
       </div>
 
       <div class="flex items-center gap-2">
@@ -315,12 +311,18 @@
 
       // Dados padrão com os 4 cartões reais do usuário (Itaú, Bradesco, Amazon, Samsung)
       const DEFAULT_DATA = {
+        accountCards: [
+          { id: 'card_salario', name: 'Meu Salário', totalValue: 5000, icon: '👛', colorBorder: 'border-l-4 border-l-emerald-500', pillBg: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800' },
+          { id: 'card_gloria', name: 'Glória', totalValue: 600, icon: '👛', colorBorder: 'border-l-4 border-l-sky-500', pillBg: 'bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800' },
+          { id: 'card_sofia', name: 'Pensão Sophia', totalValue: 1500, icon: '👛', colorBorder: 'border-l-4 border-l-purple-500', pillBg: 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800' }
+        ],
+        extraBudgets: [],
         boxes: [
-          { id: '1', name: 'Salário / Geral', limit: 5000, color: '#6366f1', icon: '💼', isMain: true },
-          { id: '2', name: 'Alimentação', limit: 1200, color: '#10b981', icon: '🍔', isMain: false },
-          { id: '3', name: 'Transporte', limit: 400, color: '#f59e0b', icon: '🚗', isMain: false },
-          { id: '4', name: 'Lazer e Streaming', limit: 500, color: '#ec4899', icon: '🎮', isMain: false },
-          { id: '5', name: 'Saúde e Farmácia', limit: 350, color: '#06b6d4', icon: '💊', isMain: false }
+          { id: '1', name: 'Alimentação & Supermercado', limit: 1200, color: '#10b981', icon: '🛒', isMain: false },
+          { id: '2', name: 'Moradia & Contas Fixas', limit: 1500, color: '#6366f1', icon: '🏠', isMain: false },
+          { id: '3', name: 'Transporte & Combustível', limit: 500, color: '#f59e0b', icon: '🚗', isMain: false },
+          { id: '4', name: 'Saúde & Farmácia', limit: 400, color: '#06b6d4', icon: '💊', isMain: false },
+          { id: '5', name: 'Lazer & Compras', limit: 600, color: '#ec4899', icon: '🛍️', isMain: false }
         ],
         creditCards: [
           { id: 'card-itau', name: 'Itaú Mastercard', limit: 4000, brand: 'Mastercard', theme: 'itau', cvv: '584', isBlocked: false },
@@ -329,14 +331,13 @@
           { id: 'card-samsung', name: 'Samsung Itaú', limit: 5000, brand: 'Visa Platinum', theme: 'samsung', cvv: '471', isBlocked: false }
         ],
         transactions: [
-          { id: 1, desc: 'Salário Mensal', value: 5000, type: 'receita', boxId: '1', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 2, desc: 'Supermercado Mensal', value: 480, type: 'despesa', boxId: '2', category: 'Supermercado', payment: 'Cartão de Crédito', cardId: 'card-itau', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 3, desc: 'Combustível Posto', value: 160, type: 'despesa', boxId: '3', category: 'Transporte', payment: 'Débito', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
-          { id: 4, desc: 'Notebook Dell (3/10)', value: 250, type: 'despesa', boxId: '1', category: 'Compras Parceladas', payment: 'Cartão de Crédito', cardId: 'card-amazon', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
+          { id: 1, desc: 'Entrada: Meu Salário', value: 5000, type: 'receita', cardIdRef: 'card_salario', category: 'Salário', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
+          { id: 2, desc: 'Entrada: Glória', value: 600, type: 'receita', cardIdRef: 'card_gloria', category: 'Família', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
+          { id: 3, desc: 'Entrada: Pensão Sophia', value: 1500, type: 'receita', cardIdRef: 'card_sofia', category: 'Pensão', payment: 'Pix', date: new Date().toISOString().slice(0, 10), year: new Date().getFullYear(), month: new Date().getMonth() + 1 }
         ],
         savingsGoals: [
           { id: 1, name: 'Reserva de Emergência', targetValue: 15000, currentValue: 6500, color: '#10b981', icon: '🛡️' },
-          { id: 2, name: 'Viagem de Fim de Ano', targetValue: 5000, currentValue: 1800, color: '#06b6d4', icon: '✈️' }
+          { id: 2, name: 'Objetivo da Sofia', targetValue: 5000, currentValue: 2200, color: '#ec4899', icon: '👧' }
         ],
         recurringBills: [
           { id: '1', name: 'Netflix 4K Ultra', value: 55.90, dueDay: 12, icon: '🍿' },
@@ -345,24 +346,26 @@
         ]
       };
 
-      // Carregador seguro: garante que arrays nunca sejam undefined
       function loadData() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
           const parsed = JSON.parse(raw);
 
-          // Se veio de formato antigo ou incompleto, mescla com os padrões de forma segura
+          const finalAccountCards = Array.isArray(parsed.accountCards) && parsed.accountCards.length > 0
+            ? parsed.accountCards
+            : DEFAULT_DATA.accountCards;
+
           const finalCards = Array.isArray(parsed.creditCards) && parsed.creditCards.length > 0
             ? parsed.creditCards
             : DEFAULT_DATA.creditCards;
 
-          // Assegura que cada cartão tenha um tema definido
           finalCards.forEach(c => {
             if (!c.theme) c.theme = detectBankTheme(c.name, c.skin);
           });
 
           return {
+            accountCards: finalAccountCards,
             boxes: Array.isArray(parsed.boxes) && parsed.boxes.length > 0 ? parsed.boxes : DEFAULT_DATA.boxes,
             creditCards: finalCards,
             transactions: Array.isArray(parsed.transactions) ? parsed.transactions : DEFAULT_DATA.transactions,
@@ -374,8 +377,7 @@
           return JSON.parse(JSON.stringify(DEFAULT_DATA));
         }
       }
-
-      const state = {
+const state = {
         data: loadData(),
         currentYear: new Date().getFullYear(),
         currentMonth: new Date().getMonth() + 1,
@@ -506,6 +508,235 @@
       // ==========================================
       // MODAIS DE EDIÇÃO DE TODAS AS ABAS
       // ==========================================
+
+      
+      // ==========================================
+      // GESTÃO DE CARDS DE CONTAS (SALÁRIO, SOFIA, GLÓRIA, ETC.)
+
+      window.lancarGastoParaCard = function(cardId) {
+        state.selectedCardForLaunch = cardId;
+        switchTab('lancar');
+        setTimeout(() => {
+          const select = document.getElementById('input-account-card-ref');
+          if (select) select.value = cardId;
+        }, 50);
+      };
+
+      window.openModalVerbaExtra = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>💸</span>
+            <span>+ Adicionar Verba Extra</span>
+          </h3>
+          <p class="text-[11px] text-slate-500">13º salário, bônus, rendas extras ou vendas deste mês.</p>
+
+          <div class="space-y-2 mt-2">
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Descrição:</label>
+              <input type="text" id="m-extra-desc" placeholder="Ex: Venda de Item, Bonificação" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Valor Extra (R$):</label>
+              <input type="number" step="10" id="m-extra-val" placeholder="Ex: 500" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-3">
+            <button onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveVerbaExtra()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Adicionar</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveVerbaExtra = function() {
+        const desc = document.getElementById('m-extra-desc').value.trim();
+        const val = parseFloat(document.getElementById('m-extra-val').value);
+        if (!desc || isNaN(val) || val <= 0) return alert('Informe descrição e valor válidos.');
+
+        if (!Array.isArray(state.data.extraBudgets)) state.data.extraBudgets = [];
+        state.data.extraBudgets.push({ id: Date.now(), desc, value: val });
+
+        state.data.transactions.unshift({
+          id: Date.now(),
+          desc: 'Extra: ' + desc,
+          value: val,
+          type: 'receita',
+          cardIdRef: 'extra',
+          category: 'Extra',
+          payment: 'Pix',
+          date: new Date().toISOString().slice(0, 10),
+          year: state.currentYear,
+          month: state.currentMonth
+        });
+
+        saveData();
+        closeModal();
+        showToast(`Verba extra "${desc}" adicionada! 💸`);
+        render();
+      };
+
+      // ==========================================
+      window.openModalNovoCardConta = function() {
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>🗂️</span>
+            <span>+ Criar Novo Card na Tela Inicial</span>
+          </h3>
+          <p class="text-[11px] text-slate-500">Crie um card para uma fonte de renda, conta ou pessoa (ex: Pensão, Salário, Mãe, Trabalho Extra).</p>
+
+          <div class="space-y-2 mt-2">
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Nome do Card:</label>
+              <input type="text" id="m-acc-name" placeholder="Ex: Renda Extra, Conta Filhos" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Valor Previsto / Renda Mensal (R$):</label>
+              <input type="number" step="50" id="m-acc-val" placeholder="Ex: 1500" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Ícone / Emoji:</label>
+                <input type="text" id="m-acc-icon" value="💰" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700 text-center" />
+              </div>
+
+              <div>
+                <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Estilo de Cor:</label>
+                <select id="m-acc-color" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700">
+                  <option value="from-indigo-600 via-indigo-700 to-indigo-900">Azul / Índigo Real</option>
+                  <option value="from-pink-500 via-rose-600 to-rose-700">Rosa / Pétala</option>
+                  <option value="from-purple-600 via-indigo-700 to-violet-900">Lilás / Roxo Nobre</option>
+                  <option value="from-emerald-600 via-teal-700 to-emerald-900">Verde Esmeralda</option>
+                  <option value="from-amber-500 via-orange-600 to-amber-800">Laranja Dourado</option>
+                  <option value="from-slate-700 via-slate-800 to-slate-950">Grafite / Preto</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-3">
+            <button onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveNovoCardConta()" class="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer shadow-md">Criar Card</button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveNovoCardConta = function() {
+        const name = document.getElementById('m-acc-name').value.trim();
+        const val = parseFloat(document.getElementById('m-acc-val').value);
+        const icon = document.getElementById('m-acc-icon').value.trim() || '💰';
+        const color = document.getElementById('m-acc-color').value;
+
+        if (!name || isNaN(val) || val <= 0) return alert('Por favor, informe o nome e o valor do card.');
+
+        const newId = 'card_' + Date.now();
+        state.data.accountCards.push({
+          id: newId,
+          name,
+          totalValue: val,
+          icon,
+          color,
+          border: 'border-white/20'
+        });
+
+        // Adiciona lançamento de receita correspondente
+        state.data.transactions.unshift({
+          id: Date.now(),
+          desc: 'Renda: ' + name,
+          value: val,
+          type: 'receita',
+          cardIdRef: newId,
+          category: 'Receita',
+          payment: 'Pix',
+          date: new Date().toISOString().slice(0, 10),
+          year: state.currentYear,
+          month: state.currentMonth
+        });
+
+        saveData();
+        closeModal();
+        showToast(`Card "${name}" criado com sucesso! 🗂️`);
+        render();
+      };
+
+      window.openModalEditarCardConta = function(id) {
+        const card = state.data.accountCards.find(c => c.id === id);
+        if (!card) return;
+
+        modalBox.innerHTML = `
+          <h3 class="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+            <span>✏️</span>
+            <span>Editar Card: ${card.name}</span>
+          </h3>
+
+          <div class="space-y-2 mt-2">
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Nome:</label>
+              <input type="text" id="m-editacc-name" value="${card.name}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Valor Previsto / Renda Mensal (R$):</label>
+              <input type="number" step="50" id="m-editacc-val" value="${card.totalValue}" class="w-full mt-1 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700" />
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-400 block">Ícone / Emoji:</label>
+              <input type="text" id="m-editacc-icon" value="${card.icon || '💰'}" class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold border border-slate-200 dark:border-slate-700 text-center" />
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-3">
+            <button onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold cursor-pointer">Cancelar</button>
+            <button onclick="saveEditarCardConta('${card.id}')" class="flex-1 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Salvar</button>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+            <button onclick="deleteCardConta('${card.id}')" class="w-full py-2.5 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-bold border border-rose-500/30 cursor-pointer">
+              🗑️ Excluir Card
+            </button>
+          </div>
+        `;
+        modalContainer.classList.remove('hidden');
+      };
+
+      window.saveEditarCardConta = function(id) {
+        const name = document.getElementById('m-editacc-name').value.trim();
+        const val = parseFloat(document.getElementById('m-editacc-val').value);
+        const icon = document.getElementById('m-editacc-icon').value.trim() || '💰';
+
+        if (!name || isNaN(val) || val <= 0) return alert('Informe dados válidos.');
+
+        const card = state.data.accountCards.find(c => c.id === id);
+        if (card) {
+          card.name = name;
+          card.totalValue = val;
+          card.icon = icon;
+
+          // Atualiza transação correspondente se existir
+          const trans = state.data.transactions.find(t => t.cardIdRef === id && t.type === 'receita');
+          if (trans) trans.value = val;
+
+          saveData();
+          closeModal();
+          showToast(`Card "${name}" atualizado!`);
+          render();
+        }
+      };
+
+      window.deleteCardConta = function(id) {
+        if (confirm('Tem certeza que deseja excluir este card?')) {
+          state.data.accountCards = state.data.accountCards.filter(c => c.id !== id);
+          saveData();
+          closeModal();
+          showToast('Card excluído!');
+          render();
+        }
+      };
 
       // 1. EDITAR VERBA / SALÁRIO
       window.openModalEditarSalario = function() {
@@ -1463,117 +1694,177 @@
           // 1. ABA PAINEL
           // ------------------------------------------
           if (state.currentTab === 'painel') {
+            const accCards = state.data.accountCards || [];
+            const extras = state.data.extraBudgets || [];
+            const totalExtras = extras.reduce((a, b) => a + (Number(b.value) || 0), 0);
+            const totalVerbas = accCards.reduce((acc, c) => acc + (Number(c.totalValue) || 0), 0) + totalExtras;
+            const consumoGeral = totalDespesas;
+            const sobraTotal = totalVerbas - consumoGeral;
+
             html = `
-              <div class="space-y-4">
-                <!-- QUADRADOS DE RESUMO COM LÁPIS EM TODOS -->
-                <div class="grid grid-cols-2 gap-2.5">
-                  <!-- 1. Verba / Receitas -->
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-md relative">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-indigo-100 uppercase tracking-wider block">Verba / Receitas</span>
-                      <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Editar Verba">✏️</button>
-                    </div>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalReceitas)}</span>
-                  </div>
-
-                  <!-- 2. Total Gasto -->
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white shadow-md relative">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-rose-100 uppercase tracking-wider block">Total Gasto</span>
-                      <button onclick="openModalAjustarGastos()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Ajustar Despesa">✏️</button>
-                    </div>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalDespesas)}</span>
-                  </div>
-
-                  <!-- 3. Fatura Cartões -->
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-800 text-white shadow-md relative">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-purple-100 uppercase tracking-wider block">Fatura Cartões</span>
-                      <button onclick="openModalAjustarFatura()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Ajustar Fatura">✏️</button>
-                    </div>
-                    <span class="text-base font-black tracking-tight mt-1 block">${formatMoeda(totalCartao)}</span>
-                  </div>
-
-                  <!-- 4. Sobra Líquida -->
-                  <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-md relative">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Sobra Líquida</span>
-                      <button onclick="openModalEditarSalario()" class="p-1 rounded-md bg-white/20 hover:bg-white/30 text-white text-xs cursor-pointer active:scale-95" title="Ajustar">✏️</button>
-                    </div>
-                    <span class="text-base font-black tracking-tight mt-1 block ${sobraLiquida < 0 ? 'text-rose-200' : ''}">${formatMoeda(sobraLiquida)}</span>
-                  </div>
-                </div>
-
-                <!-- Lançamentos Rápidos de 1 toque -->
-                <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-                  <button onclick="quickLancar('Mercado Express', 80, 'Alimentação')" class="py-1 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer active:scale-95">
-                    🛒 Mercado R$ 80
+              <div class="space-y-3.5">
+                <!-- ATALHOS RÁPIDOS SUPERIORES -->
+                <div class="grid grid-cols-3 gap-2">
+                  <button
+                    onclick="switchTab('lancar')"
+                    class="py-2.5 px-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-black text-[11px] shadow-sm hover:border-emerald-400 transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer active:scale-95"
+                  >
+                    <span class="text-emerald-500 font-black text-sm">+</span>
+                    <span>Lançar Despesa</span>
                   </button>
-                  <button onclick="quickLancar('Combustível', 100, 'Transporte')" class="py-1 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer active:scale-95">
-                    ⛽ Posto R$ 100
+
+                  <button
+                    onclick="switchTab('cartoes')"
+                    class="py-2.5 px-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-black text-[11px] shadow-sm hover:border-indigo-400 transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer active:scale-95"
+                  >
+                    <span class="text-indigo-500 text-sm">💳</span>
+                    <span>Ver Cartões</span>
                   </button>
-                  <button onclick="quickLancar('Delivery / Lanche', 45, 'Alimentação')" class="py-1 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer active:scale-95">
-                    🍕 Lanche R$ 45
-                  </button>
-                  <button onclick="quickLancar('Farmácia', 50, 'Saúde')" class="py-1 px-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold whitespace-nowrap shadow-2xs hover:border-indigo-400 cursor-pointer active:scale-95">
-                    💊 Farmácia R$ 50
+
+                  <button
+                    onclick="openModalNovaCaixinha()"
+                    class="py-2.5 px-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-black text-[11px] shadow-sm hover:border-purple-400 transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer active:scale-95"
+                  >
+                    <span class="text-purple-500 text-sm">🎁</span>
+                    <span>Nova Caixinha</span>
                   </button>
                 </div>
 
-                <!-- Caixinhas com Lápis e Botão '+ Nova Caixinha' -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
+                <!-- CARD SOMA TOTAL DAS VERBAS (IGUAL AO SEU PRINT) -->
+                <div class="p-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex justify-between items-center relative overflow-hidden">
+                  <div>
+                    <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 uppercase tracking-wider">
+                      <span>📦</span>
+                      <span>SOMA TOTAL DAS VERBAS</span>
+                    </div>
+                    <div class="text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight mt-1">
+                      ${formatMoeda(totalVerbas)}
+                    </div>
+                  </div>
+
+                  <div class="text-right">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Consumo Geral</span>
+                    <span class="text-sm font-black text-rose-500 tracking-tight block mt-0.5">
+                      - ${formatMoeda(consumoGeral)}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- CARDS DE VERBAS (MEU SALÁRIO, GLÓRIA, PENSÃO SOPHIA) -->
+                <div class="space-y-3">
+                  ${accCards.map(c => {
+                    const gastosDoCard = monthTrans
+                      .filter(t => t.type === 'despesa' && (t.cardIdRef === c.id || (c.id === 'card_salario' && !t.cardIdRef)))
+                      .reduce((acc, t) => acc + (Number(t.value) || 0), 0);
+                    const saldoCard = (Number(c.totalValue) || 0) - gastosDoCard;
+                    const percGasto = c.totalValue > 0 ? Math.min(100, Math.round((gastosDoCard / c.totalValue) * 100)) : 0;
+
+                    let borderClass = 'border-l-4 border-l-emerald-500';
+                    let pillClass = 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+                    let dotColor = 'bg-emerald-500';
+
+                    if (c.id === 'card_gloria' || c.name.toLowerCase().includes('glória') || c.name.toLowerCase().includes('gloria')) {
+                      borderClass = 'border-l-4 border-l-sky-500';
+                      pillClass = 'bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800';
+                      dotColor = 'bg-sky-500';
+                    } else if (c.id === 'card_sofia' || c.name.toLowerCase().includes('sophia') || c.name.toLowerCase().includes('sofia')) {
+                      borderClass = 'border-l-4 border-l-purple-500';
+                      pillClass = 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800';
+                      dotColor = 'bg-purple-500';
+                    }
+
+                    return `
+                      <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm ${borderClass} space-y-2.5 transition-all">
+                        <!-- Linha Superior do Card: Pílula + Valor + Ações -->
+                        <div class="flex justify-between items-center">
+                          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-black ${pillClass}">
+                            <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+                            <span>👛</span>
+                            <span>${c.name}</span>
+                          </div>
+
+                          <div class="flex items-center gap-2">
+                            <span class="text-sm font-black text-slate-900 dark:text-slate-100">${formatMoeda(c.totalValue)}</span>
+                            <button
+                              onclick="openModalEditarCardConta('${c.id}')"
+                              class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg text-xs cursor-pointer"
+                              title="Editar"
+                            >✏️</button>
+                            <button
+                              onclick="deleteCardConta('${c.id}')"
+                              class="text-slate-400 hover:text-rose-500 p-1 rounded-lg text-xs cursor-pointer"
+                              title="Excluir"
+                            >🗑️</button>
+                          </div>
+                        </div>
+
+                        <!-- Barra de Progresso Suave -->
+                        <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                          <div class="h-full rounded-full transition-all duration-300 ${percGasto >= 90 ? 'bg-rose-500' : 'bg-emerald-500'}" style="width: ${percGasto}%;"></div>
+                        </div>
+
+                        <!-- Linha Inferior: Gasto, Sobra e Botão + Gasto -->
+                        <div class="flex justify-between items-center pt-0.5">
+                          <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                            Gasto: <span class="text-rose-500 font-bold">${formatMoeda(gastosDoCard)}</span> (${percGasto}%)
+                            &nbsp;&nbsp;
+                            Sobra: <span class="${saldoCard < 0 ? 'text-rose-500 font-black' : 'text-slate-700 dark:text-slate-200 font-black'}">${formatMoeda(saldoCard)}</span>
+                          </div>
+
+                          <button
+                            onclick="lancarGastoParaCard('${c.id}')"
+                            class="py-1 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-black flex items-center gap-1 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                          >
+                            <span>+ Gasto</span>
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+
+                  <!-- BOTÃO PARA ADICIONAR NOVO CARD DE VERBA -->
+                  <button
+                    onclick="openModalNovoCardConta()"
+                    class="w-full py-2.5 px-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white/40 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-600 dark:text-slate-400 text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-98"
+                  >
+                    <span>➕</span>
+                    <span>Criar Novo Card de Conta / Verba</span>
+                  </button>
+
+                  <!-- VERBAS EXTRAS DESTE MÊS (SEÇÃO PONTILHADA IGUAL AO SEU PRINT) -->
+                  <div class="p-3.5 rounded-2xl border-2 border-dashed border-emerald-400/40 bg-emerald-50/20 dark:bg-emerald-950/10 flex justify-between items-center">
                     <div>
-                      <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Caixinhas de Verba</h3>
-                      <span class="text-[10px] text-indigo-500 font-bold">Transbordo Ativo</span>
+                      <div class="flex items-center gap-1.5 text-xs font-black text-emerald-700 dark:text-emerald-400">
+                        <span>💸</span>
+                        <span>Verbas Extras deste Mês</span>
+                      </div>
+                      <span class="text-[10px] text-slate-400 dark:text-slate-500">13º, vendas, bônus ou rendas extras</span>
+                      ${totalExtras > 0 ? `<div class="text-xs font-black text-emerald-600 mt-1">Total Extra: ${formatMoeda(totalExtras)}</div>` : ''}
                     </div>
+
                     <button
-                      onclick="openModalNovaCaixinha()"
-                      class="py-1.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-1 shadow-xs cursor-pointer active:scale-95 transition-all"
+                      onclick="openModalVerbaExtra()"
+                      class="py-1.5 px-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 text-xs font-black flex items-center gap-1 hover:bg-emerald-200 transition-all cursor-pointer active:scale-95"
                     >
-                      + Nova Caixinha
+                      <span>+ Extra</span>
                     </button>
                   </div>
+                </div>
 
-                  <div class="space-y-2.5">
-                    ${(state.data.boxes || []).map(box => {
-                      const gastosBox = monthTrans.filter(t => t.type === 'despesa' && t.boxId === box.id).reduce((a, b) => a + (Number(b.value) || 0), 0);
-                      const percent = box.limit > 0 ? Math.min(100, Math.round((gastosBox / box.limit) * 100)) : 0;
-                      const excedeu = !box.isMain && gastosBox > box.limit;
-                      const excedente = excedeu ? gastosBox - box.limit : 0;
-
+                <!-- CAIXINHAS DE CATEGORIAS -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-sm space-y-2.5">
+                  <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide">📦 Categorias</h3>
+                    <button onclick="openModalNovaCaixinha()" class="text-xs font-black text-indigo-600 dark:text-indigo-400 cursor-pointer">+ Nova</button>
+                  </div>
+                  <div class="space-y-1.5">
+                    ${(state.data.boxes || []).map(b => {
+                      const g = monthTrans.filter(t => t.type === 'despesa' && t.boxId === b.id).reduce((s, x) => s + (Number(x.value) || 0), 0);
+                      const p = b.limit > 0 ? Math.min(100, Math.round((g / b.limit) * 100)) : 0;
                       return `
-                        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1.5 border border-slate-200/50 dark:border-slate-700/50">
-                          <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                              <span>${box.icon || '📦'}</span>
-                              <span>${box.name}</span>
-                              ${box.isMain ? '<span class="text-[9px] bg-indigo-500/20 text-indigo-400 px-1 rounded font-bold">Principal</span>' : ''}
-                            </span>
-                            <div class="flex items-center gap-2">
-                              <span class="font-extrabold text-slate-600 dark:text-slate-300">
-                                ${formatMoeda(gastosBox)} / ${formatMoeda(box.limit)}
-                              </span>
-                              <button
-                                onclick="handleEditBox('${box.id}', ${Boolean(box.isMain)})"
-                                class="px-2 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold text-[11px] hover:bg-indigo-100 flex items-center gap-0.5 cursor-pointer shadow-2xs border border-indigo-200/50 dark:border-indigo-800/50 active:scale-95"
-                                title="Editar Caixinha"
-                              >
-                                <span>✏️</span>
-                                <span>Editar</span>
-                              </button>
-                            </div>
-                          </div>
-
-                          <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-                            <div class="h-full rounded-full transition-all duration-300" style="width: ${percent}%; background-color: ${excedeu ? '#ef4444' : (box.color || '#6366f1')};"></div>
-                          </div>
-
-                          ${excedeu ? `
-                            <div class="text-[10px] font-bold text-rose-500 pt-0.5">
-                              ↳ Excedeu ${formatMoeda(excedente)} (absorvido pelo Salário Geral)
-                            </div>
-                          ` : ''}
+                        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40 flex justify-between items-center text-xs">
+                          <span class="font-bold text-slate-700 dark:text-slate-200">${b.icon || '📦'} ${b.name}</span>
+                          <span class="font-bold text-slate-500">${formatMoeda(g)} / ${formatMoeda(b.limit)}</span>
                         </div>
                       `;
                     }).join('')}
@@ -1581,12 +1872,7 @@
                 </div>
               </div>
             `;
-          }
-
-          // ------------------------------------------
-          // 2. ABA LANÇAR
-          // ------------------------------------------
-          else if (state.currentTab === 'lancar') {
+          } else if (state.currentTab === 'lancar') {
             html = `
               <div class="space-y-4">
                 <form id="form-lancar" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
@@ -1603,7 +1889,15 @@
                     </button>
                   </div>
 
-                  <input type="text" id="input-desc" placeholder="Descrição da compra (ex: Supermercado, Almoço)" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none" />
+                  <!-- ESCOLHA DO CARD DE CONTA / FONTE (SALÁRIO, SOFIA, GLÓRIA) -->
+                  <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Vincular a qual Card / Conta:</label>
+                    <select id="input-account-card-ref" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-black text-indigo-600 dark:text-indigo-400 focus:outline-none">
+                      ${(state.data.accountCards || []).map(c => `<option value="${c.id}">${c.icon || '💰'} ${c.name}</option>`).join('')}
+                    </select>
+                  </div>
+
+                  <input type="text" id="input-desc" placeholder="Descrição da compra (ex: Supermercado, Almoço, Remédio)" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none" />
 
                   <div class="grid grid-cols-2 gap-2">
                     <input type="number" step="0.01" id="input-valor" placeholder="Valor Total R$" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none" />
@@ -1613,44 +1907,20 @@
                     </select>
                   </div>
 
-                  <div class="pt-1">
-                    <button type="button" id="btn-toggle-sim" class="w-full py-1.5 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex justify-between items-center cursor-pointer">
-                      <span>⚡ Simulador Inteligente: À Vista vs. Parcelar (CDI)</span>
-                      <span id="sim-indicator">${state.showSimulator ? 'Fechar' : 'Calcular'}</span>
-                    </button>
-
-                    <div id="sim-box" class="${state.showSimulator ? '' : 'hidden'} mt-2 p-3 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-xs space-y-2">
-                      <div class="grid grid-cols-2 gap-2 text-[10px]">
-                        <div>
-                          <span>Desconto À Vista (%):</span>
-                          <input type="number" id="sim-discount-input" value="${state.simDiscount}" class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold" />
-                        </div>
-                        <div>
-                          <span>Rendimento CDI (% a.m.):</span>
-                          <input type="number" step="0.1" id="sim-cdi-input" value="${state.simCdi}" class="w-full mt-1 p-1 rounded bg-white dark:bg-slate-800 font-bold" />
-                        </div>
-                      </div>
-
-                      <div id="sim-verdict" class="text-[11px] font-bold pt-1 border-t border-indigo-200 dark:border-indigo-800">
-                        Informe o valor acima para comparar a economia do desconto com o ganho no CDI.
-                      </div>
-                    </div>
-                  </div>
-
                   <div class="grid grid-cols-2 gap-2">
                     <select id="input-caixinha" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none">
                       ${(state.data.boxes || []).map(b => `<option value="${b.id}">${b.icon || '📦'} ${b.name}</option>`).join('')}
                     </select>
 
                     <select id="input-pagamento" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none">
-                      <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
                       <option value="Pix">⚡ Pix</option>
+                      <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
                       <option value="Débito">💵 Débito</option>
                       <option value="Dinheiro">💰 Dinheiro</option>
                     </select>
                   </div>
 
-                  <div id="card-select-container">
+                  <div id="card-select-container" class="hidden">
                     <select id="input-cartao" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none">
                       ${(state.data.creditCards || []).map(c => `<option value="${c.id}">💳 ${c.name} ${c.isBlocked ? '(Bloqueado)' : ''}</option>`).join('')}
                     </select>
@@ -1660,7 +1930,6 @@
                     Salvar Lançamento
                   </button>
                 </form>
-
                 <!-- Extrato do Mês com Edição e Exclusão -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
@@ -1979,71 +2248,7 @@
             html = `
               <div class="space-y-4">
 
-                
-                <!-- CARD DE SINCRONIZAÇÃO NUVEM SUPABASE & BACKUP -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
-                  <div class="flex justify-between items-center">
-                    <div>
-                      <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide flex items-center gap-1.5">
-                        <span>☁️</span>
-                        <span>Sincronização com a Nuvem (Supabase)</span>
-                      </h3>
-                      <span class="text-[10px] text-slate-400">Guarde e recupere seus lançamentos e cartões na nuvem</span>
-                    </div>
-                  </div>
-
-                  <div class="space-y-2 pt-1">
-                    <p class="text-[11px] text-slate-600 dark:text-slate-300">
-                      Clique para forçar o salvamento ou puxar seus dados do banco de dados na nuvem:
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onclick="salvarDadosNuvem(true)"
-                        class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 transition"
-                      >
-                        <span>☁️</span>
-                        <span>Salvar na Nuvem Agora</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="carregarDadosNuvem(false)"
-                        class="py-2.5 px-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 transition"
-                      >
-                        <span>📥</span>
-                        <span>Puxar Dados da Nuvem</span>
-                      </button>
-                    </div>
-
-                    <!-- Botões de Backup Local em Arquivo JSON -->
-                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
-                      <button
-                        type="button"
-                        onclick="exportarBackupJSON()"
-                        class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 text-[10px] font-bold flex items-center justify-center gap-1 cursor-pointer"
-                        title="Baixar cópia de segurança em arquivo JSON"
-                      >
-                        <span>💾</span>
-                        <span>Exportar Backup (JSON)</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="document.getElementById('input-import-backup').click()"
-                        class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 text-[10px] font-bold flex items-center justify-center gap-1 cursor-pointer"
-                        title="Carregar arquivo JSON com suas informações"
-                      >
-                        <span>📂</span>
-                        <span>Restaurar Backup</span>
-                      </button>
-                      <input type="file" id="input-import-backup" accept=".json" class="hidden" onchange="importarBackupJSON(this)">
-                    </div>
-                  </div>
-                </div>
-
-<!-- CARD DE PERSONALIZAÇÃO DE TEMA, CORES E FOTO EXTERNA -->
+                <!-- CARD DE PERSONALIZAÇÃO DE TEMA, CORES E FOTO EXTERNA -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <div>
@@ -2294,6 +2499,7 @@
                 const val = parseFloat(document.getElementById('input-valor').value);
                 const parcelas = parseInt(document.getElementById('input-parcelas').value, 10) || 1;
                 const boxId = document.getElementById('input-caixinha').value;
+                const accountCardRef = document.getElementById('input-account-card-ref')?.value || 'card_salario';
                 const payment = document.getElementById('input-pagamento').value;
                 const cardId = document.getElementById('input-cartao')?.value;
 
@@ -2324,6 +2530,7 @@
                     value: valorPorParcela,
                     type: state.newTransType,
                     boxId,
+                    cardIdRef: accountCardRef,
                     category: 'Geral',
                     payment,
                     cardId: payment === 'Cartão de Crédito' ? cardId : undefined,
@@ -2877,145 +3084,6 @@
         const tela = document.getElementById('tela-bloqueio-app');
         if (tela) tela.classList.add('hidden');
       }
-    });
-
-
-    // ==========================================
-    // CONEXÃO & SINCRONIZAÇÃO NUVEM SUPABASE
-    // ==========================================
-    const SUPABASE_URL = 'https://jmeepzdvmmjngxwvayqb.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_54ORrLbP7naW7n-KlKCdUA_hZnpjguH';
-    let supabaseClient = null;
-
-    try {
-      if (window.supabase) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      }
-    } catch (e) {
-      console.warn("Supabase indisponível:", e);
-    }
-
-    // Função para carregar dados da nuvem
-    async function carregarDadosNuvem(silencioso = false) {
-      if (!supabaseClient) {
-        if (!silencioso) showToast("Supabase não conectado.");
-        return false;
-      }
-      try {
-        const tabelas = ['app_dados_financas', 'financas_pro', 'app_financas', 'app_dados'];
-        for (let tabela of tabelas) {
-          try {
-            let query = supabaseClient.from(tabela).select('conteudo');
-            if (tabela === 'app_dados') {
-              query = query.eq('id', 'financas');
-            } else {
-              query = query.eq('id', '1');
-            }
-            const { data, error } = await query.maybeSingle();
-            if (data && data.conteudo) {
-              const parsed = typeof data.conteudo === 'string' ? JSON.parse(data.conteudo) : data.conteudo;
-              if (parsed && (parsed.transactions || parsed.boxes || parsed.creditCards)) {
-                state.data = parsed;
-                saveData();
-                render();
-                atualizarStatusNuvem(true);
-                if (!silencioso) showToast("✅ Informações carregadas da nuvem com sucesso!");
-                return true;
-              }
-            }
-          } catch (errInner) {}
-        }
-      } catch (err) {
-        console.warn("Erro ao buscar dados na nuvem:", err);
-      }
-      atualizarStatusNuvem(false);
-      return false;
-    }
-
-    // Função para salvar dados na nuvem
-    window.salvarDadosNuvem = async function(manual = false) {
-      if (!supabaseClient) {
-        if (manual) showToast("⚠️ Supabase desconectado.");
-        return;
-      }
-      try {
-        if (manual) showToast("Sincronizando com a nuvem... ⏳");
-        const tabelas = ['app_dados_financas', 'app_dados'];
-        let sucesso = false;
-        for (let tabela of tabelas) {
-          try {
-            const idVal = tabela === 'app_dados' ? 'financas' : '1';
-            const { error } = await supabaseClient
-              .from(tabela)
-              .upsert({ id: idVal, conteudo: state.data });
-            if (!error) {
-              sucesso = true;
-              break;
-            }
-          } catch (e) {}
-        }
-        if (sucesso) {
-          atualizarStatusNuvem(true);
-          if (manual) showToast("☁️ Sincronizado com a Nuvem no Supabase com sucesso!");
-        } else {
-          if (manual) showToast("Aviso: Nuvem não gravou, dados mantidos no celular.");
-        }
-      } catch (e) {
-        if (manual) showToast("Erro de rede ao salvar na nuvem.");
-      }
-    };
-
-    function atualizarStatusNuvem(conectado) {
-      const el = document.getElementById('badge-nuvem-status');
-      if (el) {
-        if (conectado) {
-          el.className = "flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 text-[9px]";
-          el.innerHTML = "<span>☁️</span><span>Conectado</span>";
-        } else {
-          el.className = "flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-slate-500/10 text-slate-500 font-bold border border-slate-500/20 text-[9px]";
-          el.innerHTML = "<span>☁️</span><span>Offline</span>";
-        }
-      }
-    }
-
-    // Funções de Backup e Restauração local (JSON)
-    window.exportarBackupJSON = function() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.data, null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `Financas_Pro_Backup_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-      showToast("Arquivo de backup baixado! 📥");
-    };
-
-    window.importarBackupJSON = function(fileInput) {
-      const file = fileInput.files && fileInput.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const imported = JSON.parse(e.target.result);
-          if (imported && (imported.transactions || imported.boxes || imported.creditCards)) {
-            state.data = imported;
-            saveData();
-            salvarDadosNuvem(false);
-            render();
-            showToast("✅ Suas informações foram restauradas com sucesso!");
-          } else {
-            showToast("Arquivo de backup inválido.");
-          }
-        } catch (err) {
-          showToast("Erro ao ler arquivo de backup.");
-        }
-      };
-      reader.readAsText(file);
-    };
-
-    // Chamar carregarDadosNuvem ao carregar a página
-    window.addEventListener('DOMContentLoaded', () => {
-      carregarDadosNuvem(true);
     });
 
 </script>
