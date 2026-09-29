@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V35 - Cloud Supabase</title>
+    <title>Finanças Pro V36 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#047857">
@@ -22,16 +22,16 @@
 
     <style>
         :root {
-            --global-bg: #f8fafc;
-            --primary: #047857;
-            --primary-gradient: linear-gradient(135deg, #065f46 0%, #0d9488 50%, #0f766e 100%);
+            --global-bg: #f1f5f9;
+            --primary: #059669;
+            --primary-gradient: linear-gradient(135deg, #047857 0%, #059669 50%, #0d9488 100%);
             --custom-border: #cbd5e1;
             --custom-card: #ffffff;
             --custom-text: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #f1f5f9;
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --input-bg: #f8fafc;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             --green: #059669;
             --red: #e11d48;
             --blue: #0284c7;
@@ -49,7 +49,7 @@
         }
 
         body {
-            background-color: #0b1329;
+            background-color: #030712;
             color: var(--custom-text);
             display: flex;
             justify-content: center;
@@ -66,7 +66,7 @@
             color: var(--custom-text);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
         }
@@ -102,29 +102,29 @@
         }
 
         @keyframes bordaPiscando {
-            0% { border-color: rgba(244, 63, 94, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 0px rgba(244, 63, 94, 0); }
-            50% { border-color: rgba(244, 63, 94, 1); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 12px rgba(244, 63, 94, 0.6); }
-            100% { border-color: rgba(244, 63, 94, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 0 0px rgba(244, 63, 94, 0); }
+            0% { border-color: rgba(244, 63, 94, 0.3); box-shadow: var(--card-shadow), 0 0 0px rgba(244, 63, 94, 0); }
+            50% { border-color: rgba(244, 63, 94, 1); box-shadow: var(--card-shadow), 0 0 12px rgba(244, 63, 94, 0.6); }
+            100% { border-color: rgba(244, 63, 94, 0.3); box-shadow: var(--card-shadow), 0 0 0px rgba(244, 63, 94, 0); }
         }
 
         .neon-glow-btn {
-            background: linear-gradient(135deg, #047857 0%, #10b981 100%) !important;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
             color: white !important;
-            box-shadow: 0 0 12px rgba(4, 120, 87, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(5, 150, 105, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.5);
             animation: neonPulse 2s infinite ease-in-out;
             border: 1px solid #34d399 !important;
         }
 
         @keyframes neonPulse {
-            0% { box-shadow: 0 0 8px rgba(4, 120, 87, 0.4); }
-            50% { box-shadow: 0 0 18px rgba(16, 185, 129, 0.8); }
-            100% { box-shadow: 0 0 8px rgba(4, 120, 87, 0.4); }
+            0% { box-shadow: 0 0 8px rgba(5, 150, 105, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.9); }
+            100% { box-shadow: 0 0 8px rgba(5, 150, 105, 0.4); }
         }
 
         .lock-screen {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #064e3b 0%, #0b1329 100%);
+            background: linear-gradient(135deg, #065f46 0%, #030712 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -149,7 +149,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(4, 120, 87, 0.3);
+            box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3);
             z-index: 10;
         }
 
@@ -160,30 +160,31 @@
         }
 
         .app-logo {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .app-logo svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             stroke: #ffffff;
-            stroke-width: 2.5;
+            stroke-width: 2.8;
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
         header h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
+            font-size: 1.15rem;
+            font-weight: 900;
             letter-spacing: -0.3px;
         }
 
@@ -194,17 +195,18 @@
         }
 
         .header-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .header-btn:active { transform: scale(0.92); }
 
@@ -236,7 +238,7 @@
 
         .top-nav-item i { font-size: 1.05rem; }
         .top-nav-item span { font-size: 0.65rem; font-weight: 800; }
-        .top-nav-item.active { color: var(--primary); background: rgba(4, 120, 87, 0.1); }
+        .top-nav-item.active { color: var(--primary); background: rgba(5, 150, 105, 0.12); }
 
         .content {
             padding: 14px 16px 20px 16px;
@@ -306,18 +308,19 @@
             font-size: 0.8rem;
         }
 
+        /* HERO WALLET CARD COM GRADIENTE PREMIUM VIBRANTE */
         .hero-wallet-card {
-            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #0f766e 100%);
+            background: linear-gradient(135deg, #065f46 0%, #059669 45%, #0284c7 100%);
             color: white;
-            padding: 18px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(4, 120, 87, 0.3);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(5, 150, 105, 0.35);
             display: flex;
             flex-direction: column;
             gap: 12px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .quick-actions-bar {
@@ -431,7 +434,7 @@
             align-items: center;
             gap: 4px;
         }
-        .btn-box-action:hover { background: rgba(4, 120, 87, 0.1); color: var(--primary); }
+        .btn-box-action:hover { background: rgba(5, 150, 105, 0.1); color: var(--primary); }
 
         .extra-income-card {
             background: var(--custom-card);
@@ -640,13 +643,13 @@
             font-size: 0.7rem;
             font-weight: 800;
             color: var(--primary);
-            background: rgba(4, 120, 87, 0.08);
+            background: rgba(5, 150, 105, 0.08);
             padding: 6px 10px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(4, 120, 87, 0.2);
+            border: 1px solid rgba(5, 150, 105, 0.2);
         }
 
         .detail-row {
@@ -713,7 +716,7 @@
             white-space: nowrap;
             flex-shrink: 0;
         }
-        .card-pill-btn.active { border-color: var(--primary); background: rgba(4, 120, 87, 0.1); color: var(--primary); }
+        .card-pill-btn.active { border-color: var(--primary); background: rgba(5, 150, 105, 0.1); color: var(--primary); }
 
         .card-pill-btn .color-dot {
             width: 8px;
@@ -827,15 +830,15 @@
         .btn-mini-action:hover { color: var(--primary); background: var(--input-bg); }
         .btn-mini-action.del:hover { color: var(--red); }
 
-        /* CARTÃO RETRÁTIL INTERATIVO E MODERNO COM EDIÇÃO */
+        /* CARTÃO RETRÁTIL INTERATIVO E MODERNO */
         .credit-card-widget {
             color: white;
-            padding: 14px 16px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            padding: 16px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -846,7 +849,7 @@
             display: none;
             flex-direction: column;
             gap: 8px;
-            margin-top: 8px;
+            margin-top: 10px;
             border-top: 1px solid rgba(255,255,255,0.25);
             padding-top: 10px;
             font-size: 0.75rem;
@@ -878,8 +881,8 @@
         .months-elegant-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 8px;
-            max-height: 420px;
+            gap: 10px;
+            max-height: 480px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -888,7 +891,7 @@
             background: var(--custom-card);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 12px 16px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -899,7 +902,7 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            min-width: 80px;
+            min-width: 90px;
         }
 
         .month-values-group {
@@ -1087,7 +1090,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V35 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V36 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1108,7 +1111,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V35</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V36</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1437,7 +1440,7 @@
                 </div>
             </div>
 
-            <!-- TELA 3: CARTÕES INTERATIVOS, EXPANSÍVEIS E COM EDIÇÃO DE VENCIMENTO/LIMITE -->
+            <!-- TELA 3: CARTÕES INTERATIVOS E EXPANSÍVEIS -->
             <div id="tab-cartoes" class="tab-pane">
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
@@ -1488,7 +1491,7 @@
 
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 MEUS CARTÕES (CLIQUE PARA EXPANDIR / EDITAR)</span>
+                        <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted);">💳 MEUS CARTÕES (CLIQUE PARA EXPANDIR)</span>
                         <span id="txt-qtd-cartoes" style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">0 cartões</span>
                     </div>
                     <div id="cards-container" style="display:flex; flex-direction:column; gap:10px;"></div>
@@ -1540,7 +1543,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V35 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V36 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.85);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
@@ -1863,7 +1866,6 @@
             limiteInput.value = "";
         }
 
-        // FUNÇÃO DE EDITAR O CARTÃO DIRETAMENTE (VENCIMENTO, FECHAMENTO E LIMITE)
         function abrirModalEditarCartao(cardId) {
             const card = (financialData.creditCards || []).find(c => c.id === cardId);
             if (!card) return;
@@ -2859,6 +2861,7 @@
                 }
             }
 
+            // EXIBIÇÃO COMPLETA DE TODOS OS 12 MESES ABERTOS NA ABA MESES
             const monthsContainer = document.getElementById("months-cards-container");
             if (monthsContainer) {
                 monthsContainer.innerHTML = '';
@@ -2889,16 +2892,16 @@
                     cardMes.className = "month-card-item";
                     if (isMesAtual) {
                         cardMes.style.borderColor = "var(--primary)";
-                        cardMes.style.boxShadow = "0 0 10px rgba(4, 120, 87, 0.2)";
+                        cardMes.style.boxShadow = "0 0 12px rgba(5, 150, 105, 0.25)";
                     }
 
                     let statusBadge = (mInc > 0 || mExp > 0) 
-                        ? (mNet >= 0 ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(4, 120, 87, 0.1); padding:1px 5px; border-radius:4px;">🟢 Positivo</span>` : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(225,29,72,0.1); padding:1px 5px; border-radius:4px;">🔴 Negativo</span>`)
+                        ? (mNet >= 0 ? `<span style="font-size:0.58rem; font-weight:800; color:var(--green); background:rgba(5, 150, 105, 0.1); padding:2px 6px; border-radius:4px;">🟢 Positivo</span>` : `<span style="font-size:0.58rem; font-weight:800; color:var(--red); background:rgba(225,29,72,0.1); padding:2px 6px; border-radius:4px;">🔴 Negativo</span>`)
                         : `<span style="font-size:0.58rem; font-weight:700; color:var(--text-muted);">⚪ Sem dados</span>`;
 
                     cardMes.innerHTML = `
                         <div class="month-name-badge">
-                            <b style="font-size:0.85rem; color:var(--custom-text);">${mesesNomes[m - 1]}</b>
+                            <b style="font-size:0.9rem; color:var(--custom-text);">${mesesNomes[m - 1]}</b>
                             ${statusBadge}
                         </div>
 
@@ -2913,8 +2916,8 @@
                                     ${(mInc > 0 || mExp > 0) ? formatarMoeda(mNet) : '-'}
                                 </b>
                             </div>
-                            <div style="display:flex; flex-direction:column; gap:3px;">
-                                <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:2px 6px;">Abrir</button>
+                            <div style="display:flex; flex-direction:column; gap:4px;">
+                                <button onclick="selecionarMesEAbrirAno(${selectedYearTabela}, ${m})" class="btn-box-action" style="padding:3px 8px;">Abrir</button>
                                 <button onclick="abrirModalEditarVerbaMes('${mKey}', '${mesesNomes[m - 1]}', ${selectedYearTabela})" class="btn-mini-action" style="color:var(--primary); font-weight:bold;">✏️ Verba</button>
                             </div>
                         </div>
