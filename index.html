@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V48 - Aurora Lilac</title>
+    <title>Finanças Pro V67 - Aurora Lilac</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#173f35">
@@ -2181,6 +2181,15 @@ header,.top-nav{z-index:20!important}
 .v49-custom-file{position:relative;display:block}
 .v49-custom-file input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .v49-bg-note{font-size:.53rem;color:#9879a9;line-height:1.35;margin-top:6px}
+/* V65 — seletor claro/escuro, com tons suaves */
+.v65-bg-mode{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:7px;padding:3px;background:#f3eafa;border:1px solid #e7d8f3;border-radius:11px}
+.v65-mode-btn{border:0;border-radius:8px;background:transparent;color:#765a82;padding:7px 5px;font-size:.62rem;font-weight:900;cursor:pointer;transition:.18s}
+.v65-mode-btn.active{background:#fff;color:#8b3fd8;box-shadow:0 2px 8px rgba(126,76,163,.12)}
+.v65-bg-caption{font-size:.54rem;color:#9a7baa;text-align:center;margin:6px 0 2px;font-weight:800}
+.v65-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.v65-theme-grid .aurora-theme-btn{min-height:62px!important;background:#fff!important}
+.v65-theme-grid .aurora-theme-btn span{height:30px!important;box-shadow:inset 0 0 0 1px rgba(92,55,115,.08)}
+@media(max-width:370px){.v65-theme-grid{gap:5px}.v65-theme-grid .aurora-theme-btn{font-size:.55rem;min-height:58px!important}}
 </style>
 
 
@@ -2584,6 +2593,167 @@ body{
 @media(max-width:360px){#tab-meses .months-elegant-grid{gap:6px!important}#tab-meses .month-archive-summary{padding:9px!important}#tab-meses .month-archive-name b{font-size:.76rem!important}}
 </style>
 
+
+<style id="v62-mobile-fix">
+/* V62 — acabamento mobile: Cartões e Meses sem apertar nem sobrepor */
+@media (max-width:600px){
+  /* CARTÕES: no celular, uma coluna confortável em vez de dois cartões espremidos */
+  #tab-cartoes #cards-container{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+    width:100%!important;
+  }
+  #tab-cartoes #cards-container .credit-card-widget{
+    width:100%!important;
+    min-width:0!important;
+    min-height:126px!important;
+    padding:11px 12px!important;
+    border-radius:14px!important;
+  }
+  #tab-cartoes #cards-container .credit-card-widget > div:first-child{
+    gap:8px!important;
+  }
+  #tab-cartoes #cards-container .credit-card-widget > div:nth-child(2) span:first-child{
+    font-size:1.18rem!important;
+  }
+  #tab-cartoes #cards-container .credit-card-widget .credit-card-details-box{
+    font-size:.65rem!important;
+    line-height:1.25!important;
+  }
+
+  /* MESES: o nome fica sozinho na primeira linha; a sobra fica abaixo, sem colidir */
+  #tab-meses .months-elegant-grid{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+  }
+  #tab-meses .month-archive-item{
+    width:100%!important;
+    min-width:0!important;
+  }
+  #tab-meses .month-archive-summary{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:
+      "name action"
+      "net action"!important;
+    align-items:center!important;
+    min-height:70px!important;
+    padding:9px 10px!important;
+    gap:3px 8px!important;
+  }
+  #tab-meses .month-archive-name{
+    grid-area:name!important;
+    min-width:0!important;
+  }
+  #tab-meses .month-archive-name b{
+    font-size:.84rem!important;
+  }
+  #tab-meses .month-archive-net{
+    grid-area:net!important;
+    justify-self:start!important;
+    font-size:.76rem!important;
+    line-height:1.1!important;
+    padding:2px 7px!important;
+    border-radius:7px!important;
+    background:#f7efff!important;
+  }
+  #tab-meses .month-archive-summary::after{
+    grid-area:action!important;
+    align-self:center!important;
+    justify-self:end!important;
+    white-space:nowrap!important;
+  }
+  #tab-meses .month-archive-body{
+    padding:9px!important;
+  }
+}
+
+@media (max-width:360px){
+  #tab-cartoes #cards-container .credit-card-widget{
+    min-height:120px!important;
+    padding:10px!important;
+  }
+  #tab-meses .month-archive-summary{
+    min-height:66px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  #tab-meses .month-archive-name b{font-size:.80rem!important}
+  #tab-meses .month-archive-net{font-size:.70rem!important}
+}
+</style>
+
+<style id="v63-mobile-polish">
+/* V63 — refinamento real pelo tamanho do app, não pelo tamanho da janela */
+.phone-container{container-type:inline-size;}
+
+/* Cartões: uma ficha por linha, mais confortável em qualquer tela */
+#tab-cartoes #cards-container{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  width:100%!important;
+}
+#tab-cartoes #cards-container .credit-card-widget{
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* Meses: o valor fica em uma linha própria; nunca encosta no nome */
+#tab-meses .month-archive-summary{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-areas:"name action" "net action"!important;
+  align-items:center!important;
+  min-height:70px!important;
+  gap:3px 8px!important;
+}
+#tab-meses .month-archive-name{grid-area:name!important;min-width:0!important;}
+#tab-meses .month-archive-name b{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+#tab-meses .month-archive-net{
+  grid-area:net!important;
+  justify-self:start!important;
+  white-space:nowrap!important;
+  padding:2px 7px!important;
+  border-radius:8px!important;
+  background:#f7efff!important;
+  line-height:1.1!important;
+}
+#tab-meses .month-archive-summary::after{
+  grid-area:action!important;
+  justify-self:end!important;
+  align-self:center!important;
+  white-space:nowrap!important;
+}
+
+/* Fundo: o conteúdo fica transparente para o fundo escolhido realmente aparecer */
+#app-main-container{
+  background-color:var(--global-bg)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-attachment:local!important;
+}
+#app-main-container .content{background:transparent!important;}
+
+@container (max-width:600px){
+  #tab-cartoes #cards-container .credit-card-widget{
+    min-height:126px!important;
+    padding:11px 12px!important;
+    border-radius:14px!important;
+  }
+  #tab-meses .months-elegant-grid{grid-template-columns:1fr!important;gap:8px!important;}
+  #tab-meses .month-archive-summary{min-height:72px!important;padding:9px 10px!important;}
+  #tab-meses .month-archive-name b{font-size:.84rem!important;}
+  #tab-meses .month-archive-net{font-size:.76rem!important;}
+}
+@container (max-width:380px){
+  #tab-cartoes #cards-container .credit-card-widget{min-height:120px!important;padding:10px!important;}
+  #tab-meses .month-archive-summary{min-height:68px!important;padding:8px!important;}
+  #tab-meses .month-archive-name b{font-size:.80rem!important;}
+  #tab-meses .month-archive-net{font-size:.70rem!important;}
+}
+</style>
 </head>
 <body>
 
@@ -2623,10 +2793,13 @@ body{
                     <span id="brand-status-dot" class="brand-status-dot green" title="Situação financeira: boa"></span>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span class="brand-version">V56</span></h1>
+                    <h1>Finanças Pro <span class="brand-version">V67</span></h1>
                 </div>
             </div>
             <div class="header-actions">
+                <button id="bg-mode-toggle" class="bg-mode-toggle" type="button" onclick="toggleBackgroundMode()" title="Alternar fundo claro/escuro" aria-label="Alternar fundo claro/escuro">
+                    <span class="bg-mode-knob">☀️</span>
+                </button>
                 <div id="sync-status" style="font-size:0.6rem; background:rgba(255,255,255,0.2); padding:3px 6px; border-radius:6px; color:#fff; margin-right:4px;">☁️ Sincronizado</div>
                 <button class="header-btn" onclick="alternarModoPrivacidade()" title="Modo Privacidade">
                     <i id="btn-eye-icon" class="fa-solid fa-eye"></i>
@@ -5310,88 +5483,104 @@ body{
   document.addEventListener('DOMContentLoaded',()=>setTimeout(renderAll,200));
   setTimeout(renderAll,400);
 
-  /* V49 — Fundos livres: presets, sólidos, aleatórios e imagem própria. */
+  /* V66 — fundos completos + chave pequena no topo para claro/escuro. */
   const THEME_KEY='financas_pro_aurora_theme';
   const BG_KEY='financas_pro_v49_background';
+  const BG_MODE_KEY='financas_pro_background_mode';
   const THEMES={
-    aurora:{label:'💜 Aurora',body:'radial-gradient(circle at 12% 12%,rgba(168,85,247,.16),transparent 28%),radial-gradient(circle at 88% 82%,rgba(236,72,153,.12),transparent 30%),#09070f'},
-    lilac:{label:'🌸 Lilás',body:'radial-gradient(circle at 20% 15%,rgba(216,180,254,.28),transparent 30%),radial-gradient(circle at 85% 85%,rgba(192,132,252,.18),transparent 32%),linear-gradient(145deg,#170d21,#2a1638)'},
-    midnight:{label:'🌙 Midnight',body:'radial-gradient(circle at 80% 10%,rgba(99,102,241,.20),transparent 30%),radial-gradient(circle at 15% 90%,rgba(139,92,246,.16),transparent 28%),linear-gradient(145deg,#080a18,#15112b)'},
-    rose:{label:'🌷 Rosé',body:'radial-gradient(circle at 18% 18%,rgba(244,114,182,.20),transparent 30%),radial-gradient(circle at 88% 78%,rgba(232,121,249,.16),transparent 30%),linear-gradient(145deg,#180b17,#2d1227)'},
-    pearl:{label:'🤍 Pérola',body:'radial-gradient(circle at 20% 10%,rgba(255,255,255,.95),transparent 28%),radial-gradient(circle at 85% 85%,rgba(216,180,254,.18),transparent 30%),linear-gradient(145deg,#dcd7e4,#f6f1fa)'},
-    solidLilac:{label:'🟣 Lilás sólido',body:'#241034'},
-    solidBlack:{label:'🖤 Preto sólido',body:'#09070f'},
-    solidWhite:{label:'🤍 Branco sólido',body:'#f5f1f8'},
-    solidPlum:{label:'🍇 Ameixa sólido',body:'#3b1d55'}
+    aurora:{label:'💜 Aurora',body:'radial-gradient(circle at 12% 12%,rgba(168,85,247,.16),transparent 28%),radial-gradient(circle at 88% 82%,rgba(236,72,153,.12),transparent 30%),#09070f',mode:'dark',pair:'auroraLight'},
+    lilac:{label:'🌸 Lilás',body:'radial-gradient(circle at 20% 15%,rgba(216,180,254,.28),transparent 30%),radial-gradient(circle at 85% 85%,rgba(192,132,252,.18),transparent 32%),linear-gradient(145deg,#170d21,#2a1638)',mode:'dark',pair:'lilacLight'},
+    midnight:{label:'🌙 Midnight',body:'radial-gradient(circle at 80% 10%,rgba(99,102,241,.20),transparent 30%),radial-gradient(circle at 15% 90%,rgba(139,92,246,.16),transparent 28%),linear-gradient(145deg,#080a18,#15112b)',mode:'dark',pair:'midnightLight'},
+    rose:{label:'🌷 Rosé',body:'radial-gradient(circle at 18% 18%,rgba(244,114,182,.20),transparent 30%),radial-gradient(circle at 88% 78%,rgba(232,121,249,.16),transparent 30%),linear-gradient(145deg,#180b17,#2d1227)',mode:'dark',pair:'roseLight'},
+    pearl:{label:'🤍 Pérola',body:'radial-gradient(circle at 20% 10%,rgba(255,255,255,.95),transparent 28%),radial-gradient(circle at 85% 85%,rgba(216,180,254,.18),transparent 30%),linear-gradient(145deg,#dcd7e4,#f6f1fa)',mode:'light',pair:'pearl'},
+    solidLilac:{label:'🟣 Lilás sólido',body:'#241034',mode:'dark',pair:'solidLilacLight'},
+    solidBlack:{label:'🖤 Preto sólido',body:'#09070f',mode:'dark',pair:'solidWhite'},
+    solidWhite:{label:'🤍 Branco sólido',body:'#f5f1f8',mode:'light',pair:'solidBlack'},
+    solidPlum:{label:'🍇 Ameixa sólido',body:'#3b1d55',mode:'dark',pair:'solidPlumLight'},
+    auroraLight:{label:'💜 Aurora clara',body:'radial-gradient(circle at 12% 12%,rgba(192,132,252,.22),transparent 28%),radial-gradient(circle at 88% 82%,rgba(244,114,182,.12),transparent 30%),linear-gradient(145deg,#fbf7ff,#efe4fb)',mode:'light',pair:'aurora'},
+    lilacLight:{label:'🌸 Lilás claro',body:'linear-gradient(145deg,#fbf7ff 0%,#f1e5ff 52%,#e8d7fb 100%)',mode:'light',pair:'lilac'},
+    midnightLight:{label:'🌙 Midnight claro',body:'linear-gradient(145deg,#f6f7ff 0%,#ebe9ff 52%,#ddd9f4 100%)',mode:'light',pair:'midnight'},
+    roseLight:{label:'🌷 Rosé claro',body:'linear-gradient(145deg,#fff8fc 0%,#f8e8f2 52%,#f0d9e9 100%)',mode:'light',pair:'rose'},
+    solidLilacLight:{label:'🟣 Lilás claro sólido',body:'#eee4fb',mode:'light',pair:'solidLilac'},
+    solidPlumLight:{label:'🍇 Ameixa clara sólido',body:'#f0e0ed',mode:'light',pair:'solidPlum'}
   };
-  function applyAppBackground(body, meta={type:'preset',value:''}){
+
+  function getBackgroundMode(){
+    try{return localStorage.getItem(BG_MODE_KEY)||'light'}catch(e){return 'light'}
+  }
+  function setBackgroundMode(mode,apply=true){
+    mode=mode==='dark'?'dark':'light';
+    try{localStorage.setItem(BG_MODE_KEY,mode)}catch(e){}
+    updateBackgroundModeToggle();
+    if(apply){
+      const current=localStorage.getItem(THEME_KEY)||'auroraLight';
+      const theme=THEMES[current]||THEMES.auroraLight;
+      if(theme.mode!==mode && theme.pair && THEMES[theme.pair]) applyAuroraTheme(theme.pair);
+    }
+    renderThemePicker();
+  }
+  function toggleBackgroundMode(){ setBackgroundMode(getBackgroundMode()==='dark'?'light':'dark'); showToast(getBackgroundMode()==='dark'?'🌙 Fundo escuro':'☀️ Fundo claro'); }
+  function updateBackgroundModeToggle(){
+    const b=document.getElementById('bg-mode-toggle'); if(!b)return;
+    const dark=getBackgroundMode()==='dark';
+    b.classList.toggle('dark',dark);
+    const k=b.querySelector('.bg-mode-knob'); if(k) k.textContent=dark?'🌙':'☀️';
+  }
+  function applyAppBackground(body,meta={type:'preset',value:''}){
     const phone=document.getElementById('app-main-container');
-    if(phone) phone.style.background=body;
-    document.body.style.background=body;
-    localStorage.setItem(BG_KEY,JSON.stringify(meta));
+    const apply=(el)=>{if(!el)return; el.style.setProperty('background',body,'important'); el.style.setProperty('background-repeat','no-repeat','important'); el.style.setProperty('background-position','center','important'); el.style.setProperty('background-size','cover','important'); el.style.setProperty('background-attachment','local','important');};
+    apply(phone); document.body.style.setProperty('background',body,'important');
+    try{localStorage.setItem(BG_KEY,JSON.stringify(meta))}catch(e){}
+    updateBackgroundModeToggle();
   }
   function applyAuroraTheme(key){
-    if(!THEMES[key]) key='aurora';
+    if(!THEMES[key]) key=getBackgroundMode()==='dark'?'aurora':'auroraLight';
     applyAppBackground(THEMES[key].body,{type:'preset',value:key});
-    localStorage.setItem(THEME_KEY,key);
+    try{localStorage.setItem(THEME_KEY,key); localStorage.setItem(BG_MODE_KEY,THEMES[key].mode)}catch(e){}
+    updateBackgroundModeToggle();
     document.querySelectorAll('.aurora-theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.theme===key));
   }
   function randomAuroraBackground(){
-    const keys=Object.keys(THEMES);
-    const key=keys[Math.floor(Math.random()*keys.length)];
-    applyAuroraTheme(key);
-    showToast('🎲 Fundo aleatório aplicado!');
+    const keys=Object.keys(THEMES); const current=localStorage.getItem(THEME_KEY)||'';
+    const options=keys.filter(k=>k!==current); const key=(options.length?options:keys)[Math.floor(Math.random()*(options.length?options:keys).length)];
+    applyAuroraTheme(key); showToast('🎲 Fundo aleatório aplicado!');
   }
   function applySolidBackground(hex){
-    const safe=/^#[0-9a-fA-F]{6}$/.test(hex)?hex:'#241034';
+    const safe=/^#[0-9a-fA-F]{6}$/.test(hex)?hex:'#eee4fb';
     applyAppBackground(safe,{type:'solid',value:safe});
     document.querySelectorAll('.aurora-theme-btn').forEach(b=>b.classList.remove('active'));
+    try{localStorage.setItem(BG_MODE_KEY,getBackgroundMode())}catch(e){}
   }
   function handleCustomBackground(file){
     if(!file || !file.type.startsWith('image/')) return;
-    const reader=new FileReader();
-    reader.onload=function(e){
-      const data=e.target.result;
-      try{
-        localStorage.setItem(BG_KEY,JSON.stringify({type:'image',value:data}));
-        const phone=document.getElementById('app-main-container');
-        if(phone){phone.style.backgroundImage=`linear-gradient(rgba(18,8,28,.20),rgba(18,8,28,.20)),url("${data}")`;phone.style.backgroundSize='cover';phone.style.backgroundPosition='center';phone.style.backgroundAttachment='local';}
-        document.body.style.background='#09070f';
-        document.querySelectorAll('.aurora-theme-btn').forEach(b=>b.classList.remove('active'));
-        showToast('🖼️ Seu fundo foi aplicado!');
-      }catch(err){showToast('⚠️ Imagem muito grande para salvar no navegador.');}
-    };
-    reader.readAsDataURL(file);
+    const reader=new FileReader(); reader.onload=function(e){const data=e.target.result; try{
+      localStorage.setItem(BG_KEY,JSON.stringify({type:'image',value:data}));
+      const phone=document.getElementById('app-main-container');
+      if(phone){phone.style.setProperty('background-image',`linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),url("${data}")`,'important');phone.style.setProperty('background-size','cover','important');phone.style.setProperty('background-position','center','important');phone.style.setProperty('background-repeat','no-repeat','important');phone.style.setProperty('background-attachment','local','important');}
+      document.body.style.setProperty('background','#f4ecfb','important'); document.querySelectorAll('.aurora-theme-btn').forEach(b=>b.classList.remove('active')); showToast('🖼️ Seu fundo foi aplicado!');
+    }catch(err){showToast('⚠️ Imagem muito grande para salvar no navegador.')}}; reader.readAsDataURL(file);
   }
   function restoreSavedBackground(){
-    let saved=null;
-    try{saved=JSON.parse(localStorage.getItem(BG_KEY)||'null')}catch(e){}
-    if(saved?.type==='image' && saved.value){
-      const phone=document.getElementById('app-main-container');
-      if(phone){phone.style.backgroundImage=`linear-gradient(rgba(18,8,28,.20),rgba(18,8,28,.20)),url("${saved.value}")`;phone.style.backgroundSize='cover';phone.style.backgroundPosition='center';}
-      document.body.style.background='#09070f';
-    }else if(saved?.type==='solid' && saved.value){applySolidBackground(saved.value)}
-    else {applyAuroraTheme(localStorage.getItem(THEME_KEY)||'aurora')}
+    let saved=null; try{saved=JSON.parse(localStorage.getItem(BG_KEY)||'null')}catch(e){}
+    const phone=document.getElementById('app-main-container');
+    if(saved?.type==='image'&&saved.value){if(phone){phone.style.setProperty('background-image',`linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),url("${saved.value}")`,'important');phone.style.setProperty('background-size','cover','important');phone.style.setProperty('background-position','center','important');phone.style.setProperty('background-repeat','no-repeat','important');phone.style.setProperty('background-attachment','local','important');}document.body.style.setProperty('background','#f4ecfb','important');}
+    else if(saved?.type==='solid'&&saved.value) applySolidBackground(saved.value);
+    else {const savedTheme=localStorage.getItem(THEME_KEY); const mode=getBackgroundMode(); const fallback=mode==='dark'?'aurora':'auroraLight'; applyAuroraTheme(THEMES[savedTheme]?savedTheme:fallback);}
+    updateBackgroundModeToggle();
   }
   function renderThemePicker(){
     const grid=document.getElementById('aurora-theme-grid'); if(!grid)return;
-    const current=localStorage.getItem(THEME_KEY)||'aurora';
+    const current=localStorage.getItem(THEME_KEY)||'';
     grid.className='aurora-theme-grid v49-theme-grid';
-    grid.innerHTML=Object.entries(THEMES).map(([key,t])=>`<button type="button" class="aurora-theme-btn v49-theme-btn ${key===current?'active':''}" data-theme="${key}" onclick="applyAuroraTheme('${key}')"><span style="background:${t.body}"></span>${t.label}</button>`).join('')+
-      `<div class="v49-bg-tools">
-        <button type="button" class="v49-bg-tool" onclick="randomAuroraBackground()">🎲 Fundo aleatório</button>
-        <label class="v49-bg-tool v49-custom-file">🖼️ Usar minha imagem<input type="file" accept="image/*" onchange="handleCustomBackground(this.files[0])"></label>
-      </div>
-      <div class="v49-color-row"><span style="font-size:.58rem;font-weight:900;flex:1">🎨 Cor sólida</span><input type="color" value="#241034" onchange="applySolidBackground(this.value)"><span style="font-size:.52rem;color:#9879a9">escolha qualquer cor</span></div>
-      <div class="v49-bg-note">Você pode usar um fundo sólido, um dos estilos prontos, sortear um aleatório ou escolher uma imagem baixada da internet no seu aparelho.</div>`;
+    grid.innerHTML=`<div class="v65-theme-grid v66-all-themes">${Object.entries(THEMES).map(([key,t])=>`<button type="button" class="aurora-theme-btn v49-theme-btn ${key===current?'active':''}" data-theme="${key}" onclick="applyAuroraTheme('${key}')"><span style="background:${t.body}"></span>${t.label}</button>`).join('')}</div>
+      <div class="v49-bg-tools"><button type="button" class="v49-bg-tool" onclick="randomAuroraBackground()">🎲 Fundo aleatório</button><label class="v49-bg-tool v49-custom-file">🖼️ Usar minha imagem<input type="file" accept="image/*" onchange="handleCustomBackground(this.files[0])"></label></div>
+      <div class="v49-color-row"><span style="font-size:.58rem;font-weight:900;flex:1">🎨 Cor sólida</span><input id="aurora-solid-color" type="color" value="#eee4fb" onchange="applySolidBackground(this.value)"><span style="font-size:.52rem;color:#9879a9">escolha qualquer cor</span></div>
+      <div class="v49-bg-note">Use qualquer um dos fundos, sorteie um aleatório, escolha uma cor ou use sua própria imagem. A chave pequena no topo alterna claro/escuro.</div>`;
+    updateBackgroundModeToggle();
   }
-  window.applyAuroraTheme=applyAuroraTheme;
-  window.renderThemePicker=renderThemePicker;
-  window.randomAuroraBackground=randomAuroraBackground;
-  window.applySolidBackground=applySolidBackground;
-  window.handleCustomBackground=handleCustomBackground;
+  window.applyAuroraTheme=applyAuroraTheme; window.renderThemePicker=renderThemePicker; window.randomAuroraBackground=randomAuroraBackground; window.applySolidBackground=applySolidBackground; window.handleCustomBackground=handleCustomBackground; window.setBackgroundMode=setBackgroundMode; window.toggleBackgroundMode=toggleBackgroundMode;
   restoreSavedBackground();
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(renderThemePicker,120));
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{renderThemePicker();updateBackgroundModeToggle();},120));
 
   /* V49 — ordem manual das verbas: arraste e solte. */
   const BOX_ORDER_KEY='financas_pro_v49_box_order';
@@ -5863,6 +6052,64 @@ body{
 #tab-painel.active{display:flex!important;}
 </style>
 
+
+<style id="v66-bg-toggle">
+.bg-mode-toggle{width:30px;height:22px;padding:2px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.16);display:inline-flex;align-items:center;justify-content:flex-start;cursor:pointer;box-shadow:0 2px 8px rgba(76,29,149,.12);transition:.2s;flex:0 0 auto}
+.bg-mode-toggle .bg-mode-knob{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.15);transition:transform .2s}
+.bg-mode-toggle.dark{justify-content:flex-end;background:rgba(38,18,58,.72);border-color:rgba(255,255,255,.35)}
+.v66-all-themes{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.v66-all-themes .aurora-theme-btn{min-height:36px!important}
+@media(max-width:520px){.header-actions{gap:5px!important}.bg-mode-toggle{width:28px;height:21px}.bg-mode-toggle .bg-mode-knob{width:16px;height:16px;font-size:8px}.v66-all-themes{grid-template-columns:1fr 1fr}}
+</style>
+
+<style id="v71-floating-color-palette">
+/* V71 — seletor de cores recolhido em uma bolinha no topo */
+.aurora-theme-card{display:none!important}
+#v71-color-trigger{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);padding:0}
+#v71-color-trigger:active{transform:scale(.92)}
+#v71-color-pop{position:fixed;top:62px;right:10px;width:min(300px,calc(100vw - 20px));background:rgba(255,255,255,.98);border:1px solid #eadff5;border-radius:16px;padding:10px;box-shadow:0 14px 35px rgba(40,20,60,.24);z-index:99999;display:none;color:#463450}
+#v71-color-pop.open{display:block}
+.v71-color-head{display:flex;align-items:center;justify-content:space-between;font-weight:900;font-size:.72rem;margin-bottom:8px}
+.v71-close{border:0;background:#f3ecf8;border-radius:50%;width:25px;height:25px;cursor:pointer;font-weight:900}
+.v71-palette{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.v71-swatch{width:100%;aspect-ratio:1;border-radius:8px;border:1px solid rgba(70,52,80,.14);cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.v71-swatch.active{outline:2px solid #a855f7;outline-offset:1px}
+.v71-tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}
+.v71-tool{min-height:32px;border:1px solid #eadff5;background:#fff;border-radius:9px;color:#463450;font-weight:900;font-size:.58rem;cursor:pointer;padding:4px}
+.v71-custom{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.v71-custom input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.v71-note{font-size:.52rem;color:#9a7baa;text-align:center;margin-top:7px;font-weight:700}
+@media(max-width:520px){#v71-color-pop{top:56px;right:7px;width:min(280px,calc(100vw - 14px));padding:8px}.v71-palette{gap:4px}.v71-swatch{border-radius:7px}.v71-tool{font-size:.55rem}}
+</style>
+<script>
+(function(){
+  const colors=['#fff','#f5f1f8','#eee4fb','#e8d7fb','#f0e0ed','#fbf7ff','#f1e5ff','#f8e8f2','#eadcff','#d8b4fe','#c084fc','#a855f7','#7c3aed','#5b21b6','#3b1d55','#241034','#09070f','#111827','#1e293b','#334155','#475569','#64748b','#94a3b8','#cbd5e1','#ef4444','#f97316','#f59e0b','#eab308','#84cc16','#22c55e','#14b8a6','#06b6d4','#3b82f6','#6366f1','#ec4899','#f43f5e','#fb7185','#c026d3','#7e22ce','#9333ea','#16a34a','#15803d','#0f766e','#0369a1','#1d4ed8','#be123c','#9f1239','#92400e','#a16207','#713f12','#57534e','#44403c','#292524','#ffffff'];
+  const themeMap={aurora:'#09070f',lilac:'#2a1638',midnight:'#15112b',rose:'#2d1227',pearl:'#f6f1fa',solidLilac:'#241034',solidBlack:'#09070f',solidWhite:'#f5f1f8',solidPlum:'#3b1d55',auroraLight:'#efe4fb',lilacLight:'#f1e5ff',midnightLight:'#ddd9f4',roseLight:'#f0d9e9',solidLilacLight:'#eee4fb',solidPlumLight:'#f0e0ed'};
+  function init(){
+    const actions=document.querySelector('.header-actions'); if(!actions || document.getElementById('v71-color-trigger')) return;
+    const mode=document.getElementById('bg-mode-toggle');
+    const b=document.createElement('button'); b.id='v71-color-trigger'; b.type='button'; b.textContent='🎨'; b.title='Cores e fundos'; b.setAttribute('aria-label','Cores e fundos');
+    if(mode) mode.insertAdjacentElement('afterend',b); else actions.prepend(b);
+    const pop=document.createElement('div'); pop.id='v71-color-pop'; pop.innerHTML='<div class="v71-color-head"><span>🎨 Cores e fundos</span><button class="v71-close" type="button">×</button></div><div class="v71-palette" id="v71-palette"></div><div class="v71-tools"><button class="v71-tool" type="button" id="v71-random">🎲 Aleatório</button><label class="v71-tool v71-custom">🖼️ Minha imagem<input type="file" accept="image/*" id="v71-image"></label><label class="v71-tool v71-custom">🎨 Escolher cor<input type="color" id="v71-picker" value="#f1e5ff"></label></div><div class="v71-note">Toque em uma cor para aplicar. A escolha fica salva.</div>';
+    document.body.appendChild(pop);
+    const grid=pop.querySelector('#v71-palette'); colors.forEach(c=>{const x=document.createElement('button');x.type='button';x.className='v71-swatch';x.style.background=c;x.title=c;x.dataset.color=c;x.onclick=()=>applySolid(c);grid.appendChild(x)});
+    b.onclick=()=>pop.classList.toggle('open'); pop.querySelector('.v71-close').onclick=()=>pop.classList.remove('open');
+    document.addEventListener('click',e=>{if(pop.classList.contains('open')&&!pop.contains(e.target)&&e.target!==b)pop.classList.remove('open')});
+    pop.querySelector('#v71-random').onclick=()=>{const c=colors[Math.floor(Math.random()*colors.length)];applySolid(c)};
+    pop.querySelector('#v71-picker').oninput=e=>applySolid(e.target.value);
+    pop.querySelector('#v71-image').onchange=e=>{if(typeof handleCustomBackground==='function'&&e.target.files[0]) handleCustomBackground(e.target.files[0]); pop.classList.remove('open')};
+  }
+  function applySolid(c){
+    document.body.style.background=c;
+    document.body.style.backgroundImage='none';
+    localStorage.setItem('aurora_custom_background',c);
+    localStorage.setItem('aurora_background_mode', c===' #09070f'?'dark':'light');
+    document.querySelectorAll('.v71-swatch').forEach(x=>x.classList.toggle('active',x.dataset.color.toLowerCase()===c.toLowerCase()));
+  }
+  window.addEventListener('DOMContentLoaded',init); setTimeout(init,120);
+})();
+</script>
+
 </body>
 </html>
 
@@ -5958,3 +6205,242 @@ body{
 @keyframes v61MonthHint{0%,100%{box-shadow:0 6px 16px rgba(90,55,120,.07)}50%{box-shadow:0 6px 20px rgba(168,85,247,.14)}}
 @media(prefers-reduced-motion:reduce){#tab-lancar .entry-isolated-box::before,#tab-lancar .entry-isolated-box::after,#tab-lancar .card-pill-btn,#tab-lancar #trans-is-fixed,#tab-lancar .btn-primary,#tab-meses .month-archive-item:not([open]) .month-archive-summary{animation:none!important}}
 </style>
+
+<style id="v67-background-picker-mobile">
+/* V67 — seletor de fundos compacto + chave única no topo + sem moldura branca no celular */
+.v66-all-themes{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:5px!important;
+}
+.v66-all-themes .aurora-theme-btn{
+  min-height:0!important;
+  height:42px!important;
+  padding:5px 8px!important;
+  border-radius:10px!important;
+  display:grid!important;
+  grid-template-columns:54px 1fr!important;
+  align-items:center!important;
+  gap:8px!important;
+  text-align:left!important;
+  font-size:.66rem!important;
+}
+.v66-all-themes .aurora-theme-btn span{
+  width:54px!important;
+  height:26px!important;
+  border-radius:7px!important;
+  margin:0!important;
+}
+.v66-all-themes .aurora-theme-btn.active{
+  transform:none!important;
+  box-shadow:0 0 0 2px rgba(168,85,247,.12),0 0 9px rgba(168,85,247,.13)!important;
+}
+.v49-bg-tools{grid-template-columns:1fr 1fr!important;gap:5px!important;margin-top:6px!important}
+.v49-bg-tool{min-height:34px!important;padding:6px 7px!important;font-size:.6rem!important;border-radius:9px!important}
+.v49-color-row{min-height:36px!important;padding:6px 7px!important;border-radius:9px!important}
+.v49-bg-note{font-size:.5rem!important;margin-top:5px!important}
+.bg-mode-toggle{
+  width:25px!important;height:19px!important;padding:1px!important;
+  border-radius:999px!important;flex:0 0 auto!important;
+}
+.bg-mode-toggle .bg-mode-knob{width:15px!important;height:15px!important;font-size:7px!important}
+@media(max-width:520px){
+  body{background:#f4effa!important;}
+  .phone-container{
+    width:100%!important;max-width:none!important;
+    min-height:100vh!important;
+    border:none!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    outline:none!important;
+  }
+  .v66-all-themes .aurora-theme-btn{height:40px!important;grid-template-columns:50px 1fr!important;font-size:.62rem!important}
+  .v66-all-themes .aurora-theme-btn span{width:50px!important;height:24px!important}
+  .header-actions{gap:4px!important}
+}
+</style>
+
+<style id="v69-safe-frame-and-theme">
+/* V69 — correção cirúrgica: mantém o aplicativo inteiro visível, borda contínua e fundos compactos. */
+html,body{min-width:0!important;overflow-x:hidden!important;}
+body{background:#f4effa!important;}
+.phone-container{
+  width:100%!important;
+  max-width:440px!important;
+  min-height:100vh!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  border:1.5px solid rgba(168,85,247,.58)!important;
+  outline:1px solid rgba(168,85,247,.22)!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.7) inset,0 18px 55px rgba(76,29,149,.16)!important;
+  border-radius:0!important;
+  position:relative!important;
+}
+/* moldura contínua por cima do conteúdo, sem bloquear cliques */
+.phone-container::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  border:1.5px solid rgba(192,132,252,.36)!important;
+  border-radius:inherit!important;
+  pointer-events:none!important;
+  z-index:99999!important;
+}
+/* Não deixar a seção de fundos ocupar/encobrir as demais telas. */
+#tab-mais{position:relative!important;z-index:2!important;}
+#aurora-theme-card{position:relative!important;z-index:2!important;}
+#aurora-theme-grid{position:relative!important;z-index:3!important;}
+/* Fundos compactos: volta ao estilo de miniaturas, 3 por linha. */
+.v66-all-themes{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:6px!important;
+}
+.v66-all-themes .aurora-theme-btn{
+  height:58px!important;
+  min-height:58px!important;
+  padding:5px!important;
+  border-radius:10px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:3px!important;
+  text-align:center!important;
+  font-size:.58rem!important;
+  line-height:1.05!important;
+}
+.v66-all-themes .aurora-theme-btn span{
+  width:100%!important;
+  height:25px!important;
+  border-radius:7px!important;
+  margin:0!important;
+  flex:none!important;
+}
+.v49-bg-tools{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;margin-top:6px!important}
+.v49-bg-tool{min-height:42px!important;padding:6px 7px!important;font-size:.62rem!important;border-radius:10px!important}
+.v49-color-row{min-height:42px!important;padding:6px 8px!important;border-radius:10px!important}
+.v49-bg-note{font-size:.52rem!important;margin-top:5px!important}
+@media(max-width:520px){
+  .phone-container{
+    width:100%!important;
+    max-width:none!important;
+    min-height:100vh!important;
+    border:1.5px solid rgba(168,85,247,.58)!important;
+    outline:1px solid rgba(168,85,247,.22)!important;
+    border-radius:0!important;
+  }
+  .v66-all-themes{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .v66-all-themes .aurora-theme-btn{height:54px!important;min-height:54px!important;font-size:.55rem!important}
+  .v66-all-themes .aurora-theme-btn span{height:23px!important}
+}
+</style>
+<script>
+/* V69 — garante que trocar de aba nunca deixe o aplicativo preso em Mais. */
+(function(){
+  const oldTrocar=window.trocarAba;
+  if(typeof oldTrocar==='function' && !oldTrocar.__v69safe){
+    function safeTrocarAba(aba){
+      oldTrocar.apply(this,arguments);
+      requestAnimationFrame(()=>{
+        document.querySelectorAll('.tab-pane').forEach(p=>{
+          p.style.removeProperty('visibility');
+          p.style.removeProperty('opacity');
+        });
+        const active=document.getElementById('tab-'+aba);
+        if(active) active.scrollIntoView({block:'start',behavior:'instant'});
+      });
+    }
+    safeTrocarAba.__v69safe=true;
+    window.trocarAba=safeTrocarAba;
+  }
+})();
+</script>
+<style id="v70-restore-soft-theme">
+/* V70 — volta ao estilo compacto, branco e delicado dos fundos. */
+body{background:#f4effa!important;}
+.phone-container{
+  border:1.5px solid #c9a7ef!important;
+  outline:1px solid rgba(168,85,247,.20)!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.9) inset,0 14px 38px rgba(76,29,149,.12)!important;
+  border-radius:0!important;
+}
+/* O seletor volta a ser leve: nada de quadradões gigantes. */
+#aurora-theme-card{
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid #eadff5!important;
+  border-radius:16px!important;
+  padding:8px!important;
+  box-shadow:0 6px 18px rgba(67,38,95,.05)!important;
+}
+#aurora-theme-card > div:first-child{margin-bottom:4px!important;}
+.v66-all-themes{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;
+}
+.v66-all-themes .aurora-theme-btn{
+  height:48px!important;
+  min-height:48px!important;
+  padding:4px 3px!important;
+  border:1px solid #eadff5!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#463450!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:2px!important;
+  font-size:.54rem!important;
+  line-height:1.05!important;
+  box-shadow:none!important;
+}
+.v66-all-themes .aurora-theme-btn span{
+  width:100%!important;
+  height:20px!important;
+  border-radius:6px!important;
+  margin:0!important;
+  flex:none!important;
+}
+.v66-all-themes .aurora-theme-btn.active{
+  border-color:#b56cff!important;
+  box-shadow:0 0 0 1.5px rgba(181,108,255,.20),0 0 8px rgba(168,85,247,.10)!important;
+  transform:none!important;
+}
+.v49-bg-tools{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin-top:5px!important;
+}
+.v49-bg-tool{
+  min-height:42px!important;
+  padding:5px 4px!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  border:1px solid #eadff5!important;
+  font-size:.56rem!important;
+  line-height:1.1!important;
+}
+.v49-color-row{
+  min-height:42px!important;
+  padding:5px 7px!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  border:1px solid #eadff5!important;
+}
+.v49-bg-note{font-size:.50rem!important;line-height:1.2!important;margin-top:5px!important;}
+@media(max-width:520px){
+  .phone-container{width:100%!important;max-width:none!important;border-radius:0!important;}
+  #aurora-theme-card{padding:7px!important;}
+  .v66-all-themes{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important;}
+  .v66-all-themes .aurora-theme-btn{height:46px!important;min-height:46px!important;font-size:.52rem!important;}
+  .v66-all-themes .aurora-theme-btn span{height:19px!important;}
+  .v49-bg-tools{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important;}
+}
+</style>
+<script>
+/* V70 — nada nesta correção altera navegação ou dados; apenas reapresenta o seletor de fundos. */
+</script>
