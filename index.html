@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V20 - Neon Glow</title>
+    <title>Finanças Pro V22 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SDK do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -1063,7 +1065,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V20</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V22 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1084,10 +1086,11 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V20</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V22 Cloud</span></h1>
                 </div>
             </div>
             <div class="header-actions">
+                <div id="sync-status" style="font-size:0.6rem; background:rgba(255,255,255,0.2); padding:3px 6px; border-radius:6px; color:#fff; margin-right:4px;">☁️ Sincronizado</div>
                 <button class="header-btn" onclick="alternarModoPrivacidade()" title="Modo Privacidade">
                     <i id="btn-eye-icon" class="fa-solid fa-eye"></i>
                 </button>
@@ -1494,7 +1497,7 @@
             <div id="tab-mais" class="tab-pane">
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V20</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V22 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Bancos do Mercado</span>
                     </div>
                 </div>
@@ -1610,6 +1613,12 @@
     </div>
 
     <script>
+        // CONFIGURAÇÃO DO SUPABASE CONECTADA COM SEU PROJETO
+        const SUPABASE_URL = 'https://jmeepzdvmmjngxwvayqb.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptZWVwemR2bW1qbmd4d3ZheXFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNjY3MjUsImV4cCI6MjEwNTc0MjcyNX0.SGrIiykodIH3G6V6ChHyBGhOzjnzwf6EWj3vJmvJBao';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         const STORAGE_KEY = "financas_pro_neon_v50";
         const CURRENT_TAB_KEY = "financas_pro_active_tab";
         const PRIVACY_KEY = "financas_pro_privacy_mode";
@@ -1686,7 +1695,26 @@
             showToast(privacyMode ? "Valores ocultados" : "Valores visíveis", privacyMode ? "fa-eye-slash" : "fa-eye");
         }
 
-        function carregarDados() {
+        // CARREGA DIRETO DO SUPABASE COM FALLBACK LOCAL
+        async function carregarDados() {
+            const statusEl = document.getElementById("sync-status");
+            try {
+                const { data, error } = await supabaseClient
+                    .from('financas_dados')
+                    .select('dados')
+                    .eq('id', 1)
+                    .single();
+
+                if (error) throw error;
+                if (data && data.dados && Object.keys(data.dados).length > 0) {
+                    if (statusEl) statusEl.innerText = "☁️ Conectado";
+                    return data.dados;
+                }
+            } catch (e) {
+                console.error("Erro ao carregar da nuvem, usando local:", e);
+                if (statusEl) statusEl.innerText = "⚠️ Offline";
+            }
+
             const salvo = localStorage.getItem(STORAGE_KEY);
             if (salvo) {
                 try {
@@ -1708,18 +1736,39 @@
             return JSON.parse(JSON.stringify(defaultData));
         }
 
-        let financialData = carregarDados();
+        let financialData = JSON.parse(JSON.stringify(defaultData));
 
-        function salvarDados() {
+        // SALVA DIRETO NO SUPABASE E LOCAL
+        async function salvarDados() {
+            const statusEl = document.getElementById("sync-status");
+            if (statusEl) statusEl.innerText = "🔄 Salvando...";
+            
             localStorage.setItem(STORAGE_KEY, JSON.stringify(financialData));
+
+            try {
+                const { error } = await supabaseClient
+                    .from('financas_dados')
+                    .update({ dados: financialData, atualizado_em: new Date() })
+                    .eq('id', 1);
+
+                if (error) throw error;
+                if (statusEl) statusEl.innerText = "☁️ Sincronizado";
+            } catch (err) {
+                console.error("Erro ao salvar na nuvem:", err);
+                if (statusEl) statusEl.innerText = "⚠️ Salvo Local";
+                showToast("Salvo offline", "fa-triangle-exclamation");
+            }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             if (sessionStorage.getItem('app_ja_desbloqueado') === 'true') {
                 const lock = document.getElementById("lock-screen");
                 if (lock) lock.classList.add("hidden");
             }
             
+            // Carrega os dados da nuvem ao iniciar
+            financialData = await carregarDados();
+
             aplicarTodasConfiguracoesBlocos();
 
             const icon = document.getElementById("btn-eye-icon");
@@ -3209,4 +3258,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
