@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V67 - Aurora Lilac</title>
+    <title>Finanças Pro V74 - Aurora Lilac</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
-    <meta name="theme-color" content="#173f35">
+    <meta name="theme-color" content="#f6f1fa">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2754,6 +2754,34 @@ body{
   #tab-meses .month-archive-net{font-size:.70rem!important;}
 }
 </style>
+
+<style id="v73-mobile-nav-border">
+:root{--app-border:#c9a7ff;--app-border-glow:rgba(168,115,255,.22)}
+html,body{scroll-behavior:smooth}
+body{margin:0;min-height:100vh}
+#app,.app,.app-shell,.app-container{border:1px solid var(--app-border)!important;box-shadow:0 0 0 1px var(--app-border-glow),0 0 22px var(--app-border-glow);border-radius:18px;box-sizing:border-box}
+@media(max-width:700px){
+  body{padding:0!important;padding-bottom:76px!important}
+  #app,.app,.app-shell,.app-container{width:100%!important;max-width:none!important;border-radius:0!important;border-left:1px solid var(--app-border)!important;border-right:1px solid var(--app-border)!important;border-top:1px solid var(--app-border)!important;border-bottom:1px solid var(--app-border)!important}
+  .top-nav.mobile-bottom-nav{
+    position:fixed!important;left:8px!important;right:8px!important;bottom:10px!important;top:auto!important;
+    z-index:10000!important;display:flex!important;align-items:center!important;justify-content:space-around!important;
+    padding:6px 5px!important;border:1px solid rgba(186,145,255,.45)!important;border-radius:18px!important;
+    background:rgba(255,255,255,.88)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;
+    box-shadow:0 8px 26px rgba(82,48,120,.16),0 0 18px rgba(186,145,255,.10)!important;
+    transform:translateY(0);opacity:1;transition:transform .30s ease,opacity .30s ease,box-shadow .30s ease!important;
+  }
+  .top-nav.mobile-bottom-nav.nav-bottom-hidden{transform:translateY(calc(100% + 18px));opacity:.05;pointer-events:none}
+  .top-nav.mobile-bottom-nav.nav-bottom-visible{transform:translateY(0);opacity:1;pointer-events:auto}
+  .top-nav.mobile-bottom-nav .top-nav-item{flex:1;min-width:0;padding:6px 3px!important;gap:2px!important;border-radius:12px!important}
+  .top-nav.mobile-bottom-nav .top-nav-item i{font-size:.95rem!important}
+  .top-nav.mobile-bottom-nav .top-nav-item span{font-size:.60rem!important}
+  .content{padding-bottom:10px!important}
+}
+@media(min-width:701px){
+  .top-nav.mobile-bottom-nav{position:sticky;top:0;z-index:1000}
+}
+</style>
 </head>
 <body>
 
@@ -2808,8 +2836,8 @@ body{
             </div>
         </header>
 
-        <!-- BARRA DE NAVEGAÇÃO FIXA NO TOPO -->
-        <nav class="top-nav">
+        <!-- BARRA DE NAVEGAÇÃO FLUIDA NA PARTE INFERIOR -->
+        <nav class="top-nav mobile-bottom-nav" aria-label="Navegação principal">
             <button class="top-nav-item active" id="btn-tab-painel" onclick="trocarAba('painel')">
                 <i class="fa-solid fa-house"></i>
                 <span>Painel</span>
@@ -6110,6 +6138,64 @@ body{
 })();
 </script>
 
+
+<style id="v72-soft-background-palette">
+/* V72 — fundos atuais em miniaturas + padrão claro */
+body{background:#f6f1fa!important;color:#463450}
+#app-main-container{background:#f6f1fa!important}
+.v71-color-pop{background:rgba(255,255,255,.99)!important}
+.v71-preset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px}
+.v71-preset{border:1px solid #eadff5;background:#fff;border-radius:8px;padding:3px;cursor:pointer;min-width:0;transition:.16s}
+.v71-preset span{display:block;width:100%;height:22px;border-radius:6px;border:1px solid rgba(70,52,80,.10)}
+.v71-preset b{display:block;font-size:.48rem;color:#5d4868;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.v71-preset.active{border-color:#a855f7;box-shadow:0 0 0 1px rgba(168,85,247,.16)}
+@media(max-width:520px){.v71-preset-grid{grid-template-columns:repeat(4,1fr);gap:4px}.v71-preset span{height:18px}.v71-preset b{font-size:.44rem}.v71-color-pop{background:#fff!important}}
+</style>
+<script id="v72-soft-defaults">
+(function(){
+  const LIGHT_DEFAULT_KEY='financas_pro_v72_light_default';
+  function setLightDefault(){
+    try{
+      if(!localStorage.getItem(LIGHT_DEFAULT_KEY)){
+        localStorage.setItem(LIGHT_DEFAULT_KEY,'1');
+        localStorage.setItem('financas_pro_aurora_theme','auroraLight');
+        localStorage.setItem('financas_pro_background_mode','light');
+        localStorage.removeItem('financas_pro_v49_background');
+      }
+    }catch(e){}
+    if(typeof applyAuroraTheme==='function') applyAuroraTheme('auroraLight');
+  }
+  function patchPalette(){
+    const pop=document.getElementById('v71-color-pop');
+    const grid=document.getElementById('v71-palette');
+    if(!pop||!grid||pop.dataset.v72==='1') return;
+    pop.dataset.v72='1';
+    const themes=['auroraLight','lilacLight','midnightLight','roseLight','pearl','solidWhite','solidLilacLight','solidPlumLight','aurora','lilac','midnight','rose','solidLilac','solidPlum','solidBlack'];
+    const wrap=document.createElement('div'); wrap.className='v71-preset-grid';
+    themes.forEach(key=>{
+      const t=THEMES[key]; if(!t)return;
+      const b=document.createElement('button'); b.type='button'; b.className='v71-preset'; b.dataset.theme=key; b.title=t.label;
+      b.innerHTML='<span style="background:'+t.body+'"></span><b>'+t.label+'</b>';
+      b.onclick=()=>{applyAuroraTheme(key); refreshPreset();};
+      wrap.appendChild(b);
+    });
+    grid.parentNode.insertBefore(wrap,grid);
+    function refreshPreset(){
+      const cur=localStorage.getItem('financas_pro_aurora_theme')||'auroraLight';
+      wrap.querySelectorAll('.v71-preset').forEach(x=>x.classList.toggle('active',x.dataset.theme===cur));
+    }
+    refreshPreset();
+    const old=window.applyAuroraTheme;
+    if(old&&!old.__v72wrapped){
+      function wrapped(key){old(key);refreshPreset();}
+      wrapped.__v72wrapped=true; window.applyAuroraTheme=wrapped;
+    }
+  }
+  function boot(){setLightDefault();patchPalette();}
+  window.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180));
+  setTimeout(boot,500);
+})();
+</script>
 </body>
 </html>
 
@@ -6443,4 +6529,15 @@ body{background:#f4effa!important;}
 </style>
 <script>
 /* V70 — nada nesta correção altera navegação ou dados; apenas reapresenta o seletor de fundos. */
+</script>
+
+<script id="v73-mobile-nav-script">
+(function(){
+ let lastY=window.scrollY||0, ticking=false;
+ const sels=['.nav','.tabs','.bottom-nav','.main-nav','.top-nav'];
+ function navs(){return sels.flatMap(sel=>Array.from(document.querySelectorAll(sel))).filter((e,i,a)=>a.indexOf(e)===i)}
+ function update(){const y=window.scrollY||0,d=y-lastY; const els=navs(); if(!els.length){ticking=false;return;} if(Math.abs(d)>3){els.forEach(e=>{e.classList.toggle('nav-bottom-hidden',d>0 && y>90);e.classList.toggle('nav-bottom-visible',!(d>0&&y>90));});lastY=y;} ticking=false;}
+ window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true;}},{passive:true});
+ document.addEventListener('pointerdown',e=>{if(e.target.closest('.nav,.tabs,.bottom-nav,.main-nav,.top-nav')){navs().forEach(x=>{x.classList.remove('nav-bottom-hidden');x.classList.add('nav-bottom-visible')})}});
+})();
 </script>
