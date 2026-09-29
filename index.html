@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V25 - Cloud Supabase</title>
+    <title>Finanças Pro V26 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -1057,7 +1057,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V25 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V26 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1078,7 +1078,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V25</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V26</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1442,7 +1442,7 @@
                     </div>
                 </div>
 
-                <!-- PAINEL DIRETO DE ADICIONAR CARTÃO (SEM ERRO DE MODAL) -->
+                <!-- PAINEL DIRETO DE ADICIONAR CARTÃO -->
                 <div class="custom-card-box" style="display:flex; flex-direction:column; gap:10px; background:var(--custom-card);">
                     <b style="font-size:0.82rem; color:var(--primary); display:flex; align-items:center; gap:6px;">
                         <i class="fa-solid fa-credit-card"></i> Adicionar Novo Cartão Direto:
@@ -1511,8 +1511,8 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V25 Cloud</span></h3>
-                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Bancos do Mercado</span>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V26 Cloud</span></h3>
+                        <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
 
@@ -1541,6 +1541,33 @@
                     </div>
                 </div>
 
+                <!-- SEÇÃO DE CATEGORIAS COM BOTÃO DE OCULTAR / MOSTRAR -->
+                <div class="modern-action-card custom-card-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-tags text-pink-600"></i> Quanto Gasto por Categoria
+                        </b>
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="alternarOcultarCategorias()" id="btn-toggle-cat" class="btn-box-action" style="font-size:0.65rem;">👁️ Ocultar</button>
+                            <button onclick="abrirModalNovaCategoria()" class="btn-box-action"><i class="fa-solid fa-plus"></i> Nova</button>
+                        </div>
+                    </div>
+                    <p style="font-size:0.68rem; opacity:0.7;">Gastos reais do mês atual por cada categoria:</p>
+                    <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
+                </div>
+
+                <div class="modern-action-card custom-card-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+                            <i class="fa-solid fa-piggy-bank text-amber-600"></i> Caixinhas de Reserva
+                        </b>
+                        <button onclick="abrirModalNovaMeta()" class="btn-box-action">
+                            <i class="fa-solid fa-plus"></i> Nova
+                        </button>
+                    </div>
+                    <div class="list-container" id="goals-list" style="max-height:220px;"></div>
+                </div>
+
                 <div class="modern-action-card custom-card-box">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
@@ -1558,30 +1585,6 @@
                             <i class="fa-solid fa-paste"></i> Restaurar
                         </button>
                     </div>
-                </div>
-
-                <div class="modern-action-card custom-card-box">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-tags text-pink-600"></i> Suas Categorias
-                        </b>
-                        <button onclick="abrirModalNovaCategoria()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Nova
-                        </button>
-                    </div>
-                    <div id="mais-categories-list" style="display:flex; flex-direction:column; gap:6px;"></div>
-                </div>
-
-                <div class="modern-action-card custom-card-box">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
-                            <i class="fa-solid fa-piggy-bank text-amber-600"></i> Caixinhas de Reserva
-                        </b>
-                        <button onclick="abrirModalNovaMeta()" class="btn-box-action">
-                            <i class="fa-solid fa-plus"></i> Nova
-                        </button>
-                    </div>
-                    <div class="list-container" id="goals-list" style="max-height:220px;"></div>
                 </div>
 
                 <div class="modern-action-card custom-card-box" style="border-color:rgba(244,63,94,0.4);">
@@ -1660,6 +1663,7 @@
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
         let privacyMode = localStorage.getItem(PRIVACY_KEY) === 'true';
+        let categoriasOcultas = false;
         let annualChartInstance = null;
 
         let blocksConfig = JSON.parse(localStorage.getItem(BLOCKS_CONFIG_KEY)) || {};
@@ -1717,6 +1721,13 @@
             if (icon) icon.className = privacyMode ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
             atualizarTela();
             showToast(privacyMode ? "Valores ocultados" : "Valores visíveis", privacyMode ? "fa-eye-slash" : "fa-eye");
+        }
+
+        function alternarOcultarCategorias() {
+            categoriasOcultas = !categoriasOcultas;
+            const btn = document.getElementById("btn-toggle-cat");
+            if (btn) btn.innerText = categoriasOcultas ? "👁️ Mostrar" : "👁️ Ocultar";
+            atualizarTela();
         }
 
         async function carregarDados() {
@@ -1788,7 +1799,6 @@
             showToast("Dados sincronizados com sucesso!");
         }
 
-        // ADICIONAR CARTÃO DIRETO NA TELA DE CARTÕES (SEM MODAL QUEBRADO)
         function adicionarCartaoDireto() {
             const nomeInput = document.getElementById("direct-card-name");
             const limiteInput = document.getElementById("direct-card-limit");
@@ -2726,6 +2736,35 @@
                 }
             }
 
+            // ATUALIZA A LISTA DE CATEGORIAS MOSTRANDO O GASTO REAL DO MÊS
+            const maisCatContainer = document.getElementById("mais-categories-list");
+            if (maisCatContainer) {
+                maisCatContainer.innerHTML = '';
+                if (categoriasOcultas) {
+                    maisCatContainer.innerHTML = '<span style="font-size:0.7rem; color:var(--text-muted); text-align:center; padding:4px;">Categorias ocultadas. Clique em "Mostrar" para visualizar.</span>';
+                } else {
+                    (financialData.categories || []).forEach((cat, idx) => {
+                        const gastoNaCategoria = transDoMes
+                            .filter(t => t.type === 'expense' && t.category === cat.name)
+                            .reduce((acc, curr) => acc + curr.value, 0);
+
+                        const item = document.createElement("div");
+                        item.className = "category-chip-item";
+                        item.innerHTML = `
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="width:10px; height:10px; border-radius:50%; background:${cat.color || 'var(--primary)'};"></span>
+                                <span style="color:var(--custom-text);">${cat.name}</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:0.75rem; font-weight:900; color:var(--red);">${formatarMoeda(gastoNaCategoria)}</span>
+                                <button onclick="removerCategoria(${idx})" class="btn-mini-action del" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        maisCatContainer.appendChild(item);
+                    });
+                }
+            }
+
             const monthsContainer = document.getElementById("months-cards-container");
             if (monthsContainer) {
                 monthsContainer.innerHTML = '';
@@ -2798,27 +2837,6 @@
 
             document.getElementById("txt-ano-entradas-total").innerText = formatarMoeda(anoEntradasTotal);
             document.getElementById("txt-ano-gastos-total").innerText = formatarMoeda(anoGastosTotal);
-
-            const maisCatContainer = document.getElementById("mais-categories-list");
-            if (maisCatContainer) {
-                maisCatContainer.innerHTML = '';
-                (financialData.categories || []).forEach((cat, idx) => {
-                    const item = document.createElement("div");
-                    item.className = "category-chip-item";
-                    item.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="width:10px; height:10px; border-radius:50%; background:${cat.color || 'var(--primary)'};"></span>
-                            <span style="color:var(--custom-text);">${cat.name}</span>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${cat.limit > 0 ? 'Teto: ' + formatarMoeda(cat.limit) : 'Sem teto'}</span>
-                            <button onclick="abrirModalEditarCategoria(${idx})" class="btn-mini-action" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="removerCategoria(${idx})" class="btn-mini-action del" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                    maisCatContainer.appendChild(item);
-                });
-            }
 
             const goalsContainer = document.getElementById("goals-list");
             if (goalsContainer) {
@@ -3039,38 +3057,14 @@
             abrirModal("Adicionar Nova Categoria", `
                 <label class="text-xs text-gray-700 font-bold">Nome da Categoria (com emoji):</label>
                 <input type="text" id="new-cat-name" placeholder="Ex: 🍿 Lazer">
-                <label class="text-xs text-gray-700 font-bold mt-2">Teto de Gasto Mensal (R$) [Opcional]:</label>
-                <input type="number" id="new-cat-limit" step="50" placeholder="Ex: 500">
             `, () => {
                 const name = document.getElementById("new-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("new-cat-limit").value) || 0;
                 if (!name) return;
                 if (!financialData.categories) financialData.categories = [];
-                financialData.categories.push({ id: "cat_" + Date.now(), name, limit });
+                financialData.categories.push({ id: "cat_" + Date.now(), name, limit: 0 });
                 salvarDados();
                 atualizarTela();
                 showToast("Categoria adicionada!");
-            });
-        }
-
-        function abrirModalEditarCategoria(idx) {
-            const cat = financialData.categories[idx];
-            if (!cat) return;
-            abrirModal("Editar Categoria", `
-                <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-cat-name" value="${cat.name}">
-                <label class="text-xs text-gray-700 font-bold mt-2">Teto (R$):</label>
-                <input type="number" id="edit-cat-limit" step="50" value="${cat.limit || 0}">
-            `, () => {
-                const name = document.getElementById("edit-cat-name").value.trim();
-                const limit = parseFloat(document.getElementById("edit-cat-limit").value) || 0;
-                if (name) {
-                    cat.name = name;
-                    cat.limit = limit;
-                    salvarDados();
-                    atualizarTela();
-                    showToast("Categoria atualizada!");
-                }
             });
         }
 
