@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V30 - Cloud Supabase</title>
+    <title>Finanças Pro V32 - Cloud Supabase</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#059669">
@@ -987,6 +987,28 @@
         }
         .bank-preset-btn:hover { background: rgba(5,150,105,0.1); border-color: var(--primary); }
 
+        .emoji-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+            background: var(--input-bg);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        .emoji-option {
+            background: var(--custom-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1.1rem;
+            padding: 6px 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .emoji-option:hover { background: rgba(5,150,105,0.1); border-color: var(--primary); }
+
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -1060,7 +1082,7 @@
                         <img src="https://img.icons8.com/fluency/192/wallet.png" alt="Logo" class="w-12 h-12 object-contain">
                     </div>
                 </div>
-                <h2 class="text-2xl font-black text-white">Finanças Pro V30 Cloud</h2>
+                <h2 class="text-2xl font-black text-white">Finanças Pro V32 Cloud</h2>
                 <p class="text-xs text-emerald-200 font-semibold">Controle Pessoal Inteligente</p>
             </div>
 
@@ -1081,7 +1103,7 @@
                     <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
                 </div>
                 <div>
-                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V30</span></h1>
+                    <h1>Finanças Pro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:6px;">V32</span></h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -1513,7 +1535,7 @@
 
                 <div class="modern-profile-banner">
                     <div>
-                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V30 Cloud</span></h3>
+                        <h3 style="font-size:1.05rem; font-weight:900;">Painel Financeiro <span style="font-size:0.65rem; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:6px;">V32 Cloud</span></h3>
                         <span style="font-size:0.68rem; color:rgba(255,255,255,0.8);">Configurações e Relatórios de Gastos</span>
                     </div>
                 </div>
@@ -2737,6 +2759,7 @@
                 }
             }
 
+            // CONTROLE MENSAL DE GASTOS POR CATEGORIA (MOSTRANDO QUANTO GASTA EM CADA UMA NO MÊS)
             const maisCatContainer = document.getElementById("mais-categories-list");
             if (maisCatContainer) {
                 maisCatContainer.innerHTML = '';
@@ -2756,7 +2779,7 @@
                                 <span style="color:var(--custom-text);">${cat.name}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <span style="font-size:0.75rem; font-weight:900; color:var(--red);">${formatarMoeda(gastoNaCategoria)}</span>
+                                <span style="font-size:0.75rem; font-weight:900; color:var(--red);">${formatarMoeda(gastoNaCategoria)} / mês</span>
                                 <button onclick="removerCategoria(${idx})" class="btn-mini-action del" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `;
@@ -2972,7 +2995,6 @@
             }
         }
 
-        // EDIÇÃO COMPLETA DE LANÇAMENTO COM TODAS AS OPÇÕES (CAIXINHAS, CATEGORIAS, DATA E RECORRENTE)
         function abrirModalEditarTransacao(id) {
             const trans = (financialData.transactions || []).find(t => t.id === id);
             if (!trans) return;
@@ -2989,6 +3011,12 @@
                 optionsCat += `<option value="${c.name}" ${trans.category === c.name ? 'selected' : ''}>${c.name}</option>`;
             });
 
+            const cards = financialData.creditCards || [];
+            let optionsCard = '';
+            cards.forEach(card => {
+                optionsCard += `<option value="${card.id}" ${trans.cardId === card.id ? 'selected' : ''}>${card.name}</option>`;
+            });
+
             abrirModal("Editar Lançamento Completo", `
                 <label class="text-xs text-gray-700 font-bold">Descrição:</label>
                 <input type="text" id="edit-trans-desc" value="${trans.desc}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
@@ -3000,6 +3028,17 @@
                 <select id="edit-trans-box" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
                     <option value="">Geral</option>
                     ${optionsBox}
+                </select>
+
+                <label class="text-xs text-gray-700 font-bold mt-1">Forma de Pagamento:</label>
+                <select id="edit-trans-payment" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+                    <option value="Cartão de Crédito" ${trans.payment === 'Cartão de Crédito' ? 'selected' : ''}>Cartão de Crédito</option>
+                    <option value="Dinheiro/Caixa" ${trans.payment !== 'Cartão de Crédito' ? 'selected' : ''}>À vista (Pix/Débito)</option>
+                </select>
+
+                <label class="text-xs text-gray-700 font-bold mt-1">Cartão Utilizado:</label>
+                <select id="edit-trans-card" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+                    ${optionsCard}
                 </select>
 
                 <label class="text-xs text-gray-700 font-bold mt-1">Categoria:</label>
@@ -3018,6 +3057,8 @@
                 const desc = document.getElementById("edit-trans-desc").value.trim();
                 const val = parseFloat(document.getElementById("edit-trans-val").value);
                 const boxId = document.getElementById("edit-trans-box").value;
+                const payment = document.getElementById("edit-trans-payment").value;
+                const cardId = document.getElementById("edit-trans-card").value;
                 const category = document.getElementById("edit-trans-cat").value;
                 const date = document.getElementById("edit-trans-date").value;
                 const isFixed = document.getElementById("edit-trans-fixed").checked;
@@ -3026,6 +3067,8 @@
                     trans.desc = desc;
                     trans.value = val;
                     trans.boxId = boxId;
+                    trans.payment = payment;
+                    trans.cardId = payment === 'Cartão de Crédito' ? cardId : null;
                     trans.category = category;
                     trans.isFixed = isFixed;
                     if (date) {
@@ -3041,14 +3084,30 @@
 
         function abrirModalNovaCaixinhaVerba() {
             abrirModal("Criar Nova Caixinha de Verba", `
-                <label class="text-xs text-gray-700 font-bold">Nome da Caixinha:</label>
-                <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer">
+                <label class="text-xs text-gray-700 font-bold">Escolha um Emoji:</label>
+                <div class="emoji-picker-grid">
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🍔')">🍔</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🏠')">🏠</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🚗')">🚗</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('💊')">💊</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('✈️')">✈️</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🎓')">🎓</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🛍️')">🛍️</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('💰')">💰</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🛡️')">🛡️</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('👶')">👶</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🐶')">🐶</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCaixinha('🎁')">🎁</div>
+                </div>
 
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
+                <label class="text-xs text-gray-700 font-bold mt-1">Nome da Caixinha:</label>
+                <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
 
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
-                <input type="color" id="new-box-color" value="#059669" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-700 font-bold mt-1">Valor Mensal (R$):</label>
+                <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+
+                <label class="text-xs text-gray-700 font-bold mt-1">Cor:</label>
+                <input type="color" id="new-box-color" value="#059669" style="width: 50px; height: 38px; padding: 0; cursor:pointer; background:transparent;">
             `, () => {
                 const name = document.getElementById("new-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("new-box-amount").value);
@@ -3068,19 +3127,24 @@
             });
         }
 
+        function selecionarEmojiCaixinha(emoji) {
+            const input = document.getElementById("new-box-name");
+            if (input) input.value = emoji + " " + input.value;
+        }
+
         function abrirModalEditarCaixinhaVerba(boxId) {
             const box = financialData.budgetBoxes.find(b => b.id === boxId);
             if (!box) return;
 
             abrirModal("Editar Caixinha de Verba", `
                 <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-box-name" value="${box.name}">
+                <input type="text" id="edit-box-name" value="${box.name}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
 
-                <label class="text-xs text-gray-700 font-bold mt-2">Valor Mensal (R$):</label>
-                <input type="number" id="edit-box-amount" step="50" value="${box.amount}">
+                <label class="text-xs text-gray-700 font-bold mt-1">Valor Mensal (R$):</label>
+                <input type="number" id="edit-box-amount" step="50" value="${box.amount}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
 
-                <label class="text-xs text-gray-700 font-bold mt-2">Cor:</label>
-                <input type="color" id="edit-box-color" value="${box.color || '#059669'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer;">
+                <label class="text-xs text-gray-700 font-bold mt-1">Cor:</label>
+                <input type="color" id="edit-box-color" value="${box.color || '#059669'}" style="width: 50px; height: 38px; padding: 0; cursor:pointer; background:transparent;">
             `, () => {
                 const name = document.getElementById("edit-box-name").value.trim();
                 const amount = parseFloat(document.getElementById("edit-box-amount").value);
@@ -3122,8 +3186,24 @@
 
         function abrirModalNovaCategoria() {
             abrirModal("Adicionar Nova Categoria", `
-                <label class="text-xs text-gray-700 font-bold">Nome da Categoria (com emoji):</label>
-                <input type="text" id="new-cat-name" placeholder="Ex: 🍿 Lazer">
+                <label class="text-xs text-gray-700 font-bold">Escolha um Emoji:</label>
+                <div class="emoji-picker-grid">
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🍔')">🍔</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🏠')">🏠</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🚗')">🚗</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('💊')">💊</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('✈️')">✈️</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🎓')">🎓</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🍿')">🍿</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('💡')">💡</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('🛒')">🛒</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('👗')">👗</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('⚖️')">⚖️</div>
+                    <div class="emoji-option" onclick="selecionarEmojiCategoria('📚')">📚</div>
+                </div>
+
+                <label class="text-xs text-gray-700 font-bold mt-1">Nome da Categoria:</label>
+                <input type="text" id="new-cat-name" placeholder="Ex: Lazer" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
             `, () => {
                 const name = document.getElementById("new-cat-name").value.trim();
                 if (!name) return;
@@ -3133,6 +3213,11 @@
                 atualizarTela();
                 showToast("Categoria adicionada!");
             });
+        }
+
+        function selecionarEmojiCategoria(emoji) {
+            const input = document.getElementById("new-cat-name");
+            if (input) input.value = emoji + " " + input.value;
         }
 
         function removerCategoria(idx) {
@@ -3147,9 +3232,9 @@
         function abrirModalNovaMeta() {
             abrirModal("Criar Nova Caixinha de Reserva", `
                 <label class="text-xs text-gray-700 font-bold">Nome da Reserva:</label>
-                <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro Novo">
-                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="new-goal-target" step="500" placeholder="Ex: 5000">
+                <input type="text" id="new-goal-name" placeholder="Ex: Viagem, Carro Novo" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+                <label class="text-xs text-gray-700 font-bold mt-1">Meta Total (R$):</label>
+                <input type="number" id="new-goal-target" step="500" placeholder="Ex: 5000" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
             `, () => {
                 const name = document.getElementById("new-goal-name").value.trim();
                 const target = parseFloat(document.getElementById("new-goal-target").value);
@@ -3167,9 +3252,9 @@
             if (!goal) return;
             abrirModal("Editar Reserva", `
                 <label class="text-xs text-gray-700 font-bold">Nome:</label>
-                <input type="text" id="edit-goal-name" value="${goal.name}">
-                <label class="text-xs text-gray-700 font-bold mt-2">Meta Total (R$):</label>
-                <input type="number" id="edit-goal-target" step="500" value="${goal.target}">
+                <input type="text" id="edit-goal-name" value="${goal.name}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+                <label class="text-xs text-gray-700 font-bold mt-1">Meta Total (R$):</label>
+                <input type="number" id="edit-goal-target" step="500" value="${goal.target}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
             `, () => {
                 const name = document.getElementById("edit-goal-name").value.trim();
                 const target = parseFloat(document.getElementById("edit-goal-target").value);
@@ -3198,7 +3283,7 @@
             const title = tipo === 'guardar' ? `Guardar em ${goal.name}` : `Resgatar de ${goal.name}`;
             abrirModal(title, `
                 <label class="text-xs text-gray-700 font-bold">Valor (R$):</label>
-                <input type="number" id="goal-action-val" step="50" placeholder="0.00">
+                <input type="number" id="goal-action-val" step="50" placeholder="0.00" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
             `, () => {
                 const val = parseFloat(document.getElementById("goal-action-val").value);
                 if (isNaN(val) || val <= 0) return;
