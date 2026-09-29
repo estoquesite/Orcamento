@@ -2264,10 +2264,10 @@
                 }
             });
 
-            if (boxStats.length > 0) boxStats[0].spilloverReceived = totalExcedenteSecundarias;
-
-            const semCaixinha = transDoMes.filter(t => t.type === 'expense' && !t.boxId).reduce((acc, c) => acc + c.value, 0);
-            if (boxStats.length > 0) boxStats[0].spilloverReceived += semCaixinha;
+            if (boxStats.length > 0) {
+                const semCaixinha = transDoMes.filter(t => t.type === 'expense' && !t.boxId).reduce((acc, c) => acc + c.value, 0);
+                boxStats[0].spilloverReceived = totalExcedenteSecundarias + semCaixinha;
+            }
 
             const boxesContainer = document.getElementById("budget-boxes-container");
             if (boxesContainer) {
@@ -2306,7 +2306,7 @@
                         let cardPiscandoClass = '';
                         if (displayRemain < 0 || percBox >= 90) {
                             statusColorClass = 'red';
-                            cardPiscandoClass = 'borda-piscante-suave'; // Borda inteira piscando suavemente!
+                            cardPiscandoClass = 'borda-piscante-suave';
                         } else if (percBox >= 75) {
                             statusColorClass = 'yellow';
                         }
@@ -3167,6 +3167,22 @@
                 atualizarTela();
                 showToast("Aplicativo limpo e reiniciado!");
             }
+        }
+
+        // Funções auxiliares para abrir e fechar modais padrão
+        function abrirModal(titulo, htmlConteudo, callbackConfirmar) {
+            document.getElementById("modal-title").innerText = titulo;
+            document.getElementById("modal-body").innerHTML = htmlConteudo;
+            const btnConfirm = document.getElementById("modal-confirm-btn");
+            btnConfirm.onclick = () => {
+                callbackConfirmar();
+                fecharModal();
+            };
+            document.getElementById("app-modal").classList.add("active");
+        }
+
+        function fecharModal() {
+            document.getElementById("app-modal").classList.remove("active");
         }
     </script>
 </body>
