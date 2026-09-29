@@ -7,6 +7,7 @@
   <meta name="description" content="Aplicativo de gestão financeira pessoal completo e 100% editável para celular." />
   <meta name="theme-color" content="#4f46e5" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -94,6 +95,9 @@
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
         <span class="text-xs font-black tracking-wider text-slate-800 dark:text-slate-100 uppercase">Finanças Pro</span>
         <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 font-bold border border-indigo-500/20">V40 Cloud</span>
+        <div id="badge-nuvem-status" class="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 text-[9px]">
+          <span>☁️</span><span>Conectando...</span>
+        </div>
       </div>
 
       <div class="flex items-center gap-2">
@@ -1975,7 +1979,71 @@
             html = `
               <div class="space-y-4">
 
-                <!-- CARD DE PERSONALIZAÇÃO DE TEMA, CORES E FOTO EXTERNA -->
+                
+                <!-- CARD DE SINCRONIZAÇÃO NUVEM SUPABASE & BACKUP -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <h3 class="text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-wide flex items-center gap-1.5">
+                        <span>☁️</span>
+                        <span>Sincronização com a Nuvem (Supabase)</span>
+                      </h3>
+                      <span class="text-[10px] text-slate-400">Guarde e recupere seus lançamentos e cartões na nuvem</span>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2 pt-1">
+                    <p class="text-[11px] text-slate-600 dark:text-slate-300">
+                      Clique para forçar o salvamento ou puxar seus dados do banco de dados na nuvem:
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onclick="salvarDadosNuvem(true)"
+                        class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 transition"
+                      >
+                        <span>☁️</span>
+                        <span>Salvar na Nuvem Agora</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onclick="carregarDadosNuvem(false)"
+                        class="py-2.5 px-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 transition"
+                      >
+                        <span>📥</span>
+                        <span>Puxar Dados da Nuvem</span>
+                      </button>
+                    </div>
+
+                    <!-- Botões de Backup Local em Arquivo JSON -->
+                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+                      <button
+                        type="button"
+                        onclick="exportarBackupJSON()"
+                        class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 text-[10px] font-bold flex items-center justify-center gap-1 cursor-pointer"
+                        title="Baixar cópia de segurança em arquivo JSON"
+                      >
+                        <span>💾</span>
+                        <span>Exportar Backup (JSON)</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onclick="document.getElementById('input-import-backup').click()"
+                        class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 text-[10px] font-bold flex items-center justify-center gap-1 cursor-pointer"
+                        title="Carregar arquivo JSON com suas informações"
+                      >
+                        <span>📂</span>
+                        <span>Restaurar Backup</span>
+                      </button>
+                      <input type="file" id="input-import-backup" accept=".json" class="hidden" onchange="importarBackupJSON(this)">
+                    </div>
+                  </div>
+                </div>
+
+<!-- CARD DE PERSONALIZAÇÃO DE TEMA, CORES E FOTO EXTERNA -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm space-y-3">
                   <div class="flex justify-between items-center">
                     <div>
@@ -2811,6 +2879,145 @@
       }
     });
 
+
+    // ==========================================
+    // CONEXÃO & SINCRONIZAÇÃO NUVEM SUPABASE
+    // ==========================================
+    const SUPABASE_URL = 'https://jmeepzdvmmjngxwvayqb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_54ORrLbP7naW7n-KlKCdUA_hZnpjguH';
+    let supabaseClient = null;
+
+    try {
+      if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch (e) {
+      console.warn("Supabase indisponível:", e);
+    }
+
+    // Função para carregar dados da nuvem
+    async function carregarDadosNuvem(silencioso = false) {
+      if (!supabaseClient) {
+        if (!silencioso) showToast("Supabase não conectado.");
+        return false;
+      }
+      try {
+        const tabelas = ['app_dados_financas', 'financas_pro', 'app_financas', 'app_dados'];
+        for (let tabela of tabelas) {
+          try {
+            let query = supabaseClient.from(tabela).select('conteudo');
+            if (tabela === 'app_dados') {
+              query = query.eq('id', 'financas');
+            } else {
+              query = query.eq('id', '1');
+            }
+            const { data, error } = await query.maybeSingle();
+            if (data && data.conteudo) {
+              const parsed = typeof data.conteudo === 'string' ? JSON.parse(data.conteudo) : data.conteudo;
+              if (parsed && (parsed.transactions || parsed.boxes || parsed.creditCards)) {
+                state.data = parsed;
+                saveData();
+                render();
+                atualizarStatusNuvem(true);
+                if (!silencioso) showToast("✅ Informações carregadas da nuvem com sucesso!");
+                return true;
+              }
+            }
+          } catch (errInner) {}
+        }
+      } catch (err) {
+        console.warn("Erro ao buscar dados na nuvem:", err);
+      }
+      atualizarStatusNuvem(false);
+      return false;
+    }
+
+    // Função para salvar dados na nuvem
+    window.salvarDadosNuvem = async function(manual = false) {
+      if (!supabaseClient) {
+        if (manual) showToast("⚠️ Supabase desconectado.");
+        return;
+      }
+      try {
+        if (manual) showToast("Sincronizando com a nuvem... ⏳");
+        const tabelas = ['app_dados_financas', 'app_dados'];
+        let sucesso = false;
+        for (let tabela of tabelas) {
+          try {
+            const idVal = tabela === 'app_dados' ? 'financas' : '1';
+            const { error } = await supabaseClient
+              .from(tabela)
+              .upsert({ id: idVal, conteudo: state.data });
+            if (!error) {
+              sucesso = true;
+              break;
+            }
+          } catch (e) {}
+        }
+        if (sucesso) {
+          atualizarStatusNuvem(true);
+          if (manual) showToast("☁️ Sincronizado com a Nuvem no Supabase com sucesso!");
+        } else {
+          if (manual) showToast("Aviso: Nuvem não gravou, dados mantidos no celular.");
+        }
+      } catch (e) {
+        if (manual) showToast("Erro de rede ao salvar na nuvem.");
+      }
+    };
+
+    function atualizarStatusNuvem(conectado) {
+      const el = document.getElementById('badge-nuvem-status');
+      if (el) {
+        if (conectado) {
+          el.className = "flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20 text-[9px]";
+          el.innerHTML = "<span>☁️</span><span>Conectado</span>";
+        } else {
+          el.className = "flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-slate-500/10 text-slate-500 font-bold border border-slate-500/20 text-[9px]";
+          el.innerHTML = "<span>☁️</span><span>Offline</span>";
+        }
+      }
+    }
+
+    // Funções de Backup e Restauração local (JSON)
+    window.exportarBackupJSON = function() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.data, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `Financas_Pro_Backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Arquivo de backup baixado! 📥");
+    };
+
+    window.importarBackupJSON = function(fileInput) {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported && (imported.transactions || imported.boxes || imported.creditCards)) {
+            state.data = imported;
+            saveData();
+            salvarDadosNuvem(false);
+            render();
+            showToast("✅ Suas informações foram restauradas com sucesso!");
+          } else {
+            showToast("Arquivo de backup inválido.");
+          }
+        } catch (err) {
+          showToast("Erro ao ler arquivo de backup.");
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    // Chamar carregarDadosNuvem ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+      carregarDadosNuvem(true);
+    });
+
 </script>
 </body>
-    </html>
+</html>
