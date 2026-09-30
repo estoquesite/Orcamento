@@ -7019,3 +7019,80 @@ body{background:#f4effa!important;}
  document.addEventListener('pointerdown',e=>{if(e.target.closest('.nav,.tabs,.bottom-nav,.main-nav,.top-nav')){navs().forEach(x=>{x.classList.remove('nav-bottom-hidden');x.classList.add('nav-bottom-visible')})}});
 })();
 </script>
+<style id="v83-turbo">
+html{scroll-behavior:auto!important}
+*,*::before,*::after{transition:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;mix-blend-mode:normal!important}
+#hero-progress-bar,.box-clean-track>div{transition:width .3s ease!important}
+.phone-container::after,.ambient-floaters,.content::after,
+.quick-btn::after,.card-pill-btn::after,.month-card-item::after,.aurora-widget::after,
+#cards-container .credit-card-widget::after,#budget-boxes-container .box-clean-card::after{display:none!important}
+body,.phone-container::before,.phone-container::after,.hero-wallet-card,.hero-wallet-card::after,
+.neon-glow-btn,.borda-piscante-suave,.box-clean-card,
+#tab-lancar .card-pill-btn,#tab-lancar #trans-is-fixed,#tab-lancar .btn-primary,
+#tab-lancar .entry-isolated-box::before,#tab-lancar .entry-isolated-box::after,
+#tab-meses .month-archive-item:not([open]) .month-archive-summary,
+#cards-container .credit-card-widget{animation:none!important}
+.top-nav.mobile-bottom-nav{background:rgba(255,255,255,.97)!important}
+header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,#a855f7)!important}
+@keyframes t83{50%{opacity:.45}}
+#budget-boxes-container .box-clean-card::before{animation:t83 1.6s ease-in-out infinite!important;box-shadow:none!important}
+#budget-boxes-container .box-clean-card.status-over::before{animation-duration:.9s!important}
+#transaction-list .clean-statement-item,#tab-meses .month-archive-item{content-visibility:auto;contain-intrinsic-size:auto 64px}
+</style>
+<script id="v83-turbo-js">
+(function(){
+  'use strict';
+  var orig=window.atualizarTela;
+  if(typeof orig==='function'&&!orig.__t83){
+    var p=0;
+    var w=function(){ if(p)return; p=requestAnimationFrame(function(){p=0;orig.apply(window);}); };
+    w.__t83=true; window.atualizarTela=w;
+  }
+  var s=document.getElementById('search-trans');
+  if(s){ var t; s.oninput=function(){clearTimeout(t);t=setTimeout(function(){window.atualizarTela();},200);}; }
+
+  var stack=[];
+  var snap=function(){return JSON.stringify(financialData);};
+  window.salvarPontoDesfazer=function(){
+    var x=snap();
+    if(stack[stack.length-1]!==x){ stack.push(x); if(stack.length>10)stack.shift(); }
+  };
+  window.desfazerNaAba=function(){
+    var x; while((x=stack.pop())&&x===snap());
+    if(!x){ showToast('Nada para desfazer','fa-rotate-left'); return; }
+    financialData=normalizarDadosSeguros(JSON.parse(x));
+    salvarDados(); window.atualizarTela();
+    showToast('Alteração desfeita','fa-rotate-left');
+  };
+
+  var tabs=['painel','lancar','cartoes','contas','meses','mais'];
+  var skip='input,textarea,select,button,a,summary,.card-tags-scroll,.list-container,.modal-overlay';
+  var x0=0,y0=0,t0=0,ok=false;
+  var o={passive:true,capture:true};
+  window.addEventListener('touchstart',function(e){
+    e.stopPropagation();
+    ok=e.touches.length===1&&!e.target.closest(skip);
+    if(ok){x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now();}
+  },o);
+  window.addEventListener('touchmove',function(e){e.stopPropagation();},o);
+  window.addEventListener('touchcancel',function(e){e.stopPropagation();ok=false;},o);
+  window.addEventListener('touchend',function(e){
+    e.stopPropagation();
+    if(!ok||!e.changedTouches.length)return; ok=false;
+    var dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)<50||Math.abs(dx)<Math.abs(dy)*1.7||Date.now()-t0>450)return;
+    var cur=-1;
+    for(var i=0;i<tabs.length;i++){var el=document.getElementById('tab-'+tabs[i]);if(el&&el.classList.contains('active')){cur=i;break;}}
+    if(cur<0)return;
+    trocarAba(tabs[(cur+(dx<0?1:-1)+tabs.length)%tabs.length]);
+  },o);
+
+  var add=window.adicionarTransacao;
+  if(typeof add==='function'){
+    window.adicionarTransacao=function(){
+      if(navigator.vibrate)navigator.vibrate(15);
+      return add.apply(this,arguments);
+    };
+  }
+})();
+</script>
