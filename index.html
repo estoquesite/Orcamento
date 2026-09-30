@@ -7019,7 +7019,7 @@ body{background:#f4effa!important;}
  document.addEventListener('pointerdown',e=>{if(e.target.closest('.nav,.tabs,.bottom-nav,.main-nav,.top-nav')){navs().forEach(x=>{x.classList.remove('nav-bottom-hidden');x.classList.add('nav-bottom-visible')})}});
 })();
 </script>
-<style id="v85-wow">
+<style id="v86-wow">
 html{scroll-behavior:auto!important}
 *,*::before,*::after{transition:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;mix-blend-mode:normal!important}
 #hero-progress-bar,.box-clean-track>div{transition:width .3s ease!important}
@@ -7067,8 +7067,33 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
 .v85e{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .v85m{aspect-ratio:1;border:1px solid #eadff5;background:#fff;border-radius:10px;padding:3px;cursor:pointer;font-size:1.3rem}
 .v85m img{width:100%;height:100%;object-fit:contain}
+
+#btn-tab-stats::before{content:"📊"}#btn-tab-estilo::before{content:"🎨"}
+#tab-stats>*{order:initial!important}
+#tab-lancar .clean-val-input{font-size:2rem!important;min-height:52px!important}
+#tab-lancar .detail-row input,#tab-lancar .detail-row select{font-size:16px!important;min-height:46px!important}
+#tab-lancar .entry-isolated-box::after{display:none!important}
+.v86-typing .top-nav.mobile-bottom-nav,.v86-typing #v84-fab{display:none!important}
+.v86-chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.v86-chips button{flex:1;min-width:42px;padding:7px 4px;border:1px solid #e3d0f5;background:#faf5ff;color:#6d28d9;border-radius:9px;font-weight:800;font-size:.72rem}
+.v86{background:#fff;border:1px solid #eadff5;border-radius:14px;padding:10px;box-shadow:0 5px 14px rgba(67,31,96,.07);color:#30243a}
+.v86k{font-size:.72rem;font-weight:900;margin-bottom:6px}
+.v86s{font-size:.66rem;opacity:.7;margin-top:2px}
+.v86g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}
+.v86g button{min-height:40px;border:1px solid #eadff5;border-radius:10px;font-size:.66rem;font-weight:800;cursor:pointer;padding:4px}
+.v86r{display:flex;gap:6px;margin:6px 0;align-items:center}
+.v86r input[type=text],.v86r select{flex:1;min-width:0;padding:8px;border:1px solid #dfd2ee;border-radius:9px;font-size:16px}
+.v86r label{flex:1;font-size:.6rem;font-weight:800;display:flex;flex-direction:column;gap:2px}
+.v86r input[type=color]{width:100%;height:34px;padding:0;border:1px solid #eadff5;border-radius:8px}
+.v86r button{flex:1;padding:8px 4px;border:1px solid #eadff5;background:#f5edff;border-radius:9px;font-weight:800;font-size:.66rem;color:#6d28d9}
+.v86hd{display:flex;align-items:center;justify-content:space-between}
+.v86hd button{border:1px solid #eadff5;background:#faf5ff;border-radius:9px;width:34px;height:30px}
+.v86t{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.v86t div{background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #eadff5;border-radius:11px;padding:8px}
+.v86t small{display:block;font-size:.56rem;font-weight:800;color:#8b6a9c;text-transform:uppercase}
+.v86t b{font-size:.92rem}
 </style>
-<script id="v85-wow-js">
+<script id="v86-wow-js">
 (function(){
   'use strict';
   var orig=window.atualizarTela;
@@ -7094,7 +7119,7 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
     showToast('Alteração desfeita','fa-rotate-left');
   };
 
-  var tabs=['painel','lancar','cartoes','contas','meses','mais'];
+  var tabs=['painel','lancar','cartoes','contas','meses','stats','estilo','mais'];
   var skip='input,textarea,select,.card-tags-scroll,.modal-overlay';
   var x0=0,y0=0,t0=0,ok=false;
   var o={passive:true,capture:true};
@@ -7128,13 +7153,13 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
 /* ===== V84 novidades ===== */
 (function(){
   var $=function(i){return document.getElementById(i);};
-  var vb=document.querySelector('.brand-version'); if(vb)vb.textContent='V85';
+  var vb=document.querySelector('.brand-version'); if(vb)vb.textContent='V86';
   var PAL=['#a855f7','#ec4899','#6366f1','#f59e0b','#14b8a6','#3b82f6'];
   function esc(v){var d=document.createElement('div');d.textContent=String(v==null?'':v);return d.innerHTML;}
   function money(v){return typeof formatarMoeda==='function'?formatarMoeda(v):'R$ '+v.toFixed(2);}
 
   function build(){
-    var pn=$('tab-painel'); if(!pn||!pn.classList.contains('active'))return;
+    var pn=$('tab-stats'); if(!pn||!pn.classList.contains('active'))return;
     var card=$('v84-card');
     if(!card){
       card=document.createElement('div'); card.id='v84-card'; card.className='v84-card';
@@ -7252,7 +7277,7 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
     c.iconUrl=u; salvarDados(); atualizarTela(); showToast('Ícone aplicado em '+c.name);
   }
   function ui(){
-    var mais=$('tab-mais'); if(!mais||$('v85-lab'))return;
+    var mais=$('tab-estilo'); if(!mais||$('v85-lab'))return;
     var c=document.createElement('div'); c.id='v85-lab'; c.className='v85';
     c.innerHTML='<div class="v85k">🎨 Fundos</div><div class="v85g" id="v85p"></div>'
      +'<div class="v85r"><button id="v85rand">🎲 Aleatório</button><button id="v85reset">↺ Padrão</button></div>'
@@ -7261,7 +7286,7 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
      +'<div class="v85k" style="margin-top:10px">😀 Emojis realistas</div>'
      +'<div class="v85r"><input id="v85eq" placeholder="Buscar emoji (ex: carro, comida)"><button id="v85es" style="flex:0 0 44px">🔍</button></div>'
      +'<div class="v85r"><select id="v85ec"></select></div><div class="v85e" id="v85er"></div>';
-    var b=mais.querySelector('.modern-profile-banner'); mais.insertBefore(c,b?b.nextSibling:mais.firstChild);
+    mais.appendChild(c);
     P.forEach(function(p){var d=document.createElement('button');d.className='v85t';d.style.background=p[1];d.innerHTML='<b>'+p[0]+'</b>';d.onclick=function(){apply(p[1],1);};$('v85p').appendChild(d);});
     $('v85rand').onclick=function(){apply(img('https://picsum.photos/seed/'+Date.now()+'/900/1600'),1);};
     $('v85reset').onclick=function(){try{localStorage.removeItem(K);}catch(x){} if(window.applyAuroraTheme)applyAuroraTheme('auroraLight');};
@@ -7294,6 +7319,149 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
     fill();
   }
   var ot=window.trocarAba;
-  if(typeof ot==='function'){window.trocarAba=function(a){ot.apply(this,arguments); if(a==='mais'){ui();fill();}};}
+  if(typeof ot==='function'){window.trocarAba=function(a){ot.apply(this,arguments); if(a==='estilo'){ui();fill();}};}
+})();
+
+/* ===== V86: abas Gráficos e Estilo, cores de cards/bancos, Lançar fluido ===== */
+(function(){
+  var $=function(i){return document.getElementById(i);};
+  function norm(s){return String(s||'').normalize('NFD').toLowerCase().replace(/[^a-z0-9 ]/g,'');}
+  function lum(h){var n=parseInt(h.slice(1),16);return (0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255;}
+  function sh(h,f){var n=parseInt(h.slice(1),16),c=function(x){return Math.min(255,Math.round(x*f));};return 'rgb('+c(n>>16)+','+c(n>>8&255)+','+c(n&255)+')';}
+  var CK='v86_cards',CS={}; try{CS=JSON.parse(localStorage.getItem(CK)||'{}');}catch(e){}
+  var SEL=['.custom-card-box','.section-box','.budget-summary-banner','.box-clean-card','.accounts-dashboard-card','.account-card','.month-archive-item','.entry-isolated-box','.aurora-widget','.v84-card','.v85','.v86','.clean-statement-item','.quick-btn','.date-control-bar'];
+  function save(){try{localStorage.setItem(CK,JSON.stringify(CS));}catch(e){}}
+  function capply(){
+    var st=$('v86-cards-css'); if(!st){st=document.createElement('style');st.id='v86-cards-css';document.head.appendChild(st);}
+    var S='#app-main-container#app-main-container#app-main-container ',L=SEL.map(function(x){return S+x;}).join(','),c='';
+    if(CS.bg)c+=L+'{background:'+CS.bg+'!important}';
+    if(CS.bd)c+=L+'{border-color:'+CS.bd+'!important}';
+    if(CS.tx)c+=L+'{color:'+CS.tx+'!important}';
+    if(CS.rad!=null)c+=L+'{border-radius:'+CS.rad+'px!important}';
+    if(CS.sh===0)c+=L+'{box-shadow:none!important}';
+    st.textContent=c;
+    var e=$('app-main-container');
+    if(e){if(CS.tx){e.style.setProperty('--custom-text',CS.tx);e.style.setProperty('--text-muted',CS.tx);}else{e.style.removeProperty('--custom-text');e.style.removeProperty('--text-muted');}}
+  }
+  capply();
+
+  /* abas novas */
+  var content=document.querySelector('.content'),nav=document.querySelector('.top-nav'),mb=$('btn-tab-mais');
+  function pane(id,h){var d=document.createElement('div');d.id='tab-'+id;d.className='tab-pane';d.innerHTML=h;content.appendChild(d);}
+  function nb(id,l){var b=document.createElement('button');b.className='top-nav-item';b.id='btn-tab-'+id;b.innerHTML='<span>'+l+'</span>';b.onclick=function(){trocarAba(id);};nav.insertBefore(b,mb);}
+  if(content&&nav&&mb){
+    nb('stats','Gráficos'); nb('estilo','Estilo');
+    pane('stats','<div class="v86 v86hd" id="v86-hd"></div><div id="v86-stats" class="v86"></div><div id="v84-card" class="v84-card"></div>');
+    pane('estilo','<div class="v86"><b>🎨 Estilo</b><div class="v86s">Cores dos cards, cartões dos bancos, fundos e emojis.</div></div>');
+  }
+  function mv(){var p=$('tab-stats'); if(!p)return; ['aurora-widget-grid','bloco_footer'].forEach(function(id){var e=$(id); if(e&&e.parentNode!==p)p.appendChild(e);});}
+
+  /* Gráficos: indicadores */
+  function stats2(){
+    var p=$('tab-stats'); if(!p||!p.classList.contains('active'))return;
+    $('v86-hd').innerHTML='<button onclick="mudarMes(-1)">◀</button><b>📊 '+mesesNomes[currentMonthNum-1]+' '+currentYear+'</b><button onclick="mudarMes(1)">▶</button>';
+    var tr=(financialData.transactions||[]).filter(function(t){return t.monthKey===selectedMonthKey&&t.type==='expense';});
+    var tot=0,mx=null,cc=0,days={};
+    tr.forEach(function(t){var v=+t.value||0;tot+=v;if(!mx||v>mx.value)mx=t;if(t.payment==='Cartão de Crédito')cc+=v;if(t.date)days[t.date]=1;});
+    var M=function(v){return formatarMoeda(v);};
+    $('v86-stats').innerHTML='<div class="v86k">📈 Números do mês</div><div class="v86t">'
+     +'<div><small>Lançamentos</small><b>'+tr.length+'</b></div>'
+     +'<div><small>Ticket médio</small><b>'+M(tr.length?tot/tr.length:0)+'</b></div>'
+     +'<div><small>Maior gasto</small><b>'+M(mx?mx.value:0)+'</b><div style="font-size:.58rem;padding:0;background:none;border:0">'+(mx?String(mx.desc).replace(/</g,'').slice(0,22):'—')+'</div></div>'
+     +'<div><small>No cartão</small><b>'+(tot?Math.round(cc/tot*100):0)+'%</b><div style="font-size:.58rem;padding:0;background:none;border:0">'+Object.keys(days).length+' dia(s) com gasto</div></div></div>';
+  }
+
+  /* cartões: cor real com degradê do próprio banco */
+  function paint(){
+    var w=document.querySelectorAll('#cards-container .credit-card-widget'),cs=financialData.creditCards||[];
+    w.forEach(function(el,i){var c=cs[i]&&cs[i].color; if(c&&c.charAt(0)==='#'&&c.length===7){el.style.background='linear-gradient(135deg,'+c+' 0%,'+sh(c,.6)+' 100%)';el.style.borderLeftColor=c;}});
+  }
+  var b0=window.__v84;
+  window.__v84=function(){if(b0)b0(); mv(); stats2(); paint();};
+
+  /* Estilo */
+  var PR=[['Branco','#ffffff','#eadff5','#30243a'],['Lilás','#f5edff','#d8b4fe','#3b1d55'],['Rosé','#fff0f6','#f9a8d4','#4a1d3b'],['Menta','#ecfdf5','#86efac','#14432e'],['Céu','#eff6ff','#93c5fd','#1e3a5f'],['Creme','#fffbeb','#fcd34d','#4a3410'],['Noite','#2a1b3d','#5b3a82','#f5eaff']];
+  var COL={rosa:'#fbcfe8',pink:'#f472b6',lilas:'#e9d5ff',roxo:'#8b5cf6',lavanda:'#ddd6fe',azul:'#bfdbfe',marinho:'#1e3a8a',turquesa:'#99f6e4',verde:'#bbf7d0',menta:'#d1fae5',limao:'#ecfccb',amarelo:'#fef08a',creme:'#fffbeb',laranja:'#fed7aa',pessego:'#ffedd5',salmao:'#fecaca',coral:'#fca5a5',vermelho:'#fecdd3',vinho:'#881337',marrom:'#d6c3a8',bege:'#f5f0e6',cinza:'#e5e7eb',preto:'#1f1729',branco:'#ffffff',dourado:'#fde68a',prata:'#e2e8f0'};
+  var BK=[['Nubank','#820ad1'],['Itaú','#ec7000'],['Bradesco','#cc092f'],['Santander','#ec0000'],['Banco do Brasil','#0038a8'],['Caixa','#005ca9'],['Inter','#ff7a00'],['C6 Bank','#242424'],['Samsung','#1428a0'],['Mercado Pago','#009ee3'],['PicPay','#21c25e'],['BTG Pactual','#001e62'],['XP','#1a1a1a'],['Sicredi','#3fa110'],['Neon','#0ac2d1'],['Will Bank','#f5c400'],['Next','#00c95a'],['Porto','#0a7bd4']];
+  function setBg(bg){CS.bg=bg;CS.tx=lum(bg)<0.45?'#f5eaff':'#30243a';CS.bd=sh(bg,0.85);save();capply();}
+  function fillT(){
+    var t=$('v86t'); if(!t)return; t.innerHTML='';
+    (financialData.creditCards||[]).forEach(function(c){var o=document.createElement('option');o.value=c.id;o.textContent='Aplicar em: '+c.name;t.appendChild(o);});
+    var n=document.createElement('option');n.value='new';n.textContent='➕ Criar novo cartão';t.appendChild(n);
+  }
+  function bank(n,c){
+    var t=$('v86t').value; if(!financialData.creditCards)financialData.creditCards=[];
+    if(t==='new')financialData.creditCards.push({id:'card_'+Date.now(),name:n,limit:4000,initialUsed:0,color:c,closingDay:25,dueDay:5});
+    else{var k=financialData.creditCards.filter(function(x){return x.id===t;})[0]; if(!k)return; k.color=c;}
+    salvarDados(); atualizarTela(); fillT(); showToast('Cor '+n+' aplicada!');
+  }
+  var built=false;
+  function estilo(){
+    var p=$('tab-estilo'); if(!p)return; fillT(); if(built)return; built=true;
+    var a=document.createElement('div'); a.className='v86';
+    a.innerHTML='<div class="v86k">🃏 Cores dos cards</div><div class="v86g" id="v86pre"></div>'
+     +'<div class="v86r"><input type="text" id="v86cq" placeholder="Pesquisar cor (rosa, azul, menta…)"></div><div class="v86g" id="v86cr"></div>'
+     +'<div class="v86r"><label>Fundo<input type="color" id="v86bg" value="#ffffff"></label><label>Borda<input type="color" id="v86bd" value="#eadff5"></label><label>Texto<input type="color" id="v86tx" value="#30243a"></label></div>'
+     +'<div class="v86r"><button data-r="6">▭ Reto</button><button data-r="14">▢ Redondo</button><button data-r="24">◯ Bolha</button><button id="v86sh">☁️ Sombra</button><button id="v86rs">↺</button></div>';
+    var b=document.createElement('div'); b.className='v86';
+    b.innerHTML='<div class="v86k">💳 Cores reais dos bancos</div><div class="v86s">Escolha o cartão e toque no banco. Ou crie um cartão novo já com a cor oficial.</div><div class="v86r"><select id="v86t"></select></div><div class="v86g" id="v86bk"></div>';
+    p.appendChild(a); p.appendChild(b); fillT();
+    PR.forEach(function(x){var d=document.createElement('button');d.textContent=x[0];d.style.background=x[1];d.style.color=x[3];d.style.borderColor=x[2];d.onclick=function(){CS.bg=x[1];CS.bd=x[2];CS.tx=x[3];save();capply();};$('v86pre').appendChild(d);});
+    $('v86cq').oninput=function(){var q=norm(this.value),r=$('v86cr'); r.innerHTML=''; if(!q)return;
+      Object.keys(COL).filter(function(k){return k.indexOf(q)>-1;}).slice(0,9).forEach(function(k){var d=document.createElement('button');d.textContent=k;d.style.background=COL[k];d.style.color=lum(COL[k])<0.45?'#fff':'#30243a';d.onclick=function(){setBg(COL[k]);};r.appendChild(d);});
+      if(!r.children.length)r.textContent='Cor não encontrada. Use os seletores abaixo.';};
+    $('v86bg').oninput=function(){setBg(this.value);};
+    $('v86bd').oninput=function(){CS.bd=this.value;save();capply();};
+    $('v86tx').oninput=function(){CS.tx=this.value;save();capply();};
+    a.querySelectorAll('[data-r]').forEach(function(x){x.onclick=function(){CS.rad=+x.getAttribute('data-r');save();capply();};});
+    $('v86sh').onclick=function(){CS.sh=CS.sh===0?1:0;save();capply();};
+    $('v86rs').onclick=function(){CS={};save();capply();};
+    BK.forEach(function(x){var d=document.createElement('button');d.textContent=x[0];d.style.background=x[1];d.style.color=lum(x[1])<0.6?'#fff':'#222';d.onclick=function(){bank(x[0],x[1]);};$('v86bk').appendChild(d);});
+  }
+
+  /* Lançar mais fluido */
+  var KW=[['aliment',['mercado','super','padaria','ifood','restaur','lanche','pizza','hamburg','acougue','feira','cafe']],['transp',['uber','99','gasolina','combust','posto','onibus','metro','estacion','pedagio']],['saude',['farmac','drog','medic','consulta','exame','dentist','hospital']],['moradia',['luz','agua','aluguel','internet','condom','gas','energia']]];
+  function guess(){
+    var d=$('trans-desc'),c=$('trans-category'); if(!d||!c||c.value)return; var t=norm(d.value);
+    for(var i=0;i<KW.length;i++){ if(KW[i][1].some(function(k){return t.indexOf(k)>-1;})){
+      var o=[].slice.call(c.options).filter(function(x){return x.value&&norm(x.text).indexOf(KW[i][0])>-1;})[0];
+      if(o){c.value=o.value;showToast('Categoria: '+o.text);return;} } }
+  }
+  function boost(){
+    var v=$('trans-value'),d=$('trans-desc'); if(!v||!d||v.dataset.b)return; v.dataset.b='1';
+    v.setAttribute('inputmode','decimal'); v.setAttribute('enterkeyhint','next');
+    d.setAttribute('enterkeyhint','done'); d.setAttribute('autocomplete','off'); d.setAttribute('autocapitalize','sentences');
+    var dl=document.createElement('datalist'); dl.id='v86-dl'; document.body.appendChild(dl); d.setAttribute('list','v86-dl');
+    d.addEventListener('focus',function(){
+      var seen={}; dl.innerHTML='';
+      (financialData.transactions||[]).slice(0,120).forEach(function(t){var x=String(t.desc||'').replace(/ *[(][0-9]+[/][0-9]+[)]$/,''); if(x&&!seen[x]&&Object.keys(seen).length<30){seen[x]=1;var o=document.createElement('option');o.value=x;dl.appendChild(o);}});
+    });
+    [v,d].forEach(function(el){el.addEventListener('focus',function(){if(el===v)v.select();setTimeout(function(){el.scrollIntoView({block:'center'});},280);});});
+    v.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();d.focus();}});
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();d.blur();}});
+    d.addEventListener('blur',guess);
+    var line=v.closest('.amount-hero-box').querySelector('.val-controls-line'),row=document.createElement('div'); row.className='v86-chips';
+    [10,20,50,100].forEach(function(n){var b=document.createElement('button');b.type='button';b.textContent='+'+n;b.onclick=function(){v.value=((parseFloat(v.value)||0)+n).toFixed(2);calcularResumoParcelas();};row.appendChild(b);});
+    [1,2,3,6,10,12].forEach(function(n){var b=document.createElement('button');b.type='button';b.textContent=n+'x';b.onclick=function(){$('trans-installments-num').value=n;calcularResumoParcelas();};row.appendChild(b);});
+    line.parentNode.insertBefore(row,line.nextSibling);
+  }
+  document.addEventListener('focusin',function(e){if(e.target.matches&&e.target.matches('input,select,textarea'))document.body.classList.add('v86-typing');});
+  document.addEventListener('focusout',function(){setTimeout(function(){var a=document.activeElement;if(!a||!a.matches||!a.matches('input,select,textarea'))document.body.classList.remove('v86-typing');},120);});
+  setTimeout(boost,700);
+
+  /* navegação com as duas abas novas */
+  var NEW=['stats','estilo'],OLD=['painel','lancar','cartoes','contas','meses','mais'],ot=window.trocarAba;
+  if(typeof ot==='function'){
+    window.trocarAba=function(a){
+      NEW.forEach(function(n){var p=$('tab-'+n),b=$('btn-tab-'+n); if(p)p.classList.toggle('active',n===a); if(b)b.classList.toggle('active',n===a);});
+      if(NEW.indexOf(a)<0){var r=ot.apply(this,arguments); if(a==='lancar')boost(); return r;}
+      OLD.forEach(function(n){var p=$('tab-'+n),b=$('btn-tab-'+n); if(p)p.classList.remove('active'); if(b)b.classList.remove('active');});
+      try{localStorage.setItem('financas_pro_active_tab',a);}catch(e){}
+      window.scrollTo(0,0); var f=$('v84-fab'); if(f)f.style.display='flex';
+      if(a==='estilo')estilo();
+      requestAnimationFrame(function(){mv(); if(window.__v84)window.__v84();});
+    };
+  }
+  setTimeout(mv,1200);
 })();
 </script>
