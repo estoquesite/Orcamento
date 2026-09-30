@@ -6540,16 +6540,16 @@ body{background:#f4effa!important;}
  window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true;}},{passive:true});
  document.addEventListener('pointerdown',e=>{if(e.target.closest('.nav,.tabs,.bottom-nav,.main-nav,.top-nav')){navs().forEach(x=>{x.classList.remove('nav-bottom-hidden');x.classList.add('nav-bottom-visible')})}});
 })();
-</script>
+<script>
 /* =========================================================
    AJUSTE CIRÚRGICO V75 — VERBAS INDEPENDENTES POR MÊS
    ========================================================= */
 (function() {
-    // 1. Função para buscar as caixinhas específicas do mês selecionado (selectedMonthKey)
+    // 1. Função para buscar as caixinhas específicas do mês selecionado
     window.obterCaixinhasDoMesAtual = function() {
         if (!financialData.monthBoxes) financialData.monthBoxes = {};
         
-        // Se o mês ainda não tem caixinhas próprias salvas, cria uma cópia das caixinhas base atuais
+        // Se o mês ainda não tem caixinhas próprias salvas, cria uma cópia das base atuais
         if (!financialData.monthBoxes[selectedMonthKey]) {
             const baseBoxes = financialData.budgetBoxes || [];
             financialData.monthBoxes[selectedMonthKey] = JSON.parse(JSON.stringify(baseBoxes));
@@ -6572,7 +6572,6 @@ body{background:#f4effa!important;}
     const originalAtualizarTela = window.atualizarTela;
     if (originalAtualizarTela && !originalAtualizarTela.__v75Wrapped) {
         window.atualizarTela = function() {
-            // Garante que a variável global de caixinhas aponte para o mês atual
             if (financialData) {
                 financialData.budgetBoxes = window.obterCaixinhasDoMesAtual();
             }
@@ -6581,8 +6580,6 @@ body{background:#f4effa!important;}
         window.atualizarTela.__v75Wrapped = true;
     }
 
-    // 4. Garante que ao alterar valores, adicionar ou remover caixinhas, salve apenas no mês ativo
-    const originalSalvarCaixinha = window.abrirModalNovaCaixinhaVerba;
-    
     console.log("Módulo de Verbas Independentes por Mês (V75) ativado com sucesso!");
 })();
+</script>  
