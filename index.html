@@ -3208,7 +3208,7 @@ header h1::after{content:none!important;display:none!important;}
                                 <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
                             </select>
                         </div>
-                        <div class="v82-payment-note">✨ O lançamento entra no gasto geral do mês; o painel calcula o disponível somando todas as verbas.</div>
+                        <div class="v82-payment-note"></div>
                     </div>
 
                     <div id="row-select-card" class="entry-isolated-box custom-card-box v82-card-selector-group">
@@ -6433,106 +6433,94 @@ body{background:#f6f1fa!important;color:#463450}
     window.v81LastUndo=Date.now();
   };
   window.desfazerNaAba=function(page){
-    const st=readStack();
-    let idx=-1;
+    const st=readStack(); let idx=-1;
     for(let i=st.length-1;i>=0;i--){if(st[i].page===page||page==='geral'){idx=i;break}}
-    if(idx<0){ if(typeof mostrarToast==='function') mostrarToast('↶ Nada para desfazer nesta página'); return; }
-    const item=st[idx]; st.splice(idx,1); writeStack(st);
-    const snap=item.snap;
+    if(idx<0){if(typeof mostrarToast==='function') mostrarToast('↶ Nada para desfazer nesta página');return;}
+    const item=st[idx]; st.splice(idx,1); writeStack(st); const snap=item.snap;
     try{
       const currentKeys=[]; for(let i=0;i<localStorage.length;i++) currentKeys.push(localStorage.key(i));
       currentKeys.forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
       Object.keys(snap.ls||{}).forEach(k=>{try{localStorage.setItem(k,snap.ls[k])}catch(e){}});
       if(snap.data) window.financialData=snap.data;
       if(typeof renderizar==='function') renderizar();
-      if(typeof mostrarToast==='function') mostrarToast('↶ Alteração desfeita');
-      else alert('Alteração desfeita.');
+      if(typeof mostrarToast==='function') mostrarToast('↶ Alteração desfeita'); else alert('Alteração desfeita.');
     }catch(e){console.error('V81 undo',e);}
   };
-  // Capture state immediately before destructive actions. One undo point per page.
   ['removerVerbaExtra','removerTransacao','removerCaixinhaVerba','removerCartao','removerCategoria','removerMeta','removerConta'].forEach(name=>{
     const original=window[name];
     if(typeof original!=='function'||original.__v81wrapped)return;
     const wrapped=function(){
       let page='geral';
       try{const active=document.querySelector('.tab-pane:not(.hidden)'); if(active&&active.id) page=active.id.replace('tab-','')}catch(e){}
-      salvarPontoDesfazer(page);
-      return original.apply(this,arguments);
+      salvarPontoDesfazer(page); return original.apply(this,arguments);
     };
     wrapped.__v81wrapped=true; window[name]=wrapped;
   });
-  // Swipe horizontal entre as abas — acompanha o dedo e conclui com uma transição curta.
+
+  // Swipe entre abas: o gesto NÃO move a página. Só detecta o arrasto horizontal
+  // e, ao soltar, troca de aba. O scroll vertical continua nativo.
   const tabs=['painel','lancar','cartoes','contas','meses','mais'];
-  let sx=0,sy=0,st=0,activePane=null,tracking=false,horizontal=false,lastDx=0;
-  function activeTab(){const el=document.querySelector('.tab-pane.active')||document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null}
-  function pane(){const cur=activeTab();return cur?document.getElementById('tab-'+cur):null}
+  let sx=0,sy=0,st=0,tracking=false,horizontal=false,ignore=false;
+  function activeTab(){const el=document.querySelector('.tab-pane.active')||document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null;}
   function touchScrollable(el){
-    try{let n=el; while(n&&n!==document.body){const cs=getComputedStyle(n); if((cs.overflowX==='auto'||cs.overflowX==='scroll')&&n.scrollWidth>n.clientWidth+8)return true; n=n.parentElement;} }catch(_){} return false;
-  }
-  function finishSwipe(delta){
-    const cur=activeTab(), i=tabs.indexOf(cur); if(i<0)return;
-    const next=tabs[(i+delta+tabs.length)%tabs.length];
-    const current=document.getElementById('tab-'+cur);
-    if(!current||typeof trocarAba!=='function')return;
-    current.style.transition='transform .20s cubic-bezier(.22,.8,.25,1),opacity .20s ease';
-    current.style.transform=`translate3d(${delta<0?-100:100}%,0,0)`;
-    current.style.opacity='.55';
-    setTimeout(()=>{
-      current.style.transition='none'; current.style.transform=''; current.style.opacity='';
-      trocarAba(next);
-      const incoming=document.getElementById('tab-'+next);
-      if(incoming){
-        incoming.style.transition='none'; incoming.style.transform=`translate3d(${delta<0?100:-100}%,0,0)`; incoming.style.opacity='.55';
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          incoming.style.transition='transform .24s cubic-bezier(.22,.8,.25,1),opacity .24s ease';
-          incoming.style.transform='translate3d(0,0,0)'; incoming.style.opacity='1';
-          setTimeout(()=>{incoming.style.transition='';incoming.style.transform='';incoming.style.opacity='';},260);
-        }));
+    try{
+      let n=el;
+      while(n&&n!==document.body){
+        const cs=getComputedStyle(n);
+        if((cs.overflowX==='auto'||cs.overflowX==='scroll')&&n.scrollWidth>n.clientWidth+8)return true;
+        n=n.parentElement;
       }
-    },190);
+    }catch(_){ }
+    return false;
   }
-  document.documentElement.style.setProperty('--v82-swipe-distance','46px');
+  function go(delta){
+    const cur=activeTab(), i=tabs.indexOf(cur);
+    if(i<0||typeof trocarAba!=='function')return;
+    const next=tabs[(i+delta+tabs.length)%tabs.length];
+    trocarAba(next);
+  }
+  function reset(){tracking=false;horizontal=false;ignore=false;st=0;}
+
+  // Garante que o navegador não tente deslocar horizontalmente a página inteira.
+  const swipeStyle=document.createElement('style');
+  swipeStyle.id='v82-no-page-swipe-style';
+  swipeStyle.textContent='.phone-container,.tab-pane{overflow-x:hidden!important;}';
+  document.head.appendChild(swipeStyle);
+
   document.addEventListener('touchstart',e=>{
-    if(e.touches.length!==1)return;
+    if(e.touches.length!==1){reset();return;}
     const t=e.target;
-    if(t.closest('input,textarea,select,button,a,[contenteditable="true"]'))return;
-    if(touchScrollable(t))return;
-    sx=e.touches[0].clientX; sy=e.touches[0].clientY; st=Date.now(); lastDx=0; tracking=true; horizontal=false; activePane=pane();
+    // Campos, botões e links ficam 100% nativos.
+    if(t.closest('input,textarea,select,button,a,[contenteditable="true"]')){ignore=true;return;}
+    // Não roubar gestos de listas horizontais internas, como cartões.
+    if(touchScrollable(t)){ignore=true;return;}
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY; st=Date.now(); tracking=true; horizontal=false;
   },{passive:true});
+
   document.addEventListener('touchmove',e=>{
-    if(!tracking||e.touches.length!==1||!activePane)return;
-    const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy; lastDx=dx;
+    if(!tracking||ignore||e.touches.length!==1)return;
+    const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
     if(!horizontal){
-      if(Math.abs(dx)<8&&Math.abs(dy)<8)return;
-      if(Math.abs(dy)>Math.abs(dx)*1.08){tracking=false;return;}
+      if(Math.abs(dx)<9&&Math.abs(dy)<9)return;
+      // Se for gesto vertical, entrega imediatamente ao scroll normal da página.
+      if(Math.abs(dy)>=Math.abs(dx)*1.15){reset();return;}
       horizontal=true;
-      activePane.style.willChange='transform,opacity'; activePane.style.transition='none';
     }
-    if(horizontal){
-      const resisted=dx*.72;
-      activePane.style.transform=`translate3d(${resisted}px,0,0)`;
-      activePane.style.opacity=String(Math.max(.72,1-Math.abs(dx)/900));
-    }
-  },{passive:true});
+    // Impede apenas o deslocamento horizontal do navegador/página.
+    if(horizontal&&e.cancelable)e.preventDefault();
+  },{passive:false});
+
   document.addEventListener('touchend',e=>{
-    if(!tracking||e.changedTouches.length!==1)return;
+    if(ignore){reset();return;}
+    if(!tracking||e.changedTouches.length!==1){reset();return;}
     const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy, dt=Date.now()-st;
-    tracking=false; st=0;
-    if(!horizontal){if(activePane)activePane.style.willChange='';return;}
-    const ok=Math.abs(dx)>=46 && Math.abs(dx)>Math.abs(dy)*1.12 && dt<900;
-    if(ok){
-      activePane.style.transition='transform .18s cubic-bezier(.22,.8,.25,1),opacity .18s ease';
-      activePane.style.transform=`translate3d(${dx<0?-100:100}%,0,0)`; activePane.style.opacity='.55';
-      const dir=dx<0?1:-1;
-      setTimeout(()=>{activePane.style.willChange='';finishSwipe(dir);},170);
-    }else{
-      activePane.style.transition='transform .18s cubic-bezier(.22,.8,.25,1),opacity .18s ease';
-      activePane.style.transform='translate3d(0,0,0)'; activePane.style.opacity='1';
-      setTimeout(()=>{if(activePane){activePane.style.transition='';activePane.style.transform='';activePane.style.opacity='';activePane.style.willChange='';}},210);
+    if(horizontal&&Math.abs(dx)>=48&&Math.abs(dx)>Math.abs(dy)*1.12&&dt<900){
+      go(dx<0?1:-1);
     }
-    activePane=null; horizontal=false; lastDx=0;
+    reset();
   },{passive:true});
-  document.addEventListener('touchcancel',()=>{if(activePane){activePane.style.transition='';activePane.style.transform='';activePane.style.opacity='';activePane.style.willChange='';}tracking=false;horizontal=false;st=0;activePane=null;},{passive:true});
+
+  document.addEventListener('touchcancel',reset,{passive:true});
 })();
 </script>
 
@@ -6562,18 +6550,13 @@ body{background:#f6f1fa!important;color:#463450}
 
 </body>
 
-<style id="v82-swipe-fluid-and-card-group">
-/* V82.2 — gesto mais natural: a tela acompanha o dedo antes de trocar */
-.tab-pane{backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translate3d(0,0,0);}
-#tab-lancar .v82-payment-card-group{gap:5px!important;padding-bottom:7px!important;margin-bottom:0!important;border-bottom-left-radius:9px!important;border-bottom-right-radius:9px!important;}
-#tab-lancar .v82-payment-note{font-size:.58rem;line-height:1.25;opacity:.60;margin:1px 2px 0;text-align:center;}
+
+
+<style id="v82-3-card-group">
+#tab-lancar .v82-payment-card-group{gap:4px!important;padding-bottom:6px!important;margin-bottom:0!important;border-bottom-left-radius:9px!important;border-bottom-right-radius:9px!important;}
 #tab-lancar .v82-card-selector-group{margin-top:-4px!important;border-top-left-radius:9px!important;border-top-right-radius:9px!important;padding-top:7px!important;}
 #tab-lancar .v82-card-selector-group .card-tags-scroll-wrap{margin-top:0!important;}
-@media(max-width:640px){
-  #tab-lancar .v82-payment-card-group{padding:7px 9px 6px!important;gap:4px!important;}
-  #tab-lancar .v82-payment-note{font-size:.55rem;margin-top:0;}
-  #tab-lancar .v82-card-selector-group{margin-top:-4px!important;padding:6px 9px 7px!important;}
-}
+@media(max-width:640px){#tab-lancar .v82-payment-card-group{padding:7px 9px 6px!important;gap:3px!important;}#tab-lancar .v82-card-selector-group{margin-top:-4px!important;padding:6px 9px 7px!important;}}
 </style>
 </html>
 
