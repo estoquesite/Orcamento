@@ -5035,9 +5035,33 @@ body{
         }
 
         function abrirModalEditarCaixinhaVerba(boxId) {
-            const box = financialData.budgetBoxes.find(b => b.id === boxId);
-            if (!box) return;
+    const box = financialData.budgetBoxes.find(b => b.id === boxId);
+    if (!box) return;
+    
+    // Pega o valor atual específico desse mês
+    const valorAtual = buscarValorMensal(boxId, selectedMonthKey);
 
+    abrirModal(`Ajustar ${box.name}`, `
+        <p class="text-xs text-gray-500 mb-2">Alterando apenas para o mês: <b>${selectedMonthKey}</b></p>
+        <label class="text-xs text-gray-700 font-bold">Valor para este mês:</label>
+        <input type="number" id="input-valor-independente" step="0.01" value="${valorAtual}" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:8px;">
+    `, () => {
+        const novoVal = parseFloat(document.getElementById("input-valor-independente").value);
+        if (!isNaN(novoVal)) {
+            // Se a gaveta de meses não existir, cria ela
+            if (!financialData.boxMonthlyValues) financialData.boxMonthlyValues = {};
+            // Se o mês atual não tiver uma gaveta, cria ela
+            if (!financialData.boxMonthlyValues[selectedMonthKey]) financialData.boxMonthlyValues[selectedMonthKey] = {};
+            
+            // SALVA O VALOR APENAS PARA ESSE MÊS E ESSA CAIXINHA
+            financialData.boxMonthlyValues[selectedMonthKey][boxId] = novoVal;
+            
+            salvarDados();
+            atualizarTela();
+            showToast("Renda de " + mesesNomes[currentMonthNum-1] + " atualizada!");
+        }
+    });
+}
             abrirModal("Editar Caixinha de Verba", `
                 <label class="text-xs text-gray-700 font-bold">Nome:</label>
                 <input type="text" id="edit-box-name" value="${box.name}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
