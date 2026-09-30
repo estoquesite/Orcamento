@@ -2088,7 +2088,7 @@ header,.top-nav{z-index:20!important}
 #budget-boxes-container .box-clean-footer{font-size:.64rem!important}
 
 /* Hero ainda menor, mantendo todas as informações */
-#bloco_saldo .btn-config-bloco{top:7px;right:7px}
+#bloco_saldo .btn-config-bloco{display:none!important;top:7px;right:7px}
 #bloco_saldo #hero-sobra-livre{font-size:1.38rem!important}
 #bloco_saldo .hero-progress-wrap{margin-top:0!important}
 #bloco_saldo .hero-progress-wrap > div:last-child{height:5px!important}
@@ -2824,6 +2824,56 @@ header{align-items:center;}
   .brand-cloud-status span:first-child{font-size:.62rem !important;}
 }
 </style>
+
+<style id="v78-header-clean">
+/* V78 — cabeçalho mais limpo: título + versão, status discreto abaixo */
+header h1::after{content:none!important;display:none!important;}
+.brand-title-wrap{gap:2px!important;padding-bottom:3px!important;}
+.brand-title-wrap h1{display:flex!important;align-items:center!important;gap:4px!important;white-space:nowrap;}
+.brand-version{margin-left:0!important;padding:2px 5px!important;font-size:.45rem!important;border-radius:6px!important;line-height:1!important;}
+.brand-cloud-status{
+  display:flex!important;align-items:center!important;gap:3px!important;
+  margin-top:1px!important;padding:0!important;border:0!important;width:auto!important;
+  font-size:.48rem!important;line-height:1!important;font-weight:650!important;
+  color:rgba(216,180,254,.86)!important;opacity:.9!important;
+}
+.brand-cloud-status span:first-child{font-size:.52rem!important;line-height:1!important;}
+/* tira a sensação de informação espalhada: o indicador financeiro fica abaixo do título */
+.header-brand{position:relative!important;align-items:center!important;}
+.brand-status-dot{
+  position:absolute!important;left:52px!important;right:auto!important;bottom:1px!important;
+  width:6px!important;height:6px!important;border-width:1.5px!important;
+}
+@media(max-width:520px){
+  .brand-title-wrap{gap:1px!important;padding-bottom:2px!important;}
+  .brand-title-wrap h1{font-size:1.08rem!important;gap:3px!important;}
+  .brand-version{font-size:.42rem!important;padding:2px 4px!important;}
+  .brand-cloud-status{font-size:.45rem!important;gap:2px!important;}
+  .brand-cloud-status span:first-child{font-size:.49rem!important;}
+  .brand-status-dot{left:50px!important;bottom:0!important;width:5px!important;height:5px!important;}
+}
+</style>
+
+<style id="v79-clean-header">
+/* V79 — topo mais limpo e compacto; controles de cor removidos */
+#v71-color-trigger,#v71-color-pop{display:none!important}
+.brand-cloud-status{font-size:.48rem!important;line-height:1!important;gap:2px!important;margin-top:2px!important;opacity:.72!important;white-space:nowrap!important}
+.brand-cloud-status span:first-child{font-size:.62rem!important}
+#sync-status{font-size:.48rem!important;padding:2px 4px!important;border-radius:5px!important;margin-right:1px!important;white-space:nowrap!important}
+@media(max-width:520px){
+  .brand-title-wrap h1{font-size:1rem!important;line-height:1.05!important}
+  .brand-cloud-status{font-size:.44rem!important;margin-top:1px!important}
+  .brand-cloud-status span:first-child{font-size:.55rem!important}
+  #sync-status{font-size:.42rem!important;padding:2px 3px!important}
+  .header-actions{gap:4px!important}
+}
+</style>
+<style id="v81-undo-swipe">
+.v81-undo-wrap{display:flex;justify-content:flex-end;margin:0 0 8px}
+.v81-undo-btn{border:1px solid rgba(139,92,246,.25);background:rgba(255,255,255,.88);color:#6d28d9;border-radius:999px;padding:6px 10px;font-size:.68rem;font-weight:800;box-shadow:0 3px 12px rgba(99,67,170,.08);backdrop-filter:blur(8px);cursor:pointer}
+.v81-undo-btn:active{transform:scale(.97)}
+@media(max-width:600px){.v81-undo-wrap{margin:0 0 7px}.v81-undo-btn{font-size:.66rem;padding:6px 9px}}
+</style>
 </head>
 <body>
 
@@ -2863,7 +2913,7 @@ header{align-items:center;}
                     <span id="brand-status-dot" class="brand-status-dot green" title="Situação financeira: boa"></span>
                 </div>
                 <div class="brand-title-wrap">
-                    <h1>Finanças Pro <span class="brand-version">V67</span></h1>
+                    <h1>Finanças Pro <span class="brand-version">V79</span></h1>
                     <div class="brand-cloud-status"><span aria-hidden="true">☁️</span> <span>Conectado às nuvens</span></div>
                 </div>
             </div>
@@ -2911,6 +2961,7 @@ header{align-items:center;}
 
             <!-- TELA 1: PAINEL -->
             <div id="tab-painel" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('painel')">↶ Desfazer</button></div>
                 <div class="hero-wallet-card" id="bloco_saldo" data-bloco-id="saldo">
                     <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -2953,7 +3004,7 @@ header{align-items:center;}
 
 
                 <div class="date-control-bar custom-card-box" id="bloco_data" data-bloco-id="data">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('data')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
+                    
                     <div style="display:flex; align-items:center; gap:3px;">
                         <button class="date-nav-btn" onclick="mudarAno(-1)">«</button>
                         <select id="select-year" onchange="alterarAnoDireto(this.value)" style="width:auto; padding:1px 4px; font-weight:900; font-size:0.85rem; color:var(--primary); background:transparent; border:none;"></select>
@@ -3009,7 +3060,7 @@ header{align-items:center;}
 
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <div class="budget-summary-banner custom-card-box" id="bloco_soma" data-bloco-id="soma">
-                        <button class="btn-config-bloco" onclick="abrirConfigBloco('soma')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
+                        
                         <div>
                             <span style="font-size:0.65rem; font-weight:800; opacity:0.7; text-transform:uppercase; display:block;">
                                 📦 Soma Total das Verbas
@@ -3028,7 +3079,7 @@ header{align-items:center;}
                 </div>
 
                 <div class="extra-income-card custom-card-box" id="bloco_extra" data-bloco-id="extra">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('extra')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
+                    
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <b style="font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:5px;">
@@ -3045,7 +3096,7 @@ header{align-items:center;}
                 </div>
 
                 <div class="section-box custom-card-box" id="bloco_ultimos" data-bloco-id="ultimos">
-                    <button class="btn-config-bloco" onclick="abrirConfigBloco('ultimos')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
+                    
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="font-size:0.75rem; font-weight:800; opacity:0.8;">🕒 ÚLTIMOS LANÇAMENTOS</span>
                         <a href="#" onclick="trocarAba('lancar')" style="font-size:0.68rem; color:var(--primary); font-weight:800; text-decoration:none;">Ver extrato →</a>
@@ -3067,6 +3118,7 @@ header{align-items:center;}
 
             <!-- TELA 2: LANÇAR -->
             <div id="tab-lancar" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('lancar')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3218,6 +3270,7 @@ header{align-items:center;}
 
             <!-- TELA 3: CARTÕES -->
             <div id="tab-cartoes" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('cartoes')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3276,6 +3329,7 @@ header{align-items:center;}
 
             <!-- TELA 4: CONTAS -->
             <div id="tab-contas" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('contas')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3315,6 +3369,7 @@ header{align-items:center;}
 
             <!-- TELA 5: MESES (COM FILTRO SALVÁVEL) -->
             <div id="tab-meses" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('meses')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3360,6 +3415,7 @@ header{align-items:center;}
 
             <!-- TELA 5: MAIS -->
             <div id="tab-mais" class="tab-pane">
+                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('mais')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -6157,11 +6213,11 @@ header{align-items:center;}
   const colors=['#fff','#f5f1f8','#eee4fb','#e8d7fb','#f0e0ed','#fbf7ff','#f1e5ff','#f8e8f2','#eadcff','#d8b4fe','#c084fc','#a855f7','#7c3aed','#5b21b6','#3b1d55','#241034','#09070f','#111827','#1e293b','#334155','#475569','#64748b','#94a3b8','#cbd5e1','#ef4444','#f97316','#f59e0b','#eab308','#84cc16','#22c55e','#14b8a6','#06b6d4','#3b82f6','#6366f1','#ec4899','#f43f5e','#fb7185','#c026d3','#7e22ce','#9333ea','#16a34a','#15803d','#0f766e','#0369a1','#1d4ed8','#be123c','#9f1239','#92400e','#a16207','#713f12','#57534e','#44403c','#292524','#ffffff'];
   const themeMap={aurora:'#09070f',lilac:'#2a1638',midnight:'#15112b',rose:'#2d1227',pearl:'#f6f1fa',solidLilac:'#241034',solidBlack:'#09070f',solidWhite:'#f5f1f8',solidPlum:'#3b1d55',auroraLight:'#efe4fb',lilacLight:'#f1e5ff',midnightLight:'#ddd9f4',roseLight:'#f0d9e9',solidLilacLight:'#eee4fb',solidPlumLight:'#f0e0ed'};
   function init(){
-    const actions=document.querySelector('.header-actions'); if(!actions || document.getElementById('v71-color-trigger')) return;
+    const actions=document.querySelector('.header-actions'); if(!actions || document.getElementById('v79-disable-color-trigger')) return;
     const mode=document.getElementById('bg-mode-toggle');
-    const b=document.createElement('button'); b.id='v71-color-trigger'; b.type='button'; b.textContent='🎨'; b.title='Cores e fundos'; b.setAttribute('aria-label','Cores e fundos');
-    if(mode) mode.insertAdjacentElement('afterend',b); else actions.prepend(b);
-    const pop=document.createElement('div'); pop.id='v71-color-pop'; pop.innerHTML='<div class="v71-color-head"><span>🎨 Cores e fundos</span><button class="v71-close" type="button">×</button></div><div class="v71-palette" id="v71-palette"></div><div class="v71-tools"><button class="v71-tool" type="button" id="v71-random">🎲 Aleatório</button><label class="v71-tool v71-custom">🖼️ Minha imagem<input type="file" accept="image/*" id="v71-image"></label><label class="v71-tool v71-custom">🎨 Escolher cor<input type="color" id="v71-picker" value="#f1e5ff"></label></div><div class="v71-note">Toque em uma cor para aplicar. A escolha fica salva.</div>';
+    const b=document.createElement('button'); b.id='v79-disable-color-trigger'; b.style.display='none'; b.type='button'; b.textContent='🎨'; b.title='Cores e fundos'; b.setAttribute('aria-label','Cores e fundos');
+    
+    const pop=document.createElement('div'); pop.id='v71-color-pop'; pop.style.display='none'; pop.innerHTML='<div class="v71-color-head"><span>🎨 Cores e fundos</span><button class="v71-close" type="button">×</button></div><div class="v71-palette" id="v71-palette"></div><div class="v71-tools"><button class="v71-tool" type="button" id="v71-random">🎲 Aleatório</button><label class="v71-tool v71-custom">🖼️ Minha imagem<input type="file" accept="image/*" id="v71-image"></label><label class="v71-tool v71-custom">🎨 Escolher cor<input type="color" id="v71-picker" value="#f1e5ff"></label></div><div class="v71-note">Toque em uma cor para aplicar. A escolha fica salva.</div>';
     document.body.appendChild(pop);
     const grid=pop.querySelector('#v71-palette'); colors.forEach(c=>{const x=document.createElement('button');x.type='button';x.className='v71-swatch';x.style.background=c;x.title=c;x.dataset.color=c;x.onclick=()=>applySolid(c);grid.appendChild(x)});
     b.onclick=()=>pop.classList.toggle('open'); pop.querySelector('.v71-close').onclick=()=>pop.classList.remove('open');
@@ -6376,6 +6432,60 @@ body{background:#f6f1fa!important;color:#463450}
 })();
 </script>
 
+<script id="v81-undo-swipe-script">
+(function(){
+  const UNDO_KEY='financas_pro_v81_undo_stack';
+  const MAX=8;
+  function snapshot(){
+    const ls={};
+    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); try{ls[k]=localStorage.getItem(k)}catch(e){}}
+    let data=null; try{data=JSON.parse(JSON.stringify(window.financialData||null));}catch(e){}
+    return {ls,data,time:Date.now()};
+  }
+  function readStack(){try{return JSON.parse(sessionStorage.getItem(UNDO_KEY)||'[]')}catch(e){return[]}}
+  function writeStack(st){try{sessionStorage.setItem(UNDO_KEY,JSON.stringify(st.slice(-MAX)))}catch(e){}}
+  window.salvarPontoDesfazer=function(page){
+    const st=readStack(); st.push({page:page||'geral',snap:snapshot()}); writeStack(st);
+    window.v81LastUndo=Date.now();
+  };
+  window.desfazerNaAba=function(page){
+    const st=readStack();
+    let idx=-1;
+    for(let i=st.length-1;i>=0;i--){if(st[i].page===page||page==='geral'){idx=i;break}}
+    if(idx<0){ if(typeof mostrarToast==='function') mostrarToast('↶ Nada para desfazer nesta página'); return; }
+    const item=st[idx]; st.splice(idx,1); writeStack(st);
+    const snap=item.snap;
+    try{
+      const currentKeys=[]; for(let i=0;i<localStorage.length;i++) currentKeys.push(localStorage.key(i));
+      currentKeys.forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+      Object.keys(snap.ls||{}).forEach(k=>{try{localStorage.setItem(k,snap.ls[k])}catch(e){}});
+      if(snap.data) window.financialData=snap.data;
+      if(typeof renderizar==='function') renderizar();
+      if(typeof mostrarToast==='function') mostrarToast('↶ Alteração desfeita');
+      else alert('Alteração desfeita.');
+    }catch(e){console.error('V81 undo',e);}
+  };
+  // Capture state immediately before destructive actions. One undo point per page.
+  ['removerVerbaExtra','removerTransacao','removerCaixinhaVerba','removerCartao','removerCategoria','removerMeta','removerConta'].forEach(name=>{
+    const original=window[name];
+    if(typeof original!=='function'||original.__v81wrapped)return;
+    const wrapped=function(){
+      let page='geral';
+      try{const active=document.querySelector('.tab-pane:not(.hidden)'); if(active&&active.id) page=active.id.replace('tab-','')}catch(e){}
+      salvarPontoDesfazer(page);
+      return original.apply(this,arguments);
+    };
+    wrapped.__v81wrapped=true; window[name]=wrapped;
+  });
+  // Swipe horizontal between the main tabs. Ignore form controls and vertical gestures.
+  let sx=0,sy=0,st=0;
+  const tabs=['painel','lancar','cartoes','contas','meses','mais'];
+  function activeTab(){const el=document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null}
+  function go(delta){const cur=activeTab(); if(!cur||typeof trocarAba!=='function')return; const i=tabs.indexOf(cur); const n=i+delta; if(n>=0&&n<tabs.length) trocarAba(tabs[n]);}
+  document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return; const t=e.target; if(t.closest('input,textarea,select,button,a,[contenteditable="true"]'))return; sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();},{passive:true});
+  document.addEventListener('touchend',e=>{if(!st||e.changedTouches.length!==1)return; const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy,dt=Date.now()-st; st=0; if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.25||dt>700)return; go(dx<0?1:-1);},{passive:true});
+})();
+</script>
 </body>
 </html>
 
