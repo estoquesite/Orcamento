@@ -6542,76 +6542,48 @@ body{background:#f4effa!important;}
 })();
 <script>
 /* =========================================================
-   AJUSTE CIRÚRGICO V76 — VERBAS E CAIXINHAS 100% INDEPENDENTES POR MÊS
+   AJUSTE CORRIGIDO V78 — VERBAS INDEPENDENTES E LIMPEZA DE QUADROS
    ========================================================= */
 (function() {
-    // 1. Garante o armazenamento isolado de caixinhas por mês
-    window.obterCaixinhasDoMesAtual = function() {
-        if (!financialData.monthBoxes) financialData.monthBoxes = {};
-        
-        // Se o mês selecionado ainda não tem um array próprio de caixinhas, 
-        // criamos uma cópia limpa baseada nas caixinhas atuais ou padrão
-        if (!financialData.monthBoxes[selectedMonthKey]) {
-            const baseBoxes = financialData.budgetBoxes || [
-                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#059669" },
-                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#0284c7" },
-                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
-            ];
-            financialData.monthBoxes[selectedMonthKey] = JSON.parse(JSON.stringify(baseBoxes));
-        }
-        return financialData.monthBoxes[selectedMonthKey];
-    };
-
-    // 2. Calcula a verba total estritamente com base nas caixinhas do mês ativo
-    window.obterVerbaDoMes = function(mKey, totalBaseCaixinhas) {
-        if (financialData.monthBoxes && financialData.monthBoxes[mKey]) {
-            return financialData.monthBoxes[mKey].reduce((acc, b) => acc + (Number(b.amount) || 0), 0);
-        }
-        if (financialData.monthIncomes && typeof financialData.monthIncomes[mKey] === 'number') {
-            return financialData.monthIncomes[mKey];
-        }
-        return totalBaseCaixinhas;
-    };
-
-    // 3. Força o painel a renderizar e salvar alterações apenas no mês selecionado
+    // 1. Garante que os meses tenham caixinhas independentes sem duplicar
     const originalAtualizarTela = window.atualizarTela;
-    if (originalAtualizarTela && !originalAtualizarTela.__v76Wrapped) {
+    if (originalAtualizarTela && !originalAtualizarTela.__v78Wrapped) {
         window.atualizarTela = function() {
-            if (financialData) {
-                // Atribui à variável global apenas as caixinhas pertencentes ao mês na tela
-                financialData.budgetBoxes = window.obterCaixinhasDoMesAtual();
+            if (typeof financialData !== 'undefined') {
+                if (!financialData.monthBoxes) financialData.monthBoxes = {};
+                
+                if (!financialData.monthBoxes[selectedMonthKey]) {
+                    financialData.monthBoxes[selectedMonthKey] = [
+                        { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#059669" },
+                        { id: "box_gloria", name: "Glória", amount: 600.00, color: "#0284c7" },
+                        { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
+                    ];
+                }
+                
+                // Remove possíveis caixinhas duplicadas pelo ID ou nome no mesmo mês
+                const caixasDoMes = financialData.monthBoxes[selectedMonthKey];
+                const unicas = [];
+                const idsVistos = new Set();
+                const nomesVistos = new Set();
+                
+                caixasDoMes.forEach(b => {
+                    const nomeLimpo = (b.name || "").trim();
+                    if (!idsVistos.has(b.id) && !nomesVistos.has(nomeLimpo)) {
+                        idsVistos.add(b.id);
+                        nomesVistos.add(nomeLimpo);
+                        unicas.push(b);
+                    }
+                });
+                
+                financialData.monthBoxes[selectedMonthKey] = unicas;
+                financialData.budgetBoxes = unicas;
             }
             originalAtualizarTela.apply(this, arguments);
         };
-        window.atualizarTela.__v76Wrapped = true;
+        window.atualizarTela.__v78Wrapped = true;
     }
 
-    console.log("Módulo V76 de Verbas Independentes por Mês ativado com sucesso!");
+    console.log("Módulo V78 ativado com sucesso!");
 })();
-/* =========================================================
-   RESTAURAÇÃO RÁPIDA DO CARD DA SOPHIA PARA O MÊS ATUAL
-   ========================================================= */
-(function() {
-    if (typeof financialData !== 'undefined' && typeof selectedMonthKey !== 'undefined') {
-        if (!financialData.monthBoxes) financialData.monthBoxes = {};
-        if (!financialData.monthBoxes[selectedMonthKey]) {
-            financialData.monthBoxes[selectedMonthKey] = [];
-        }
-        
-        // Verifica se a caixinha da Sophia já existe neste mês; se não, adiciona
-        const jaExiste = financialData.monthBoxes[selectedMonthKey].some(b => b.name.includes("Sophia"));
-        if (!jaExiste) {
-            financialData.monthBoxes[selectedMonthKey].push({
-                id: "box_sofia_" + Date.now(),
-                name: "Pensão Sophia",
-                amount: 1500.00,
-                color: "#7c3aed"
-            });
-            // Salva e atualiza a tela automaticamente
-            if (typeof salvarDados === 'function') salvarDados();
-            if (typeof atualizarTela === 'function') atualizarTela();
-            console.log("Card da Sophia restaurado com sucesso para o mês " + selectedMonthKey);
-        }
-    }
-})();
-<script>
+</script>
+
