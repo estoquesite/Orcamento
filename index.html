@@ -2913,7 +2913,7 @@ header h1::after{content:none!important;display:none!important;}
                     <span id="brand-status-dot" class="brand-status-dot green" title="Situação financeira: boa"></span>
                 </div>
                 <div class="brand-title-wrap">
-                    <h1>Finanças Pro <span class="brand-version">V79</span></h1>
+                    <h1>Finanças Pro <span class="brand-version">V82.2</span></h1>
                     <div class="brand-cloud-status"><span aria-hidden="true">☁️</span> <span>Conectado às nuvens</span></div>
                 </div>
             </div>
@@ -3200,7 +3200,7 @@ header h1::after{content:none!important;display:none!important;}
                         </div>
                     </div>
 
-                    <div class="entry-isolated-box custom-card-box">
+                    <div class="entry-isolated-box custom-card-box v82-payment-card-group">
                         <div class="detail-row">
                             <i class="fa-solid fa-credit-card"></i>
                             <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
@@ -3208,10 +3208,10 @@ header h1::after{content:none!important;display:none!important;}
                                 <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
                             </select>
                         </div>
+                        <div class="v82-payment-note">✨ O lançamento entra no gasto geral do mês; o painel calcula o disponível somando todas as verbas.</div>
                     </div>
-                    <div style="font-size:0.60rem; opacity:0.62; margin:-1px 3px 5px; text-align:center;">✨ O lançamento entra no gasto geral do mês; o painel calcula o disponível somando todas as verbas.</div>
 
-                    <div id="row-select-card" class="entry-isolated-box custom-card-box">
+                    <div id="row-select-card" class="entry-isolated-box custom-card-box v82-card-selector-group">
                         <div class="card-tags-scroll-wrap">
                             <span style="font-size:0.62rem; font-weight:800; opacity:0.7; text-transform:uppercase; margin-bottom:4px; display:block;">
                                 Selecione o Cartão Utilizado:
@@ -6461,18 +6461,78 @@ body{background:#f6f1fa!important;color:#463450}
     };
     wrapped.__v81wrapped=true; window[name]=wrapped;
   });
-  // Swipe horizontal between the main tabs. Ignore form controls and vertical gestures.
-  let sx=0,sy=0,st=0;
+  // Swipe horizontal entre as abas — acompanha o dedo e conclui com uma transição curta.
   const tabs=['painel','lancar','cartoes','contas','meses','mais'];
-  function activeTab(){const el=document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null}
-  function go(delta){const cur=activeTab(); if(!cur||typeof trocarAba!=='function')return; const i=tabs.indexOf(cur); if(i<0)return; const n=(i+delta+tabs.length)%tabs.length; trocarAba(tabs[n]);}
-  // Mantém a barra inferior exatamente como está; o gesto só troca de tela.
-  document.documentElement.style.setProperty('--v82-swipe-distance','52px');
+  let sx=0,sy=0,st=0,activePane=null,tracking=false,horizontal=false,lastDx=0;
+  function activeTab(){const el=document.querySelector('.tab-pane.active')||document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null}
+  function pane(){const cur=activeTab();return cur?document.getElementById('tab-'+cur):null}
   function touchScrollable(el){
-    try{let n=el; while(n&&n!==document.body){const st=getComputedStyle(n); if((st.overflowX==='auto'||st.overflowX==='scroll')&&n.scrollWidth>n.clientWidth+8)return true; n=n.parentElement;} }catch(_){} return false;
+    try{let n=el; while(n&&n!==document.body){const cs=getComputedStyle(n); if((cs.overflowX==='auto'||cs.overflowX==='scroll')&&n.scrollWidth>n.clientWidth+8)return true; n=n.parentElement;} }catch(_){} return false;
   }
-  document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return; const t=e.target; if(t.closest('input,textarea,select,button,a,[contenteditable="true"]'))return; sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();},{passive:true});
-  document.addEventListener('touchend',e=>{if(!st||e.changedTouches.length!==1)return; const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy,dt=Date.now()-st; st=0; if(Math.abs(dx)<52||Math.abs(dx)<Math.abs(dy)*1.35||dt>700)return; const sc=touchScrollable(e.target); if(sc)return; go(dx<0?1:-1);},{passive:true});
+  function finishSwipe(delta){
+    const cur=activeTab(), i=tabs.indexOf(cur); if(i<0)return;
+    const next=tabs[(i+delta+tabs.length)%tabs.length];
+    const current=document.getElementById('tab-'+cur);
+    if(!current||typeof trocarAba!=='function')return;
+    current.style.transition='transform .20s cubic-bezier(.22,.8,.25,1),opacity .20s ease';
+    current.style.transform=`translate3d(${delta<0?-100:100}%,0,0)`;
+    current.style.opacity='.55';
+    setTimeout(()=>{
+      current.style.transition='none'; current.style.transform=''; current.style.opacity='';
+      trocarAba(next);
+      const incoming=document.getElementById('tab-'+next);
+      if(incoming){
+        incoming.style.transition='none'; incoming.style.transform=`translate3d(${delta<0?100:-100}%,0,0)`; incoming.style.opacity='.55';
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          incoming.style.transition='transform .24s cubic-bezier(.22,.8,.25,1),opacity .24s ease';
+          incoming.style.transform='translate3d(0,0,0)'; incoming.style.opacity='1';
+          setTimeout(()=>{incoming.style.transition='';incoming.style.transform='';incoming.style.opacity='';},260);
+        }));
+      }
+    },190);
+  }
+  document.documentElement.style.setProperty('--v82-swipe-distance','46px');
+  document.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1)return;
+    const t=e.target;
+    if(t.closest('input,textarea,select,button,a,[contenteditable="true"]'))return;
+    if(touchScrollable(t))return;
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY; st=Date.now(); lastDx=0; tracking=true; horizontal=false; activePane=pane();
+  },{passive:true});
+  document.addEventListener('touchmove',e=>{
+    if(!tracking||e.touches.length!==1||!activePane)return;
+    const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy; lastDx=dx;
+    if(!horizontal){
+      if(Math.abs(dx)<8&&Math.abs(dy)<8)return;
+      if(Math.abs(dy)>Math.abs(dx)*1.08){tracking=false;return;}
+      horizontal=true;
+      activePane.style.willChange='transform,opacity'; activePane.style.transition='none';
+    }
+    if(horizontal){
+      const resisted=dx*.72;
+      activePane.style.transform=`translate3d(${resisted}px,0,0)`;
+      activePane.style.opacity=String(Math.max(.72,1-Math.abs(dx)/900));
+    }
+  },{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(!tracking||e.changedTouches.length!==1)return;
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy, dt=Date.now()-st;
+    tracking=false; st=0;
+    if(!horizontal){if(activePane)activePane.style.willChange='';return;}
+    const ok=Math.abs(dx)>=46 && Math.abs(dx)>Math.abs(dy)*1.12 && dt<900;
+    if(ok){
+      activePane.style.transition='transform .18s cubic-bezier(.22,.8,.25,1),opacity .18s ease';
+      activePane.style.transform=`translate3d(${dx<0?-100:100}%,0,0)`; activePane.style.opacity='.55';
+      const dir=dx<0?1:-1;
+      setTimeout(()=>{activePane.style.willChange='';finishSwipe(dir);},170);
+    }else{
+      activePane.style.transition='transform .18s cubic-bezier(.22,.8,.25,1),opacity .18s ease';
+      activePane.style.transform='translate3d(0,0,0)'; activePane.style.opacity='1';
+      setTimeout(()=>{if(activePane){activePane.style.transition='';activePane.style.transform='';activePane.style.opacity='';activePane.style.willChange='';}},210);
+    }
+    activePane=null; horizontal=false; lastDx=0;
+  },{passive:true});
+  document.addEventListener('touchcancel',()=>{if(activePane){activePane.style.transition='';activePane.style.transform='';activePane.style.opacity='';activePane.style.willChange='';}tracking=false;horizontal=false;st=0;activePane=null;},{passive:true});
 })();
 </script>
 
@@ -6501,6 +6561,20 @@ body{background:#f6f1fa!important;color:#463450}
 </style>
 
 </body>
+
+<style id="v82-swipe-fluid-and-card-group">
+/* V82.2 — gesto mais natural: a tela acompanha o dedo antes de trocar */
+.tab-pane{backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translate3d(0,0,0);}
+#tab-lancar .v82-payment-card-group{gap:5px!important;padding-bottom:7px!important;margin-bottom:0!important;border-bottom-left-radius:9px!important;border-bottom-right-radius:9px!important;}
+#tab-lancar .v82-payment-note{font-size:.58rem;line-height:1.25;opacity:.60;margin:1px 2px 0;text-align:center;}
+#tab-lancar .v82-card-selector-group{margin-top:-4px!important;border-top-left-radius:9px!important;border-top-right-radius:9px!important;padding-top:7px!important;}
+#tab-lancar .v82-card-selector-group .card-tags-scroll-wrap{margin-top:0!important;}
+@media(max-width:640px){
+  #tab-lancar .v82-payment-card-group{padding:7px 9px 6px!important;gap:4px!important;}
+  #tab-lancar .v82-payment-note{font-size:.55rem;margin-top:0;}
+  #tab-lancar .v82-card-selector-group{margin-top:-4px!important;padding:6px 9px 7px!important;}
+}
+</style>
 </html>
 
 <style id="v61-visible-fill-cards">
