@@ -4098,7 +4098,7 @@ header h1::after{content:none!important;display:none!important;}
             const novoPane = document.getElementById(`tab-${aba}`);
             if (novoPane) requestAnimationFrame(() => {
                 novoPane.classList.add('v82-tab-enter');
-                setTimeout(() => novoPane.classList.remove('v82-tab-enter'), 190);
+                setTimeout(() => novoPane.classList.remove('v82-tab-enter'), 105);
             });
 
             setTimeout(aplicarTodasConfiguracoesBlocos, 10);
@@ -6636,6 +6636,50 @@ body{background:#f6f1fa!important;color:#463450}
 #tab-lancar .v82-card-selector-group{margin-top:-4px!important;border-top-left-radius:9px!important;border-top-right-radius:9px!important;padding-top:7px!important;}
 #tab-lancar .v82-card-selector-group .card-tags-scroll-wrap{margin-top:0!important;}
 @media(max-width:640px){#tab-lancar .v82-payment-card-group{padding:7px 9px 6px!important;gap:3px!important;}#tab-lancar .v82-card-selector-group{margin-top:-4px!important;padding:6px 9px 7px!important;}}
+</style>
+
+<style id="v82-6-final-polish">
+/* V82.6 — refinamento final: barra roxa legível, troca mais imediata e fatura no mesmo padrão do hero. */
+@media(max-width:700px){
+  header.v82-floating-brand{
+    background:linear-gradient(135deg,rgba(50,22,77,.97),rgba(109,40,217,.96) 58%,rgba(168,85,247,.94))!important;
+    border:1px solid rgba(221,196,255,.42)!important;
+    box-shadow:0 8px 24px rgba(54,25,82,.26),0 0 18px rgba(168,85,247,.16)!important;
+    color:#fff!important;
+  }
+  header.v82-floating-brand .brand-title-wrap h1,
+  header.v82-floating-brand .brand-cloud-status,
+  header.v82-floating-brand #sync-status{color:#fff!important;}
+  header.v82-floating-brand .brand-cloud-status{opacity:.82!important;}
+  header.v82-floating-brand .header-btn{color:#fff!important;border-color:rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;}
+  header.v82-floating-brand #bg-mode-toggle{border-color:rgba(255,255,255,.25)!important;}
+}
+
+/* A troca deve parecer um toque rápido, não uma animação que segura a tela. */
+.tab-pane.v82-tab-enter{animation-duration:.105s!important;transition:none!important;}
+
+/* Fatura Total dos Cartões com o mesmo desenho, escala e hierarquia do Disponível no Mês. */
+#tab-cartoes .hero-wallet-card{
+  width:100%!important;max-width:none!important;min-height:0!important;height:auto!important;
+  padding:9px 12px!important;border-radius:14px!important;gap:8px!important;
+  background:linear-gradient(135deg,#32164d 0%,#6d28d9 56%,#a855f7 100%)!important;
+  box-shadow:0 10px 24px rgba(109,40,217,.18)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+}
+#tab-cartoes .hero-wallet-card h2,#tab-cartoes #card-hero-total-faturas{
+  font-size:1.18rem!important;line-height:1!important;margin:2px 0!important;
+  color:#fff!important;letter-spacing:-.3px!important;
+}
+#tab-cartoes .hero-wallet-card span,#tab-cartoes .hero-wallet-card b{
+  color:rgba(255,255,255,.92)!important;
+}
+#tab-cartoes .hero-wallet-card > div:last-child{
+  padding-top:6px!important;margin-top:3px!important;font-size:.64rem!important;
+}
+#tab-cartoes .hero-wallet-card > div:last-child > div span{font-size:.62rem!important;color:rgba(255,255,255,.75)!important;}
+#tab-cartoes #card-hero-impacto{font-size:.68rem!important;color:rgba(255,255,255,.75)!important;}
+#tab-cartoes .hero-wallet-card > div:first-child span{font-size:.7rem!important;}
+@media(max-width:370px){#tab-cartoes .hero-wallet-card{padding:8px 10px!important;border-radius:13px!important;}}
 </style>
 </html>
 
