@@ -2868,11 +2868,11 @@ header h1::after{content:none!important;display:none!important;}
   .header-actions{gap:4px!important}
 }
 </style>
-<style id="v81-undo-swipe">
-.v81-undo-wrap{display:flex;justify-content:flex-end;margin:0 0 8px}
-.v81-undo-btn{border:1px solid rgba(139,92,246,.25);background:rgba(255,255,255,.88);color:#6d28d9;border-radius:999px;padding:6px 10px;font-size:.68rem;font-weight:800;box-shadow:0 3px 12px rgba(99,67,170,.08);backdrop-filter:blur(8px);cursor:pointer}
-.v81-undo-btn:active{transform:scale(.97)}
-@media(max-width:600px){.v81-undo-wrap{margin:0 0 7px}.v81-undo-btn{font-size:.66rem;padding:6px 9px}}
+<style id="v82-undo-swipe">
+.v82-undo-wrap{display:flex;justify-content:flex-end;margin:0 0 8px}
+.v82-undo-btn{border:1px solid rgba(139,92,246,.25);background:rgba(255,255,255,.88);color:#6d28d9;border-radius:999px;padding:6px 10px;font-size:.68rem;font-weight:800;box-shadow:0 3px 12px rgba(99,67,170,.08);backdrop-filter:blur(8px);cursor:pointer}
+.v82-undo-btn:active{transform:scale(.97)}
+@media(max-width:600px){.v82-undo-wrap{margin:0 0 7px}.v82-undo-btn{font-size:.66rem;padding:6px 9px}}
 </style>
 </head>
 <body>
@@ -2961,7 +2961,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 1: PAINEL -->
             <div id="tab-painel" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('painel')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('painel')">↶ Desfazer</button></div>
                 <div class="hero-wallet-card" id="bloco_saldo" data-bloco-id="saldo">
                     <button class="btn-config-bloco" onclick="abrirConfigBloco('saldo')" title="Configurar Cores"><i class="fa-solid fa-palette"></i></button>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -3118,7 +3118,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 2: LANÇAR -->
             <div id="tab-lancar" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('lancar')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('lancar')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3201,20 +3201,15 @@ header h1::after{content:none!important;display:none!important;}
                     </div>
 
                     <div class="entry-isolated-box custom-card-box">
-                        <div class="two-cols-clean">
-                            <div class="detail-row">
-                                <i class="fa-solid fa-box"></i>
-                                <select id="trans-box-id"></select>
-                            </div>
-                            <div class="detail-row">
-                                <i class="fa-solid fa-credit-card"></i>
-                                <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
-                                    <option value="Cartão de Crédito">Cartão de Crédito</option>
-                                    <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
-                                </select>
-                            </div>
+                        <div class="detail-row">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <select id="trans-payment" onchange="verificarExibicaoCartao(this.value)">
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Dinheiro/Caixa">À vista (Pix/Débito)</option>
+                            </select>
                         </div>
                     </div>
+                    <div style="font-size:0.60rem; opacity:0.62; margin:-1px 3px 5px; text-align:center;">✨ O lançamento entra no gasto geral do mês; o painel calcula o disponível somando todas as verbas.</div>
 
                     <div id="row-select-card" class="entry-isolated-box custom-card-box">
                         <div class="card-tags-scroll-wrap">
@@ -3270,7 +3265,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 3: CARTÕES -->
             <div id="tab-cartoes" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('cartoes')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('cartoes')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3329,7 +3324,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 4: CONTAS -->
             <div id="tab-contas" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('contas')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('contas')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3369,7 +3364,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 5: MESES (COM FILTRO SALVÁVEL) -->
             <div id="tab-meses" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('meses')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('meses')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -3415,7 +3410,7 @@ header h1::after{content:none!important;display:none!important;}
 
             <!-- TELA 5: MAIS -->
             <div id="tab-mais" class="tab-pane">
-                <div class="v81-undo-wrap"><button class="v81-undo-btn" type="button" onclick="desfazerNaAba('mais')">↶ Desfazer</button></div>
+                <div class="v82-undo-wrap"><button class="v82-undo-btn" type="button" onclick="desfazerNaAba('mais')">↶ Desfazer</button></div>
                 <button onclick="trocarAba('painel')" class="btn-secondary" style="font-size:0.75rem; display:flex; align-items:center; gap:6px; width:fit-content;">
                     <i class="fa-solid fa-arrow-left"></i> ← Voltar ao Painel
                 </button>
@@ -4928,9 +4923,8 @@ header h1::after{content:none!important;display:none!important;}
         }
 
         function lancarDiretoNaCaixinha(boxId) {
+            // Mantida por compatibilidade com lançamentos antigos: novas despesas não escolhem verba.
             trocarAba('lancar');
-            const select = document.getElementById("trans-box-id");
-            if (select) select.value = boxId;
         }
 
         function lancarDiretoNoCartao(cardId) {
@@ -4945,7 +4939,9 @@ header h1::after{content:none!important;display:none!important;}
             const valInput = parseFloat(document.getElementById("trans-value").value);
             const parcelas = parseInt(document.getElementById("trans-installments-num").value, 10) || 1;
             const payment = document.getElementById("trans-payment").value;
-            const boxId = document.getElementById("trans-box-id").value;
+            // Novos lançamentos não são vinculados a uma verba específica.
+            // O painel calcula o disponível usando a soma das verbas e o total gasto do mês.
+            const boxId = null;
             const category = document.getElementById("trans-category").value;
             const date = document.getElementById("trans-date").value;
             const isFixed = document.getElementById("trans-is-fixed").checked;
@@ -5020,12 +5016,6 @@ header h1::after{content:none!important;display:none!important;}
             const trans = (financialData.transactions || []).find(t => t.id === id);
             if (!trans) return;
 
-            const boxes = financialData.budgetBoxes || [];
-            let optionsBox = '';
-            boxes.forEach(b => {
-                optionsBox += `<option value="${b.id}" ${trans.boxId === b.id ? 'selected' : ''}>${b.name}</option>`;
-            });
-
             const cats = financialData.categories || [];
             let optionsCat = '';
             cats.forEach(c => {
@@ -5044,12 +5034,6 @@ header h1::after{content:none!important;display:none!important;}
 
                 <label class="text-xs text-gray-700 font-bold mt-1">Valor (R$):</label>
                 <input type="number" id="edit-trans-val" step="0.01" value="${trans.value}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
-
-                <label class="text-xs text-gray-700 font-bold mt-1">Caixinha / Verba:</label>
-                <select id="edit-trans-box" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
-                    <option value="">Geral</option>
-                    ${optionsBox}
-                </select>
 
                 <label class="text-xs text-gray-700 font-bold mt-1">Forma de Pagamento:</label>
                 <select id="edit-trans-payment" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
@@ -5077,7 +5061,6 @@ header h1::after{content:none!important;display:none!important;}
             `, () => {
                 const desc = document.getElementById("edit-trans-desc").value.trim();
                 const val = parseFloat(document.getElementById("edit-trans-val").value);
-                const boxId = document.getElementById("edit-trans-box").value;
                 const payment = document.getElementById("edit-trans-payment").value;
                 const cardId = document.getElementById("edit-trans-card").value;
                 const category = document.getElementById("edit-trans-cat").value;
@@ -5087,7 +5070,8 @@ header h1::after{content:none!important;display:none!important;}
                 if (desc && !isNaN(val) && val > 0) {
                     trans.desc = desc;
                     trans.value = val;
-                    trans.boxId = boxId;
+                    // A verba não é mais escolhida no lançamento.
+                    // Mantemos qualquer boxId histórico intacto para não perder dados antigos.
                     trans.payment = payment;
                     trans.cardId = payment === 'Cartão de Crédito' ? cardId : null;
                     trans.category = category;
@@ -6432,7 +6416,7 @@ body{background:#f6f1fa!important;color:#463450}
 })();
 </script>
 
-<script id="v81-undo-swipe-script">
+<script id="v82-undo-swipe-script">
 (function(){
   const UNDO_KEY='financas_pro_v81_undo_stack';
   const MAX=8;
@@ -6481,11 +6465,41 @@ body{background:#f6f1fa!important;color:#463450}
   let sx=0,sy=0,st=0;
   const tabs=['painel','lancar','cartoes','contas','meses','mais'];
   function activeTab(){const el=document.querySelector('.tab-pane:not(.hidden)');return el?el.id.replace('tab-',''):null}
-  function go(delta){const cur=activeTab(); if(!cur||typeof trocarAba!=='function')return; const i=tabs.indexOf(cur); const n=i+delta; if(n>=0&&n<tabs.length) trocarAba(tabs[n]);}
+  function go(delta){const cur=activeTab(); if(!cur||typeof trocarAba!=='function')return; const i=tabs.indexOf(cur); if(i<0)return; const n=(i+delta+tabs.length)%tabs.length; trocarAba(tabs[n]);}
+  // Mantém a barra inferior exatamente como está; o gesto só troca de tela.
+  document.documentElement.style.setProperty('--v82-swipe-distance','52px');
+  function touchScrollable(el){
+    try{let n=el; while(n&&n!==document.body){const st=getComputedStyle(n); if((st.overflowX==='auto'||st.overflowX==='scroll')&&n.scrollWidth>n.clientWidth+8)return true; n=n.parentElement;} }catch(_){} return false;
+  }
   document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return; const t=e.target; if(t.closest('input,textarea,select,button,a,[contenteditable="true"]'))return; sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();},{passive:true});
-  document.addEventListener('touchend',e=>{if(!st||e.changedTouches.length!==1)return; const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy,dt=Date.now()-st; st=0; if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.25||dt>700)return; go(dx<0?1:-1);},{passive:true});
+  document.addEventListener('touchend',e=>{if(!st||e.changedTouches.length!==1)return; const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy,dt=Date.now()-st; st=0; if(Math.abs(dx)<52||Math.abs(dx)<Math.abs(dy)*1.35||dt>700)return; const sc=touchScrollable(e.target); if(sc)return; go(dx<0?1:-1);},{passive:true});
 })();
 </script>
+
+<style id="v82-launch-compact-group">
+/* V82.1 — aproximação delicada das caixas do lançamento, sem fundi-las */
+#tab-lancar .entry-block-wrapper{gap:5px!important;}
+#tab-lancar .entry-block-wrapper > .entry-isolated-box{margin:0!important;}
+#tab-lancar .entry-block-wrapper > .entry-isolated-box + .entry-isolated-box{margin-top:0!important;}
+#tab-lancar .entry-block-wrapper .amount-hero-box{padding:9px 10px!important;}
+#tab-lancar .entry-block-wrapper .entry-isolated-box{padding:8px 10px!important;border-radius:12px!important;}
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-desc),
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-payment),
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-category),
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-is-fixed){
+  box-shadow:0 3px 12px rgba(126,76,160,.06)!important;
+}
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-desc){margin-top:-1px!important;}
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-payment){margin-top:-1px!important;}
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-category){margin-top:-1px!important;}
+#tab-lancar .entry-block-wrapper .entry-isolated-box:has(#trans-is-fixed){margin-top:-1px!important;}
+#tab-lancar .entry-block-wrapper > .entry-isolated-box:has(#row-select-card){margin-top:0!important;}
+@media(max-width:640px){
+  #tab-lancar .entry-block-wrapper{gap:4px!important;}
+  #tab-lancar .entry-block-wrapper .entry-isolated-box{padding:7px 9px!important;border-radius:11px!important;}
+}
+</style>
+
 </body>
 </html>
 
@@ -6493,7 +6507,6 @@ body{background:#f6f1fa!important;color:#463450}
 /* V61 — campos de lançamento realmente chamativos: cartões de preenchimento */
 #tab-lancar .entry-isolated-box:has(#trans-value),
 #tab-lancar .entry-isolated-box:has(#trans-desc),
-#tab-lancar .entry-isolated-box:has(#trans-box-id),
 #tab-lancar .entry-isolated-box:has(#card-tags-container),
 #tab-lancar .entry-isolated-box:has(#trans-category),
 #tab-lancar .entry-isolated-box:has(#trans-is-fixed){
@@ -6504,7 +6517,6 @@ body{background:#f6f1fa!important;color:#463450}
 }
 #tab-lancar .entry-isolated-box:has(#trans-value)::before,
 #tab-lancar .entry-isolated-box:has(#trans-desc)::before,
-#tab-lancar .entry-isolated-box:has(#trans-box-id)::before,
 #tab-lancar .entry-isolated-box:has(#card-tags-container)::before,
 #tab-lancar .entry-isolated-box:has(#trans-category)::before,
 #tab-lancar .entry-isolated-box:has(#trans-is-fixed)::before{
@@ -6514,7 +6526,6 @@ body{background:#f6f1fa!important;color:#463450}
 }
 #tab-lancar .entry-isolated-box:has(#trans-value)::after,
 #tab-lancar .entry-isolated-box:has(#trans-desc)::after,
-#tab-lancar .entry-isolated-box:has(#trans-box-id)::after,
 #tab-lancar .entry-isolated-box:has(#card-tags-container)::after,
 #tab-lancar .entry-isolated-box:has(#trans-category)::after,
 #tab-lancar .entry-isolated-box:has(#trans-is-fixed)::after{
@@ -6525,14 +6536,12 @@ body{background:#f6f1fa!important;color:#463450}
 }
 #tab-lancar .entry-isolated-box:has(#trans-value)::after{content:"💰 PREENCHA O VALOR"}
 #tab-lancar .entry-isolated-box:has(#trans-desc)::after{content:"✍️ O QUE VOCÊ COMPROU?"}
-#tab-lancar .entry-isolated-box:has(#trans-box-id)::after{content:"📦 ESCOLHA A VERBA"}
 #tab-lancar .entry-isolated-box:has(#card-tags-container)::after{content:"💳 SELECIONE O CARTÃO"}
 #tab-lancar .entry-isolated-box:has(#trans-category)::after{content:"🏷️ CATEGORIA + DATA"}
 #tab-lancar .entry-isolated-box:has(#trans-is-fixed)::after{content:"📌 FIXA / RECORRENTE?"}
 
 #tab-lancar .entry-isolated-box:has(#trans-value) .clean-val-input,
 #tab-lancar .entry-isolated-box:has(#trans-desc) input,
-#tab-lancar .entry-isolated-box:has(#trans-box-id) select,
 #tab-lancar .entry-isolated-box:has(#trans-payment) select,
 #tab-lancar .entry-isolated-box:has(#trans-category) select,
 #tab-lancar .entry-isolated-box:has(#trans-date) input{
@@ -6541,7 +6550,6 @@ body{background:#f6f1fa!important;color:#463450}
 }
 #tab-lancar .entry-isolated-box:has(#trans-value) .clean-val-input:focus,
 #tab-lancar .entry-isolated-box:has(#trans-desc) input:focus,
-#tab-lancar .entry-isolated-box:has(#trans-box-id) select:focus,
 #tab-lancar .entry-isolated-box:has(#trans-payment) select:focus,
 #tab-lancar .entry-isolated-box:has(#trans-category) select:focus,
 #tab-lancar .entry-isolated-box:has(#trans-date) input:focus{
