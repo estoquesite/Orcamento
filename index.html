@@ -2869,10 +2869,17 @@ header h1::after{content:none!important;display:none!important;}
 }
 </style>
 <style id="v82-undo-swipe">
-.v82-undo-wrap{display:flex;justify-content:flex-end;margin:0 0 8px}
-.v82-undo-btn{border:1px solid rgba(139,92,246,.25);background:rgba(255,255,255,.88);color:#6d28d9;border-radius:999px;padding:6px 10px;font-size:.68rem;font-weight:800;box-shadow:0 3px 12px rgba(99,67,170,.08);backdrop-filter:blur(8px);cursor:pointer}
+/* V82.4 — microbarra superior: ocupa quase nada no celular */
+.tab-pane{position:relative;}
+.v82-undo-wrap{display:flex;align-items:center;justify-content:flex-start;height:24px;margin:0 0 5px;padding:0;}
+.v82-undo-btn{border:1px solid rgba(139,92,246,.20);background:rgba(255,255,255,.72);color:#6d28d9;border-radius:999px;padding:3px 7px;font-size:.58rem;font-weight:800;line-height:1;box-shadow:none;backdrop-filter:blur(7px);cursor:pointer;min-height:20px;}
 .v82-undo-btn:active{transform:scale(.97)}
-@media(max-width:600px){.v82-undo-wrap{margin:0 0 7px}.v82-undo-btn{font-size:.66rem;padding:6px 9px}}
+.v82-undo-wrap + .btn-secondary{position:absolute;top:0;right:0;width:auto!important;margin:0!important;padding:4px 8px!important;min-height:20px!important;border-radius:999px!important;font-size:.58rem!important;line-height:1!important;box-shadow:none!important;}
+@media(max-width:600px){.v82-undo-wrap{height:22px;margin:0 0 4px}.v82-undo-btn{font-size:.56rem;padding:3px 7px}.v82-undo-wrap + .btn-secondary{font-size:.56rem!important;padding:3px 7px!important;}}
+
+/* Troca de aba leve: sensação de interface nativa, sem arrastar a página */
+@keyframes v82-tab-enter{from{opacity:.72;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.tab-pane.v82-tab-enter{animation:v82-tab-enter .16s cubic-bezier(.22,.8,.25,1) both;}
 </style>
 </head>
 <body>
@@ -4081,7 +4088,16 @@ header h1::after{content:none!important;display:none!important;}
                 const btn = document.getElementById(`btn-tab-${t}`);
                 if (btn) btn.classList.toggle('active', t === aba);
                 const pane = document.getElementById(`tab-${t}`);
-                if (pane) pane.classList.toggle('active', t === aba);
+                if (pane) {
+                    pane.classList.toggle('active', t === aba);
+                    pane.classList.remove('v82-tab-enter');
+                }
+            });
+
+            const novoPane = document.getElementById(`tab-${aba}`);
+            if (novoPane) requestAnimationFrame(() => {
+                novoPane.classList.add('v82-tab-enter');
+                setTimeout(() => novoPane.classList.remove('v82-tab-enter'), 190);
             });
 
             setTimeout(aplicarTodasConfiguracoesBlocos, 10);
@@ -6501,7 +6517,7 @@ body{background:#f6f1fa!important;color:#463450}
     if(!tracking||ignore||e.touches.length!==1)return;
     const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
     if(!horizontal){
-      if(Math.abs(dx)<9&&Math.abs(dy)<9)return;
+      if(Math.abs(dx)<6&&Math.abs(dy)<6)return;
       // Se for gesto vertical, entrega imediatamente ao scroll normal da página.
       if(Math.abs(dy)>=Math.abs(dx)*1.15){reset();return;}
       horizontal=true;
@@ -6514,7 +6530,7 @@ body{background:#f6f1fa!important;color:#463450}
     if(ignore){reset();return;}
     if(!tracking||e.changedTouches.length!==1){reset();return;}
     const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy, dt=Date.now()-st;
-    if(horizontal&&Math.abs(dx)>=48&&Math.abs(dx)>Math.abs(dy)*1.12&&dt<900){
+    if(horizontal&&Math.abs(dx)>=28&&Math.abs(dx)>Math.abs(dy)*1.08&&dt<650){
       go(dx<0?1:-1);
     }
     reset();
