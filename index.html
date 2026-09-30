@@ -6588,4 +6588,30 @@ body{background:#f4effa!important;}
 
     console.log("Módulo V76 de Verbas Independentes por Mês ativado com sucesso!");
 })();
-</script>
+/* =========================================================
+   RESTAURAÇÃO RÁPIDA DO CARD DA SOPHIA PARA O MÊS ATUAL
+   ========================================================= */
+(function() {
+    if (typeof financialData !== 'undefined' && typeof selectedMonthKey !== 'undefined') {
+        if (!financialData.monthBoxes) financialData.monthBoxes = {};
+        if (!financialData.monthBoxes[selectedMonthKey]) {
+            financialData.monthBoxes[selectedMonthKey] = [];
+        }
+        
+        // Verifica se a caixinha da Sophia já existe neste mês; se não, adiciona
+        const jaExiste = financialData.monthBoxes[selectedMonthKey].some(b => b.name.includes("Sophia"));
+        if (!jaExiste) {
+            financialData.monthBoxes[selectedMonthKey].push({
+                id: "box_sofia_" + Date.now(),
+                name: "Pensão Sophia",
+                amount: 1500.00,
+                color: "#7c3aed"
+            });
+            // Salva e atualiza a tela automaticamente
+            if (typeof salvarDados === 'function') salvarDados();
+            if (typeof atualizarTela === 'function') atualizarTela();
+            console.log("Card da Sophia restaurado com sucesso para o mês " + selectedMonthKey);
+        }
+    }
+})();
+<script>
