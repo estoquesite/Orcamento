@@ -6542,22 +6542,27 @@ body{background:#f4effa!important;}
 })();
 <script>
 /* =========================================================
-   AJUSTE CIRÚRGICO V75 — VERBAS INDEPENDENTES POR MÊS
+   AJUSTE CIRÚRGICO V76 — VERBAS E CAIXINHAS 100% INDEPENDENTES POR MÊS
    ========================================================= */
 (function() {
-    // 1. Função para buscar as caixinhas específicas do mês selecionado
+    // 1. Garante o armazenamento isolado de caixinhas por mês
     window.obterCaixinhasDoMesAtual = function() {
         if (!financialData.monthBoxes) financialData.monthBoxes = {};
         
-        // Se o mês ainda não tem caixinhas próprias salvas, cria uma cópia das base atuais
+        // Se o mês selecionado ainda não tem um array próprio de caixinhas, 
+        // criamos uma cópia limpa baseada nas caixinhas atuais ou padrão
         if (!financialData.monthBoxes[selectedMonthKey]) {
-            const baseBoxes = financialData.budgetBoxes || [];
+            const baseBoxes = financialData.budgetBoxes || [
+                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#059669" },
+                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#0284c7" },
+                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
+            ];
             financialData.monthBoxes[selectedMonthKey] = JSON.parse(JSON.stringify(baseBoxes));
         }
         return financialData.monthBoxes[selectedMonthKey];
     };
 
-    // 2. Sobrescreve a função que calcula a verba total do mês usando as caixinhas do mês
+    // 2. Calcula a verba total estritamente com base nas caixinhas do mês ativo
     window.obterVerbaDoMes = function(mKey, totalBaseCaixinhas) {
         if (financialData.monthBoxes && financialData.monthBoxes[mKey]) {
             return financialData.monthBoxes[mKey].reduce((acc, b) => acc + (Number(b.amount) || 0), 0);
@@ -6568,18 +6573,19 @@ body{background:#f4effa!important;}
         return totalBaseCaixinhas;
     };
 
-    // 3. Atualiza a renderização das caixinhas no Painel para lerem exclusivamente o mês selecionado
+    // 3. Força o painel a renderizar e salvar alterações apenas no mês selecionado
     const originalAtualizarTela = window.atualizarTela;
-    if (originalAtualizarTela && !originalAtualizarTela.__v75Wrapped) {
+    if (originalAtualizarTela && !originalAtualizarTela.__v76Wrapped) {
         window.atualizarTela = function() {
             if (financialData) {
+                // Atribui à variável global apenas as caixinhas pertencentes ao mês na tela
                 financialData.budgetBoxes = window.obterCaixinhasDoMesAtual();
             }
             originalAtualizarTela.apply(this, arguments);
         };
-        window.atualizarTela.__v75Wrapped = true;
+        window.atualizarTela.__v76Wrapped = true;
     }
 
-    console.log("Módulo de Verbas Independentes por Mês (V75) ativado com sucesso!");
+    console.log("Módulo V76 de Verbas Independentes por Mês ativado com sucesso!");
 })();
-</script>  
+</script>
