@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Finanças Pro V67 - Aurora Lilac</title>
+    <title>Finanças Pro V77 - Aurora Lilac</title>
     
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkZpbmFuXHUwMGU3YXMgUHJvIiwgInNob3J0X25hbWUiOiAiRmluYW5cdTAwZTdhcyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmY2ZjIiwgInRoZW1lX2NvbG9yIjogIiMwNzk2NjkiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzE5Mi93YWxsZXQucG5nIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifSwgeyJzcmMiOiAiaHR0cHM6Ly9pbWcuaWNvbnM4LmNvbS9mbHVlbmN5LzUxMi93YWxsZXQucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
-    <meta name="theme-color" content="#173f35">
+    <meta name="theme-color" content="#f6f1fa">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,19 +15,11 @@
     <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/wallet.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- SDK do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        function buscarValorMensal(boxId, mesChave) {
-    // Se você já digitou um valor para ESSE mês específico, ele usa esse valor
-    if (financialData.boxMonthlyValues && financialData.boxMonthlyValues[mesChave] && financialData.boxMonthlyValues[mesChave][boxId] !== undefined) {
-        return financialData.boxMonthlyValues[mesChave][boxId];
-    }
-    // Se não, ele pega o valor padrão que está no cadastro da caixinha
-    const box = financialData.budgetBoxes.find(b => b.id === boxId);
-    return box ? box.amount : 0;
-}
         :root {
             --global-bg: #f1f5f9;
             --primary: #059669;
@@ -2762,6 +2754,76 @@ body{
   #tab-meses .month-archive-net{font-size:.70rem!important;}
 }
 </style>
+
+<style id="v73-mobile-nav-border">
+:root{--app-border:#c9a7ff;--app-border-glow:rgba(168,115,255,.22)}
+html,body{scroll-behavior:smooth}
+body{margin:0;min-height:100vh}
+#app,.app,.app-shell,.app-container{border:1px solid var(--app-border)!important;box-shadow:0 0 0 1px var(--app-border-glow),0 0 22px var(--app-border-glow);border-radius:18px;box-sizing:border-box}
+@media(max-width:700px){
+  body{padding:0!important;padding-bottom:76px!important}
+  #app,.app,.app-shell,.app-container{width:100%!important;max-width:none!important;border-radius:0!important;border-left:1px solid var(--app-border)!important;border-right:1px solid var(--app-border)!important;border-top:1px solid var(--app-border)!important;border-bottom:1px solid var(--app-border)!important}
+  .top-nav.mobile-bottom-nav{
+    position:fixed!important;left:8px!important;right:8px!important;bottom:10px!important;top:auto!important;
+    z-index:10000!important;display:flex!important;align-items:center!important;justify-content:space-around!important;
+    padding:6px 5px!important;border:1px solid rgba(186,145,255,.45)!important;border-radius:18px!important;
+    background:rgba(255,255,255,.88)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;
+    box-shadow:0 8px 26px rgba(82,48,120,.16),0 0 18px rgba(186,145,255,.10)!important;
+    transform:translateY(0);opacity:1;transition:transform .30s ease,opacity .30s ease,box-shadow .30s ease!important;
+  }
+  .top-nav.mobile-bottom-nav.nav-bottom-hidden{transform:translateY(calc(100% + 18px));opacity:.05;pointer-events:none}
+  .top-nav.mobile-bottom-nav.nav-bottom-visible{transform:translateY(0);opacity:1;pointer-events:auto}
+  .top-nav.mobile-bottom-nav .top-nav-item{flex:1;min-width:0;padding:6px 3px!important;gap:2px!important;border-radius:12px!important}
+  .top-nav.mobile-bottom-nav .top-nav-item i{font-size:.95rem!important}
+  .top-nav.mobile-bottom-nav .top-nav-item span{font-size:.60rem!important}
+  .content{padding-bottom:10px!important}
+}
+@media(min-width:701px){
+  .top-nav.mobile-bottom-nav{position:sticky;top:0;z-index:1000}
+}
+</style>
+
+<style id="v75-brand-cloud">
+.brand-title-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:7px;}
+.brand-title-wrap h1{margin:0;}
+.brand-cloud-status{display:flex;align-items:center;gap:4px;font-size:.58rem;font-weight:700;letter-spacing:.01em;color:#a982e8;line-height:1.1;opacity:.9;}
+.brand-cloud-status span:first-child{font-size:.7rem;filter:saturate(.8);}
+@media(max-width:640px){
+  .brand-title-wrap{gap:5px;padding-bottom:9px;}
+  .brand-cloud-status{font-size:.56rem;}
+}
+</style>
+
+<style id="v76-brand-refine">
+/* V76 — refinamento compacto do cabeçalho, sem alterar a navegação */
+header{align-items:center;}
+.brand-title-wrap{gap:3px !important;}
+.brand-cloud-status{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:4px !important;
+  margin-top:1px !important;
+  padding-top:3px !important;
+  border-top:1px solid rgba(201,167,255,.28);
+  width:max-content;
+  max-width:100%;
+  font-size:.57rem !important;
+  line-height:1.1 !important;
+  letter-spacing:.01em;
+  color:rgba(126,87,194,.82) !important;
+}
+.brand-cloud-status span:first-child{
+  font-size:.68rem !important;
+  line-height:1 !important;
+  filter:saturate(.8);
+}
+@media (max-width:520px){
+  .brand-title-wrap{gap:2px !important;}
+  .brand-cloud-status{font-size:.54rem !important; padding-top:2px !important; gap:3px !important;}
+  .brand-cloud-status span:first-child{font-size:.62rem !important;}
+}
+</style>
 </head>
 <body>
 
@@ -2800,8 +2862,9 @@ body{
                     </div>
                     <span id="brand-status-dot" class="brand-status-dot green" title="Situação financeira: boa"></span>
                 </div>
-                <div>
+                <div class="brand-title-wrap">
                     <h1>Finanças Pro <span class="brand-version">V67</span></h1>
+                    <div class="brand-cloud-status"><span aria-hidden="true">☁️</span> <span>Conectado às nuvens</span></div>
                 </div>
             </div>
             <div class="header-actions">
@@ -2816,8 +2879,8 @@ body{
             </div>
         </header>
 
-        <!-- BARRA DE NAVEGAÇÃO FIXA NO TOPO -->
-        <nav class="top-nav">
+        <!-- BARRA DE NAVEGAÇÃO FLUIDA NA PARTE INFERIOR -->
+        <nav class="top-nav mobile-bottom-nav" aria-label="Navegação principal">
             <button class="top-nav-item active" id="btn-tab-painel" onclick="trocarAba('painel')">
                 <i class="fa-solid fa-house"></i>
                 <span>Painel</span>
@@ -3473,12 +3536,12 @@ body{
         let blocksConfig = JSON.parse(localStorage.getItem(BLOCKS_CONFIG_KEY)) || {};
 
         const defaultData = {
-    cash: 0.00,
-    budgetBoxes: [
-        { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#059669" },
-        { id: "box_gloria", name: "Glória", amount: 600.00, color: "#0284c7" },
-        { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
-    ],
+            cash: 0.00,
+            budgetBoxes: [
+                { id: "box_principal", name: "Meu Salário", amount: 5000.00, color: "#059669" },
+                { id: "box_gloria", name: "Glória", amount: 600.00, color: "#0284c7" },
+                { id: "box_sofia", name: "Pensão Sophia", amount: 1500.00, color: "#7c3aed" }
+            ],
             creditCards: [
                 { id: "card_itau", name: "Itaú Mastercard", limit: 4000.00, initialUsed: 0.00, color: "#ec7000", closingDay: 25, dueDay: 5 },
                 { id: "card_nubank", name: "Nubank", limit: 5000.00, initialUsed: 0.00, color: "#820ad1", closingDay: 20, dueDay: 28 }
@@ -5035,33 +5098,9 @@ body{
         }
 
         function abrirModalEditarCaixinhaVerba(boxId) {
-    const box = financialData.budgetBoxes.find(b => b.id === boxId);
-    if (!box) return;
-    
-    // Pega o valor atual específico desse mês
-    const valorAtual = buscarValorMensal(boxId, selectedMonthKey);
+            const box = financialData.budgetBoxes.find(b => b.id === boxId);
+            if (!box) return;
 
-    abrirModal(`Ajustar ${box.name}`, `
-        <p class="text-xs text-gray-500 mb-2">Alterando apenas para o mês: <b>${selectedMonthKey}</b></p>
-        <label class="text-xs text-gray-700 font-bold">Valor para este mês:</label>
-        <input type="number" id="input-valor-independente" step="0.01" value="${valorAtual}" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:8px;">
-    `, () => {
-        const novoVal = parseFloat(document.getElementById("input-valor-independente").value);
-        if (!isNaN(novoVal)) {
-            // Se a gaveta de meses não existir, cria ela
-            if (!financialData.boxMonthlyValues) financialData.boxMonthlyValues = {};
-            // Se o mês atual não tiver uma gaveta, cria ela
-            if (!financialData.boxMonthlyValues[selectedMonthKey]) financialData.boxMonthlyValues[selectedMonthKey] = {};
-            
-            // SALVA O VALOR APENAS PARA ESSE MÊS E ESSA CAIXINHA
-            financialData.boxMonthlyValues[selectedMonthKey][boxId] = novoVal;
-            
-            salvarDados();
-            atualizarTela();
-            showToast("Renda de " + mesesNomes[currentMonthNum-1] + " atualizada!");
-        }
-    });
-}
             abrirModal("Editar Caixinha de Verba", `
                 <label class="text-xs text-gray-700 font-bold">Nome:</label>
                 <input type="text" id="edit-box-name" value="${box.name}" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
@@ -6142,6 +6181,201 @@ body{
 })();
 </script>
 
+
+<style id="v72-soft-background-palette">
+/* V72 — fundos atuais em miniaturas + padrão claro */
+body{background:#f6f1fa!important;color:#463450}
+#app-main-container{background:#f6f1fa!important}
+.v71-color-pop{background:rgba(255,255,255,.99)!important}
+.v71-preset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px}
+.v71-preset{border:1px solid #eadff5;background:#fff;border-radius:8px;padding:3px;cursor:pointer;min-width:0;transition:.16s}
+.v71-preset span{display:block;width:100%;height:22px;border-radius:6px;border:1px solid rgba(70,52,80,.10)}
+.v71-preset b{display:block;font-size:.48rem;color:#5d4868;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.v71-preset.active{border-color:#a855f7;box-shadow:0 0 0 1px rgba(168,85,247,.16)}
+@media(max-width:520px){.v71-preset-grid{grid-template-columns:repeat(4,1fr);gap:4px}.v71-preset span{height:18px}.v71-preset b{font-size:.44rem}.v71-color-pop{background:#fff!important}}
+</style>
+<script id="v72-soft-defaults">
+(function(){
+  const LIGHT_DEFAULT_KEY='financas_pro_v72_light_default';
+  function setLightDefault(){
+    try{
+      if(!localStorage.getItem(LIGHT_DEFAULT_KEY)){
+        localStorage.setItem(LIGHT_DEFAULT_KEY,'1');
+        localStorage.setItem('financas_pro_aurora_theme','auroraLight');
+        localStorage.setItem('financas_pro_background_mode','light');
+        localStorage.removeItem('financas_pro_v49_background');
+      }
+    }catch(e){}
+    if(typeof applyAuroraTheme==='function') applyAuroraTheme('auroraLight');
+  }
+  function patchPalette(){
+    const pop=document.getElementById('v71-color-pop');
+    const grid=document.getElementById('v71-palette');
+    if(!pop||!grid||pop.dataset.v72==='1') return;
+    pop.dataset.v72='1';
+    const themes=['auroraLight','lilacLight','midnightLight','roseLight','pearl','solidWhite','solidLilacLight','solidPlumLight','aurora','lilac','midnight','rose','solidLilac','solidPlum','solidBlack'];
+    const wrap=document.createElement('div'); wrap.className='v71-preset-grid';
+    themes.forEach(key=>{
+      const t=THEMES[key]; if(!t)return;
+      const b=document.createElement('button'); b.type='button'; b.className='v71-preset'; b.dataset.theme=key; b.title=t.label;
+      b.innerHTML='<span style="background:'+t.body+'"></span><b>'+t.label+'</b>';
+      b.onclick=()=>{applyAuroraTheme(key); refreshPreset();};
+      wrap.appendChild(b);
+    });
+    grid.parentNode.insertBefore(wrap,grid);
+    function refreshPreset(){
+      const cur=localStorage.getItem('financas_pro_aurora_theme')||'auroraLight';
+      wrap.querySelectorAll('.v71-preset').forEach(x=>x.classList.toggle('active',x.dataset.theme===cur));
+    }
+    refreshPreset();
+    const old=window.applyAuroraTheme;
+    if(old&&!old.__v72wrapped){
+      function wrapped(key){old(key);refreshPreset();}
+      wrapped.__v72wrapped=true; window.applyAuroraTheme=wrapped;
+    }
+  }
+  function boot(){setLightDefault();patchPalette();}
+  window.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180));
+  setTimeout(boot,500);
+})();
+</script>
+
+<style id="v77-monthly-boxes-fix">
+/* V77 — cada mês passa a ter sua própria fotografia das verbas. */
+@media(max-width:700px){
+  #budget-boxes-container .box-clean-card{margin-bottom:1px!important;}
+}
+</style>
+<script id="v77-monthly-boxes-fix">
+(function(){
+  const MONTH_BOXES_KEY='financas_pro_budget_boxes_by_month_v77';
+  const SOFIA={id:'box_sofia',name:'Pensão Sophia',amount:1500,color:'#7c3aed'};
+  const clone=v=>JSON.parse(JSON.stringify(v));
+
+  function keyAtual(){return `${currentYear}-${String(currentMonthNum).padStart(2,'0')}`;}
+  function carregarSnapshots(){
+    if(!financialData.budgetBoxesByMonth || typeof financialData.budgetBoxesByMonth!=='object') financialData.budgetBoxesByMonth={};
+    return financialData.budgetBoxesByMonth;
+  }
+  function garantirSofia(lista){
+    const arr=Array.isArray(lista)?lista:[];
+    if(!arr.some(b=>b && (b.id==='box_sofia' || String(b.name||'').toLowerCase().includes('pensão sophia')))) arr.push(clone(SOFIA));
+    return arr;
+  }
+  function salvarSnapshotAtual(){
+    if(!financialData) return;
+    const snaps=carregarSnapshots();
+    const k=keyAtual();
+    snaps[k]=garantirSofia(clone(financialData.budgetBoxes||[]));
+    financialData.budgetBoxes=snaps[k];
+  }
+  function prepararMes(k){
+    const snaps=carregarSnapshots();
+    if(!snaps[k]){
+      const base=garantirSofia(clone(financialData.budgetBoxes||[]));
+      snaps[k]=base.map(b=>({...b,amount:0}));
+    } else {
+      snaps[k]=garantirSofia(snaps[k]);
+    }
+    financialData.budgetBoxes=clone(snaps[k]);
+  }
+  function salvarSnapshotSemBloquear(){
+    try{
+      salvarSnapshotAtual();
+      localStorage.setItem('financas_pro_neon_v50',JSON.stringify(financialData));
+    }catch(e){console.error('V77 snapshot',e);}
+  }
+  function trocarMesComVerbas(origFn){
+    return function(){
+      salvarSnapshotSemBloquear();
+      const r=origFn.apply(this,arguments);
+      prepararMes(keyAtual());
+      salvarSnapshotSemBloquear();
+      if(typeof atualizarTela==='function') atualizarTela();
+      return r;
+    };
+  }
+
+  // Mantém setembro intacto e cria meses independentes a partir da primeira abertura.
+  const originalMudarMes=window.mudarMes;
+  const originalAlterarMes=window.alterarMesDireto;
+  const originalMudarAno=window.mudarAno;
+  const originalAlterarAno=window.alterarAnoDireto;
+  const originalSelecionarMes=window.selecionarMesEAbrirAno;
+  if(typeof originalMudarMes==='function') window.mudarMes=trocarMesComVerbas(originalMudarMes);
+  if(typeof originalAlterarMes==='function') window.alterarMesDireto=trocarMesComVerbas(originalAlterarMes);
+  if(typeof originalMudarAno==='function') window.mudarAno=trocarMesComVerbas(originalMudarAno);
+  if(typeof originalAlterarAno==='function') window.alterarAnoDireto=trocarMesComVerbas(originalAlterarAno);
+  if(typeof originalSelecionarMes==='function') window.selecionarMesEAbrirAno=trocarMesComVerbas(originalSelecionarMes);
+
+  // O salvar continua igual, mas também guarda a fotografia do mês atual.
+  const originalSalvar=window.salvarDados;
+  if(typeof originalSalvar==='function' && !originalSalvar.__v77wrapped){
+    const wrapped=async function(){
+      salvarSnapshotAtual();
+      return originalSalvar.apply(this,arguments);
+    };
+    wrapped.__v77wrapped=true;
+    window.salvarDados=wrapped;
+  }
+
+  // Restaura a Pensão Sophia quando ela não estiver mais no painel.
+  function restaurarSofia(){
+    const snaps=carregarSnapshots();
+    financialData.budgetBoxes=garantirSofia(financialData.budgetBoxes||[]);
+    Object.keys(snaps).forEach(k=>{snaps[k]=garantirSofia(snaps[k]);});
+    snaps[keyAtual()]=clone(financialData.budgetBoxes);
+  }
+
+  // Nova Caixinha: primeiro salva localmente, depois sincroniza em segundo plano.
+  window.abrirModalNovaCaixinhaVerba=function(){
+    abrirModal('Criar 🪄 Nova Caixinha de Verba', `
+      <label class="text-xs text-gray-700 font-bold">Escolha um Emoji:</label>
+      <div class="emoji-picker-grid">
+        ${['🍔','🏠','🚗','💊','✈️','🎓','🛍️','💰','🛡️','👶','🐶','🎁'].map(e=>`<div class="emoji-option" onclick="selecionarEmojiCaixinha('${e}')">${e}</div>`).join('')}
+      </div>
+      <label class="text-xs text-gray-700 font-bold mt-1">Nome da Caixinha:</label>
+      <input type="text" id="new-box-name" placeholder="Ex: Investimentos, Lazer">
+      <label class="text-xs text-gray-700 font-bold mt-1">Valor Mensal (R$):</label>
+      <input type="number" id="new-box-amount" step="50" placeholder="Ex: 1000">
+      <label class="text-xs text-gray-700 font-bold mt-1">Cor:</label>
+      <input type="color" id="new-box-color" value="#8b5cf6" style="width:50px;height:38px;padding:0;cursor:pointer;background:transparent;">
+    `, async ()=>{
+      try{
+        const name=document.getElementById('new-box-name')?.value.trim();
+        const amount=parseFloat(document.getElementById('new-box-amount')?.value);
+        const color=document.getElementById('new-box-color')?.value || '#8b5cf6';
+        if(!name || isNaN(amount) || amount<0){showToast('Informe nome e valor válido.','fa-circle-exclamation');return;}
+        if(!financialData.budgetBoxes) financialData.budgetBoxes=[];
+        const novo={id:'box_'+Date.now(),name,amount,color};
+        financialData.budgetBoxes.push(novo);
+        salvarSnapshotAtual();
+        localStorage.setItem('financas_pro_neon_v50',JSON.stringify(financialData));
+        if(typeof atualizarTela==='function') atualizarTela();
+        showToast('Caixinha criada com sucesso!');
+        // A nuvem não bloqueia a criação local.
+        Promise.resolve(originalSalvar ? originalSalvar.call(window) : null).catch(()=>{});
+      }catch(e){
+        console.error('Erro ao criar caixinha',e);
+        showToast('A caixinha foi salva localmente.','fa-cloud');
+      }
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(()=>{
+      if(!window.financialData && typeof financialData==='undefined') return;
+      try{
+        restaurarSofia();
+        prepararMes(keyAtual());
+        localStorage.setItem('financas_pro_neon_v50',JSON.stringify(financialData));
+        if(typeof atualizarTela==='function') atualizarTela();
+      }catch(e){console.error('V77 inicialização',e);}
+    },1200);
+  });
+})();
+</script>
+
 </body>
 </html>
 
@@ -6475,4 +6709,15 @@ body{background:#f4effa!important;}
 </style>
 <script>
 /* V70 — nada nesta correção altera navegação ou dados; apenas reapresenta o seletor de fundos. */
-    </script>
+</script>
+
+<script id="v73-mobile-nav-script">
+(function(){
+ let lastY=window.scrollY||0, ticking=false;
+ const sels=['.nav','.tabs','.bottom-nav','.main-nav','.top-nav'];
+ function navs(){return sels.flatMap(sel=>Array.from(document.querySelectorAll(sel))).filter((e,i,a)=>a.indexOf(e)===i)}
+ function update(){const y=window.scrollY||0,d=y-lastY; const els=navs(); if(!els.length){ticking=false;return;} if(Math.abs(d)>3){els.forEach(e=>{e.classList.toggle('nav-bottom-hidden',d>0 && y>90);e.classList.toggle('nav-bottom-visible',!(d>0&&y>90));});lastY=y;} ticking=false;}
+ window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true;}},{passive:true});
+ document.addEventListener('pointerdown',e=>{if(e.target.closest('.nav,.tabs,.bottom-nav,.main-nav,.top-nav')){navs().forEach(x=>{x.classList.remove('nav-bottom-hidden');x.classList.add('nav-bottom-visible')})}});
+})();
+</script>
