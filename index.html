@@ -2920,7 +2920,7 @@ header h1::after{content:none!important;display:none!important;}
                     <span id="brand-status-dot" class="brand-status-dot green" title="Situação financeira: boa"></span>
                 </div>
                 <div class="brand-title-wrap">
-                    <h1>Finanças Pro <span class="brand-version">V82.2</span></h1>
+                    <h1>Finanças Pro <span class="brand-version">V82.5</span></h1>
                     <div class="brand-cloud-status"><span aria-hidden="true">☁️</span> <span>Conectado às nuvens</span></div>
                 </div>
             </div>
@@ -3589,7 +3589,7 @@ header h1::after{content:none!important;display:none!important;}
         let selectedCalcMode = 'total';
         let selectedCardIdSelected = null;
         let privacyMode = localStorage.getItem(PRIVACY_KEY) === 'true';
-        let categoriasOcultas = false;
+        let categoriasOcultas = localStorage.getItem('FP_CATEGORIAS_OCULTAS') === 'true';
 
         let blocksConfig = JSON.parse(localStorage.getItem(BLOCKS_CONFIG_KEY)) || {};
 
@@ -3694,6 +3694,7 @@ header h1::after{content:none!important;display:none!important;}
 
         function alternarOcultarCategorias() {
             categoriasOcultas = !categoriasOcultas;
+            localStorage.setItem('FP_CATEGORIAS_OCULTAS', String(categoriasOcultas));
             const btn = document.getElementById("btn-toggle-cat");
             if (btn) btn.innerText = categoriasOcultas ? "👁️ Mostrar" : "👁️ Ocultar";
             atualizarTela();
@@ -4780,7 +4781,7 @@ header h1::after{content:none!important;display:none!important;}
                         item.className = "category-chip-item";
                         item.innerHTML = `
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <span style="width:10px; height:10px; border-radius:50%; background:${cat.color || 'var(--primary)'};"></span>
+                                ${cat.iconUrl ? `<img src="${String(cat.iconUrl).replace(/"/g,'&quot;')}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:22px;height:22px;object-fit:contain;border-radius:6px;background:#fff;border:1px solid rgba(139,92,246,.14);padding:2px;">` : `<span style="width:10px; height:10px; border-radius:50%; background:${cat.color || 'var(--primary)'};"></span>`}
                                 <span style="color:var(--custom-text);">${cat.name}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
@@ -5225,11 +5226,17 @@ header h1::after{content:none!important;display:none!important;}
 
                 <label class="text-xs text-gray-700 font-bold mt-1">Nome da Categoria:</label>
                 <input type="text" id="new-cat-name" placeholder="Ex: Lazer" style="padding:8px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg);">
+                <label class="text-xs text-gray-700 font-bold mt-1" style="display:block;margin-top:7px;">🌐 Ícone da internet (opcional):</label>
+                <input type="url" id="new-cat-icon-url" placeholder="Cole o link de uma imagem/logo (ex.: Netflix)" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);">
+                <div style="font-size:.58rem;color:var(--text-muted);margin-top:4px;line-height:1.25;">Você pode usar um emoji normal ou uma imagem/logo da internet.</div>
             `, () => {
                 const name = document.getElementById("new-cat-name").value.trim();
                 if (!name) return;
                 if (!financialData.categories) financialData.categories = [];
-                financialData.categories.push({ id: "cat_" + Date.now(), name, color: "#a855f7", limit: 0 });
+                const iconUrl = (document.getElementById("new-cat-icon-url")?.value || "").trim();
+                const item = { id: "cat_" + Date.now(), name, color: "#a855f7", limit: 0 };
+                if (iconUrl && /^https?:\/\//i.test(iconUrl)) item.iconUrl = iconUrl;
+                financialData.categories.push(item);
                 salvarDados();
                 atualizarTela();
                 showToast("Categoria adicionada!");
@@ -5750,8 +5757,9 @@ header h1::after{content:none!important;display:none!important;}
   window.abrirModalEditarCategoriaAurora=function(idx){
     const cat=(financialData.categories||[])[idx];if(!cat)return;
     const raw=String(cat.name||'').trim(); const match=raw.match(/^(\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*)\s*/u); const emoji=match?match[1]:'✨'; const nome=match?raw.slice(match[0].length):raw;
-    const esc=v=>String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-    abrirModal('✏️ Editar Categoria',`<label class="text-xs font-bold">Emoji da categoria</label><div class="emoji-picker-grid">${ICONS.map(e=>`<div class="emoji-option" onclick="document.getElementById('aurora-cat-emoji').value='${e}'">${e}</div>`).join('')}</div><input id="aurora-cat-emoji" value="${esc(emoji)}" maxlength="4" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);color:var(--custom-text);margin-bottom:7px"><label class="text-xs font-bold">Nome</label><input id="aurora-cat-name" value="${esc(nome)}" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);color:var(--custom-text)">`,()=>{const e=document.getElementById('aurora-cat-emoji').value.trim()||'✨';const n=document.getElementById('aurora-cat-name').value.trim();if(!n)return;const antigo=cat.name,novo=e+' '+n;cat.name=novo;(financialData.transactions||[]).forEach(t=>{if(t.category===antigo)t.category=novo});salvarDados();atualizarTela();showToast('Categoria atualizada com emoji!')});
+    const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+    const safeUrl=/^https?:\/\//i.test(String(cat.iconUrl||''))?String(cat.iconUrl):'';
+    abrirModal('✏️ Editar Categoria',`<label class="text-xs font-bold">Emoji da categoria</label><div class="emoji-picker-grid">${ICONS.map(e=>`<div class="emoji-option" onclick="document.getElementById('aurora-cat-emoji').value='${e}'">${e}</div>`).join('')}</div><input id="aurora-cat-emoji" value="${esc(emoji)}" maxlength="8" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);color:var(--custom-text);margin-bottom:7px"><label class="text-xs font-bold">Nome</label><input id="aurora-cat-name" value="${esc(nome)}" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);color:var(--custom-text)"><label class="text-xs font-bold" style="display:block;margin-top:8px;">🌐 Ícone/logo da internet (opcional)</label><input id="aurora-cat-icon-url" type="url" value="${esc(safeUrl)}" placeholder="Cole o link de uma imagem/logo" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border-color);background:var(--input-bg);color:var(--custom-text)"><div style="font-size:.58rem;color:var(--text-muted);margin-top:4px;line-height:1.25;">Ex.: logo de um serviço como Netflix. O link precisa ser de uma imagem acessível pela internet.</div>`,()=>{const e=document.getElementById('aurora-cat-emoji').value.trim()||'✨';const n=document.getElementById('aurora-cat-name').value.trim();if(!n)return;const icon=(document.getElementById('aurora-cat-icon-url')?.value||'').trim();const antigo=cat.name,novo=e+' '+n;cat.name=novo;if(icon&&/^https?:\/\//i.test(icon))cat.iconUrl=icon;else delete cat.iconUrl;(financialData.transactions||[]).forEach(t=>{if(t.category===antigo)t.category=novo});salvarDados();atualizarTela();showToast('Categoria atualizada com emoji/ícone!')});
   };
   /* Troca apenas o clique do editor existente pelo editor com emoji mais amigável. */
   window._abrirModalEditarCategoriaOriginal=window.abrirModalEditarCategoria;window.abrirModalEditarCategoria=window.abrirModalEditarCategoriaAurora;
@@ -6530,7 +6538,7 @@ body{background:#f6f1fa!important;color:#463450}
     if(ignore){reset();return;}
     if(!tracking||e.changedTouches.length!==1){reset();return;}
     const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy, dt=Date.now()-st;
-    if(horizontal&&Math.abs(dx)>=28&&Math.abs(dx)>Math.abs(dy)*1.08&&dt<650){
+    if(horizontal&&Math.abs(dx)>=22&&Math.abs(dx)>Math.abs(dy)*1.05&&dt<520){
       go(dx<0?1:-1);
     }
     reset();
@@ -6564,6 +6572,61 @@ body{background:#f6f1fa!important;color:#463450}
 }
 </style>
 
+
+<style id="v82-5-floating-brand">
+/* V82.5 — cabeçalho flutuante compacto no celular, com auto-ocultação durante o scroll */
+@media(max-width:700px){
+  header.v82-floating-brand{
+    position:fixed!important;top:8px!important;left:8px!important;right:8px!important;z-index:9999!important;
+    min-height:0!important;height:auto!important;
+    padding:6px 9px!important;border:1px solid rgba(186,145,255,.34)!important;
+    border-radius:16px!important;background:rgba(255,255,255,.82)!important;
+    backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;
+    box-shadow:0 7px 22px rgba(82,48,120,.12),0 0 16px rgba(186,145,255,.08)!important;
+    transform:translateY(0);opacity:1;
+    transition:transform .22s cubic-bezier(.22,.61,.36,1),opacity .18s ease!important;
+  }
+  header.v82-floating-brand.v82-brand-hidden{transform:translateY(calc(-100% - 14px));opacity:.02;pointer-events:none;}
+  header.v82-floating-brand .header-brand{min-width:0!important;}
+  header.v82-floating-brand .app-logo-wrap{transform:scale(.86);transform-origin:left center;}
+  header.v82-floating-brand .brand-title-wrap{gap:1px!important;padding-bottom:0!important;}
+  header.v82-floating-brand .brand-title-wrap h1{font-size:.92rem!important;line-height:1!important;}
+  header.v82-floating-brand .brand-cloud-status{font-size:.42rem!important;margin-top:0!important;opacity:.68!important;}
+  header.v82-floating-brand .header-actions{gap:3px!important;}
+  header.v82-floating-brand .header-btn{width:27px!important;height:27px!important;min-width:27px!important;}
+  header.v82-floating-brand #sync-status{font-size:.39rem!important;padding:2px 3px!important;}
+  body{padding-top:0!important;}
+  .phone-container{padding-top:54px!important;}
+  #tab-mais .modern-action-card:has(#mais-categories-list){margin-bottom:8px!important;}
+  #tab-mais .modern-action-card:has(#mais-categories-list) #mais-categories-list{transition:max-height .22s ease,opacity .18s ease;}
+}
+</style>
+<script id="v82-5-floating-brand-script">
+(function(){
+  const header=document.querySelector('header'); if(!header)return;
+  header.classList.add('v82-floating-brand');
+  let lastY=window.scrollY||0, raf=0, hideTimer=0;
+  function show(){header.classList.remove('v82-brand-hidden');}
+  function hide(){if((window.scrollY||0)>70)header.classList.add('v82-brand-hidden');}
+  function onScroll(){
+    if(raf)return;
+    raf=requestAnimationFrame(()=>{
+      const y=window.scrollY||0, d=y-lastY;
+      if(Math.abs(d)>1){ if(d<0 || y<70) show(); else hide(); lastY=y; }
+      clearTimeout(hideTimer);
+      if(y>70) hideTimer=setTimeout(show,260);
+      raf=0;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  ['touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,()=>{ if((window.scrollY||0)<70)show(); },{passive:true}));
+  document.addEventListener('touchend',()=>{clearTimeout(hideTimer);hideTimer=setTimeout(show,180);},{passive:true});
+  window.addEventListener('resize',show,{passive:true});
+})();
+</script>
+<style id="v82-5-category-icon-fallback">
+#tab-mais #mais-categories-list img{font-size:.7rem;}
+</style>
 </body>
 
 
