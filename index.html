@@ -7465,3 +7465,49 @@ header.v82-floating-brand{background:linear-gradient(135deg,#32164d,#6d28d9 58%,
   setTimeout(mv,1200);
 })();
 </script>
+<style id="v87">
+#lock-screen{position:fixed!important;inset:0!important;z-index:2147483600!important;
+background:radial-gradient(circle at 18% 14%,rgba(192,132,252,.38),transparent 42%),radial-gradient(circle at 85% 88%,rgba(236,72,153,.28),transparent 42%),linear-gradient(160deg,#2d1250,#120a22)!important}
+#lock-screen .v87-logo{width:84px;height:84px;border-radius:26px;background:linear-gradient(135deg,#c084fc,#7c3aed 55%,#ec4899);display:flex;align-items:center;justify-content:center;box-shadow:0 0 36px rgba(168,85,247,.55);font-size:38px}
+#lock-screen h2{font-size:1.7rem!important;margin-top:10px}
+#lock-screen p{color:#e9d5ff!important}
+#biometric-btn{width:92px!important;height:92px!important;border-radius:50%!important;font-size:2.4rem!important;background:linear-gradient(135deg,#7c3aed,#ec4899)!important;box-shadow:0 0 0 8px rgba(168,85,247,.16),0 0 34px rgba(192,132,252,.6)!important;animation:v87p 2.4s ease-in-out infinite!important}
+@keyframes v87p{50%{box-shadow:0 0 0 14px rgba(168,85,247,.08),0 0 48px rgba(236,72,153,.6)}}
+#lock-screen button:not(#biometric-btn){background:rgba(255,255,255,.12)!important;border:1px solid rgba(233,213,255,.35)!important;border-radius:999px!important;padding:11px 26px!important;font-size:.85rem!important}
+body:has(#lock-screen:not(.hidden)) header,
+body:has(#lock-screen:not(.hidden)) .top-nav,
+body:has(#lock-screen:not(.hidden)) #v84-fab,
+body:has(#lock-screen:not(.hidden)) #v87-fx{display:none!important}
+
+#tab-lancar .entry-isolated-box,
+#tab-lancar .entry-isolated-box:has(#trans-value),#tab-lancar .entry-isolated-box:has(#trans-desc),
+#tab-lancar .entry-isolated-box:has(#card-tags-container),#tab-lancar .entry-isolated-box:has(#trans-category),
+#tab-lancar .entry-isolated-box:has(#trans-is-fixed){
+background:#fff!important;border:1px solid #eadff5!important;outline:none!important;
+border-radius:16px!important;padding:10px!important;box-shadow:0 3px 10px rgba(88,50,120,.06)!important;animation:none!important}
+#tab-lancar .entry-isolated-box::before,#tab-lancar .entry-isolated-box::after{display:none!important;content:none!important}
+#tab-lancar .amount-hero-box,#tab-lancar .detail-row{border:0!important;background:transparent!important;padding-left:0!important;padding-right:0!important}
+#tab-lancar .detail-row input,#tab-lancar .detail-row select,#tab-lancar .clean-val-input,#tab-lancar .step-input{
+border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!important;border-radius:12px!important}
+#tab-lancar .detail-row input:focus,#tab-lancar .detail-row select:focus,#tab-lancar .clean-val-input:focus{border-color:#a855f7!important;box-shadow:0 0 0 3px rgba(168,85,247,.12)!important}
+#tab-lancar .two-cols-clean{grid-template-columns:1fr!important;gap:8px!important}
+#tab-lancar .card-pill-btn,#tab-lancar .card-pill-btn.active,#tab-lancar .btn-primary,#tab-lancar #trans-is-fixed{animation:none!important}
+#tab-lancar .calc-preview-bar{background:#f5edff!important;border:1px solid #e6d5fa!important;color:#6d28d9!important}
+#tab-lancar .entry-block-wrapper{gap:8px!important}
+#tab-lancar .v82-card-selector-group,#tab-lancar .v82-payment-card-group{margin-top:0!important}
+
+#v87-fx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:5}
+#v87-fx span{position:absolute;top:0;left:0;will-change:transform;opacity:.65;animation-timing-function:linear;animation-iteration-count:infinite}
+#v87-fx .fall{animation-name:v87f}#v87-fx .up{animation-name:v87u}#v87-fx .tw{animation-name:v87t;animation-timing-function:ease-in-out}
+@keyframes v87f{from{transform:translate3d(0,-12vh,0) rotate(0)}to{transform:translate3d(var(--dx),112vh,0) rotate(360deg)}}
+@keyframes v87u{from{transform:translate3d(0,112vh,0) rotate(0)}to{transform:translate3d(var(--dx),-12vh,0) rotate(40deg)}}
+@keyframes v87t{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:.95;transform:scale(1.25)}}
+.v87c{background:#fff;border:1px solid #eadff5;border-radius:14px;padding:10px;box-shadow:0 5px 14px rgba(67,31,96,.07);color:#30243a}
+.v87c b{font-size:.78rem}.v87g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.v87g button{border:1px solid #eadff5;background:#faf5ff;border-radius:11px;padding:10px 4px;font-size:.68rem;font-weight:800;color:#5b21b6}
+.v87g button.on{border-color:#a855f7;background:#f0e4ff}
+.v87r{display:flex;gap:6px;margin-top:6px}.v87r input{flex:1;min-width:0;padding:9px;border:1px solid #dfd2ee;border-radius:10px;font-size:16px}
+.v87r button{border:1px solid #eadff5;background:#f5edff;border-radius:10px;padding:9px 12px;font-weight:800;color:#6d28d9}
+.v87res{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px}
+.v87res button{height:52px;border:1px solid #eadff5;border-radius:9px;padding:0}
+</style>
