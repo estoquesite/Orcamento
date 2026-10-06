@@ -7511,7 +7511,7 @@ border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!
 .v87res{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px}
 .v87res button{height:52px;border:1px solid #eadff5;border-radius:9px;padding:0}
     </style>
-<style id="v88-ir">
+    <style id="v88-ir">
 #btn-tab-ir::before{content:"🧾"}
 .ir-c{background:#fff;border:1px solid #eadff5;border-radius:14px;padding:10px;box-shadow:0 5px 14px rgba(67,31,96,.07);color:#30243a}
 .ir-hero{background:linear-gradient(135deg,#32164d,#6d28d9 56%,#a855f7);color:#fff;border-radius:14px;padding:12px}
@@ -7534,13 +7534,20 @@ border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!
 .ir-m button small{display:block;font-size:.58rem;font-weight:800;color:#8b6a9c}
 .ir-m button b{font-size:.74rem}
 .ir-m button.ok{background:#f5edff;border-color:#c084fc}
+.ir-m button.sel{box-shadow:0 0 0 2px #a855f7}
 .ir-m button.no b{color:#b9a8c6}
 .ir-l{display:flex;flex-direction:column;gap:6px}
-.ir-i{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fbf8ff;border:1px solid #eadff5;border-radius:11px;padding:8px 10px}
-.ir-i div{min-width:0}.ir-i b{font-size:.8rem;display:block}
+.ir-i{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fbf8ff;border:1px solid #eadff5;border-radius:11px;padding:9px 10px;cursor:pointer}
+.ir-i:active{background:#f3e8ff}
+.ir-i div{min-width:0}
+.ir-i b{font-size:.84rem;display:block;color:#6d28d9;text-decoration:underline dotted}
 .ir-i span{font-size:.62rem;color:#8e7b98;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ir-i span.who{color:#30243a;font-weight:700}
+.ir-i span.nowho{color:#d97706;font-weight:700}
 .ir-i button{border:0;background:transparent;font-size:1rem;padding:6px}
+.ir-tag{display:inline-block;font-size:.55rem;font-weight:900;padding:1px 6px;border-radius:999px;background:#f1e6ff;color:#7c3aed;margin-right:4px}
 .ir-n{font-size:.6rem;color:#8e7b98;line-height:1.35}
+.ir-mi{width:100%;padding:10px;border:1px solid #e6d9f3;border-radius:10px;background:#fbf8ff;font-size:16px}
 </style>
 <script id="v88-ir-js">
 (function(){
@@ -7549,21 +7556,39 @@ border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!
   var content=document.querySelector('.content'),nav=document.querySelector('.top-nav'),mb=$('btn-tab-mais');
   if(!content||!nav||!mb||$('tab-ir'))return;
 
-  var ano=(typeof currentYear==='number')?currentYear:new Date().getFullYear(), editId=null;
+  var ano=(typeof currentYear==='number')?currentYear:new Date().getFullYear(), filtroMes=0;
   var MES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   var MESL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  function esc(v){var d=document.createElement('div');d.textContent=String(v==null?'':v);return d.innerHTML;}
+  function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
   function M(v){return formatarMoeda(+v||0);}
   function D(){
     if(!Array.isArray(financialData.pensaoIR))financialData.pensaoIR=[];
     if(!financialData.pensaoIRConfig||typeof financialData.pensaoIRConfig!=='object')financialData.pensaoIRConfig={oficial:0};
     return financialData;
   }
+  function mask(v,t){
+    var d=String(v||'').replace(/\D/g,'');
+    if(t==='PF'){d=d.slice(0,11);return d.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');}
+    d=d.slice(0,14);return d.replace(/(\d{2})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1/$2').replace(/(\d{4})(\d{1,2})$/,'$1-$2');
+  }
+  function tipoOpts(sel){return '<option value="PJ"'+(sel!=='PF'?' selected':'')+'>Pessoa jurídica (empresa)</option><option value="PF"'+(sel==='PF'?' selected':'')+'>Pessoa física</option>';}
+  function mesOpts(sel){return MESL.map(function(n,i){return '<option value="'+(i+1)+'"'+(+sel===i+1?' selected':'')+'>'+n+'</option>';}).join('');}
 
   var pane=document.createElement('div');pane.id='tab-ir';pane.className='tab-pane';content.appendChild(pane);
   var btn=document.createElement('button');btn.className='top-nav-item';btn.id='btn-tab-ir';
   btn.innerHTML='<span>IR</span>';btn.onclick=function(){trocarAba('ir');};
   nav.insertBefore(btn,mb);
+
+  /* liga máscara e troca de rótulo (CNPJ/CPF) em qualquer par tipo+documento */
+  function bindDoc(tipoId,docId,lblId){
+    var t=$(tipoId),d=$(docId),l=lblId&&$(lblId); if(!t||!d)return;
+    function upd(){var pf=t.value==='PF'; if(l)l.textContent=pf?'CPF':'CNPJ'; d.placeholder=pf?'000.000.000-00':'00.000.000/0000-00'; d.value=mask(d.value,t.value);}
+    t.onchange=upd; d.oninput=function(){d.value=mask(d.value,t.value);}; upd();
+  }
+  function quem(x){
+    if(!x.pagador&&!x.doc)return '<span class="nowho">⚠️ toque para informar quem pagou</span>';
+    return '<span class="who"><span class="ir-tag">'+(x.tipo==='PF'?'PF':'PJ')+'</span>'+esc(x.pagador||'(sem nome)')+'</span>'+(x.doc?'<span>'+(x.tipo==='PF'?'CPF ':'CNPJ ')+esc(x.doc)+'</span>':'');
+  }
 
   function render(){
     var d=D(),all=d.pensaoIR.filter(function(x){return +x.ano===ano;});
@@ -7571,70 +7596,102 @@ border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!
     var porMes=[];for(var m=1;m<=12;m++)porMes[m]=0;
     all.forEach(function(x){porMes[+x.mes]+=(+x.valor||0);});
     var pagos=0;for(m=1;m<=12;m++)if(porMes[m]>0)pagos++;
-    var of=+d.pensaoIRConfig.oficial||0;
-    var esperado=of*12, dif=esperado-tot;
-    var e=editId?all.filter(function(x){return x.id===editId;})[0]:null;
+    var of=+d.pensaoIRConfig.oficial||0,esperado=of*12,dif=esperado-tot;
+    var semQuem=all.filter(function(x){return !x.pagador&&!x.doc;}).length;
     var hoje=new Date(),mAtual=(ano===hoje.getFullYear())?hoje.getMonth()+1:1;
+    var lista=all.filter(function(x){return !filtroMes||+x.mes===filtroMes;}).sort(function(a,b){return (+a.mes-+b.mes)||String(a.data||'').localeCompare(String(b.data||''));});
 
-    var h='<div class="ir-hero"><small>🧾 Pensão da Sophia · IR '+ano+'</small><h2>'+M(tot)+'</h2>'
-      +'<div class="ir-sub">'+pagos+' de 12 meses com pagamento'
-      +(of>0?' · previsto no ano: '+M(esperado)+(dif>0.009?' · faltam '+M(dif):(dif<-0.009?' · acima em '+M(-dif):' ✓')):'')+'</div></div>'
+    pane.innerHTML=
+      '<div class="ir-hero"><small>🧾 Pensão da Sophia · IR '+ano+'</small><h2>'+M(tot)+'</h2>'
+      +'<div class="ir-sub">'+pagos+' de 12 meses com valor'
+      +(of>0?' · previsto no ano: '+M(esperado)+(dif>0.009?' · faltam '+M(dif):(dif<-0.009?' · acima em '+M(-dif):' ✓')):'')
+      +(semQuem?' · ⚠️ '+semQuem+' sem pagador informado':'')+'</div></div>'
 
       +'<div class="ir-c"><div class="ir-yr"><button type="button" id="ir-ant">«</button><b>Ano '+ano+'</b><button type="button" id="ir-prox">»</button></div>'
-      +'<div class="ir-k">'+(e?'✏️ Editando lançamento':'➕ Novo valor pago')+'</div><div class="ir-f">'
-      +'<label>Mês<select id="ir-mes">'+MESL.map(function(n,i){return '<option value="'+(i+1)+'"'+((e?+e.mes:mAtual)===i+1?' selected':'')+'>'+n+'</option>';}).join('')+'</select></label>'
-      +'<label>Valor pago (R$)<input id="ir-val" type="number" inputmode="decimal" step="0.01" placeholder="0,00" value="'+(e?e.valor:'')+'"></label>'
-      +'<label>Data do pagamento<input id="ir-dt" type="date" value="'+(e&&e.data?e.data:'')+'"></label>'
-      +'<label>Observação<input id="ir-obs" type="text" placeholder="Ex.: depósito na conta" value="'+esc(e?e.obs:'')+'"></label></div>'
-      +'<div class="ir-b"><button type="button" class="p" id="ir-save">'+(e?'💾 Atualizar':'💾 Salvar')+'</button>'+(e?'<button type="button" id="ir-cancel">Cancelar</button>':'')+'</div></div>'
+      +'<div class="ir-k">➕ Novo valor</div><div class="ir-f">'
+      +'<label>Mês<select id="ir-mes">'+mesOpts(mAtual)+'</select></label>'
+      +'<label>Valor (R$)<input id="ir-val" type="number" inputmode="decimal" step="0.01" placeholder="0,00"></label>'
+      +'<label>Data<input id="ir-dt" type="date"></label>'
+      +'<label>Quem pagou?<select id="ir-tipo">'+tipoOpts('PJ')+'</select></label>'
+      +'<label class="w">Nome / razão social<input id="ir-nome" type="text" placeholder="Ex.: Empresa Tal Ltda"></label>'
+      +'<label class="w"><span id="ir-doclbl">CNPJ</span><input id="ir-doc" type="text" inputmode="numeric"></label>'
+      +'<label class="w">Observação<input id="ir-obs" type="text" placeholder="Opcional"></label></div>'
+      +'<div class="ir-b"><button type="button" class="p" id="ir-save">💾 Salvar</button></div></div>'
 
-      +'<div class="ir-c"><div class="ir-k">📅 Meses de '+ano+' (toque para lançar)</div><div class="ir-m">'
-      +MES.map(function(n,i){var v=porMes[i+1];return '<button type="button" data-m="'+(i+1)+'" class="'+(v>0?'ok':'no')+'"><small>'+n+'</small><b>'+(v>0?M(v):'—')+'</b></button>';}).join('')+'</div></div>'
+      +'<div class="ir-c"><div class="ir-k">📅 Meses de '+ano+(filtroMes?' · filtrando '+MES[filtroMes-1]:'')+'</div><div class="ir-m">'
+      +MES.map(function(n,i){var v=porMes[i+1];return '<button type="button" data-m="'+(i+1)+'" class="'+(v>0?'ok':'no')+(filtroMes===i+1?' sel':'')+'"><small>'+n+'</small><b>'+(v>0?M(v):'—')+'</b></button>';}).join('')+'</div>'
+      +'<div class="ir-n" style="margin-top:6px">Toque num mês com valor para ver só os lançamentos dele; toque de novo para ver todos.</div></div>'
+
+      +'<div class="ir-c"><div class="ir-k">📑 Lançamentos · toque no valor para ver/editar quem pagou</div><div class="ir-l">'
+      +(lista.length?lista.map(function(x){
+        return '<div class="ir-i" data-v="'+esc(x.id)+'"><div><b>'+MESL[x.mes-1]+' · '+M(x.valor)+'</b>'+quem(x)
+          +'<span>'+(x.data?'Pago em '+x.data.split('-').reverse().join('/'):'sem data')+(x.obs?' · '+esc(x.obs):'')+'</span></div>'
+          +'<button type="button" data-d="'+esc(x.id)+'" title="Excluir">🗑️</button></div>';
+      }).join(''):'<span class="ir-n">Nenhum valor lançado'+(filtroMes?' neste mês':' neste ano')+'.</span>')
+      +'</div><div class="ir-b"><button type="button" id="ir-copy">📋 Copiar resumo para o IR</button></div></div>'
 
       +'<div class="ir-c"><div class="ir-k">⚖️ Valor oficial mensal (decisão judicial)</div><div class="ir-f"><label class="w">Valor fixado por mês (R$)<input id="ir-of" type="number" inputmode="decimal" step="0.01" placeholder="0,00" value="'+(of||'')+'"></label></div>'
-      +'<div class="ir-b"><button type="button" id="ir-ofsave">Salvar valor oficial</button><button type="button" id="ir-fill">Lançar nos meses sem pagamento</button></div></div>'
-
-      +'<div class="ir-c"><div class="ir-k">📑 Lançamentos de '+ano+'</div><div class="ir-l">'
-      +(all.length?all.slice().sort(function(a,b){return (+a.mes-+b.mes)||String(a.data||'').localeCompare(String(b.data||''));}).map(function(x){
-        return '<div class="ir-i"><div><b>'+MESL[x.mes-1]+' · '+M(x.valor)+'</b><span>'+(x.data?x.data.split('-').reverse().join('/'):'sem data')+(x.obs?' · '+esc(x.obs):'')+'</span></div><div style="display:flex"><button type="button" data-e="'+x.id+'" title="Editar">✏️</button><button type="button" data-d="'+x.id+'" title="Excluir">🗑️</button></div></div>';
-      }).join(''):'<span class="ir-n">Nenhum valor lançado neste ano.</span>')
-      +'</div><div class="ir-b"><button type="button" id="ir-copy">📋 Copiar resumo para o IR</button></div>'
-      +'<div class="ir-n" style="margin-top:8px">Na declaração, a pensão alimentícia judicial entra em “Pagamentos efetuados”. Lance aqui apenas o que foi pago conforme a decisão/acordo homologado e guarde os comprovantes.</div></div>';
-    pane.innerHTML=h;
+      +'<div class="ir-b"><button type="button" id="ir-ofsave">Salvar valor oficial</button><button type="button" id="ir-fill">Lançar nos meses vazios</button></div>'
+      +'<div class="ir-n" style="margin-top:8px">Na declaração, a pensão alimentícia judicial entra em “Pagamentos efetuados”. Guarde os comprovantes.</div></div>';
     wire();
+  }
+
+  function abrirFicha(id){
+    var d=D(),x=d.pensaoIR.filter(function(y){return y.id===id;})[0]; if(!x)return;
+    abrirModal('🧾 '+MESL[x.mes-1]+' · '+M(x.valor),
+      '<label class="text-xs font-bold">Quem pagou?</label><select id="ir-m-tipo" class="ir-mi">'+tipoOpts(x.tipo)+'</select>'
+      +'<label class="text-xs font-bold">Nome / razão social</label><input id="ir-m-nome" class="ir-mi" type="text" value="'+esc(x.pagador)+'" placeholder="Ex.: Empresa Tal Ltda">'
+      +'<label class="text-xs font-bold"><span id="ir-m-lbl">CNPJ</span></label><input id="ir-m-doc" class="ir-mi" type="text" inputmode="numeric" value="'+esc(x.doc)+'">'
+      +'<label class="text-xs font-bold">Valor (R$)</label><input id="ir-m-val" class="ir-mi" type="number" inputmode="decimal" step="0.01" value="'+esc(x.valor)+'">'
+      +'<label class="text-xs font-bold">Mês</label><select id="ir-m-mes" class="ir-mi">'+mesOpts(x.mes)+'</select>'
+      +'<label class="text-xs font-bold">Data do pagamento</label><input id="ir-m-dt" class="ir-mi" type="date" value="'+esc(x.data)+'">'
+      +'<label class="text-xs font-bold">Observação</label><input id="ir-m-obs" class="ir-mi" type="text" value="'+esc(x.obs)+'">',
+      function(){
+        var v=parseFloat($('ir-m-val').value);
+        if(isNaN(v)||v<=0){showToast('Valor inválido — nada foi alterado.','fa-circle-exclamation');return;}
+        x.tipo=$('ir-m-tipo').value; x.pagador=$('ir-m-nome').value.trim(); x.doc=$('ir-m-doc').value.trim();
+        x.valor=v; x.mes=+$('ir-m-mes').value; x.data=$('ir-m-dt').value||''; x.obs=$('ir-m-obs').value.trim();
+        salvarDados(); render(); showToast('Ficha salva!');
+      });
+    bindDoc('ir-m-tipo','ir-m-doc','ir-m-lbl');
   }
 
   function wire(){
     var d=D();
-    $('ir-ant').onclick=function(){ano--;editId=null;render();};
-    $('ir-prox').onclick=function(){ano++;editId=null;render();};
+    bindDoc('ir-tipo','ir-doc','ir-doclbl');
+    $('ir-ant').onclick=function(){ano--;filtroMes=0;render();};
+    $('ir-prox').onclick=function(){ano++;filtroMes=0;render();};
     $('ir-save').onclick=function(){
-      var v=parseFloat($('ir-val').value),mes=+$('ir-mes').value;
+      var v=parseFloat($('ir-val').value);
       if(isNaN(v)||v<=0){showToast('Informe um valor válido.','fa-circle-exclamation');return;}
-      var o={mes:mes,ano:ano,valor:v,data:$('ir-dt').value||'',obs:$('ir-obs').value.trim()};
-      if(editId){d.pensaoIR.forEach(function(x){if(x.id===editId){x.mes=o.mes;x.ano=o.ano;x.valor=o.valor;x.data=o.data;x.obs=o.obs;}});}
-      else{o.id='ir_'+Date.now();d.pensaoIR.push(o);}
-      editId=null;salvarDados();render();showToast('Pensão registrada!');
+      d.pensaoIR.push({id:'ir_'+Date.now(),mes:+$('ir-mes').value,ano:ano,valor:v,data:$('ir-dt').value||'',
+        tipo:$('ir-tipo').value,pagador:$('ir-nome').value.trim(),doc:$('ir-doc').value.trim(),obs:$('ir-obs').value.trim()});
+      salvarDados();render();showToast('Valor registrado!');
     };
-    var c=$('ir-cancel');if(c)c.onclick=function(){editId=null;render();};
-    pane.querySelectorAll('[data-m]').forEach(function(b){b.onclick=function(){$('ir-mes').value=b.getAttribute('data-m');var o=+d.pensaoIRConfig.oficial||0;if(o>0&&!$('ir-val').value)$('ir-val').value=o;$('ir-val').focus();};});
-    pane.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){editId=b.getAttribute('data-e');render();window.scrollTo(0,0);};});
-    pane.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){
-      if(!confirm('Excluir este lançamento da pensão?'))return;
+    pane.querySelectorAll('[data-m]').forEach(function(b){b.onclick=function(){
+      var m=+b.getAttribute('data-m'),tem=d.pensaoIR.some(function(x){return +x.ano===ano&&+x.mes===m;});
+      if(tem){filtroMes=(filtroMes===m)?0:m;render();}
+      else{filtroMes=0;render();$('ir-mes').value=m;var o=+d.pensaoIRConfig.oficial||0;if(o>0)$('ir-val').value=o;$('ir-val').focus();}
+    };});
+    pane.querySelectorAll('[data-v]').forEach(function(el){el.onclick=function(e){
+      if(e.target.closest('[data-d]'))return; abrirFicha(el.getAttribute('data-v'));};});
+    pane.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(e){
+      e.stopPropagation(); if(!confirm('Excluir este lançamento?'))return;
       var id=b.getAttribute('data-d');d.pensaoIR=d.pensaoIR.filter(function(x){return x.id!==id;});
       salvarDados();render();showToast('Lançamento excluído.');};});
     $('ir-ofsave').onclick=function(){var v=parseFloat($('ir-of').value);d.pensaoIRConfig.oficial=isNaN(v)||v<0?0:v;salvarDados();render();showToast('Valor oficial salvo!');};
     $('ir-fill').onclick=function(){
       var of=+d.pensaoIRConfig.oficial||0;if(of<=0){showToast('Salve primeiro o valor oficial.','fa-circle-exclamation');return;}
-      if(!confirm('Lançar '+M(of)+' em cada mês de '+ano+' que ainda não tem pagamento?'))return;
+      if(!confirm('Lançar '+M(of)+' em cada mês de '+ano+' sem valor? Depois toque em cada um para informar quem pagou.'))return;
       var tem={};d.pensaoIR.forEach(function(x){if(+x.ano===ano)tem[+x.mes]=1;});
-      var n=0;for(var m=1;m<=12;m++)if(!tem[m]){d.pensaoIR.push({id:'ir_'+Date.now()+'_'+m,mes:m,ano:ano,valor:of,data:'',obs:'Valor oficial'});n++;}
+      var n=0;for(var m=1;m<=12;m++)if(!tem[m]){d.pensaoIR.push({id:'ir_'+Date.now()+'_'+m,mes:m,ano:ano,valor:of,data:'',tipo:'PJ',pagador:'',doc:'',obs:'Valor oficial'});n++;}
       salvarDados();render();showToast(n+' mês(es) preenchido(s).');};
     $('ir-copy').onclick=function(){
-      var all=d.pensaoIR.filter(function(x){return +x.ano===ano;}),tot=0,l=['Pensão alimentícia – Sophia – '+ano];
-      for(var m=1;m<=12;m++){var s=all.filter(function(x){return +x.mes===m;}).reduce(function(a,x){return a+(+x.valor||0);},0);tot+=s;
-        l.push(MESL[m-1]+': R$ '+s.toFixed(2).replace('.',','));}
-      l.push('TOTAL: R$ '+tot.toFixed(2).replace('.',','));
+      var all=d.pensaoIR.filter(function(x){return +x.ano===ano;}).sort(function(a,b){return (+a.mes-+b.mes)||String(a.data||'').localeCompare(String(b.data||''));});
+      var tot=0,l=['Pensão alimentícia – Sophia – '+ano,''];
+      all.forEach(function(x){tot+=+x.valor||0;
+        l.push(MESL[x.mes-1]+': R$ '+(+x.valor).toFixed(2).replace('.',',')+' | '+(x.tipo==='PF'?'Pessoa física':'Pessoa jurídica')+' | '+(x.pagador||'sem nome')+' | '+(x.tipo==='PF'?'CPF ':'CNPJ ')+(x.doc||'não informado')+' | pago em '+(x.data?x.data.split('-').reverse().join('/'):'sem data')+(x.obs?' | '+x.obs:''));});
+      l.push('','TOTAL: R$ '+tot.toFixed(2).replace('.',','));
       (navigator.clipboard?navigator.clipboard.writeText(l.join('\n')):Promise.reject()).then(function(){showToast('Resumo copiado!');}).catch(function(){showToast('Não foi possível copiar.','fa-circle-exclamation');});
     };
   }
@@ -7651,7 +7708,5 @@ border:1px solid #e6d9f3!important;background:#fbf8ff!important;box-shadow:none!
     pane.classList.remove('active');btn.classList.remove('active');
     return prev.apply(this,arguments);
   };
-  var sw=document.querySelectorAll('.top-nav-item');
 })();
 </script>
-
